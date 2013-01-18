@@ -18,11 +18,13 @@ dist: $(PROG_NAME)
 
 $(PROG_NAME): $(OBJECTS)
 	if [ ! -d $(DIST) ]; then mkdir $(DIST) ; fi
-# 	$(CC) -o ./bin/artikel23i.so $(CPPFLAGS_SO) ./src/view/artikel23i.o  
 	$(CC) -o ./$< $(CPPFLAGS_SO) ./$@ 
 	rm $(OBJECTS) $(TMP_SOURCES)
 
-./src/view/artikel23i.o: ./src/view/artikel23i.cpp
+# ./src/view/artikel23i.o: ./src/view/artikel23i.cpp
+# 	$(CC) -o ./$@ $(CPPFLAGS_O) -c ./$<
+
+%.o: %.cpp
 	$(CC) -o ./$@ $(CPPFLAGS_O) -c ./$<
 
 ./src/view/artikel23i.cpp: ./src/view/artikel23i.ecpp
