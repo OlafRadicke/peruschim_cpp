@@ -3,30 +3,40 @@ ECPPC=/usr/bin/ecppc
 TNTNET=/usr/bin/tntnet
 CPPFLAGS_SO = -shared -L/usr/local/lib -ltntnet -lcxxtools
 CPPFLAGS_O = -I/usr/local/include -fPIC -O2
-TNTSOURCES = ./src/view/artikel23i.ecpp 
-SOURCES = ./src/view/artikel23i.cpp 
-OBJECTS = /src/view/artikel23i.o 
 CC =  g++
 DIST = ./bin
-# clean:
-# 	rm ./src/view/artikel23i.so ./src/view/artikel23i.o
+PROG_NAME = ./bin/artikel23i.so
 
-all-o: ./bin/artikel23i.so
+TNTSOURCES = ./src/view/artikel23i.ecpp 
+TMP_SOURCES = ./src/view/artikel23i.cpp 
+OBJECTS = ./src/view/artikel23i.o 
 
-./bin/artikel23i.so: ./src/view/artikel23i.o
+clean:
+	rm $(TMP_SOURCES) $(OBJECTS)
+
+dist: $(PROG_NAME)
+
+$(PROG_NAME): $(OBJECTS)
 	if [ ! -d $(DIST) ]; then mkdir $(DIST) ; fi
-	$(CC) -o ./bin/artikel23i.so $(CPPFLAGS_SO) ./src/view/artikel23i.o  
-	rm $(OBJECTS) $(SOURCES)
+# 	$(CC) -o ./bin/artikel23i.so $(CPPFLAGS_SO) ./src/view/artikel23i.o  
+	$(CC) -o ./$< $(CPPFLAGS_SO) ./$@ 
+	rm $(OBJECTS) $(TMP_SOURCES)
 
 ./src/view/artikel23i.o: ./src/view/artikel23i.cpp
-	$(CC) -o ./src/view/artikel23i.o $(CPPFLAGS_O) -c ./src/view/artikel23i.cpp 
+	$(CC) -o ./$@ $(CPPFLAGS_O) -c ./$<
 
 ./src/view/artikel23i.cpp: ./src/view/artikel23i.ecpp
-	$(ECPPC)   -o ./src/view/artikel23i.cpp  ./src/view/artikel23i.ecpp 
+	$(ECPPC)   -o ./$@  ./$< 
 
 
-test: all
+test: dist
 	${TNTNET} tntnet.conf
+
+install:
+	echo "ist noch nicht implementiert"
+
+uninstall:
+	echo "ist noch nicht implementiert"
 
 
 .SUFFIXES: .ecpp .gif .jpg .css .js .cpp
@@ -45,3 +55,5 @@ test: all
 	${ECPPC} ${ECPPFLAGS} -m text/css ${ECPPFLAGS_CSS} -b -o $@ $<
 .js.cpp:
 	${ECPPC} ${ECPPFLAGS} -m application/javascript ${ECPPFLAGS_JS} -b -o $@ $<
+
+.PHONY: test clean install dist uninstall
