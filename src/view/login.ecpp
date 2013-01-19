@@ -9,6 +9,7 @@
 <%session>
 // define your session scope variables here
 // std::string mySessionState;
+std::string userRoll = "logout";
 </%session>
 <%cpp>
 // put your C++ code here
@@ -18,7 +19,7 @@
   <title>Login</title>
  </head>
  <body>
-  <h1>artikel23i</h1>
+  <h1>Anmeldung</h1>
   <p>Hello world!</p>
  </body>
 </html>

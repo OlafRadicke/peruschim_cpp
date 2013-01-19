@@ -7,9 +7,15 @@ CC =  g++
 DIST = ./bin
 PROG_NAME = ./bin/artikel23i.so
 
-TNTSOURCES = ./src/view/artikel23i.ecpp 
-TMP_SOURCES = ./src/view/artikel23i.cpp 
-OBJECTS = ./src/view/artikel23i.o 
+TNTSOURCES = ./src/view/artikel23i.ecpp \
+./src/view/login.ecpp
+
+TMP_SOURCES = ./src/view/artikel23i.cpp \
+./src/view/login.cpp
+
+
+OBJECTS = ./src/view/artikel23i.o \
+./src/view/login.o
 
 clean:
 	rm $(TMP_SOURCES) $(OBJECTS)
@@ -18,7 +24,8 @@ dist: $(PROG_NAME)
 
 $(PROG_NAME): $(OBJECTS)
 	if [ ! -d $(DIST) ]; then mkdir $(DIST) ; fi
-	$(CC) -o ./$< $(CPPFLAGS_SO) ./$@ 
+	$(CC) -o $(PROG_NAME) $(CPPFLAGS_SO)  $(OBJECTS) 
+	echo $(CC) -o $(PROG_NAME) $(CPPFLAGS_SO)   $(OBJECTS)
 	rm $(OBJECTS) $(TMP_SOURCES)
 
 %.o: %.cpp
