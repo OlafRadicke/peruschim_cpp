@@ -19,6 +19,8 @@ OBJECTS = ./src/view/artikel23i.o \
 clean:
 	rm $(TMP_SOURCES) $(OBJECTS)
 
+
+
 dist: $(PROG_NAME)
 
 $(PROG_NAME): $(OBJECTS)
@@ -33,6 +35,7 @@ $(PROG_NAME): $(OBJECTS)
 
 
 test: dist
+	cp $(PROG_NAME) ./
 	${TNTNET} tntnet.conf
 
 install:
