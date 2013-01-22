@@ -1,11 +1,20 @@
 
 ECPPC=/usr/bin/ecppc
 TNTNET=/usr/bin/tntnet
-CPPFLAGS_SO = -shared -L/usr/local/lib -ltntnet -lcxxtools
-CPPFLAGS_O = -I/usr/local/include -fPIC -O2
+# CPPFLAGS_SO = -shared -L/usr/local/lib -ltntnet -lcxxtools 
+# CPPFLAGS_O = -I/usr/local/include -fPIC -O2  -ltntdb
+CPPFLAGS_SO = -shared -L/usr/lib -ltntnet -lcxxtools 
+CPPFLAGS_O = -I/usr/include -fPIC -O2  
+# tnt data base provider
+# CPPFLAGS_O += -ltntdb
+# pstgrsql 
+CPPFLAGS_O += -lpqxx -lpq 
+
 CC =  g++
 DIST = ./bin
 PROG_NAME = ./bin/artikel23i.so
+
+SOURCES = ./src/model/WebACL.cpp
 
 TNTSOURCES = ./src/view/artikel23i.ecpp \
 ./src/view/login.ecpp
@@ -14,7 +23,8 @@ TMP_SOURCES = ./src/view/artikel23i.cpp \
 ./src/view/login.cpp
 
 OBJECTS = ./src/view/artikel23i.o \
-./src/view/login.o
+./src/view/login.o \
+./src/model/WebACL.o
 
 clean:
 	rm $(TMP_SOURCES) $(OBJECTS)
@@ -23,12 +33,15 @@ clean:
 
 dist: $(PROG_NAME)
 
-$(PROG_NAME): $(OBJECTS)
+$(PROG_NAME):  $(OBJECTS)
 	if [ ! -d $(DIST) ]; then mkdir $(DIST) ; fi
 	$(CC) -o $(PROG_NAME) $(CPPFLAGS_SO)  $(OBJECTS) 
 
+# ./src/model/WebACL.o: ./src/model/WebACL.cpp
+# 	$(CC) -o ./src/model/WebACL.o -I/usr/include -ltntdb ./src/model/WebACL.cpp
+
 %.o: %.cpp
-	$(CC) -o ./$@ $(CPPFLAGS_O) -c ./$<
+	$(CC) -o ./$@ $(CPPFLAGS_O)  -c ./$<
 
 %.cpp: %.ecpp
 	$(ECPPC)   -o ./$@  ./$< 

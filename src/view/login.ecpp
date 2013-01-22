@@ -1,26 +1,36 @@
 <%pre>
-// put your includes here
-// #include "foo.h"
+    // put your includes here
+    // #include "foo.h"
 </%pre>
+
+<%config>
+    db_url = "database=localhost";  
+    db_user = "user=user";
+    db_password = "password=password";
+</%config>
+
 <%args>
-// define the query parameters
-// bar;
-std::string name = "";
-std::string password = "";
+    // define the query parameters
+    // bar;
+    std::string name = "";
+    std::string password = "";
 </%args>
+
 <%session>
-// define your session scope variables here
-// std::string mySessionState;
-std::string userRoll = "logout";
+    // define your session scope variables here
+    // std::string mySessionState;
+    std::string userRoll = "logout";
 </%session>
+
 <%cpp>
-// put your C++ code here
-if ( name == "tom" ) {
-    userRoll = "login";
-} else {
-    userRoll = "logout";
-};
+    // put your C++ code here
+    if ( name == "tom" ) {
+        userRoll = "login";
+    } else {
+        userRoll = "logout";
+    };
 </%cpp>
+
 <html>
 <head>
     <title>Login</title>
@@ -31,7 +41,10 @@ if ( name == "tom" ) {
     <p>Hello world! <br />
 Name: <$ name $> <br />
 Passwort: <$ password $> <br />
-userRoll: <$ userRoll $>
+userRoll: <$ userRoll $> <br />
+db_url: <$ db_url $> <br />
+db_user: <$ db_user $> <br />
+db_password: <$ db_password $>
     </p>
 
     <form method="post" >
