@@ -6,7 +6,7 @@
 #include <string>
 #include <iostream>
 
-#include <pgxx/pgxx>
+//#include <pgxx/pgxx>
 
 class WebACL {
     
@@ -18,7 +18,7 @@ public:
      * @para password password of user.
      * @return "true" if okay, else "false".
      **/     
-    bool authUser ( string user_name, string password );
+    bool authUser ( std::string user_name, std::string password );
     
     /**
      * Open connatct with database.
@@ -30,9 +30,9 @@ public:
      * @para user_name name of the user.
      * @return list of user roles
      **/ 
-    static list<string> getRole ( string user_name );
+    static std::list<std::string> getRole ( std::string user_name );
 
-}
+};
 
 #endif 
 

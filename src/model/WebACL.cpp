@@ -1,18 +1,23 @@
-#include <stdio.h>
-#include <string>
 
+#include <string>
+#include <list>
+#include <iostream>
+#include <pqxx/pqxx>
+ 
 #include "WebACL.h"
 
 
-bool WebACL::authUser ( string user_name, string password ) {
-    
+bool WebACL::authUser ( std::string user_name, std::string password ) {
+    return false;
 }
 
 void WebACL::connectDataBase (){
     
 }
 
-list<string> WebACL::getRole ( string user_name ) {
+std::list<std::string> WebACL::getRole ( std::string user_name ) {
+    std::list<std::string> list_role;
+    return list_role;
     
 }
 
