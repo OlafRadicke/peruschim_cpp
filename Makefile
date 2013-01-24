@@ -16,13 +16,17 @@ CC = g++
 DIST = ./bin
 PROG_NAME = ./bin/artikel23i.so
 
-SOURCES = ./src/model/WebACL.cpp \
+SOURCES = ./src/model/Config.cpp \
+./src/model/DatabaseProxy.cpp \
+./src/model/WebACL.cpp \
 ./src/view/artikel23i.cpp \
 ./src/view/login.cpp
 
-OBJECTS = ./src/view/artikel23i.o \
-./src/view/login.o \
-./src/model/WebACL.o
+OBJECTS = ./src/model/Config.o \
+./src/model/DatabaseProxy.o \
+./src/model/WebACL.o\
+./src/view/artikel23i.o \
+./src/view/login.o 
 
 clean:
 	make clean -f tntnet.make 
