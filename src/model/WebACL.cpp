@@ -16,10 +16,17 @@
 bool WebACL::authUser ( std::string user_name, std::string password ) {
     DatabaseProxy database_proxy;
     
+//     C++-style    
     std::string password_2 = "Original String";
     unsigned char hash[20];
-    SHA1( password_2.c_str(), password_2.length(), hash);
+    SHA1( (unsigned char *)password_2.c_str(), password_2.length(), hash);
     DEBUG hash << std::endl;
+  
+//     C-style
+//     const char ibuf[] = "compute sha1";
+//     unsigned char obuf[20];
+//     SHA1( (unsigned char *)ibuf, strlen(ibuf), obuf); 
+//     DEBUG obuf << std::endl;
     
     return false;
 }
