@@ -8,6 +8,7 @@
 
 
 bool WebACL::authUser ( std::string user_name, std::string password ) {
+    DatabaseProxy database_proxy;
     return false;
 }
 

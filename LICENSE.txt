@@ -1,0 +1,1 @@
+Das Projekt steht unter der GNU Affero General Public License.
