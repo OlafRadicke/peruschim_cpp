@@ -52,7 +52,7 @@ convecpp:
 
 test: dist
 	cp $(PROG_NAME) ./
-	${TNTNET} tntnet.conf
+	LANG=C LC_ALL=C  ${TNTNET} tntnet.conf
 
 install:
 	echo "ist noch nicht implementiert"

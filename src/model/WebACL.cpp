@@ -5,6 +5,7 @@
 #include <pqxx/pqxx>
 
 #include <cxxtools/md5.h>
+#include <cxxtools/log.h>
 
 /*
  * openssl-variante
@@ -17,12 +18,23 @@
 #include "WebACL.h"
 
 
-# define DEBUG cout << "[WebACL]" <<
+# define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 bool WebACL::authUser ( std::string user_name, std::string password ) {
+    DEBUG "start..." << std::endl;
+    std::string password_hash_a = "";
+    DEBUG std::endl;
+    std::string password_hash_b = "";
+    DEBUG std::endl;
+    std::string masqu_name = "";
+    DEBUG std::endl;
+    vector< vector<string> > sqlResult;
+    DEBUG std::endl;
     DatabaseProxy database_proxy;
-    std::string hexDigest;
-    
+    DEBUG std::endl;
+    database_proxy.setQuotaType ( "'" );
+    DEBUG std::endl;
 //     C++-style    
 //     std::string password_2 = "Original String";
 //     unsigned char hash[20];
@@ -36,10 +48,31 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
 //     DEBUG obuf << std::endl;
     
     // cxxtools-style
-    hexDigest = cxxtools::md5("The quick brown fox jumps over the lazy dog.");
-    DEBUG hexDigest << std::endl;
-    
-    return false;
+    DEBUG std::endl;
+    password_hash_a = cxxtools::md5(password);
+    DEBUG std::endl;
+    // simple password salt
+    password_hash_a = cxxtools::md5(password + password_hash_a);
+    DEBUG "hexDigest_a " << password_hash_a << std::endl;
+    masqu_name = database_proxy.sqlMasquerading ( user_name );
+    sqlResult = database_proxy.sqlGet ( "SELECT password_hash FROM a23i_account WHERE login_name = '" + masqu_name + "';");
+    if ( sqlResult.size() > 0 ) {
+        if ( sqlResult[0].size() > 0 ) {
+            password_hash_b = sqlResult[0][0];
+        } else {
+            DEBUG "The sql result has not column." << std::endl;
+            return false;
+        }
+    } else {
+//        Logger::Logger ( "User not foaunt in data base?", Logger::LOG_LEVEL_WARN );
+        ERROR "User not foaunt in data base?" << std::endl;
+        return false;
+    }
+    if ( password_hash_b == password_hash_a ) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 void WebACL::connectDataBase (){

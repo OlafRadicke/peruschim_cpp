@@ -1,20 +1,20 @@
 #include "DatabaseProxy.h"
 
-# define DEBUG cout << "[Config]" <<
-
+# define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 
 using namespace std;
 
-DatabaseProxy::DatabaseProxy( ) : 
-    m_pg_db_name (""), 
-    m_pg_db_host (""), 
-    m_pg_db_user (""),
-    m_pg_db_passwd (""),
-    m_pg_db_port (""),
-    m_sqlQuotas ("'") 
-{
-        
+// DatabaseProxy::DatabaseProxy( ) : 
+//     m_pg_db_name (""), 
+//     m_pg_db_host (""), 
+//     m_pg_db_user (""),
+//     m_pg_db_passwd (""),
+//     m_pg_db_port (""),
+//     m_sqlQuotas ("'") 
+// {
+DatabaseProxy::DatabaseProxy( ){       
     DEBUG "========== init begin ==========" ;
     DEBUG "----------init 0.1 " ;
 //     Config config;

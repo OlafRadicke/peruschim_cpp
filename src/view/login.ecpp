@@ -1,6 +1,7 @@
 <%pre>
     // put your includes here
     // #include "foo.h"
+    #include "../model/WebACL.h"
 </%pre>
 
 <%config>
@@ -19,13 +20,16 @@
 <%session>
     // define your session scope variables here
     // std::string mySessionState;
+    std::string userName = "anonymous";
     std::string userRoll = "logout";
 </%session>
 
 <%cpp>
+    
     // put your C++ code here
-    if ( name == "tom" ) {
+    if ( WebACL::authUser ( name, password ) ) {
         userRoll = "login";
+        userName = name;
     } else {
         userRoll = "logout";
     };

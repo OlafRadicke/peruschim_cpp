@@ -18,7 +18,7 @@ public:
      * @para password password of user.
      * @return "true" if okay, else "false".
      **/     
-    bool authUser ( std::string user_name, std::string password );
+    bool static authUser ( std::string user_name, std::string password );
     
     /**
      * Open connatct with database.

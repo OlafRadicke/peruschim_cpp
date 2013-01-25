@@ -15,9 +15,14 @@ dist: $(TMP_SOURCES)
 clean:
 	rm $(TMP_SOURCES)
 
-$(TMP_SOURCES): $(TNTSOURCES)
-	$(ECPPC)   -o ./$@  ./$< 
+#$(TMP_SOURCES): $(TNTSOURCES)
+#	$(ECPPC)   -o ./$@  ./$< 
 
+./src/view/artikel23i.cpp: ./src/view/artikel23i.ecpp
+	$(ECPPC)   -o ./src/view/artikel23i.cpp  ./src/view/artikel23i.ecpp
+
+./src/view/login.cpp: ./src/view/login.ecpp
+	$(ECPPC)   -o ./src/view/login.cpp  ./src/view/login.ecpp
 
 
 .SUFFIXES: .ecpp .gif .jpg .css .js .cpp
