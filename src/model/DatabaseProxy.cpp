@@ -6,15 +6,14 @@
 
 using namespace std;
 
-// DatabaseProxy::DatabaseProxy( ) : 
-//     m_pg_db_name (""), 
-//     m_pg_db_host (""), 
-//     m_pg_db_user (""),
-//     m_pg_db_passwd (""),
-//     m_pg_db_port (""),
-//     m_sqlQuotas ("'") 
-// {
-DatabaseProxy::DatabaseProxy( ){       
+DatabaseProxy::DatabaseProxy( ) : 
+    m_pg_db_name (""), 
+    m_pg_db_host (""), 
+    m_pg_db_user (""),
+    m_pg_db_passwd (""),
+    m_pg_db_port (""),
+    m_sqlQuotas ("'") 
+{      
     DEBUG "========== init begin ==========" ;
     DEBUG "----------init 0.1 " ;
 //     Config config;
@@ -100,19 +99,7 @@ vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
     
 }
 
-string DatabaseProxy::sqlMasquerading ( string origin ){
-    DEBUG "[OR1345988559] sqlMasquerading";
-    if ( m_sqlQuotas == "\'" ) {
-        DEBUG "[OR1345988559] 1";
-        return replace( origin, "'", "\\'" );
-    } else if ( m_sqlQuotas == "\"" ) {
-        DEBUG "[OR1345988559] 2";
-        return replace( origin, "\"", "\\\"" );
-    } else {
-        DEBUG "[OR1345988559] 3";
-        throw "unknown quota type!";
-    }
-}
+
 
 void DatabaseProxy::sqlSet ( string sqlcommand )
 {
@@ -130,34 +117,31 @@ void DatabaseProxy::sqlSet ( string sqlcommand )
     DEBUG "========== pgTest - end ==========" ;
 }
 
-std::string& DatabaseProxy::replace(std::string& s, char c, const std::string& r)
-{
-    std::string::size_type p = 0;
 
-    while ((p = s.find(c, p)) != std::string::npos) {
-        s.replace(p, 1, r);
-        p += r.length();
-    }
 
-    return s;
-}
-
-std::string& DatabaseProxy::replace(std::string& s, const std::string& k, const std::string& r)
+std::string DatabaseProxy::replace(std::string s, const std::string& k, const std::string& r)
 {
     DEBUG "[OR1345988343] replace";
     DEBUG "s" << s;
     DEBUG "k" << k;
     DEBUG "r" << r;
-    
+    if ( s.length() == 0 ) {
+        return s;
+    }
     std::string::size_type p = 0;
-
-    while ((p = s.find(k, p)) != std::string::npos) {
+    DEBUG endl;
+    p = s.find(k, p);
+    while ( p != std::string::npos) {
+        DEBUG endl;
         s.replace(p, k.length(), r);
+        DEBUG endl;
         p += r.length();
-  }
+        DEBUG " p " << p << endl;
+        p = s.find(k, p);
+    }
 
-  DEBUG "return s" << s;
-  return s;
+    DEBUG "return s" << s;
+    return s;
 }
 
 void DatabaseProxy::setQuotaType ( string quotaTyp ){

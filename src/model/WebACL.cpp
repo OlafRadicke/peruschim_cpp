@@ -31,7 +31,7 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
     DEBUG std::endl;
     vector< vector<string> > sqlResult;
     DEBUG std::endl;
-    DatabaseProxy database_proxy;
+    DatabaseProxy database_proxy ( 1 );
     DEBUG std::endl;
     database_proxy.setQuotaType ( "'" );
     DEBUG std::endl;
@@ -54,7 +54,8 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
     // simple password salt
     password_hash_a = cxxtools::md5(password + password_hash_a);
     DEBUG "hexDigest_a " << password_hash_a << std::endl;
-    masqu_name = database_proxy.sqlMasquerading ( user_name );
+//     masqu_name = DatabaseProxy::replace( user_name, "'", "\\'" );
+    
     sqlResult = database_proxy.sqlGet ( "SELECT password_hash FROM a23i_account WHERE login_name = '" + masqu_name + "';");
     if ( sqlResult.size() > 0 ) {
         if ( sqlResult[0].size() > 0 ) {

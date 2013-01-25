@@ -17,20 +17,22 @@ public:
     string m_dbbackent;
     
     DatabaseProxy( );
+    DatabaseProxy( int i ) { cout << "[" << __FILE__ << ":" << __LINE__ << "] " << endl; };
     ~DatabaseProxy();
     
     
     void sqlSet( string sqlcommand );
+
+    vector< vector<string> > sqlGet( string sqlcommand );
     
     /**
-     * it's masc " in \" or ' in \'.
-     * @param origin is the origin string
-     * @return Is a string with masquered quotas.
-     */
-    string sqlMasquerading ( string origin ) ;
-    
-    
-    vector< vector<string> > sqlGet( string sqlcommand );
+     * Replace a char with a string.
+     * @param s origin string
+     * @param K searching char
+     * @param r replace string
+     * @return a string with the replaceings.
+     */ 
+    static std::string replace(std::string s, const std::string& k, const std::string& r);
     
     /**
      * Set the type of quota.
@@ -68,24 +70,8 @@ private:
      * The pyte of used quotas. Default is '
      */
     string              m_sqlQuotas;
-    
-    /**
-     * Replace a char with a string.
-     * @param s origin string
-     * @param c searching char
-     * @param r replace string
-     * @return a string with the replaceings.
-     */ 
-    std::string& replace(std::string& s, char c, const std::string& r);
-    
-    /**
-     * Replace a char with a string.
-     * @param s origin string
-     * @param k searching string
-     * @param r replace string
-     * @return a string with the replaceings.
-     */     
-    std::string& replace(std::string& s, const std::string& k, const std::string& r);
+
+   
 };
 
 #endif 
