@@ -3,10 +3,10 @@ ECPPC=/usr/bin/ecppc
 TNTNET=/usr/bin/tntnet
 
 
-TNTSOURCES = ./src/view/artikel23i.ecpp \
+TNTSOURCES = ./src/view/artikel23t.ecpp \
 ./src/view/login.ecpp
 
-TMP_SOURCES = ./src/view/artikel23i.cpp \
+TMP_SOURCES = ./src/view/artikel23t.cpp \
 ./src/view/login.cpp
 
 
@@ -18,8 +18,8 @@ clean:
 #$(TMP_SOURCES): $(TNTSOURCES)
 #	$(ECPPC)   -o ./$@  ./$< 
 
-./src/view/artikel23i.cpp: ./src/view/artikel23i.ecpp
-	$(ECPPC)   -o ./src/view/artikel23i.cpp  ./src/view/artikel23i.ecpp
+./src/view/artikel23t.cpp: ./src/view/artikel23t.ecpp
+	$(ECPPC)   -o ./src/view/artikel23t.cpp  ./src/view/artikel23t.ecpp
 
 ./src/view/login.cpp: ./src/view/login.ecpp
 	$(ECPPC)   -o ./src/view/login.cpp  ./src/view/login.ecpp

@@ -31,7 +31,7 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
     DEBUG std::endl;
     vector< vector<string> > sqlResult;
     DEBUG std::endl;
-    DatabaseProxy database_proxy ( 1 );
+    DatabaseProxy database_proxy;
     DEBUG std::endl;
     database_proxy.setQuotaType ( "'" );
     DEBUG std::endl;
@@ -56,7 +56,14 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
     DEBUG "hexDigest_a " << password_hash_a << std::endl;
 //     masqu_name = DatabaseProxy::replace( user_name, "'", "\\'" );
     
-    sqlResult = database_proxy.sqlGet ( "SELECT password_hash FROM a23i_account WHERE login_name = '" + masqu_name + "';");
+    DEBUG std::endl;
+    database_proxy.sqlSet( "SELECT password_hash FROM a23i_account WHERE login_name = '" + masqu_name + "';");
+    DEBUG std::endl;
+    try {
+        sqlResult = database_proxy.sqlGet ( "SELECT password_hash FROM a23i_account WHERE login_name = '" + masqu_name + "';");
+    } catch ( char * errstr ) {
+        ERROR "Exception raised: " << errstr << '\n';
+    }
     if ( sqlResult.size() > 0 ) {
         if ( sqlResult[0].size() > 0 ) {
             password_hash_b = sqlResult[0][0];

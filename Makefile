@@ -14,18 +14,18 @@ LIBS += -lpqxx -lpq
 
 CC = g++
 DIST = ./bin
-PROG_NAME = ./bin/artikel23i.so
+PROG_NAME = ./bin/artikel23t.so
 
 SOURCES = ./src/model/Config.cpp \
 ./src/model/DatabaseProxy.cpp \
 ./src/model/WebACL.cpp \
-./src/view/artikel23i.cpp \
+./src/view/artikel23t.cpp \
 ./src/view/login.cpp
 
 OBJECTS = ./src/model/Config.o \
 ./src/model/DatabaseProxy.o \
 ./src/model/WebACL.o\
-./src/view/artikel23i.o \
+./src/view/artikel23t.o \
 ./src/view/login.o 
 
 clean:

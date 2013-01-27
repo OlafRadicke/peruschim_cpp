@@ -14,24 +14,23 @@ DatabaseProxy::DatabaseProxy( ) :
     m_pg_db_port (""),
     m_sqlQuotas ("'") 
 {      
-    DEBUG "========== init begin ==========" ;
-    DEBUG "----------init 0.1 " ;
+    DEBUG "========== init begin ========== \n" ;
 //     Config config;
     m_config = new Config();
     m_pg_db_name = m_config->get( "DB-NAME" );
-    DEBUG "----------m_pg_db_name: " << m_pg_db_name ;
+    DEBUG "m_pg_db_name: " << m_pg_db_name << endl ;
     m_pg_db_host = m_config->get( "DB-HOST" ); 
-    DEBUG "----------m_pg_db_host: " << m_pg_db_host ;
+    DEBUG "m_pg_db_host: " << m_pg_db_host << endl;
     m_pg_db_user = m_config->get( "DB-USER" ); 
-    DEBUG "----------m_pg_db_user: " << m_pg_db_user ;
+    DEBUG "m_pg_db_user: " << m_pg_db_user << endl;
     m_pg_db_passwd = m_config->get( "DB-PASSWD" ); 
-    DEBUG "----------m_pg_db_passwd: " << m_pg_db_passwd ;
+    DEBUG "m_pg_db_passwd: " << m_pg_db_passwd << endl;
     m_pg_db_port = m_config->get( "DB-PORT" ); 
-    DEBUG "----------m_pg_db_passwd: " << m_pg_db_port ;
+    DEBUG "m_pg_db_passwd: " << m_pg_db_port << endl;
     
-    DEBUG "----------init 1.1 " ;
+    DEBUG  endl;
     
-    DEBUG "init 2.1 " ;
+    DEBUG  endl;
     
     string conn_para = "password=" + m_pg_db_passwd +\
         " dbname=" + m_pg_db_name + \
@@ -39,21 +38,22 @@ DatabaseProxy::DatabaseProxy( ) :
         " port=" + m_pg_db_port + \
         " user=" + m_pg_db_user ;
         
-    DEBUG "conn_para:  " << conn_para;
+    DEBUG "conn_para:  " << conn_para << endl;
     
     m_pg_conn = new pqxx::connection( conn_para );
     
-    DEBUG "init 2.2 " ;
+    DEBUG endl ;
     
     m_pg_work = new pqxx::work( *(m_pg_conn) );
-
-    DEBUG "========== init begin ==========" ;
+    DEBUG "========== init end ==========" << endl;
 
 }
 
 DatabaseProxy::~DatabaseProxy() {
     DEBUG "========== destructor begin ==========" ;
-    
+    delete m_config;
+    delete m_pg_conn;
+    delete m_pg_work;    
     DEBUG "========== destructor end ==========" ;
     
 }
@@ -103,7 +103,7 @@ vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
 
 void DatabaseProxy::sqlSet ( string sqlcommand )
 {
-    
+/*    
     DEBUG "SQL-CODE: \n <begin>" << sqlcommand  << "<end>";
     DEBUG "[OR1336745746] sqlSet ( string sqlcommand )" ;
         
@@ -115,6 +115,7 @@ void DatabaseProxy::sqlSet ( string sqlcommand )
         VALUES ( 'Tier', 'Hund');" );
 
     DEBUG "========== pgTest - end ==========" ;
+    */
 }
 
 

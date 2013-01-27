@@ -11,7 +11,7 @@ list <string> Config::m_configStrings;
 string Config::m_confFilePath = "";
 
 Config::Config () {
-    Config config;
+//     Config config;
     
     // checked is user config exist
     string homedir_conf =  "./artikel23t.conf" ;
