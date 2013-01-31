@@ -1,6 +1,7 @@
 
 
 TNTNET=/usr/bin/tntnet
+TNTMAKEFILE = ./tntnet-make/Makefile
 
 CPPFLAGS = -Wall -Werror -pedantic  -Wno-long-long
 CPPFLAGS += -fPIC -O2  
@@ -14,7 +15,7 @@ LIBS += -lpqxx -lpq
 
 CC = g++
 DIST = ./bin
-PROG_NAME = ./bin/artikel23t.so
+PROG_NAME = ./artikel23t.so
 
 SOURCES = ./src/model/Config.cpp \
 ./src/model/DatabaseProxy.cpp \
@@ -29,14 +30,21 @@ OBJECTS = ./src/model/Config.o \
 ./src/view/login.o 
 
 clean:
-	make clean -f tntnet.make 
+	make clean -f  $(TNTMAKEFILE)
 	rm  $(OBJECTS)
+	rm -Rvf $(DIST)
 
 
 dist: convecpp $(PROG_NAME)
+	if [ ! -d $(DIST) ]; then mkdir $(DIST) ; fi
+	mv ./$(PROG_NAME) $(DIST)
+	cp ./exsamples/artikel23t.conf $(DIST)
+	cp ./exsamples/tntnet.conf $(DIST)
+	cp ./AGPLv3.txt $(DIST)
+	cp ./README.txt $(DIST)
+	cp ./LICENSE.txt $(DIST)
 
 $(PROG_NAME):  $(OBJECTS)
-	if [ ! -d $(DIST) ]; then mkdir $(DIST) ; fi
 	LANG=C LC_ALL=C  $(CC) $(CPPFLAGS) -shared -o $(PROG_NAME) $(OBJECTS) $(LIBS)
 
 # ./src/model/WebACL.o: ./src/model/WebACL.cpp
@@ -47,12 +55,13 @@ $(PROG_NAME):  $(OBJECTS)
 
 
 convecpp:
-	make dist -f tntnet.make
+	make dist -f $(TNTMAKEFILE)
 
-
+# Für englische Fehlermeldungen LANG=C LC_ALL=C
 test: dist
-	cp $(PROG_NAME) ./
-	LANG=C LC_ALL=C  ${TNTNET} tntnet.conf
+	cd $(DIST)
+	ls
+	${TNTNET} tntnet.conf
 
 install:
 	echo "ist noch nicht implementiert"
