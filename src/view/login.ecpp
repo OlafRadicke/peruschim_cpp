@@ -37,11 +37,11 @@
 
 <html>
 <head>
-    <title>Login</title>
+    <title>Login Artike23t</title>
 </head>
 <body>
 
-    <h1>Anmeldung</h1>
+    <h1>Login Artike23t</h1>
     <p>Hello world! <br />
 Name: <$ name $> <br />
 Passwort: <$ password $> <br />
