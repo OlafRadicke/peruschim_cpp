@@ -50,49 +50,47 @@ DatabaseProxy::DatabaseProxy( ) :
 }
 
 DatabaseProxy::~DatabaseProxy() {
-    DEBUG "========== destructor begin ==========" ;
+    DEBUG "========== destructor begin =========="  << endl;
     delete m_config;
+    m_pg_conn->disconnect();
     delete m_pg_conn;
     delete m_pg_work;    
-    DEBUG "========== destructor end ==========" ;
+    DEBUG "========== destructor end =========="  << endl;
     
 }
 
 vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
 {
-    DEBUG "sqlGet 1.1 " ;
+    DEBUG  endl;
     unsigned int     row;
     unsigned int     col;
     vector< vector<string> >  list_2d;
-    
-        
-    DEBUG "========== pgTest - begin ==========" ;
 
-    DEBUG "========== pgTest - 1 ==========" ;
+    DEBUG  endl;
+/*    
     m_pg_work->exec(
-        "INSERT INTO category (title, subtitle) \
-        VALUES ( 'Tier', 'Hund');" );
-    DEBUG "========== pgTest - 2 ==========" ;
+         "INSERT INTO category (title, subtitle) \
+         VALUES ( 'Tier', 'Hund');" );
+    DEBUG  endl;
+    */
 
 //    m_pg_work.commit();
-    DEBUG "========== pgTest - 3 ==========" ;
     
-    pqxx::result res = m_pg_work->exec(
-        "SELECT title, subtitle \
-        FROM category ORDER BY title, subtitle;");  
-    DEBUG "========== pgTest - 4 ==========" ;
-    DEBUG "[pgTest] found: " << res.size() ;
-    DEBUG "========== pgTest - 5 ==========" ;
+    pqxx::result res = m_pg_work->exec( sqlcommand );  
+    DEBUG  endl;
+    m_pg_work->commit();
+    DEBUG " found: " << res.size() << endl;
+    DEBUG  endl;
     
     for (row=0; row < res.size(); row++) {
-        DEBUG "[pgTest] row nr.:" << row ;
+        DEBUG "row nr.:" << row  << endl;
         for (col=0; col < res[row].size(); col++) {
-            DEBUG "[pgTest] col nr.:" << col ;
-            DEBUG "[pgTest] value:" << res[row][col].as<string>() << "\t" ;
+            DEBUG "col nr.:" << col  << endl;
+            DEBUG "value:" << res[row][col].as<string>() << "\t"  << endl;
         }
-        DEBUG "end of loop";
+        DEBUG "end of loop" << endl;
     }    
-    DEBUG "========== pgTest - end ==========" ;
+    DEBUG  endl;
     return list_2d;
  
     

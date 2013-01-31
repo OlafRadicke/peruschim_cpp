@@ -39,6 +39,14 @@ createdb -O artikel23_user  artikel23t_db
 # Server neu starten
 systemctl restart postgresql.service
 # Verbindung testen
-psql -U artikel23_user -h localhost -W artikel23t_db
+psql -U artikel23_user -h localhost -W artikel23t
 # Log-Analyse:
  tail -n 60 /var/lib/pgsql/data/pg_log/postgresql-Sun.log
+# Tabellen erstellen:
+cat ./PostgreSQL/system_db_schema.sql | psql -U artikel23_user -h localhost -W artikel23t
+
+
+STARTEN
+-------
+
+tntnet ./tntnet.conf

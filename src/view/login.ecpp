@@ -54,7 +54,7 @@ db_password: <$ db_password $>
     <form method="post" >
         <p>Benutzer:<br><input name="name" type="text" size="30" maxlength="30"></p>
         <p>Passwort:<br><input name="password" type="password" size="30" maxlength="40"></p>
-        <p><input type="submit" value=" Absenden "><input type="reset" value=" Abbrechen"></p>
+        <p><input type="submit" value="Anmelden"></p>
     </form>
 </body>
 </html>

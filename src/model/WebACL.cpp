@@ -60,12 +60,15 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
     database_proxy.sqlSet( "SELECT password_hash FROM a23i_account WHERE login_name = '" + masqu_name + "';");
     DEBUG std::endl;
     try {
-        sqlResult = database_proxy.sqlGet ( "SELECT password_hash FROM a23i_account WHERE login_name = '" + masqu_name + "';");
+        DEBUG std::endl;
+        sqlResult = database_proxy.sqlGet ( "SELECT password_hash FROM a23t_account WHERE login_name = '" + masqu_name + "';");
     } catch ( char * errstr ) {
         ERROR "Exception raised: " << errstr << '\n';
     }
     if ( sqlResult.size() > 0 ) {
+        DEBUG std::endl;
         if ( sqlResult[0].size() > 0 ) {
+            DEBUG std::endl;
             password_hash_b = sqlResult[0][0];
         } else {
             DEBUG "The sql result has not column." << std::endl;

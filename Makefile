@@ -40,6 +40,7 @@ dist: convecpp $(PROG_NAME)
 	mv ./$(PROG_NAME) $(DIST)
 	cp ./exsamples/artikel23t.conf $(DIST)
 	cp ./exsamples/tntnet.conf $(DIST)
+	cp ./exsamples/tntnet.properties $(DIST)
 	cp ./AGPLv3.txt $(DIST)
 	cp ./README.txt $(DIST)
 	cp ./LICENSE.txt $(DIST)
@@ -59,9 +60,7 @@ convecpp:
 
 # Für englische Fehlermeldungen LANG=C LC_ALL=C
 test: dist
-	cd $(DIST)
-	ls
-	${TNTNET} tntnet.conf
+	cd $(DIST)&& ls && ${TNTNET} tntnet.conf
 
 install:
 	echo "ist noch nicht implementiert"
