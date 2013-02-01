@@ -21,13 +21,15 @@ SOURCES = ./src/model/Config.cpp \
 ./src/model/DatabaseProxy.cpp \
 ./src/model/WebACL.cpp \
 ./src/view/artikel23t.cpp \
-./src/view/login.cpp
+./src/view/login.cpp \
+./src/view/newaccont.cpp
 
 OBJECTS = ./src/model/Config.o \
 ./src/model/DatabaseProxy.o \
 ./src/model/WebACL.o\
 ./src/view/artikel23t.o \
-./src/view/login.o 
+./src/view/login.o \
+./src/view/newaccont.o
 
 clean:
 	make clean -f  $(TNTMAKEFILE)

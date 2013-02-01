@@ -1,0 +1,68 @@
+<%pre>
+    // put your includes here
+    // #include "foo.h"
+    #include "../model/WebACL.h"
+</%pre>
+
+<%config>
+</%config>
+
+<%args>
+    // define the query parameters
+    std::string feedback = "";
+    std::string login_name = "";
+    std::string name = "";
+    std::string mail = "";
+    std::string anmelden;
+    std::string password_a = "";
+    std::string password_b = "";
+</%args>
+
+<%session>
+    // define your session scope variables here
+    // std::string mySessionState;
+    std::string userName = "anonymous";
+    std::string userRoll = "logout";
+</%session>
+
+<%cpp>
+    
+    // ACL Check
+    if ( userRoll != "logout" ) {
+        return reply.redirect ( "/login" );
+    };
+
+    //
+    if ( password_a == password_b ) {
+        feedback = "";
+    } else {
+        feedback = "Das Passwort ist nicht gleich!";
+    };
+
+</%cpp>
+
+<html>
+<head>
+    <title>Neuen Account anlegen</title>
+</head>
+<body>
+
+    <h1>Neuen Account anlegen</h1>
+<b><$ feedback $> </b><br />
+Anmelden: <$ anmelden $> <br />
+userName: <$ userName $> <br />
+Name: <$ name $> <br />
+Passwort: <$ password_a $> <br />
+userRoll: <$ userRoll $> <br />
+    </p>
+
+    <form method="post" >
+        <p>Login:<br><input name="login_name" type="text" size="30" maxlength="30"></p>
+        <p>Vollständiger Name:<br><input name="name" type="text" size="30" maxlength="30"></p>
+        <p>E-Mail-Adresse:<br><input name="mail" type="text" size="30" maxlength="30"></p>
+        <p>Passwort:<br><input name="password_a" type="password" size="30" maxlength="40"></p>
+        <p>Passwort:<br><input name="password_b" type="password" size="30" maxlength="40"></p>
+        <p><input type="submit" name="anmelden" value="anmelden"></p>
+    </form>
+</body>
+</html>

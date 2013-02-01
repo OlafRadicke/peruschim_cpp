@@ -6,7 +6,6 @@
 #include <string>
 #include <iostream>
 
-//#include <pgxx/pgxx>
 
 class WebACL {
     
@@ -31,6 +30,21 @@ public:
      * @return list of user roles
      **/ 
     static std::list<std::string> getRole ( std::string user_name );
+    
+    /**
+     * Set a new password from a user.
+     * @para user_name name of the user.
+     * @para new_password new password phrase.
+     **/     
+    void setPassword (  std::string user_name, std::string new_password );
+    
+private:
+    /**
+     * Generated a random string for password salt.
+     * @para len length of sting.
+     * @return a random string
+     */
+    std::string genRandomSalt ( const int len ) ;
 
 };
 

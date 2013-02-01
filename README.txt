@@ -10,7 +10,6 @@ cxxtools
 cxxtools-devel
 libpqxx-devel 
 libpqxx
-openssl-devel
 
 
 INSTALLATION

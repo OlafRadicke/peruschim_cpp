@@ -4,10 +4,12 @@ TNTNET=/usr/bin/tntnet
 
 
 TNTSOURCES = ./src/view/artikel23t.ecpp \
-./src/view/login.ecpp
+./src/view/login.ecpp \
+./src/view/newaccont.ecpp
 
 TMP_SOURCES = ./src/view/artikel23t.cpp \
-./src/view/login.cpp
+./src/view/login.cpp \
+./src/view/newaccont.cpp
 
 
 dist: $(TMP_SOURCES)
@@ -15,14 +17,18 @@ dist: $(TMP_SOURCES)
 clean:
 	rm $(TMP_SOURCES)
 
-#$(TMP_SOURCES): $(TNTSOURCES)
-#	$(ECPPC)   -o ./$@  ./$< 
+# $(TMP_SOURCES): $(TNTSOURCES)
+# 	$(ECPPC)   -o ./$@  ./$< 
 
 ./src/view/artikel23t.cpp: ./src/view/artikel23t.ecpp
 	$(ECPPC)   -o ./src/view/artikel23t.cpp  ./src/view/artikel23t.ecpp
 
 ./src/view/login.cpp: ./src/view/login.ecpp
 	$(ECPPC)   -o ./src/view/login.cpp  ./src/view/login.ecpp
+
+
+./src/view/newaccont.cpp: ./src/view/newaccont.ecpp
+	$(ECPPC)   -o ./src/view/newaccont.cpp  ./src/view/newaccont.ecpp
 
 
 .SUFFIXES: .ecpp .gif .jpg .css .js .cpp
