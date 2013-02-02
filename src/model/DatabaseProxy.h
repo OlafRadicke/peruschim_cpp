@@ -24,6 +24,13 @@ public:
     void sqlSet( string sqlcommand );
 
     vector< vector<string> > sqlGet( string sqlcommand );
+
+    /**
+     * Replace a char with a string.
+     * @param s origin string
+     * @return a string with the replaceings.
+     */ 
+    static std::string replace ( std::string s );    
     
     /**
      * Replace a char with a string.
@@ -32,7 +39,11 @@ public:
      * @param r replace string
      * @return a string with the replaceings.
      */ 
-    static std::string replace(std::string s, const std::string& k, const std::string& r);
+    static std::string replace (
+        std::string s, 
+        const std::string& k, 
+        const std::string& r 
+    );
     
     /**
      * Set the type of quota.

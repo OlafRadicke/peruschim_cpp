@@ -23,6 +23,30 @@ public:
      * Open connatct with database.
      * */
     void connectDataBase ();
+ 
+    /**
+     * Create new account.
+     * @para user_name name of user account.
+     * @para password password of user.
+     **/      
+    void static createAccount (  
+            std::string user_name, 
+            std::string new_password     
+    );    
+    
+    /**
+     * Create new account.
+     * @para user_name name of user account.
+     * @para password password of user.
+     * @para real_name real name of user.
+     * @para email email of user.
+     **/      
+    void static createAccount (  
+            std::string user_name, 
+            std::string new_password,  
+            std::string real_name = "",
+            std::string email = ""        
+    );
     
     /**
      * Get back the role from a user.
@@ -44,7 +68,7 @@ private:
      * @para len length of sting.
      * @return a random string
      */
-    std::string genRandomSalt ( const int len ) ;
+    std::string static genRandomSalt ( const int len ) ;
 
 };
 

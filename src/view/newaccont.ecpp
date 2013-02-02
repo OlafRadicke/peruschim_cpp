@@ -1,6 +1,7 @@
 <%pre>
     // put your includes here
     // #include "foo.h"
+    #include <iostream>
     #include "../model/WebACL.h"
 </%pre>
 
@@ -27,17 +28,26 @@
 
 <%cpp>
     
+    # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+    
     // ACL Check
     if ( userRoll != "logout" ) {
         return reply.redirect ( "/login" );
     };
 
-    //
-    if ( password_a == password_b ) {
-        feedback = "";
-    } else {
-        feedback = "Das Passwort ist nicht gleich!";
+    // check equal of new password.
+    if ( password_a != password_b || password_b != "" ) {
+        feedback = "Das Passwort ist nicht gleich oder leer!";
+    } else {   
+        try {
+            WebACL::createAccount ( login_name, password_a, name, mail );
+        } catch ( char * errstr ) {
+            ERROR "Exception raised: " << errstr << '\n';
+            feedback = "Es trat ein Problem auf: " + std::string ( errstr ) ;
+        }            
+        feedback = "Der Account wurde angelegt!";
     };
+    
 
 </%cpp>
 

@@ -52,9 +52,12 @@ DatabaseProxy::DatabaseProxy( ) :
 DatabaseProxy::~DatabaseProxy() {
     DEBUG "========== destructor begin =========="  << endl;
     delete m_config;
+    DEBUG  endl;
+    delete m_pg_work;  
+    DEBUG  endl;
     m_pg_conn->disconnect();
-    delete m_pg_conn;
-    delete m_pg_work;    
+    DEBUG endl;
+    delete m_pg_conn;  
     DEBUG "========== destructor end =========="  << endl;
     
 }
@@ -116,10 +119,18 @@ void DatabaseProxy::sqlSet ( string sqlcommand )
     */
 }
 
-
-
-std::string DatabaseProxy::replace(std::string s, const std::string& k, const std::string& r)
-{
+std::string DatabaseProxy::replace (  std::string s ){
+    if ( s == "" ) {
+        return "";
+    }
+    return DatabaseProxy::replace ( s, "'", "\\'" );
+}
+    
+std::string DatabaseProxy::replace ( 
+    std::string s, 
+    const std::string& k, 
+    const std::string& r
+){
     DEBUG "[OR1345988343] replace";
     DEBUG "s" << s;
     DEBUG "k" << k;
@@ -139,7 +150,7 @@ std::string DatabaseProxy::replace(std::string s, const std::string& k, const st
         p = s.find(k, p);
     }
 
-    DEBUG "return s" << s;
+    DEBUG "return s" << s << endl;
     return s;
 }
 

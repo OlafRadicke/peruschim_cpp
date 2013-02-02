@@ -14,6 +14,10 @@
 # define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
+
+
+
+
 bool WebACL::authUser ( std::string user_name, std::string password ) {
     DEBUG "start..." << std::endl;
     std::string password_hash_a = "";
@@ -85,6 +89,54 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
 
 void WebACL::connectDataBase (){
     
+}
+
+void WebACL::createAccount (  
+        std::string user_name, 
+        std::string new_password  
+) {
+    WebACL::createAccount ( user_name, new_password,  "", "");        
+}
+    
+
+void WebACL::createAccount (  
+        std::string user_name, 
+        std::string new_password,  
+        std::string real_name,
+        std::string email        
+) {
+
+    DEBUG "start..." << std::endl;
+    std::string password_hash = "";
+    std::string password_salt = "";
+    std::string masqu_name = "";
+    vector< vector<string> > sqlResult;
+    DatabaseProxy database_proxy;
+    database_proxy.setQuotaType ( "'" );
+    
+    password_salt = WebACL::genRandomSalt ( 16 );
+    DEBUG "password_salt: " << password_salt << std::endl;
+    password_hash = cxxtools::md5 ( new_password + password_salt );
+    DEBUG "password_hash: " <<  password_hash <<  std::endl;
+//     masqu_name = DatabaseProxy::replace( user_name, "'", "\\'" );
+    masqu_name = DatabaseProxy::replace( user_name );
+    
+    DEBUG std::endl;
+    DEBUG std::endl;
+    
+    database_proxy.sqlSet( \
+        "INSERT INTO a23t_account \
+        ( login_name, real_name, password_hash, password_salt, email, account_disable )\
+        VALUES \
+        ( '" + DatabaseProxy::replace( user_name ) + "',  \
+            '" + DatabaseProxy::replace( real_name ) + "',  \
+            '" + DatabaseProxy::replace( password_hash ) + "',  \
+            '" + DatabaseProxy::replace( password_salt ) + "',  \
+            '" + DatabaseProxy::replace( email ) + "',  \
+            'FALSE'  \
+        );"
+    );
+
 }
 
 string WebACL::genRandomSalt ( const int len) {
