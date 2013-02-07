@@ -24,7 +24,7 @@ public:
      **/
     void addRoll ( std::vector<std::string> rolls ) {
 //         m_userroles.push_back ( roll );
-    }:
+    };
     
     /**
      * Check is user in this site rolle.
