@@ -16,6 +16,7 @@ CREATE TABLE a23t_account (
 -- Default accound "admin" with password "admin". 
 INSERT INTO a23t_account 
 ( 
+    id,
     login_name, 
     real_name, 
     password_hash, 
@@ -24,12 +25,99 @@ INSERT INTO a23t_account
     account_disable 
 ) 
 VALUES ( 
+    1
     'admin',
     '',
     '43b732f80b0308a1c26114e42d377e2f',
     'fa37JncCHryDsbza',
     '',
     'FALSE'
+);
+
+CREATE TABLE a23t_roll (
+    id              SERIAL    PRIMARY KEY,
+    name            TEXT      NOT NULL UNIQUE,
+    explanation     TEXT      NOT NULL
+);
+-- COMMENT ON TABLE a23t_rolls IS 'ACL rolls.';
+-- Default accound "admin" with password "admin". 
+
+-- Default rolls. 
+INSERT INTO a23t_account 
+( 
+    id,
+    name, 
+    explanation
+) 
+VALUES ( 
+    1,
+    'admin',
+    ''
+); 
+
+INSERT INTO a23t_account 
+( 
+    id,
+    name, 
+    explanation
+) 
+VALUES ( 
+    2,
+    'seeker',
+    ''
+);
+
+INSERT INTO a23t_account 
+( 
+    id,
+    name, 
+    explanation
+) 
+VALUES ( 
+    3,
+    'provider',
+    ''
+);
+
+
+CREATE TABLE a23t_account_rolls (
+    id              SERIAL    PRIMARY KEY,
+    account_id      INTEGER   NOT NULL,
+    roll_id         INTEGER   NOT NULL,
+    FOREIGN KEY  (account_id) REFERENCES a23t_account (id)
+    FOREIGN KEY  (roll_id) REFERENCES a23t_roll (id)
+);
+-- COMMENT ON TABLE a23t_account_rolls IS 'Linking acconds with rolls.';
+
+-- admin account get all rolls.
+INSERT INTO a23t_account 
+( 
+    account_id, 
+    roll_id
+) 
+VALUES ( 
+    1,
+    1
+);
+
+INSERT INTO a23t_account 
+( 
+    account_id, 
+    roll_id
+) 
+VALUES ( 
+    1,
+    2
+);
+
+INSERT INTO a23t_account 
+( 
+    account_id, 
+    roll_id
+) 
+VALUES ( 
+    1,
+    3
 );
 
 CREATE TABLE db_account (

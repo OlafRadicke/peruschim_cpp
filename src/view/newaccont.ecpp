@@ -35,30 +35,33 @@
         return reply.redirect ( "/login" );
     };
     
+    // is button "anmelden" kicked?
+    if ( anmelden == "kicked" ) {
     
-    // check equal of new password.
-    if ( password_a != password_b ) {
-        feedback = "Das Passwort ist nicht gleich!";
-    } else {   
-        // check is password empty.
-        if ( password_b == "" ) {
-            feedback = "Kein Passwort gesetzt!";
-        } else {
-            // chech ist account all reade exist.
-            if ( WebACL::isUserExist (login_name) ) {
-                feedback = "Es existiert schon ein Account mit diesem Namen!";
+        // check equal of new password.
+        if ( password_a != password_b ) {
+            feedback = "Das Passwort ist nicht gleich!";
+        } else {   
+            // check is password empty.
+            if ( password_b == "" ) {
+                feedback = "Kein Passwort gesetzt!";
             } else {
-                // create ne account...
-                try {
-                    WebACL::createAccount ( login_name, password_a, name, mail );
-                } catch ( char * errstr ) {
-                    ERROR "Exception raised: " << errstr << '\n';
-                    feedback = "Es trat ein Problem auf: " + std::string ( errstr ) ;
-                }            
-                feedback = "Der Account wurde angelegt!";
+                // chech ist account all reade exist.
+                if ( WebACL::isUserExist (login_name) ) {
+                    feedback = "Es existiert schon ein Account mit diesem Namen!";
+                } else {
+                    // create ne account...
+                    try {
+                        WebACL::createAccount ( login_name, password_a, name, mail );
+                    } catch ( char * errstr ) {
+                        ERROR "Exception raised: " << errstr << '\n';
+                        feedback = "Es trat ein Problem auf: " + std::string ( errstr ) ;
+                    }            
+                    feedback = "Der Account wurde angelegt!";
+                }
             }
-        }
-    };
+        };
+    }
     
 
 </%cpp>
@@ -66,11 +69,14 @@
 <html>
 <head>
     <title>Neuen Account anlegen</title>
+    <& "style" &>
 </head>
 <body>
-
+    <& "header" &>
     <h1>Neuen Account anlegen</h1>
-<b><$ feedback $> </b><br />
+    <dev class="feedback-box">
+        <b><$ feedback $> </b><br />
+    </dev>
 Anmelden: <$ anmelden $> <br />
 userName: <$ userName $> <br />
 Name: <$ name $> <br />
@@ -85,7 +91,7 @@ userRoll: <$ userRoll $> <br />
         <p>E-Mail-Adresse:<br><input name="mail" type="text" size="80" maxlength="80"></p>
         <p>Passwort:<br><input name="password_a" type="password" size="40" maxlength="40"></p>
         <p>Passwort:<br><input name="password_b" type="password" size="40" maxlength="40"></p>
-        <p><input type="submit" name="anmelden" value="anmelden"></p>
+        <p><input type="submit" name="anmelden" value="kicked"></p>
     </form>
 </body>
 </html>

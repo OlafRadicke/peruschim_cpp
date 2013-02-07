@@ -62,6 +62,7 @@ public:
      **/ 
     static std::list<std::string> getRole ( std::string user_name );
     
+    
     /**
      * Set a new password from a user.
      * @para user_name name of the user.

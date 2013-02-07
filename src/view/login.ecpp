@@ -38,6 +38,7 @@
 <html>
 <head>
     <title>Login Artike23t</title>
+    <& "style" &>
 </head>
 <body>
 
