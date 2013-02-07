@@ -20,10 +20,25 @@ public:
     DatabaseProxy( int i ) { cout << "[" << __FILE__ << ":" << __LINE__ << "] " << endl; };
     ~DatabaseProxy();
     
-    
+     /**
+     * Do a SQL command without result.
+     * @param sqlcommand a sql command.
+     **/      
     void sqlSet( string sqlcommand );
 
-    vector< vector<string> > sqlGet( string sqlcommand );
+     /**
+     * get back a SQL result as 3d vector.
+     * @param sqlcommand a sql command.
+     * @return If nothing found, it is get back a empty string. 
+     **/   
+    vector< vector<string> >  sqlGet( string sqlcommand );
+    
+    /**
+     * get back the first fund of result.
+     * @param sqlcommand a sql command.
+     * @return If nothing found, it is get back a empty string. 
+     **/
+    string  sqlGetSingle ( string sqlcommand );
 
     /**
      * Replace a char with a string.

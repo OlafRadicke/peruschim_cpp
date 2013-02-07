@@ -153,6 +153,26 @@ string WebACL::genRandomSalt ( const int len) {
     return randomString;
 }
 
+bool WebACL::isUserExist ( std::string user_name ){
+    DEBUG "start..." << std::endl;
+    vector< vector<string> > sqlResult;
+    DatabaseProxy database_proxy;
+    DEBUG std::endl;
+    try {
+        DEBUG std::endl;
+        sqlResult = database_proxy.sqlGet( "SELECT * FROM a23t_account \
+            WHERE login_name = '" + DatabaseProxy::replace( user_name ) + "';");
+    } catch ( ... ) {
+        ERROR "Exception raised with: database_proxy.sqlSet ()" << endl;
+        return false;
+    }    
+    if ( sqlResult.size() > 0 ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 std::list<std::string> WebACL::getRole ( std::string user_name ) {
     std::list<std::string> list_role;
     return list_role;
@@ -184,8 +204,8 @@ void WebACL::setPassword (  std::string user_name, std::string new_password ) {
             SET password_hash = '" + password_hash + "',\
             SET password_salt = '" + password_salt + "',\
             WHERE login_name = '" + user_name + "';");
-    } catch ( char * errstr ) {
-        ERROR "Exception raised: " << errstr << '\n';
+    } catch ( ... ) {
+        ERROR "Exception raised with: database_proxy.sqlSet ()" << endl;
     }
 
 }

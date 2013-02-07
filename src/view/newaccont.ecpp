@@ -34,18 +34,30 @@
     if ( userRoll != "logout" ) {
         return reply.redirect ( "/login" );
     };
-
+    
+    
     // check equal of new password.
-    if ( password_a != password_b || password_b != "" ) {
-        feedback = "Das Passwort ist nicht gleich oder leer!";
+    if ( password_a != password_b ) {
+        feedback = "Das Passwort ist nicht gleich!";
     } else {   
-        try {
-            WebACL::createAccount ( login_name, password_a, name, mail );
-        } catch ( char * errstr ) {
-            ERROR "Exception raised: " << errstr << '\n';
-            feedback = "Es trat ein Problem auf: " + std::string ( errstr ) ;
-        }            
-        feedback = "Der Account wurde angelegt!";
+        // check is password empty.
+        if ( password_b == "" ) {
+            feedback = "Kein Passwort gesetzt!";
+        } else {
+            // chech ist account all reade exist.
+            if ( WebACL::isUserExist (login_name) ) {
+                feedback = "Es existiert schon ein Account mit diesem Namen!";
+            } else {
+                // create ne account...
+                try {
+                    WebACL::createAccount ( login_name, password_a, name, mail );
+                } catch ( char * errstr ) {
+                    ERROR "Exception raised: " << errstr << '\n';
+                    feedback = "Es trat ein Problem auf: " + std::string ( errstr ) ;
+                }            
+                feedback = "Der Account wurde angelegt!";
+            }
+        }
     };
     
 
@@ -62,16 +74,17 @@
 Anmelden: <$ anmelden $> <br />
 userName: <$ userName $> <br />
 Name: <$ name $> <br />
-Passwort: <$ password_a $> <br />
+Passwort A: <$ password_a $> <br />
+Passwort B: <$ password_b $> <br />
 userRoll: <$ userRoll $> <br />
     </p>
 
     <form method="post" >
-        <p>Login:<br><input name="login_name" type="text" size="30" maxlength="30"></p>
-        <p>Vollständiger Name:<br><input name="name" type="text" size="30" maxlength="30"></p>
-        <p>E-Mail-Adresse:<br><input name="mail" type="text" size="30" maxlength="30"></p>
-        <p>Passwort:<br><input name="password_a" type="password" size="30" maxlength="40"></p>
-        <p>Passwort:<br><input name="password_b" type="password" size="30" maxlength="40"></p>
+        <p>Login:<br><input name="login_name" type="text" size="80" maxlength="80"></p>
+        <p>Vollständiger Name:<br><input name="name" type="text" size="80" maxlength="80"></p>
+        <p>E-Mail-Adresse:<br><input name="mail" type="text" size="80" maxlength="80"></p>
+        <p>Passwort:<br><input name="password_a" type="password" size="40" maxlength="40"></p>
+        <p>Passwort:<br><input name="password_b" type="password" size="40" maxlength="40"></p>
         <p><input type="submit" name="anmelden" value="anmelden"></p>
     </form>
 </body>

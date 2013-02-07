@@ -49,6 +49,13 @@ public:
     );
     
     /**
+     * Check is user in database exist.
+     * @para user_name name of the user.
+     * @return true = exist, false = no exist.
+     **/ 
+    static bool isUserExist ( std::string user_name );
+    
+    /**
      * Get back the role from a user.
      * @para user_name name of the user.
      * @return list of user roles

@@ -65,25 +65,85 @@ DatabaseProxy::~DatabaseProxy() {
 vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
 {
     DEBUG  endl;
-    unsigned int     row;
-    unsigned int     col;
+    unsigned int     row_count;
+    unsigned int     col_count;
+    vector<string>   list_1d;
     vector< vector<string> >  list_2d;
 
     DEBUG  endl;
-/*    
-    m_pg_work->exec(
-         "INSERT INTO category (title, subtitle) \
-         VALUES ( 'Tier', 'Hund');" );
-    DEBUG  endl;
-    */
-
-//    m_pg_work.commit();
     
     pqxx::result res = m_pg_work->exec( sqlcommand );  
     DEBUG  endl;
     m_pg_work->commit();
     DEBUG " found: " << res.size() << endl;
     DEBUG  endl;
+    
+    for (row_count=0; row_count < res.size(); row_count++) {
+        DEBUG "row nr.:" << row_count  << endl;
+        for (col_count=0; col_count < res[row_count].size(); col_count++) {
+            DEBUG "col nr.:" << col_count  << endl;
+            DEBUG "value:" << res[row_count][col_count].as<string>() << "\t"  << endl;
+            list_1d.push_back ( res[row_count][col_count].as<string>() );
+        }
+        DEBUG "end of loop" << endl;
+        list_2d.push_back ( list_1d );
+    }    
+    DEBUG  endl;
+    return list_2d;
+    
+}
+
+string DatabaseProxy::sqlGetSingle ( string sqlcommand )
+{
+    DEBUG  endl;
+    unsigned int     row_count;
+    unsigned int     col_count;
+
+    DEBUG  endl;
+    
+    pqxx::result res = m_pg_work->exec( sqlcommand );  
+    DEBUG  endl;
+    m_pg_work->commit();
+    DEBUG " found: " << res.size() << endl;
+    DEBUG  endl;
+    
+    for (row_count=0; row_count < res.size(); row_count++) {
+        DEBUG "row nr.:" << row_count  << endl;
+        for (col_count=0; col_count < res[row_count].size(); col_count++) {
+            DEBUG "col nr.:" << col_count  << endl;
+            DEBUG "value:" << res[row_count][col_count].as<string>() << "\t"  << endl;
+            return res[row_count][col_count].as<string>() ;
+        }
+    }    
+    DEBUG  endl;
+    return "";
+}
+
+
+void DatabaseProxy::sqlSet ( string sqlcommand )
+{
+    DEBUG "sqlSet" << endl;
+    unsigned int     row;
+    unsigned int     col;
+    pqxx::result res;
+    DEBUG "SQL-CODE: \n <code>" << sqlcommand  << "</code>" << endl;
+    DEBUG endl ;
+    try {
+        DEBUG endl ;
+        res = m_pg_work->exec ( sqlcommand );
+        DEBUG endl ;
+        m_pg_work->commit();
+        DEBUG endl ;
+    } catch ( char * errstr ) {
+        ERROR "Exception raised: " << errstr << '\n';
+        return;
+    } 
+    
+//     catch ( ... ) {
+//         ERROR "unknow exception raised!"  << endl;
+//         return;
+//     }
+    DEBUG endl ;
     
     for (row=0; row < res.size(); row++) {
         DEBUG "row nr.:" << row  << endl;
@@ -93,30 +153,7 @@ vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
         }
         DEBUG "end of loop" << endl;
     }    
-    DEBUG  endl;
-    return list_2d;
- 
-    
-    
-}
-
-
-
-void DatabaseProxy::sqlSet ( string sqlcommand )
-{
-/*    
-    DEBUG "SQL-CODE: \n <begin>" << sqlcommand  << "<end>";
-    DEBUG "[OR1336745746] sqlSet ( string sqlcommand )" ;
-        
-    DEBUG "========== pgTest - begin ==========" ;
-
-    DEBUG "========== pgTest - 1 ==========" ;
-    m_pg_work->exec(
-        "INSERT INTO category (title, subtitle) \
-        VALUES ( 'Tier', 'Hund');" );
-
-    DEBUG "========== pgTest - end ==========" ;
-    */
+    DEBUG  endl;    
 }
 
 std::string DatabaseProxy::replace (  std::string s ){
@@ -131,26 +168,16 @@ std::string DatabaseProxy::replace (
     const std::string& k, 
     const std::string& r
 ){
-    DEBUG "[OR1345988343] replace";
-    DEBUG "s" << s;
-    DEBUG "k" << k;
-    DEBUG "r" << r;
     if ( s.length() == 0 ) {
         return s;
     }
     std::string::size_type p = 0;
-    DEBUG endl;
     p = s.find(k, p);
     while ( p != std::string::npos) {
-        DEBUG endl;
         s.replace(p, k.length(), r);
-        DEBUG endl;
         p += r.length();
-        DEBUG " p " << p << endl;
         p = s.find(k, p);
     }
-
-    DEBUG "return s" << s << endl;
     return s;
 }
 
