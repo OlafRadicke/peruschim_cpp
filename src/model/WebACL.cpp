@@ -153,6 +153,11 @@ string WebACL::genRandomSalt ( const int len) {
     return randomString;
 }
 
+std::vector<std::string> WebACL::getRoll ( std::string user_name ){
+    vector<std::string> rolls;
+    return rolls;
+}
+
 bool WebACL::isUserExist ( std::string user_name ){
     DEBUG "start..." << std::endl;
     vector< vector<string> > sqlResult;
@@ -171,12 +176,6 @@ bool WebACL::isUserExist ( std::string user_name ){
     } else {
         return false;
     }
-}
-
-std::list<std::string> WebACL::getRole ( std::string user_name ) {
-    std::list<std::string> list_role;
-    return list_role;
-    
 }
 
 

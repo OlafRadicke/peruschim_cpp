@@ -14,7 +14,7 @@ public:
      * Add a roll.
      * @param roll account roll.
      **/
-    void addRoll ( std::strin roll ) {
+    void addRoll ( std::string roll ) {
         m_userroles.push_back ( roll );
     };
     
@@ -22,7 +22,7 @@ public:
      * Add a list of rolls.
      * @param roll list of account rolls.
      **/
-    void addRoll ( std::list<std::string> rolls ) {
+    void addRoll ( std::vector<std::string> rolls ) {
 //         m_userroles.push_back ( roll );
     }:
     

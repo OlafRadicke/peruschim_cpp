@@ -60,7 +60,7 @@ public:
      * @para user_name name of the user.
      * @return list of user roles
      **/ 
-    static std::list<std::string> getRole ( std::string user_name );
+    static std::vector<std::string> getRoll ( std::string user_name );
     
     
     /**
