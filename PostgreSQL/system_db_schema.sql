@@ -12,25 +12,25 @@ CREATE TABLE a23t_account (
 -- COMMENT ON TABLE a23t_account IS 'table have the values of webgui accounts.';
 -- COMMENT ON COLUMN a23t_account.account_disable IS 'If set true than the account is disabled';
 
--- INSERT INTO a23t_account
--- (   
---     account_id,
---     login_name,
---     real_name,
---     password_hash,
---     password_salt,
---     email,
---     account_disable
--- ) VALUES
--- (
---     DEFAULT,
---     "admin",
---     "admin",
---     "",
---     "",
---     "artikel23t@localhost",
---     FALSE
--- );
+
+-- Default accound "admin" with password "admin". 
+INSERT INTO a23t_account 
+( 
+    login_name, 
+    real_name, 
+    password_hash, 
+    password_salt, 
+    email, 
+    account_disable 
+) 
+VALUES ( 
+    'admin',
+    '',
+    '43b732f80b0308a1c26114e42d377e2f',
+    'fa37JncCHryDsbza',
+    '',
+    'FALSE'
+);
 
 CREATE TABLE db_account (
     account_id      SERIAL    PRIMARY KEY,
