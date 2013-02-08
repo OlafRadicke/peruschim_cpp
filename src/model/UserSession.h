@@ -8,23 +8,23 @@
 class UserSession {
     
 public:
-    UserSession ();
+    
+    
+    UserSession () : m_username ( "" ) {};
     
      /**
      * Add a roll.
      * @param roll account roll.
      **/
     void addRoll ( std::string roll ) {
-        m_userroles.push_back ( roll );
+        m_userrolls.push_back ( roll );
     };
     
     /**
      * Add a list of rolls.
      * @param roll list of account rolls.
      **/
-    void addRoll ( std::vector<std::string> rolls ) {
-//         m_userroles.push_back ( roll );
-    };
+    void addRoll ( std::vector<std::string> rolls ) ;
     
     /**
      * Check is user in this site rolle.
@@ -40,10 +40,22 @@ public:
      **/    
     bool isInRole ( std::vector<std::string> siterolls ) ;
     
-
+    void setUserName ( std::string username ) {
+        m_username = username;
+    };
     
 private:
-    std::vector < std::string > m_userroles;
+    
+    /**
+     * Rolls of user.
+     **/
+    std::vector < std::string > m_userrolls;
+    
+    
+    /**
+     * Login name
+     **/
+    std::string m_username;
     
 };
 

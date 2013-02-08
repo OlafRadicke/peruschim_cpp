@@ -2,6 +2,7 @@
     // put your includes here
     // #include "foo.h"
     #include "../model/WebACL.h"
+    #include "../model/UserSession.h"
 </%pre>
 
 <%config>
@@ -20,18 +21,17 @@
 <%session>
     // define your session scope variables here
     // std::string mySessionState;
-    std::string userName = "anonymous";
-    std::string userRoll = "logout";
+    UserSession userSession;
 </%session>
 
 <%cpp>
     
     // put your C++ code here
     if ( WebACL::authUser ( name, password ) ) {
-        userRoll = "login";
-        userName = name;
+        userSession.setUserName ( name );
+        userSession.addRoll (  WebACL::getRoll ( name ) );
     } else {
-        userRoll = "logout";
+        // pass
     };
 </%cpp>
 
@@ -46,7 +46,6 @@
     <p>Hello world! <br />
 Name: <$ name $> <br />
 Passwort: <$ password $> <br />
-userRoll: <$ userRoll $> <br />
 db_url: <$ db_url $> <br />
 db_user: <$ db_user $> <br />
 db_password: <$ db_password $>
@@ -54,7 +53,7 @@ db_password: <$ db_password $>
 
     <form method="post" >
         <p>Benutzer:<br><input name="name" type="text" size="30" maxlength="30"></p>
-        <p>Passwort:<br><input name="password" type="password" size="30" maxlength="40"></p>
+        <p>Passwort:<br><input name="password" type="password" size="40" maxlength="40"></p>
         <p><input type="submit" value="Anmelden"></p>
     </form>
 </body>
