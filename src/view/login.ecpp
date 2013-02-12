@@ -18,7 +18,7 @@
     std::string password = "";
 </%args>
 
-<%session>
+<%session scope="global">
     // define your session scope variables here
     // std::string mySessionState;
     UserSession userSession;
@@ -52,9 +52,9 @@ db_password: <$ db_password $>
     </p>
 
     <form method="post" >
-        <p>Benutzer:<br><input name="name" type="text" size="30" maxlength="30"></p>
+        <p>Benutzer:<br><input name="name" type="text" size="40" maxlength="40"></p>
         <p>Passwort:<br><input name="password" type="password" size="40" maxlength="40"></p>
-        <p><input type="submit" value="Anmelden"></p>
+        <p><input type="submit" name="login" value="kicked"></p>
     </form>
 </body>
 </html>

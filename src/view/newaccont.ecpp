@@ -3,6 +3,7 @@
     // #include "foo.h"
     #include <iostream>
     #include "../model/WebACL.h"
+    #include "../model/UserSession.h"
 </%pre>
 
 <%config>
@@ -14,29 +15,33 @@
     std::string login_name = "";
     std::string name = "";
     std::string mail = "";
-    std::string anmelden;
+    std::string create;
     std::string password_a = "";
     std::string password_b = "";
 </%args>
-
-<%session>
+<%session scope="global">
     // define your session scope variables here
     // std::string mySessionState;
-    std::string userName = "anonymous";
-    std::string userRoll = "logout";
+    // userSession;
+    UserSession userSession;
 </%session>
 
 <%cpp>
     
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+    # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     
     // ACL Check
-    if ( userRoll != "logout" ) {
+    bool check = userSession.isInRole ( "admin" );
+    DEBUG "check: " << check << std::endl;
+    if ( userSession.isInRole ( "admin" ) == false ) {
+        DEBUG "Nicht autorisiert!!" << std::endl;
         return reply.redirect ( "/login" );
     };
+    DEBUG "Autorisiert!!" << std::endl;
     
-    // is button "anmelden" kicked?
-    if ( anmelden == "kicked" ) {
+    // is button "create" kicked?
+    if ( create == "kicked" ) {
     
         // check equal of new password.
         if ( password_a != password_b ) {
@@ -77,12 +82,10 @@
     <dev class="feedback-box">
         <b><$ feedback $> </b><br />
     </dev>
-Anmelden: <$ anmelden $> <br />
-userName: <$ userName $> <br />
+Anmelden: <$ create $> <br />
 Name: <$ name $> <br />
 Passwort A: <$ password_a $> <br />
 Passwort B: <$ password_b $> <br />
-userRoll: <$ userRoll $> <br />
     </p>
 
     <form method="post" >
@@ -91,7 +94,7 @@ userRoll: <$ userRoll $> <br />
         <p>E-Mail-Adresse:<br><input name="mail" type="text" size="80" maxlength="80"></p>
         <p>Passwort:<br><input name="password_a" type="password" size="40" maxlength="40"></p>
         <p>Passwort:<br><input name="password_b" type="password" size="40" maxlength="40"></p>
-        <p><input type="submit" name="anmelden" value="kicked"></p>
+        <p><input type="submit" name="create" value="kicked"></p>
     </form>
 </body>
 </html>

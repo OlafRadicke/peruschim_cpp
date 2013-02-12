@@ -25,7 +25,7 @@ INSERT INTO a23t_account
     account_disable 
 ) 
 VALUES ( 
-    1
+    1,
     'admin',
     '',
     '43b732f80b0308a1c26114e42d377e2f',
@@ -43,7 +43,7 @@ CREATE TABLE a23t_roll (
 -- Default accound "admin" with password "admin". 
 
 -- Default rolls. 
-INSERT INTO a23t_account 
+INSERT INTO a23t_roll 
 ( 
     id,
     name, 
@@ -55,7 +55,7 @@ VALUES (
     ''
 ); 
 
-INSERT INTO a23t_account 
+INSERT INTO a23t_roll 
 ( 
     id,
     name, 
@@ -67,7 +67,7 @@ VALUES (
     ''
 );
 
-INSERT INTO a23t_account 
+INSERT INTO a23t_roll 
 ( 
     id,
     name, 
@@ -84,13 +84,13 @@ CREATE TABLE a23t_account_rolls (
     id              SERIAL    PRIMARY KEY,
     account_id      INTEGER   NOT NULL,
     roll_id         INTEGER   NOT NULL,
-    FOREIGN KEY  (account_id) REFERENCES a23t_account (id)
+    FOREIGN KEY  (account_id) REFERENCES a23t_account (id),
     FOREIGN KEY  (roll_id) REFERENCES a23t_roll (id)
 );
 -- COMMENT ON TABLE a23t_account_rolls IS 'Linking acconds with rolls.';
 
 -- admin account get all rolls.
-INSERT INTO a23t_account 
+INSERT INTO a23t_account_rolls 
 ( 
     account_id, 
     roll_id
@@ -100,7 +100,7 @@ VALUES (
     1
 );
 
-INSERT INTO a23t_account 
+INSERT INTO a23t_account_rolls 
 ( 
     account_id, 
     roll_id
@@ -110,7 +110,7 @@ VALUES (
     2
 );
 
-INSERT INTO a23t_account 
+INSERT INTO a23t_account_rolls 
 ( 
     account_id, 
     roll_id
