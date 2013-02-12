@@ -74,12 +74,6 @@ private:
      */
     Config           *m_config;
     
-    /**
-     * PostreSQL types
-     */
-    pqxx::connection *m_pg_conn;
-    
-    pqxx::work       *m_pg_work;
     
     /** PostreSQL database name */    
     string           m_pg_db_name;

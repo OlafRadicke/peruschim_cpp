@@ -28,23 +28,6 @@ DatabaseProxy::DatabaseProxy( ) :
     m_pg_db_port = m_config->get( "DB-PORT" ); 
     DEBUG "m_pg_db_passwd: " << m_pg_db_port << endl;
     
-    DEBUG  endl;
-    
-    DEBUG  endl;
-    
-    string conn_para = "password=" + m_pg_db_passwd +\
-        " dbname=" + m_pg_db_name + \
-        " host=" + m_pg_db_host + \
-        " port=" + m_pg_db_port + \
-        " user=" + m_pg_db_user ;
-        
-    DEBUG "conn_para:  " << conn_para << endl;
-    
-    m_pg_conn = new pqxx::connection( conn_para );
-    
-    DEBUG endl ;
-    
-    m_pg_work = new pqxx::work( *(m_pg_conn) );
     DEBUG "========== init end ==========" << endl;
 
 }
@@ -52,19 +35,23 @@ DatabaseProxy::DatabaseProxy( ) :
 DatabaseProxy::~DatabaseProxy() {
     DEBUG "========== destructor begin =========="  << endl;
     delete m_config;
-    DEBUG  endl;
-    delete m_pg_work;  
-    DEBUG  endl;
-    m_pg_conn->disconnect();
-    DEBUG endl;
-    delete m_pg_conn;  
     DEBUG "========== destructor end =========="  << endl;
     
 }
 
 vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
 {
-    DEBUG  endl;
+    DEBUG "sqlGet" <<  endl;
+    string conn_para = "password=" + m_pg_db_passwd +\
+        " dbname=" + m_pg_db_name + \
+        " host=" + m_pg_db_host + \
+        " port=" + m_pg_db_port + \
+        " user=" + m_pg_db_user ;    
+    pqxx::connection pg_conn( conn_para );
+    pqxx::work  pg_worker( pg_conn );
+    pqxx::result res;
+    
+    DEBUG endl ;    
     unsigned int     row_count;
     unsigned int     col_count;
     vector<string>   list_1d;
@@ -72,9 +59,10 @@ vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
 
     DEBUG  endl;
     
-    pqxx::result res = m_pg_work->exec( sqlcommand );  
+    res = pg_worker.exec( sqlcommand );         
+        
     DEBUG  endl;
-    m_pg_work->commit();
+    pg_worker.commit();
     DEBUG " found: " << res.size() << endl;
     DEBUG  endl;
     
@@ -89,21 +77,31 @@ vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
         list_2d.push_back ( list_1d );
     }    
     DEBUG  endl;
+    
+    pg_conn.disconnect();
+    DEBUG  endl;
     return list_2d;
     
 }
 
 string DatabaseProxy::sqlGetSingle ( string sqlcommand )
 {
+    string conn_para = "password=" + m_pg_db_passwd +\
+        " dbname=" + m_pg_db_name + \
+        " host=" + m_pg_db_host + \
+        " port=" + m_pg_db_port + \
+        " user=" + m_pg_db_user ;    
+
+    pqxx::connection pg_conn( conn_para ); 
+    pqxx::work  pg_worker( pg_conn );
+    pqxx::result res;       
     DEBUG  endl;
     unsigned int     row_count;
     unsigned int     col_count;
 
-    DEBUG  endl;
     
-    pqxx::result res = m_pg_work->exec( sqlcommand );  
     DEBUG  endl;
-    m_pg_work->commit();
+    pg_worker.commit();
     DEBUG " found: " << res.size() << endl;
     DEBUG  endl;
     
@@ -116,28 +114,34 @@ string DatabaseProxy::sqlGetSingle ( string sqlcommand )
         }
     }    
     DEBUG  endl;
+    pg_conn.disconnect();
     return "";
 }
 
 
 void DatabaseProxy::sqlSet ( string sqlcommand )
 {
+    string conn_para = "password=" + m_pg_db_passwd +\
+        " dbname=" + m_pg_db_name + \
+        " host=" + m_pg_db_host + \
+        " port=" + m_pg_db_port + \
+        " user=" + m_pg_db_user ;    
+
+    pqxx::connection pg_conn( conn_para ); 
+    pqxx::work  pg_worker( pg_conn );
+    pqxx::result res;         
     DEBUG "sqlSet" << endl;
     unsigned int     row;
     unsigned int     col;
-    pqxx::result res;
     DEBUG "SQL-CODE: \n <code>" << sqlcommand  << "</code>" << endl;
     DEBUG endl ;
-    try {
-        DEBUG endl ;
-        res = m_pg_work->exec ( sqlcommand );
-        DEBUG endl ;
-        m_pg_work->commit();
-        DEBUG endl ;
-    } catch ( char * errstr ) {
-        ERROR "Exception raised: " << errstr << '\n';
-        return;
-    } 
+
+    DEBUG endl ;
+    res = pg_worker.exec ( sqlcommand );
+    DEBUG endl ;
+    pg_worker.commit();
+    DEBUG endl ;
+
     
 //     catch ( ... ) {
 //         ERROR "unknow exception raised!"  << endl;
@@ -154,6 +158,7 @@ void DatabaseProxy::sqlSet ( string sqlcommand )
         DEBUG "end of loop" << endl;
     }    
     DEBUG  endl;    
+    pg_conn.disconnect();
 }
 
 std::string DatabaseProxy::replace (  std::string s ){
