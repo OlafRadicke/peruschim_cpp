@@ -154,7 +154,26 @@ string WebACL::genRandomSalt ( const int len) {
 }
 
 std::vector<std::string> WebACL::getRoll ( std::string user_name ){
+    DatabaseProxy database_proxy;
+    vector< vector<string> > sqlResult;
     vector<std::string> rolls;
+    
+    DEBUG std::endl;
+    sqlResult = database_proxy.sqlGet 
+    ( 
+            "SELECT a23t_roll.name \
+            FROM a23t_roll, a23t_account, a23t_account_rolls \
+            WHERE a23t_account.login_name = '" + DatabaseProxy::replace( user_name ) + "' \
+            AND a23t_account.id = a23t_account_rolls.account_id  \
+            AND a23t_account_rolls.roll_id = a23t_roll.id ;"
+    );
+
+    for ( unsigned int i=0; i<sqlResult.size(); i++) {
+        DEBUG "push_back (" <<  i << "): " << sqlResult[i][0] << std::endl;
+        rolls.push_back ( sqlResult[i][0] );
+    }  
+    
+    
     return rolls;
 }
 

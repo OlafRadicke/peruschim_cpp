@@ -27,7 +27,7 @@
 <%cpp>
     
     // put your C++ code here
-    if ( WebACL::authUser ( name, password ) ) {
+    if ( WebACL::authUser ( name, password ) == true ) {
         userSession.setUserName ( name );
         userSession.addRoll (  WebACL::getRoll ( name ) );
     } else {

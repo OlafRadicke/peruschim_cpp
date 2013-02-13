@@ -5,7 +5,9 @@
 
 
 void UserSession::addRoll ( std::vector<std::string> rolls ) {
+    DEBUG "addRoll" << std::endl;
     for ( unsigned int i=0; i<rolls.size(); i++) {
+        DEBUG "Add roll: " << rolls[i] << std::endl;
         m_userrolls.push_back ( rolls[i] );
     }
 }

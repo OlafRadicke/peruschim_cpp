@@ -75,6 +75,7 @@ vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
         }
         DEBUG "end of loop" << endl;
         list_2d.push_back ( list_1d );
+        list_1d.clear();
     }    
     DEBUG  endl;
     
