@@ -1,3 +1,68 @@
 <style type="text/css">
-        body { color: purple; background-color: #d8da3d }
+
+/* -------- LOGO + Header -------------------------- */
+
+div#header-logo{
+    padding: 0px;
+    margin: 0px;
+}
+
+div#logo-red {
+    background-color: #CC063B;
+    color: #FFFFFF;
+    text-align: center;
+
+    border-top-right-radius: 15px;
+    -moz-border-radius-topright: 15px;
+    -webkit-border-top-right-radius : 15px;
+
+    border-top-left-radius: 15px;
+    -moz-border-radius-topleft: 15px;
+    -webkit-border-top-left-radius: 15px;
+
+
+    width: 300px ;
+    margin-left: auto ;
+    margin-right: auto ;
+    margin-bottom: 1px;
+
+}
+
+div#logo-blue {
+    background-color: #1907A5;
+    color: #FFFFFF;
+    text-align: center;
+
+    border-bottom-right-radius: 15px;
+    -moz-border-radius-bottomright: 15px;
+    -webkit-border-bottom-right-radius: 15px;
+
+    border-bottom-left-radius: 15px;
+    -moz-border-radius-bottomleft: 15px;
+    -webkit-border-bottom-left-radius: 15px;
+
+    width: 300px ;
+    margin-left: auto ;
+    margin-right: auto ;
+    margin-top: 1px;
+}
+
+div#header-logo h1 {
+    padding: 0px;
+    margin: 0px;
+}
+
+/* -------- Login -------------------------- */
+div#login{
+    text-align: center;
+    border-style: solid;
+    border-color: #C3C3C3;
+    width: 30% ;
+    padding: 20px;
+    margin: auto;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
 </style>
