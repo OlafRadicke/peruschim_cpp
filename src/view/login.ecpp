@@ -6,9 +6,6 @@
 </%pre>
 
 <%config>
-    db_url = "database=localhost";  
-    db_user = "user=user";
-    db_password = "password=password";
 </%config>
 
 <%args>
@@ -30,6 +27,7 @@
     if ( WebACL::authUser ( name, password ) == true ) {
         userSession.setUserName ( name );
         userSession.addRoll (  WebACL::getRoll ( name ) );
+        return reply.redirect ( "/home" );
     } else {
         // pass
     };

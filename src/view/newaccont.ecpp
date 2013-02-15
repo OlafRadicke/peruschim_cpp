@@ -32,8 +32,6 @@
     # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     
     // ACL Check
-    bool check = userSession.isInRole ( "admin" );
-    DEBUG "check: " << check << std::endl;
     if ( userSession.isInRole ( "admin" ) == false ) {
         DEBUG "Nicht autorisiert!!" << std::endl;
         return reply.redirect ( "/login" );

@@ -22,6 +22,7 @@ SOURCES = ./src/model/Config.cpp \
 ./src/model/UserSession.cpp \
 ./src/model/WebACL.cpp \
 ./src/view/artikel23t.cpp \
+./src/view/home.cpp \
 ./src/view/login.cpp \
 ./src/view/newaccont.cpp  \
 ./src/view/style.cpp
@@ -31,6 +32,7 @@ OBJECTS = ./src/model/Config.o \
 ./src/model/UserSession.o \
 ./src/model/WebACL.o\
 ./src/view/artikel23t.o \
+./src/view/home.o \
 ./src/view/header.o \
 ./src/view/login.o \
 ./src/view/newaccont.o  \
