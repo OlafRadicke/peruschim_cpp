@@ -22,20 +22,14 @@
 </%session>
 
 <%cpp>
-    
-    // put your C++ code here
-    if ( WebACL::authUser ( name, password ) == true ) {
-        userSession.setUserName ( name );
-        userSession.addRoll (  WebACL::getRoll ( name ) );
-        return reply.redirect ( "/home" );
-    } else {
-        // pass
-    };
+
+    userSession.setUserName ( "logout" );
+    userSession.cleanRoll ();
 </%cpp>
 
 <html>
 <head>
-    <title>Login Artike23t</title>
+    <title>Logout Artike23t</title>
     <& "style" &>
 </head>
 <body>
@@ -44,10 +38,8 @@
     <br />
     <div id="groupbox">
         <form method="post" >
-            <h2>Login:</h2>
-            <p>Benutzer:<br><input name="name" type="text" size="40" maxlength="40"></p>
-            <p>Passwort:<br><input name="password" type="password" size="40" maxlength="40"></p>
-            <p><input type="submit" name="login" value="kicked"></p>
+            <h2>Logout</h2>
+            <p>Sie sind jetzt ausgelogt!</p>
         </form>
     </div>
 </body>

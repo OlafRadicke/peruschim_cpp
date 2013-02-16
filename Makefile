@@ -24,6 +24,7 @@ SOURCES = ./src/model/Config.cpp \
 ./src/view/artikel23t.cpp \
 ./src/view/home.cpp \
 ./src/view/login.cpp \
+./src/view/logout.cpp \
 ./src/view/newaccont.cpp  \
 ./src/view/style.cpp
 
@@ -35,6 +36,7 @@ OBJECTS = ./src/model/Config.o \
 ./src/view/home.o \
 ./src/view/header.o \
 ./src/view/login.o \
+./src/view/logout.o \
 ./src/view/newaccont.o  \
 ./src/view/style.o
 

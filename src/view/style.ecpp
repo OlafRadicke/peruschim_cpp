@@ -88,6 +88,20 @@ div#login{
 }
 
 
+/* -------- group box -------------------------- */
+div#groupbox{
+    text-align: center;
+    border-style: solid;
+    border-color: #C3C3C3;
+    width: 30% ;
+    padding: 20px;
+    margin: auto;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+
 /* --------------- main menue -------------------- */
 div.mainmenue{
     text-align: center;

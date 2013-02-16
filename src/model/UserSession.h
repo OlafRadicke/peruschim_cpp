@@ -27,6 +27,11 @@ public:
     void addRoll ( std::vector<std::string> rolls ) ;
     
     /**
+     * Clean the list of rolls.
+     **/
+    void cleanRoll ( ) { m_userrolls.clear(); } ;
+    
+    /**
      * Check is user in this site rolle.
      * @param siteroll the roll of this site which are allowed is.
      * @return true or false.
