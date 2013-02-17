@@ -26,6 +26,7 @@ OBJECTS = ./src/model/Config.o \
 ./src/view/header.o \
 ./src/view/login.o \
 ./src/view/logout.o \
+./src/view/portaladmin/add_db_connection.o  \
 ./src/view/portaladmin/newaccont.o  \
 ./src/view/portaladmin/portaladmin.o \
 ./src/view/style.o
