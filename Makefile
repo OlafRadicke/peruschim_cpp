@@ -17,29 +17,17 @@ CC = g++
 DIST = ./bin
 PROG_NAME = ./artikel23t.so
 
-SOURCES = ./src/model/Config.cpp \
-./src/model/DatabaseProxy.cpp \
-./src/model/UserSession.cpp \
-./src/model/WebACL.cpp \
-./src/view/artikel23t.cpp \
-./src/view/home.cpp \
-./src/view/login.cpp \
-./src/view/logout.cpp \
-./src/view/newaccont.cpp  \
-./src/view/portaladmin.cpp \
-./src/view/style.cpp
 
 OBJECTS = ./src/model/Config.o \
 ./src/model/DatabaseProxy.o \
 ./src/model/UserSession.o \
 ./src/model/WebACL.o\
-./src/view/artikel23t.o \
 ./src/view/home.o \
 ./src/view/header.o \
 ./src/view/login.o \
 ./src/view/logout.o \
-./src/view/newaccont.o  \
-./src/view/portaladmin.o \
+./src/view/portaladmin/newaccont.o  \
+./src/view/portaladmin/portaladmin.o \
 ./src/view/style.o
 
 clean:
