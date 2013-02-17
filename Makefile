@@ -26,6 +26,7 @@ SOURCES = ./src/model/Config.cpp \
 ./src/view/login.cpp \
 ./src/view/logout.cpp \
 ./src/view/newaccont.cpp  \
+./src/view/portaladmin.cpp \
 ./src/view/style.cpp
 
 OBJECTS = ./src/model/Config.o \
@@ -38,6 +39,7 @@ OBJECTS = ./src/model/Config.o \
 ./src/view/login.o \
 ./src/view/logout.o \
 ./src/view/newaccont.o  \
+./src/view/portaladmin.o \
 ./src/view/style.o
 
 clean:

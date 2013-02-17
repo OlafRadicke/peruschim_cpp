@@ -75,16 +75,22 @@ div#header-logo h1 {
 }
 
 /* -------- Login -------------------------- */
-div#login{
-    text-align: center;
+div#mainbox{
+/*    text-align: center; */
     border-style: solid;
     border-color: #C3C3C3;
-    width: 30% ;
+    width: 70% ;
     padding: 20px;
     margin: auto;
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
+
+    /* -- zweispaltig -- */
+    column-count: 2;
+    -moz-column-count: 2;
+    -moz-column-gap: 2em;
+    -webkit-column-count: 2;
 }
 
 

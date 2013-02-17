@@ -76,23 +76,21 @@
 </head>
 <body>
     <& "header" &>
-    <h1>Neuen Account anlegen</h1>
-    <dev class="feedback-box">
-        <b><$ feedback $> </b><br />
-    </dev>
-Anmelden: <$ create $> <br />
-Name: <$ name $> <br />
-Passwort A: <$ password_a $> <br />
-Passwort B: <$ password_b $> <br />
-    </p>
-
-    <form method="post" >
-        <p>Login:<br><input name="login_name" type="text" size="80" maxlength="80"></p>
-        <p>Vollständiger Name:<br><input name="name" type="text" size="80" maxlength="80"></p>
-        <p>E-Mail-Adresse:<br><input name="mail" type="text" size="80" maxlength="80"></p>
-        <p>Passwort:<br><input name="password_a" type="password" size="40" maxlength="40"></p>
-        <p>Passwort:<br><input name="password_b" type="password" size="40" maxlength="40"></p>
-        <p><input type="submit" name="create" value="kicked"></p>
-    </form>
+        <br />
+    <div id="groupbox">
+        
+        <h1>Neuen Account anlegen</h1>
+        <dev class="feedback-box">
+            <b><$ feedback $> </b><br />
+        </dev>
+        <form method="post" >
+            <p>Login*:<br><input name="login_name" type="text" size="40" maxlength="80"></p>
+            <p>Vollständiger Name:<br><input name="name" type="text" size="40" maxlength="80"></p>
+            <p>E-Mail-Adresse:<br><input name="mail" type="text" size="40" maxlength="80"></p>
+            <p>Passwort*:<br><input name="password_a" type="password" size="40" maxlength="40"></p>
+            <p>Passwort*:<br><input name="password_b" type="password" size="40" maxlength="40"></p>
+            <p><input type="submit" name="create" value="kicked"></p>
+        </form>
+    </div>
 </body>
 </html>

@@ -51,7 +51,7 @@
             <li class="tabmiddle"><a href="sucherportal">Sucherportal</a></li>
             <li class="tabmiddle"><a href="anbieterportal">Anbieterportal</a></li>
             <li class="tabmiddle"><a href="vermittlerportal">Vermittlerportal</a></li>
-            <li class="tabmiddle"><a href="adminportal">Adminportal</a></li>
+            <li class="tabmiddle"><a href="portaladmin">Adminportal</a></li>
             <li class="tabright"><a href="logout">Abmelden</a></li>
         <ul>
     </div>

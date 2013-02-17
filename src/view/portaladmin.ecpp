@@ -1,0 +1,141 @@
+<%pre>
+    // put your includes here
+    // #include "foo.h"
+    #include "../model/WebACL.h"
+    #include "../model/UserSession.h"
+
+    # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+    # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+</%pre>
+
+<%config>
+</%config>
+
+<%args>
+</%args>
+
+<%session scope="global">
+    // define your session scope variables here
+    // std::string mySessionState;
+    UserSession userSession;
+</%session>
+
+<%cpp>
+
+
+    // ACL Check
+    bool check = userSession.isInRole ( "admin" );
+    DEBUG "check: " << check << std::endl;
+    if ( userSession.isInRole ( "admin" ) == false ) {
+        DEBUG "Nicht autorisiert!!" << std::endl;
+        return reply.redirect ( "/login" );
+    };
+    DEBUG "Autorisiert!!" << std::endl;
+
+
+</%cpp>
+
+<html>
+<head>
+    <title>Home Artike23t</title>
+    <& "style" &>
+</head>
+<body>
+
+    <& "header" &>
+    <br />
+
+    <div class="mainmenue">
+        <ul>
+            <li class="tableft"><a href="home">Home</a></li>
+            <li class="tabmiddle"><a href="sucherportal">Sucherportal</a></li>
+            <li class="tabmiddle"><a href="anbieterportal">Anbieterportal</a></li>
+            <li class="tabmiddle"><a href="vermittlerportal">Vermittlerportal</a></li>
+            <li class="tabmiddle_activ"><a href="portaladmin">Adminportal</a></li>
+            <li class="tabright"><a href="logout">Abmelden</a></li>
+        <ul>
+    </div>
+
+    <div id="mainbox">
+        <ul>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+            <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Auccound für das Webportal anlegen.</li>
+        </ul>
+
+    </div>
+
+</body>
+</html>

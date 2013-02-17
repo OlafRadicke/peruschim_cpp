@@ -9,6 +9,7 @@ TNTSOURCES = ./src/view/artikel23t.ecpp \
 ./src/view/login.ecpp \
 ./src/view/logout.ecpp \
 ./src/view/newaccont.ecpp \
+./src/view/portaladmin.ecpp \
 ./src/view/style.ecpp
 
 TMP_SOURCES = ./src/view/artikel23t.cpp \
@@ -17,6 +18,7 @@ TMP_SOURCES = ./src/view/artikel23t.cpp \
 ./src/view/login.cpp \
 ./src/view/logout.cpp \
 ./src/view/newaccont.cpp  \
+./src/view/portaladmin.cpp \
 ./src/view/style.cpp
 
 OBJECTS = ./src/view/artikel23t.o \
@@ -25,6 +27,7 @@ OBJECTS = ./src/view/artikel23t.o \
 ./src/view/login.o \
 ./src/view/logout.o \
 ./src/view/newaccont.o \
+./src/view/portaladmin.o \
 ./src/view/style.o
 
 
