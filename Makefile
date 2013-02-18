@@ -20,6 +20,7 @@ PROG_NAME = ./artikel23t.so
 
 OBJECTS = ./src/model/Config.o \
 ./src/model/DatabaseProxy.o \
+./src/model/TeamDataBase.o \
 ./src/model/UserSession.o \
 ./src/model/WebACL.o\
 ./src/view/home.o \

@@ -127,7 +127,7 @@ CREATE TABLE db_account (
     database_name   TEXT      NOT NULL,
     port_no         INTEGER   NOT NULL,
     db_encoding     TEXT      NOT NULL,
-    db_user         Text      NOT NULL,
+    db_user         TEXT      NOT NULL,
     db_password     TEXT      NOT NULL,
     db_sslmode      TEXT      NOT NULL,
     owner_id        INTEGER   NOT NULL,

@@ -115,14 +115,8 @@ void WebACL::createAccount (
     database_proxy.setQuotaType ( "'" );
     
     password_salt = WebACL::genRandomSalt ( 16 );
-    DEBUG "password_salt: " << password_salt << std::endl;
     password_hash = cxxtools::md5 ( new_password + password_salt );
-    DEBUG "password_hash: " <<  password_hash <<  std::endl;
-//     masqu_name = DatabaseProxy::replace( user_name, "'", "\\'" );
     masqu_name = DatabaseProxy::replace( user_name );
-    
-    DEBUG std::endl;
-    DEBUG std::endl;
     
     database_proxy.sqlSet( \
         "INSERT INTO a23t_account \
