@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
-
+#include "AccountData.h"
 
 class WebACL {
     
@@ -54,6 +54,12 @@ public:
      * @return true = exist, false = no exist.
      **/ 
     static bool isUserExist ( std::string user_name );
+
+    /**
+     * Get back all account data.
+     * @return list of accounts.
+     **/ 
+    static std::vector<AccountData> getAllAccounts ( );  
     
     /**
      * Get back the role from a user.
@@ -61,6 +67,7 @@ public:
      * @return list of user roles
      **/ 
     static std::vector<std::string> getRoll ( std::string user_name );
+      
     
     
     /**

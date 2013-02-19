@@ -5,6 +5,9 @@
 #include <vector>
 #include <string>
 
+/**
+* This class represent a data set of a session.
+**/
 class UserSession {
     
 public:
