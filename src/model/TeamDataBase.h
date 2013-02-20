@@ -4,6 +4,10 @@
 #include <iostream>
 #include <string>
 
+
+/**
+* This class represent a data set of the tabe db_account (system data base).
+**/
 class TeamDataBase {
     
 public:

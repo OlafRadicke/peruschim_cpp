@@ -55,7 +55,7 @@ public:
      * @return list of all account datas.
      **/     
     static std::vector<AccountData> getAllAccounts ( void );
-    
+
     /**
      * Get back the role from a user.
      * @para user_name name of the user.

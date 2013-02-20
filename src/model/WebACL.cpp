@@ -15,6 +15,7 @@
 # define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 
+
 /* A ----------------------------------------------------------------------- */
 
 
@@ -87,6 +88,7 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
     }
 }
 
+
 /* C ----------------------------------------------------------------------- */
 
 void WebACL::connectDataBase (){
@@ -135,11 +137,11 @@ void WebACL::createAccount (
 
 }
 
-
 /* G ----------------------------------------------------------------------- */
 
 
 std::vector<AccountData> WebACL::getAllAccounts ( void ){
+
     DatabaseProxy database_proxy;
     vector< vector<string> > sqlResult;
     vector<AccountData> accounts;
@@ -161,6 +163,7 @@ std::vector<AccountData> WebACL::getAllAccounts ( void ){
     for ( unsigned int i=0; i<sqlResult.size(); i++) {
         DEBUG "push_back (" <<  i << "): " << sqlResult[i][0] << std::endl;
         AccountData adata;
+
         adata.setID ( sqlResult[i][0] );
         adata.setLogin_name ( sqlResult[i][1] );
         adata.setReal_name ( sqlResult[i][2] );
@@ -171,14 +174,13 @@ std::vector<AccountData> WebACL::getAllAccounts ( void ){
         if ( sqlResult[i][6] == "true" ) {
             DEBUG "true" <<  std::endl;
             adata.setAccount_disable ( true );
+
         } else {
             DEBUG "false" <<  std::endl;
             adata.setAccount_disable ( false );
         }
         accounts.push_back ( adata );
     }  
-    
-    
     return accounts;
 }
 
@@ -220,7 +222,6 @@ std::vector<std::string> WebACL::getRoll ( std::string user_name ){
     return rolls;
 }
 
-
 /* I ----------------------------------------------------------------------- */
 
 bool WebACL::isUserExist ( std::string user_name ){
@@ -243,6 +244,7 @@ bool WebACL::isUserExist ( std::string user_name ){
     }
 }
 
+/* S ----------------------------------------------------------------------- */
 
 /* S ----------------------------------------------------------------------- */
 
