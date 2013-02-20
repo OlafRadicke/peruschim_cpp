@@ -74,7 +74,7 @@ div#header-logo h1 {
     margin: 0px;
 }
 
-/* -------- Login -------------------------- */
+/* -------- Main box (with 2 columns) -------------------------- */
 div#mainbox{
 /*    text-align: center; */
     border-style: solid;
@@ -93,9 +93,21 @@ div#mainbox{
     -webkit-column-count: 2;
 }
 
+/* -------- Inner box -------------------------- */
+div#innergroupbox{
+    text-align: center;
+    border-style: solid;
+    border-color: #C3C3C3;
+    width: 90% ;
+    padding: 20px;
+    margin: auto;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
 
-/* -------- group box -------------------------- */
-div#groupbox{
+/* -------- small box (for dialogs) -------------------------- */
+div#smallgroupbox{
     text-align: center;
     border-style: solid;
     border-color: #C3C3C3;

@@ -42,7 +42,7 @@
 
     <& "header" &>
     <br />
-    <div id="groupbox">
+    <div id="smallgroupbox">
         <form method="post" >
             <h2>Login:</h2>
             <p>Benutzer:<br><input name="name" type="text" size="40" maxlength="40"></p>

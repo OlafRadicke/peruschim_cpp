@@ -34,7 +34,7 @@
     // ACL Check
     if ( userSession.isInRole ( "admin" ) == false ) {
         DEBUG "Nicht autorisiert!!" << std::endl;
-        return reply.redirect ( "/login" );
+        return reply.redirect ( "/access_denied" );
     };
     DEBUG "Autorisiert!!" << std::endl;
     
