@@ -18,7 +18,9 @@ DIST = ./bin
 PROG_NAME = ./artikel23t.so
 
 
-OBJECTS = ./src/model/Config.o \
+OBJECTS = \
+./src/model/AccountData.o \
+./src/model/Config.o \
 ./src/model/DatabaseProxy.o \
 ./src/model/TeamDataBase.o \
 ./src/model/UserSession.o \

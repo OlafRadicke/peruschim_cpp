@@ -131,9 +131,9 @@ CREATE TABLE db_account (
     db_password     TEXT      NOT NULL,
     db_sslmode      TEXT      NOT NULL,
     owner_id        INTEGER   NOT NULL,
-    FOREIGN KEY  (account_id) REFERENCES a23t_account (id)
+    FOREIGN KEY  (owner_id) REFERENCES a23t_account (id)
 );
--- COMMENT ON TABLE db_account IS 'Variable postgressql accounds for crm data.';
+-- COMMENT ON TABLE db_account IS 'Variable postgressql accounds for crm data (team database).';
 -- COMMENT ON COLUMN db_account.account_id IS 'Link to a webgui user account.';
 
 COMMIT;

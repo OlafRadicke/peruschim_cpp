@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 
+#include "AccountData.h"
 
 class WebACL {
     
@@ -48,12 +49,12 @@ public:
             std::string email = ""        
     );
     
+
     /**
-     * Check is user in database exist.
-     * @para user_name name of the user.
-     * @return true = exist, false = no exist.
-     **/ 
-    static bool isUserExist ( std::string user_name );
+     * Get back all account data.
+     * @return list of all account datas.
+     **/     
+    static std::vector<AccountData> getAllAccounts ( void );
     
     /**
      * Get back the role from a user.
@@ -61,7 +62,13 @@ public:
      * @return list of user roles
      **/ 
     static std::vector<std::string> getRoll ( std::string user_name );
-    
+
+    /**
+     * Check is user in database exist.
+     * @para user_name name of the user.
+     * @return true = exist, false = no exist.
+     **/ 
+    static bool isUserExist ( std::string user_name );    
     
     /**
      * Set a new password from a user.

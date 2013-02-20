@@ -15,7 +15,7 @@
 # define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 
-
+/* A ----------------------------------------------------------------------- */
 
 
 bool WebACL::authUser ( std::string user_name, std::string password ) {
@@ -87,6 +87,8 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
     }
 }
 
+/* C ----------------------------------------------------------------------- */
+
 void WebACL::connectDataBase (){
     
 }
@@ -133,6 +135,53 @@ void WebACL::createAccount (
 
 }
 
+
+/* G ----------------------------------------------------------------------- */
+
+
+std::vector<AccountData> WebACL::getAllAccounts ( void ){
+    DatabaseProxy database_proxy;
+    vector< vector<string> > sqlResult;
+    vector<AccountData> accounts;
+    
+    DEBUG std::endl;
+    sqlResult = database_proxy.sqlGet 
+    ( 
+            "SELECT \
+                id, \
+                login_name, \
+                real_name, \
+                password_hash, \
+                password_salt, \
+                email, \
+                account_disable  \
+            FROM a23t_account;"
+    );
+
+    for ( unsigned int i=0; i<sqlResult.size(); i++) {
+        DEBUG "push_back (" <<  i << "): " << sqlResult[i][0] << std::endl;
+        AccountData adata;
+        adata.setID ( sqlResult[i][0] );
+        adata.setLogin_name ( sqlResult[i][1] );
+        adata.setReal_name ( sqlResult[i][2] );
+        adata.setPassword_hash ( sqlResult[i][3] );
+        adata.setPassword_salt ( sqlResult[i][4] );
+        adata.setEmail ( sqlResult[i][5] );
+        DEBUG "account_disable (" <<  i << "): " << sqlResult[i][6] << std::endl;
+        if ( sqlResult[i][6] == "true" ) {
+            DEBUG "true" <<  std::endl;
+            adata.setAccount_disable ( true );
+        } else {
+            DEBUG "false" <<  std::endl;
+            adata.setAccount_disable ( false );
+        }
+        accounts.push_back ( adata );
+    }  
+    
+    
+    return accounts;
+}
+
 string WebACL::genRandomSalt ( const int len) {
     string randomString = "";
     static const char alphanum[] =
@@ -171,6 +220,9 @@ std::vector<std::string> WebACL::getRoll ( std::string user_name ){
     return rolls;
 }
 
+
+/* I ----------------------------------------------------------------------- */
+
 bool WebACL::isUserExist ( std::string user_name ){
     DEBUG "start..." << std::endl;
     vector< vector<string> > sqlResult;
@@ -190,6 +242,9 @@ bool WebACL::isUserExist ( std::string user_name ){
         return false;
     }
 }
+
+
+/* S ----------------------------------------------------------------------- */
 
 
 void WebACL::setPassword (  std::string user_name, std::string new_password ) {
