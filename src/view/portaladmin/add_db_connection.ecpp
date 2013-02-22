@@ -82,7 +82,7 @@
 <body>
     <& "header" &>
         <br />
-    <div id="groupbox">
+    <div id="innergroupbox">
 
         <h1>Neuen Datenbankverbindung anlegen</h1>
 

@@ -27,6 +27,7 @@ OBJECTS = \
 ./src/model/UserSession.o \
 ./src/model/WebACL.o\
 ./src/view/access_denied.o \
+./src/view/favicon.o \
 ./src/view/home.o \
 ./src/view/header.o \
 ./src/view/login.o \

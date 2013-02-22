@@ -91,6 +91,10 @@ div#mainbox{
     -moz-column-count: 2;
     -moz-column-gap: 2em;
     -webkit-column-count: 2;
+
+    box-shadow: 5px 5px 8px #B3B3B3;
+    -moz-box-shadow: 5px 5px 8px #B3B3B3;
+    -webkit-box-shadow: 5px 5px 8px #B3B3B3;
 }
 
 /* -------- Inner box -------------------------- */
@@ -104,6 +108,10 @@ div#innergroupbox{
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
+
+    box-shadow: 5px 5px 8px #B3B3B3;
+    -moz-box-shadow: 5px 5px 8px #B3B3B3;
+    -webkit-box-shadow: 5px 5px 8px #B3B3B3;
 }
 
 /* -------- small box (for dialogs) -------------------------- */
@@ -117,6 +125,10 @@ div#smallgroupbox{
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
+
+    box-shadow: 5px 5px 8px #B3B3B3;
+    -moz-box-shadow: 5px 5px 8px #B3B3B3;
+    -webkit-box-shadow: 5px 5px 8px #B3B3B3;
 }
 
 

@@ -5,6 +5,7 @@ TNTNET=/usr/bin/tntnet
 
 TMP_SOURCES =  \
 ./src/view/access_denied.cpp \
+./src/view/favicon.cpp \
 ./src/view/header.cpp \
 ./src/view/home.cpp \
 ./src/view/login.cpp \
@@ -17,6 +18,7 @@ TMP_SOURCES =  \
 
 OBJECTS =  \
 ./src/view/access_denied.o \
+./src/view/favicon.o \
 ./src/view/header.o \
 ./src/view/home.o \
 ./src/view/login.o \
@@ -40,6 +42,10 @@ dist: $(OBJECTS)
 	$(ECPPC) $<
 
 
+./src/view/favicon.cpp:
+	ecppc -b ./src/view/favicon.ico
+
+
 .SUFFIXES: .ecpp .gif .jpg .css .js .cpp
 
 
@@ -49,8 +55,8 @@ dist: $(OBJECTS)
 	${ECPPC} ${ECPPFLAGS} -m image/jpg ${ECPPFLAGS_JPG} -b -o $@ $<
 .png.cpp:
 	${ECPPC} ${ECPPFLAGS} -m image/png ${ECPPFLAGS_PNG} -b -o $@ $<
-.ico.cpp:
-	${ECPPC} ${ECPPFLAGS} -m image/x-icon ${ECPPFLAGS_ICO} -b -o $@ $<
+# .ico.cpp:
+# 	${ECPPC} ${ECPPFLAGS} -m image/x-icon ${ECPPFLAGS_ICO} -b -o $@ $<
 .css.cpp:
 	${ECPPC} ${ECPPFLAGS} -m text/css ${ECPPFLAGS_CSS} -b -o $@ $<
 .js.cpp:

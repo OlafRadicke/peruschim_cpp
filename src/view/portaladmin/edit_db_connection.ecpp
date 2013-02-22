@@ -36,6 +36,10 @@
     UserSession userSession;
 </%session>
 
+<%request>
+    std::string loadedTeamDataBaseID = "";
+</%request>
+
 <%cpp>
     // ACL Check
     if ( userSession.isInRole ( "admin" ) == false ) {
@@ -48,6 +52,17 @@
     std::vector<TeamDataBase> dataBaseList;
     std::string feedback = "";
     TeamDataBase teamDataBase;
+
+    // values sets
+    std::string value_account_name = "";
+    std::string value_server_name = "";
+    std::string value_database_name = "";
+    std::string value_port_no = "";
+    std::string value_db_encoding = "";
+    std::string value_db_user  = "";
+    std::string value_db_password  = "";
+    std::string value_db_sslmode = "";
+    std::string value_owner_id = "";
     
     
     // is button "Speichern" kicked?
@@ -83,6 +98,24 @@
     } else if ( load == "laden" ) {
         DEBUG "Daten laden..." << std::endl;
         DEBUG "database_id: " << database_id << std::endl;
+        accountDatas =  WebACL::getAllAccounts ( );  
+        dataBaseList = TeamDataBaseManager::getAllTeamDataBases ( );
+        for ( unsigned int i=0; i<dataBaseList.size(); i++) {
+            if ( dataBaseList[i].getAccount_id () == database_id ) {
+                loadedTeamDataBaseID = database_id;
+                value_account_name = dataBaseList[i].getAccount_name ();
+                value_server_name = dataBaseList[i].getServer_name ();
+                value_database_name = dataBaseList[i].getDatabase_name ();
+                value_port_no = dataBaseList[i].getPort_no ();
+                value_db_encoding = dataBaseList[i].getDB_encoding ();
+                value_db_user  = dataBaseList[i].getDB_user ();
+                value_db_password  = dataBaseList[i].getDB_password ();
+                value_db_sslmode = dataBaseList[i].getDB_sslmode ();
+                value_owner_id = dataBaseList[i].getOwner_id ();
+            }
+        }
+
+
     } else {
         accountDatas =  WebACL::getAllAccounts ( );  
         dataBaseList = TeamDataBaseManager::getAllTeamDataBases ( );
@@ -120,32 +153,31 @@
                 </select>
                 <input type="submit" name="load" value="laden">
             </p>
+            <p>Aktuel geladen und angezeigt wird die Verbindung mit der ID: <$ loadedTeamDataBaseID $> </p>
             <div id="innergroupbox">
                 <p>Verbindungsname*:<br><input 
                         name="account_name" 
                         type="text" 
                         size="40" 
                         maxlength="80" 
-                        required="required"></p>
+                        value="<$ value_account_name $>" ></p>
                 <p>Server-Name*:<br><input 
                         name="server_name" 
                         type="text" 
                         size="40" 
-                        maxlength="80" 
-                        required="required"></p>
+                        maxlength="80" ></p>
                 <p>Datenbank-Name*:<br><input 
                         name="database_name" 
                         type="text" 
                         size="40" 
-                        maxlength="80" 
-                        required="required"></p>
+                        maxlength="80" ></p>
                 <p>Port-Nummer*:<br><input 
                         name="port_no" 
                         type="number"   
                         size="8" 
                         min="0" 
                         max="9999" 
-                        value="5432" required="required"></p>
+                        value="5432" ></p>
                 <p>Encoding*:<br><input 
                         name="db_encoding" 
                         type="text" 
@@ -157,14 +189,12 @@
                         name="db_user" 
                         type="text" 
                         size="40" 
-                        maxlength="80" 
-                        required="required"></p>
+                        maxlength="80" ></p>
                 <p>Passwort*:<br><input 
                         name="db_password" 
                         type="text" 
                         size="40" 
-                        maxlength="80" 
-                        required="required"></p>
+                        maxlength="80" ></p>
                 <p>ssl-Mode*:<br>
                     <select name="db_sslmode" size="1">
                         <option value="true">true</option>
