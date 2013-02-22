@@ -102,7 +102,7 @@ div#innergroupbox{
     text-align: center;
     border-style: solid;
     border-color: #C3C3C3;
-    width: 90% ;
+    width: 70% ;
     padding: 20px;
     margin: auto;
     border-radius: 10px;
@@ -267,6 +267,46 @@ div.mainmenue li a span {
     display: block;
     margin: 0;
     padding: 0px;
+}
+
+/* ----- delete button ----------------------------------------------------- */
+
+input#delet_button {
+    color: #FFFFFF;
+    background: #FF0000;
+
+    -moz-border-radius-topright:5px;
+    -moz-border-radius-bottomright:5px;
+    -webkit-border-top-right-radius:5px;
+    -webkit-border-bottom-right-radius:5px;
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+    -moz-border-radius-topleft:5px;
+    -moz-border-radius-bottomleft:5px;
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-bottom-left-radius:5px;
+    border-top-left-radius:5px;
+    border-bottom-left-radius:5px;
+}
+
+/* ----- save button ----------------------------------------------------- */
+
+input#save_button {
+    color: #FFFFFF;
+    background: #008000;
+
+    -moz-border-radius-topright:5px;
+    -moz-border-radius-bottomright:5px;
+    -webkit-border-top-right-radius:5px;
+    -webkit-border-bottom-right-radius:5px;
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+    -moz-border-radius-topleft:5px;
+    -moz-border-radius-bottomleft:5px;
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-bottom-left-radius:5px;
+    border-top-left-radius:5px;
+    border-bottom-left-radius:5px;
 }
 
 </style>

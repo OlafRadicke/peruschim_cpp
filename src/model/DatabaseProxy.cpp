@@ -50,37 +50,26 @@ vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
     pqxx::connection pg_conn( conn_para );
     pqxx::work  pg_worker( pg_conn );
     pqxx::result res;
-    
-    DEBUG endl ;    
     unsigned int     row_count;
     unsigned int     col_count;
     vector<string>   list_1d;
     vector< vector<string> >  list_2d;
-
-    DEBUG  endl;
-    
     res = pg_worker.exec( sqlcommand );         
-        
-    DEBUG  endl;
     pg_worker.commit();
-    DEBUG " found: " << res.size() << endl;
-    DEBUG  endl;
+//     DEBUG " found: " << res.size() << endl;
     
     for (row_count=0; row_count < res.size(); row_count++) {
-        DEBUG "row nr.:" << row_count  << endl;
+//         DEBUG "row nr.:" << row_count  << endl;
         for (col_count=0; col_count < res[row_count].size(); col_count++) {
-            DEBUG "col nr.:" << col_count  << endl;
-            DEBUG "value:" << res[row_count][col_count].as<string>() << "\t"  << endl;
+//             DEBUG "col nr.:" << col_count  << endl;
+//             DEBUG "value:" << res[row_count][col_count].as<string>() << "\t"  << endl;
             list_1d.push_back ( res[row_count][col_count].as<string>() );
         }
-        DEBUG "end of loop" << endl;
         list_2d.push_back ( list_1d );
         list_1d.clear();
     }    
-    DEBUG  endl;
     
     pg_conn.disconnect();
-    DEBUG  endl;
     return list_2d;
     
 }

@@ -38,8 +38,8 @@
     };
     DEBUG "Autorisiert!!" << std::endl;
     
-    // is button "create" kicked?
-    if ( create == "kicked" ) {
+    // is button "create" Speichern?
+    if ( create == "Speichern" ) {
     
         // check equal of new password.
         if ( password_a != password_b ) {
@@ -76,7 +76,9 @@
 </head>
 <body>
     <& "header" &>
-        <br />
+    <br />
+    <& "mainmenu" &>
+    <br />
     <div id="innergroupbox">
         
         <h1>Neuen Account anlegen</h1>
@@ -91,7 +93,7 @@
             <p>E-Mail-Adresse:<br><input name="mail" type="text" size="40" maxlength="80"></p>
             <p>Passwort*:<br><input name="password_a" type="password" size="40" maxlength="40"></p>
             <p>Passwort*:<br><input name="password_b" type="password" size="40" maxlength="40"></p>
-            <p><input type="submit" name="create" value="kicked"></p>
+            <p><input id="save_button" type="submit" name="create" value="Speichern"></p>
         </form>
     </div>
 </body>

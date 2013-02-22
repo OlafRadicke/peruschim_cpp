@@ -81,7 +81,9 @@
 </head>
 <body>
     <& "header" &>
-        <br />
+    <br />
+    <& "mainmenu" &>
+    <br />
     <div id="innergroupbox">
 
         <h1>Neuen Datenbankverbindung anlegen</h1>
@@ -152,7 +154,7 @@
 %               }
                 </select>
                 </p>
-            <p><input type="submit" name="create" value="Erstellen"></p>
+            <p><input id="save_button" type="submit" name="create" value="Erstellen"></p>
         </form>
 
 % }

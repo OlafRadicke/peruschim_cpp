@@ -28,7 +28,11 @@ public:
         m_owner_id ( "" )
     {};
     
-    void saveConnection ( void );
+    
+    /**
+     * Delete data set in the data base (by id).
+     **/ 
+    void deleteConnection ( void );    
     
     void setAccount_id ( std::string id ) { m_account_id = id; };
     std::string getAccount_id ( void ) { return m_account_id; };
@@ -59,6 +63,17 @@ public:
     
     void setOwner_id ( std::string owner_id ) { m_owner_id = owner_id; };
     std::string getOwner_id ( void ) { return m_owner_id; };
+    
+
+    /**
+     * Save data set as new record in the data base.
+     **/ 
+    void saveConnection ( void );     
+    
+    /**
+     * Make a update from the data set record in the data base.
+     **/ 
+    void saveChanges ( void );   
     
 private:
     

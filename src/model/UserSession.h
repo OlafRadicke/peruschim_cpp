@@ -52,6 +52,12 @@ public:
         m_username = username;
     };
     
+    /**
+     * Get back the user login name.
+     * @return login name.
+     **/            
+    std::string getUserName ( void ) { return m_username; };
+    
 private:
     
     /**

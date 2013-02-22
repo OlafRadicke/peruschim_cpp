@@ -1,8 +1,9 @@
 <%pre>
-    // put your includes here
-    // #include "foo.h"
-    #include "../model/WebACL.h"
-    #include "../model/UserSession.h"
+
+    #include <vector>
+    #include <string>
+    #include "../../model/WebACL.h"
+    #include "../../model/UserSession.h"
 
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -24,14 +25,17 @@
 
 
     // ACL Check
-    bool check = userSession.isInRole ( "admin" );
+    std::vector<std::string> allowedSiteRolls;
+    allowedSiteRolls.push_back ( "admin" );
+    allowedSiteRolls.push_back ( "provider" );
+    bool check = userSession.isInRole ( allowedSiteRolls );
     DEBUG "check: " << check << std::endl;
-    if ( userSession.isInRole ( "admin" ) == false ) {
+    if ( userSession.isInRole ( allowedSiteRolls ) == false ) {
         DEBUG "Nicht autorisiert!!" << std::endl;
-        return reply.redirect ( "/login" );
+        return reply.redirect ( "/access_denied" );
     };
     DEBUG "Autorisiert!!" << std::endl;
-    std::string userName  = userSession.getUserName();
+
 
 </%cpp>
 
@@ -47,17 +51,24 @@
 
     <div class="mainmenue">
         <ul>
-            <li class="tableft_activ"><a href="home">Home</a></li>
+            <li class="tableft"><a href="home">Home</a></li>
             <li class="tabmiddle"><a href="sucherportal">Sucherportal</a></li>
-            <li class="tabmiddle"><a href="portalprovider">Anbieterportal</a></li>
+            <li class="tabmiddle_activ"><a href="portalprovider">Anbieterportal</a></li>
             <li class="tabmiddle"><a href="vermittlerportal">Vermittlerportal</a></li>
             <li class="tabmiddle"><a href="portaladmin">Adminportal</a></li>
             <li class="tabright"><a href="logout">Abmelden</a></li>
         <ul>
     </div>
-    <br />
-    <div id="smallgroupbox">
-            <h2>Herzlich willkommen <$ userName $></h2>
+
+    <div id="mainbox">
+        <ul>
+            <li><b>Suchen</b>
+            <ul>
+                <li><a href="search_seeker"><b>Personaldatenbank durchsuchen:</b></a> Datenbank nach geeignetem Personal durchsuchen.</li>        
+            </ul>
+        </ul>
+
     </div>
+
 </body>
 </html>

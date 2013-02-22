@@ -32,10 +32,12 @@ OBJECTS = \
 ./src/view/header.o \
 ./src/view/login.o \
 ./src/view/logout.o \
+./src/view/mainmenu.o \
 ./src/view/portaladmin/add_db_connection.o  \
 ./src/view/portaladmin/edit_db_connection.o  \
 ./src/view/portaladmin/newaccont.o  \
 ./src/view/portaladmin/portaladmin.o \
+./src/view/portalprovider/portalprovider.o \
 ./src/view/style.o
 
 clean:

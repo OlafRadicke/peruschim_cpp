@@ -36,9 +36,9 @@
     UserSession userSession;
 </%session>
 
-<%request>
+<%session scope="page">
     std::string loadedTeamDataBaseID = "";
-</%request>
+</%session>
 
 <%cpp>
     // ACL Check
@@ -67,32 +67,42 @@
     
     // is button "Speichern" kicked?
     if ( save == "Speichern" ) {
-        DEBUG "account_name: " << account_name << std::endl;
-        teamDataBase.setAccount_name ( account_name );
-        DEBUG "server_name: " << server_name << std::endl;
-        teamDataBase.setServer_name ( server_name );
-        DEBUG "database_name: " << database_name << std::endl;
-        teamDataBase.setDatabase_name ( database_name );
-        DEBUG "port_no: " << port_no << std::endl;
-        teamDataBase.setPort_no ( port_no );
-        DEBUG "db_encoding: " << db_encoding << std::endl;
-        teamDataBase.setDB_encoding ( db_encoding );
-        DEBUG "db_user: " << db_user << std::endl;
-        teamDataBase.setDB_user ( db_user );
-        DEBUG "db_password: " << db_password << std::endl;
-        teamDataBase.setDB_password ( db_password );
-        DEBUG "db_sslmode: " << db_sslmode << std::endl;
-        teamDataBase.setDB_sslmode ( db_sslmode );
-        DEBUG "owner_id: " << owner_id << std::endl;
-        teamDataBase.setOwner_id ( owner_id );
-        
-        teamDataBase.saveConnection ( );
-        feedback = "Datenbankverbindung wurde gespeichert!";
-
-    // is button "Speichern" kicked?
+        DEBUG "loadedTeamDataBaseID: " << loadedTeamDataBaseID << std::endl;
+        if ( loadedTeamDataBaseID == "" ) {
+            feedback = "Datenbankverbindung wurde NICHT gespeichert! Es wurde kein Datensatz ausgewählt.";
+        } else {
+            teamDataBase.setAccount_id ( loadedTeamDataBaseID );
+            DEBUG "account_name: " << account_name << std::endl;
+            teamDataBase.setAccount_name ( account_name );
+            DEBUG "server_name: " << server_name << std::endl;
+            teamDataBase.setServer_name ( server_name );
+            DEBUG "database_name: " << database_name << std::endl;
+            teamDataBase.setDatabase_name ( database_name );
+            DEBUG "port_no: " << port_no << std::endl;
+            teamDataBase.setPort_no ( port_no );
+            DEBUG "db_encoding: " << db_encoding << std::endl;
+            teamDataBase.setDB_encoding ( db_encoding );
+            DEBUG "db_user: " << db_user << std::endl;
+            teamDataBase.setDB_user ( db_user );
+            DEBUG "db_password: " << db_password << std::endl;
+            teamDataBase.setDB_password ( db_password );
+            DEBUG "db_sslmode: " << db_sslmode << std::endl;
+            teamDataBase.setDB_sslmode ( db_sslmode );
+            DEBUG "owner_id: " << owner_id << std::endl;
+            teamDataBase.setOwner_id ( owner_id );
+            
+            teamDataBase.saveChanges ( );
+            feedback = "Datenbankverbindung wurde gespeichert!";
+        }
+    // is button "Löschen" kicked?
     } else if ( delet == "Löschen" ) {
         DEBUG "Daten löschen..." << std::endl;
-        DEBUG "account_name: " << account_name << std::endl;
+        DEBUG "account_name: " << account_name << loadedTeamDataBaseID << std::endl;
+        teamDataBase.setAccount_id ( loadedTeamDataBaseID );
+        teamDataBase.deleteConnection ( );
+        feedback = "Datenbankverbindung wurde " + account_name + " mit der ID " ;
+        feedback += loadedTeamDataBaseID + " wurde gelöscht.";
+
 
     // is button "laden" kicked?
     } else if ( load == "laden" ) {
@@ -111,6 +121,7 @@
                 value_db_user  = dataBaseList[i].getDB_user ();
                 value_db_password  = dataBaseList[i].getDB_password ();
                 value_db_sslmode = dataBaseList[i].getDB_sslmode ();
+                DEBUG "value_db_sslmode: " << value_db_sslmode << std::endl;
                 value_owner_id = dataBaseList[i].getOwner_id ();
             }
         }
@@ -132,7 +143,10 @@
 </head>
 <body>
     <& "header" &>
-        <br />
+    <br />
+    <& "mainmenu" &>
+    <br />
+
     <div id="innergroupbox">
 
         <h1>Neuen Datenbankverbindung anlegen</h1>
@@ -146,7 +160,8 @@
 % } else {
         <form method="post" >
             <p>Verbindung zum bearbeiten auswählen: 
-                <select name="database_id" size="1">
+                <select name="database_id" 
+                        size="1" >
 %                   for ( unsigned int i=0; i<dataBaseList.size(); i++) {
                     <option value="<$  dataBaseList[i].getAccount_id() $>"><$ dataBaseList[i].getAccount_name() $></option>
 %                   }
@@ -165,50 +180,66 @@
                         name="server_name" 
                         type="text" 
                         size="40" 
-                        maxlength="80" ></p>
+                        maxlength="80" 
+                        value="<$ value_server_name $>" ></p>
                 <p>Datenbank-Name*:<br><input 
                         name="database_name" 
                         type="text" 
                         size="40" 
-                        maxlength="80" ></p>
+                        maxlength="80"
+                        value="<$ value_database_name $>" ></p>
                 <p>Port-Nummer*:<br><input 
                         name="port_no" 
                         type="number"   
                         size="8" 
                         min="0" 
                         max="9999" 
-                        value="5432" ></p>
+                        value="5432" 
+                        value="<$ value_port_no $>" ></p>
                 <p>Encoding*:<br><input 
                         name="db_encoding" 
                         type="text" 
                         size="15" 
                         maxlength="15" 
                         value="UNICODE" 
-                        required="required"></p>
+                        required="required"
+                        value="<$ value_db_encoding $>" ></p>
                 <p>Datenbank-User-Name*:<br><input 
                         name="db_user" 
                         type="text" 
                         size="40" 
-                        maxlength="80" ></p>
+                        maxlength="80" 
+                        value="<$ value_db_user $>"></p>
                 <p>Passwort*:<br><input 
                         name="db_password" 
                         type="text" 
                         size="40" 
-                        maxlength="80" ></p>
+                        maxlength="80" 
+                        value="<$ value_db_password $>" ></p>
                 <p>ssl-Mode*:<br>
                     <select name="db_sslmode" size="1">
-                        <option value="true">true</option>
+% if ( value_db_sslmode == "true" ) {
+                        <option selected value="true">true</option>
                         <option value="false">false</option>
+% } else {
+                        <option value="true">true</option>
+                        <option selected value="false">false</option>
+
+%}
                     </select>
                     </p>
                 <p>Eigentümer der Verbindung*:<br>
                     <select name="owner_id" size="1">
 %                   for ( unsigned int i=0; i<accountDatas.size(); i++) {
-                        <option value="<$  accountDatas[i].getID() $>"><$ accountDatas[i].getLogin_name() $></option>
+%                       if ( owner_id == accountDatas[i].getID() ) {
+                            <option selected value="<$  accountDatas[i].getID() $>"><$ accountDatas[i].getLogin_name() $></option>
+%                       } else {
+                            <option value="<$  accountDatas[i].getID() $>"><$ accountDatas[i].getLogin_name() $></option>
+%                       }
 %                   }
                     </select>
                     </p>
-                <p><input type="submit" name="save" value="Speichern"> <input type="submit" name="delet" value="Löschen"></p>
+                <p><input id="save_button" type="submit" name="save" value="Speichern"> <input id="delet_button" type="submit" name="delet" value="Löschen"></p>
             </form>
         <div id="groupbox">
 % }
