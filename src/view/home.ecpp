@@ -56,10 +56,10 @@
             <li class="tabmiddle"><a href="vermittlerportal">Vermittlerportal</a></li>
             <li class="tabmiddle"><a href="portaladmin">Adminportal</a></li>
             <li class="tabright"><a href="logout">Abmelden</a></li>
-        <ul>
+        </ul>
     </div>
     <br />
-    <div id="smallgroupbox">
+    <div class="smallgroupbox">
             <h2>Herzlich willkommen <$ userName $></h2>
     </div>
 </body>

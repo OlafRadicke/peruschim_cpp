@@ -59,17 +59,19 @@
         </ul>
     </div>
 
-    <div id="mainbox">
+    <div class="mainbox">
         <ul>
             <li><b>Portal-Accounts</b>
-            <ul>
-                <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Account für das Webportal anlegen.</li>        
-            </ul>
-            <li><b>Projekt- bzw. Datenbank-Accounts</b></li>
-            <ul>
-                <li><a href="add_db_connection"><b>Datenbank-Verbindung hinzufügen:</b></a> Einen Datenbank-Account einrichten, um sich mit einem Projekt zu verbinden.</li>
-                <li><a href="edit_db_connection"><b>Datenbank-Verbindung bearbeiten und löschen:</b></a> Hier können Datenbank-Vergindung bearbeiten oder löschen werden. Gelöscht wird aber nicht die Team-Datenbank selbst.</li>
-            </ul>
+                <ul>
+                    <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Account für das Webportal anlegen.</li>        
+                </ul>
+            </li>
+            <li><b>Projekt- bzw. Datenbank-Accounts</b>
+                <ul>
+                    <li><a href="add_db_connection"><b>Datenbank-Verbindung hinzufügen:</b></a> Einen Datenbank-Account einrichten, um sich mit einem Projekt zu verbinden.</li>
+                    <li><a href="edit_db_connection"><b>Datenbank-Verbindung bearbeiten und löschen:</b></a> Hier können Datenbank-Vergindung bearbeiten oder löschen werden. Gelöscht wird aber nicht die Team-Datenbank selbst.</li>
+                </ul>
+            </li>
         </ul>
 
     </div>

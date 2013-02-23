@@ -120,7 +120,6 @@
             <p>Port-Nummer*:<br><input 
                     name="port_no" 
                     type="number"   
-                    size="8" 
                     min="0" 
                     max="9999" 
                     value="5432" required="required"></p>

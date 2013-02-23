@@ -49,7 +49,7 @@
     <br />
     <& "mainmenu" &>
     <br />
-    <div id="innergroupbox">
+    <div class="innergroupbox">
         
         <h1>Personaldatenbank</h1>
 

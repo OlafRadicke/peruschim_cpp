@@ -26,7 +26,7 @@
 
     <& "header" &>
     <br />
-    <div id="smallgroupbox">
+    <div class="smallgroupbox">
         <form method="post" >
             <h2>Zugriff verweigert!</h2>
             <p>Sie haben keine ausreichenden Rechte oder sind nicht angemeldet.</p>

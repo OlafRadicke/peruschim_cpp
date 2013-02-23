@@ -60,7 +60,7 @@
         </ul>
     </div>
 
-    <div id="mainbox">
+    <div class="mainbox">
         <ul>
             <li><b>Suchen</b>
             <ul>

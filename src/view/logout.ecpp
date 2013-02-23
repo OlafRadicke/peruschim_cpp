@@ -40,7 +40,7 @@
 
     <& "header" &>
     <br />
-    <div id="smallgroupbox">
+    <div class="smallgroupbox">
         <form method="post" >
             <h2>Logout</h2>
             <p>Sie sind jetzt ausgelogt!</p>

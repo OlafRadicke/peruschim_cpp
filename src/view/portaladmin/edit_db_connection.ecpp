@@ -57,7 +57,7 @@
     std::string value_account_name = "";
     std::string value_server_name = "";
     std::string value_database_name = "";
-    std::string value_port_no = "";
+    std::string value_port_no = "0";
     std::string value_db_encoding = "";
     std::string value_db_user  = "";
     std::string value_db_password  = "";
@@ -150,13 +150,13 @@
     <& "mainmenu" &>
     <br />
 
-    <div id="innergroupbox">
+    <div class="innergroupbox">
 
         <h1>Neuen Datenbankverbindung anlegen</h1>
 
 % if ( feedback != "" ) {
 
-        <div id="feedback-box">
+        <div class="feedback-box">
             <b><$ feedback $> </b>
         </div>
 
@@ -165,14 +165,14 @@
             <p>Verbindung zum bearbeiten auswählen: 
                 <select name="database_id" 
                         size="1" >
-%                   for ( unsigned int i=0; i<dataBaseList.size(); i++) {
+%               for ( unsigned int i=0; i<dataBaseList.size(); i++) {
                     <option value="<$  dataBaseList[i].getAccount_id() $>"><$ dataBaseList[i].getAccount_name() $></option>
-%                   }
+%               }
                 </select>
                 <input type="submit" name="load" value="laden">
             </p>
             <p>Aktuel geladen und angezeigt wird die Verbindung mit der ID: <$ loadedTeamDataBaseID $> </p>
-            <div id="innergroupbox">
+            <div class="innergroupbox">
                 <p>Verbindungsname*:<br><input 
                         name="account_name" 
                         type="text" 
@@ -194,17 +194,14 @@
                 <p>Port-Nummer*:<br><input 
                         name="port_no" 
                         type="number"   
-                        size="8" 
                         min="0" 
                         max="9999" 
-                        value="5432" 
                         value="<$ value_port_no $>" ></p>
                 <p>Encoding*:<br><input 
                         name="db_encoding" 
                         type="text" 
                         size="15" 
                         maxlength="15" 
-                        value="UNICODE" 
                         required="required"
                         value="<$ value_db_encoding $>" ></p>
                 <p>Datenbank-User-Name*:<br><input 
@@ -221,14 +218,13 @@
                         value="<$ value_db_password $>" ></p>
                 <p>ssl-Mode*:<br>
                     <select name="db_sslmode" size="1">
-% if ( value_db_sslmode == "true" ) {
+%                   if ( value_db_sslmode == "true" ) {
                         <option selected value="true">true</option>
                         <option value="false">false</option>
-% } else {
+%                   } else {
                         <option value="true">true</option>
                         <option selected value="false">false</option>
-
-%}
+%                   }
                     </select>
                     </p>
                 <p>Eigentümer der Verbindung*:<br>
@@ -243,8 +239,8 @@
                     </select>
                     </p>
                 <p><input id="save_button" type="submit" name="save" value="Speichern"> <input id="delet_button" type="submit" name="delet" value="Löschen"></p>
-            </form>
-        <div id="groupbox">
+            </div>
+        </form>
 % }
     </div>
 </body>

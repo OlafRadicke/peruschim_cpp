@@ -75,7 +75,7 @@ div#header-logo h1 {
 }
 
 /* -------- Main box (with 2 columns) -------------------------- */
-div#mainbox{
+div.mainbox{
 /*    text-align: center; */
     border-style: solid;
     border-color: #C3C3C3;
@@ -98,7 +98,7 @@ div#mainbox{
 }
 
 /* -------- Inner box -------------------------- */
-div#innergroupbox{
+div.innergroupbox{
     text-align: center;
     border-style: solid;
     border-color: #C3C3C3;
@@ -115,7 +115,7 @@ div#innergroupbox{
 }
 
 /* -------- small box (for dialogs) -------------------------- */
-div#smallgroupbox{
+div.smallgroupbox{
     text-align: center;
     border-style: solid;
     border-color: #C3C3C3;
@@ -134,7 +134,7 @@ div#smallgroupbox{
 
 /* -------- feedback box -------------------------- */
 
-div#feedback-box{
+div.feedback-box{
     background-color: #FFF34B;
     text-align: center;
     border-style: solid;

@@ -46,7 +46,7 @@
 
     <& "header" &>
     <br />
-    <div id="smallgroupbox">
+    <div class="smallgroupbox">
         <form method="post" >
             <h2>Login:</h2>
             <p>Benutzer:<br><input name="name" type="text" size="40" maxlength="40"></p>

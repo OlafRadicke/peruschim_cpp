@@ -83,11 +83,11 @@
     <br />
     <& "mainmenu" &>
     <br />
-    <div id="innergroupbox">
+    <div class="innergroupbox">
         
         <h1>Neuen Account anlegen</h1>
 %       if ( feedback != "" ) {
-        <div id="feedback-box">
+        <div class="feedback-box">
             <b><$ feedback $> </b>
         </div>
 %       }
