@@ -14,9 +14,12 @@
 
 </%cpp>
 
+
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>Artike23t: Kein Zugriff</title>
+    <meta charset = "UTF-8" />
     <& "style" &>
 </head>
 <body>

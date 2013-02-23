@@ -100,7 +100,7 @@
         DEBUG "account_name: " << account_name << loadedTeamDataBaseID << std::endl;
         teamDataBase.setAccount_id ( loadedTeamDataBaseID );
         teamDataBase.deleteConnection ( );
-        feedback = "Datenbankverbindung wurde " + account_name + " mit der ID " ;
+        feedback = "Datenbankverbindung wurde \"" + account_name + "\" mit der ID " ;
         feedback += loadedTeamDataBaseID + " wurde gelöscht.";
 
 
@@ -136,9 +136,12 @@
 
 </%cpp>
 
+
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>Neuen Datenbankverbindung anlegen</title>
+    <meta charset = "UTF-8" />
     <& "style" &>
 </head>
 <body>

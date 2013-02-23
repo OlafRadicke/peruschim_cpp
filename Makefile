@@ -37,6 +37,7 @@ OBJECTS = \
 ./src/view/portaladmin/edit_db_connection.o  \
 ./src/view/portaladmin/newaccont.o  \
 ./src/view/portaladmin/portaladmin.o \
+./src/view/portalprovider/anonymous_seeker_list.o \
 ./src/view/portalprovider/portalprovider.o \
 ./src/view/style.o
 

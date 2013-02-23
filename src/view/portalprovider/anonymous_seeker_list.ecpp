@@ -1,7 +1,7 @@
 <%pre>
-
-    #include <vector>
-    #include <string>
+    // put your includes here
+    // #include "foo.h"
+    #include <iostream>
     #include "../../model/WebACL.h"
     #include "../../model/UserSession.h"
 
@@ -14,14 +14,12 @@
 
 <%args>
 </%args>
-
 <%session scope="global">
-    // define your session scope variables here
-    // std::string mySessionState;
     UserSession userSession;
 </%session>
 
 <%cpp>
+    
     // ACL Check
     std::vector<std::string> allowedSiteRolls;
     allowedSiteRolls.push_back ( "admin" );
@@ -35,40 +33,42 @@
     DEBUG "Autorisiert!!" << std::endl;
 
 
+    
+
 </%cpp>
 
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Home Artike23t</title>
+    <title>Liste der Personaldatenbank</title>
     <meta charset = "UTF-8" />
     <& "style" &>
 </head>
 <body>
-
     <& "header" &>
     <br />
+    <& "mainmenu" &>
+    <br />
+    <div id="innergroupbox">
+        
+        <h1>Personaldatenbank</h1>
 
-    <div class="mainmenue">
-        <ul>
-            <li class="tableft"><a href="home">Home</a></li>
-            <li class="tabmiddle"><a href="sucherportal">Sucherportal</a></li>
-            <li class="tabmiddle_activ"><a href="portalprovider">Anbieterportal</a></li>
-            <li class="tabmiddle"><a href="vermittlerportal">Vermittlerportal</a></li>
-            <li class="tabmiddle"><a href="portaladmin">Adminportal</a></li>
-            <li class="tabright"><a href="logout">Abmelden</a></li>
-        </ul>
+
+        <table>
+            <tr>
+                <th>eins</th><th>zwei</th><th>drei</th>
+            </tr>
+            <tr>
+                <td>1</td><td>3</td><td>3</td>
+            </tr>
+            <tr>
+                <td>A</td><td>B</td><td>C</td>
+            </tr>
+            <tr>
+                <td>ä</td><td>ü</td><td>ö</td>
+            </tr>
+        </table>
+
     </div>
-
-    <div id="mainbox">
-        <ul>
-            <li><b>Suchen</b>
-            <ul>
-                <li><a href="anonymous_seeker_list"><b>Personaldatenbank durchsuchen:</b></a> Datenbank nach geeignetem Personal durchsuchen.</li>        
-            </ul>
-        </ul>
-
-    </div>
-
 </body>
 </html>

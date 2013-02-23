@@ -69,9 +69,13 @@
 
 </%cpp>
 
+
+
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>Neuen Account anlegen</title>
+    <meta charset = "UTF-8" />
     <& "style" &>
 </head>
 <body>

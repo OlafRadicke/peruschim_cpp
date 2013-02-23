@@ -33,9 +33,13 @@
     };
 </%cpp>
 
+
+
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>Login Artike23t</title>
+    <meta charset = "UTF-8" />
     <& "style" &>
 </head>
 <body>

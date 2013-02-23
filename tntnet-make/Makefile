@@ -15,6 +15,7 @@ TMP_SOURCES =  \
 ./src/view/portaladmin/edit_db_connection.cpp  \
 ./src/view/portaladmin/newaccont.cpp  \
 ./src/view/portaladmin/portaladmin.cpp \
+./src/view/portalprovider/anonymous_seeker_list.cpp \
 ./src/view/portalprovider/portalprovider.cpp \
 ./src/view/style.cpp
 
@@ -30,6 +31,7 @@ OBJECTS =  \
 ./src/view/portaladmin/edit_db_connection.o  \
 ./src/view/portaladmin/newaccont.o \
 ./src/view/portaladmin/portaladmin.o \
+./src/view/portalprovider/anonymous_seeker_list.o \
 ./src/view/portalprovider/portalprovider.o \
 ./src/view/style.o
 

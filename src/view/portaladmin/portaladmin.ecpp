@@ -35,9 +35,12 @@
 
 </%cpp>
 
+
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>Home Artike23t</title>
+    <meta charset = "UTF-8" />
     <& "style" &>
 </head>
 <body>
@@ -53,7 +56,7 @@
             <li class="tabmiddle"><a href="vermittlerportal">Vermittlerportal</a></li>
             <li class="tabmiddle_activ"><a href="portaladmin">Adminportal</a></li>
             <li class="tabright"><a href="logout">Abmelden</a></li>
-        <ul>
+        </ul>
     </div>
 
     <div id="mainbox">
