@@ -3,6 +3,10 @@
     // #include "foo.h"
     #include <iostream>
     #include "../../model/WebACL.h"
+    #include "../../model/SeekerData.h"
+    #include "../../model/SeekerManager.h"
+    #include "../../model/TeamDataBase.h"
+    #include "../../model/TeamDataBaseManager.h"
     #include "../../model/UserSession.h"
 
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -20,6 +24,9 @@
 
 <%cpp>
     
+    std::vector<TeamDataBase> dataBaseList;
+    std::vector<SeekerData> seekerList;
+
     // ACL Check
     std::vector<std::string> allowedSiteRolls;
     allowedSiteRolls.push_back ( "admin" );
@@ -32,7 +39,9 @@
     };
     DEBUG "Autorisiert!!" << std::endl;
 
-
+    
+    dataBaseList = TeamDataBaseManager::getAllTeamDataBases ( userSession.getUserName () );
+    seekerList = SeekerManager::getAllSeekers ( dataBaseList );
     
 
 </%cpp>
@@ -56,17 +65,13 @@
 
         <table>
             <tr>
-                <th>eins</th><th>zwei</th><th>drei</th>
+                <th>Datenbank</th><th>ID-Nr</th><th>drei</th>
             </tr>
-            <tr>
-                <td>1</td><td>3</td><td>3</td>
-            </tr>
-            <tr>
-                <td>A</td><td>B</td><td>C</td>
-            </tr>
-            <tr>
-                <td>ä</td><td>ü</td><td>ö</td>
-            </tr>
+%           for ( unsigned int i=0; i<seekerList.size(); i++ ) {
+                <tr>
+                    <td><$ ( seekerList[i].getTeamDataBase ().getAccount_id ( ) )  $></td><td><$ ( seekerList[i].getSeeker_no () ) $></td><td>???</td>
+                </tr>
+%           }
         </table>
 
     </div>

@@ -557,7 +557,7 @@ COMMENT ON COLUMN a23_request.offer_id
 IS 'Das Angebot, auf das sich der Kontakt bezieht.';
 
 CREATE TABLE a23_seeker (
-    seeker_no       text,
+    seeker_no           text,
     seeker_id           integer                             NOT NULL,
     name                text                                NOT NULL,
     street              text    DEFAULT ''::text            NOT NULL,
@@ -568,7 +568,7 @@ CREATE TABLE a23_seeker (
     salutation          text    DEFAULT ''::text            NOT NULL,
     joining             date    DEFAULT DATE'now'           NOT NULL,
     priority            integer DEFAULT 50                  NOT NULL,
-    note               text    DEFAULT ''::text            NOT NULL,
+    note                text    DEFAULT ''::text            NOT NULL,
     address_addition    text    DEFAULT ''::text            NOT NULL
 );
 

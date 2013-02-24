@@ -22,6 +22,8 @@ OBJECTS = \
 ./src/model/AccountData.o \
 ./src/model/Config.o \
 ./src/model/DatabaseProxy.o \
+./src/model/SeekerData.o \
+./src/model/SeekerManager.o \
 ./src/model/TeamDataBase.o \
 ./src/model/TeamDataBaseManager.o \
 ./src/model/UserSession.o \

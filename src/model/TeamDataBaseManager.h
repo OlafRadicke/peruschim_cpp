@@ -26,10 +26,10 @@ public:
 
     /**
      * Get back all team data base data of a owner.
-     * @param accountID id of owner.
+     * @param account_name account name of owner.
      * @return list of all account datas.
      **/     
-    static std::vector<TeamDataBase> getAllTeamDataBases ( std::string accountID );    
+    static std::vector<TeamDataBase> getAllTeamDataBases ( std::string account_name );    
     
 private:
     

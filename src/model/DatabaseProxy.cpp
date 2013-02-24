@@ -15,26 +15,45 @@ DatabaseProxy::DatabaseProxy( ) :
     m_sqlQuotas ("'") 
 {      
     DEBUG "========== init begin ========== \n" ;
-//     Config config;
-    m_config = new Config();
-    m_pg_db_name = m_config->get( "DB-NAME" );
+    Config config;
+//     m_config = new Config();
+    m_pg_db_name = config.get( "DB-NAME" );
+    m_pg_db_host = config.get( "DB-HOST" ); 
+    m_pg_db_user = config.get( "DB-USER" ); 
+    m_pg_db_passwd = config.get( "DB-PASSWD" ); 
+    m_pg_db_port = config.get( "DB-PORT" ); 
     DEBUG "m_pg_db_name: " << m_pg_db_name << endl ;
-    m_pg_db_host = m_config->get( "DB-HOST" ); 
     DEBUG "m_pg_db_host: " << m_pg_db_host << endl;
-    m_pg_db_user = m_config->get( "DB-USER" ); 
     DEBUG "m_pg_db_user: " << m_pg_db_user << endl;
-    m_pg_db_passwd = m_config->get( "DB-PASSWD" ); 
     DEBUG "m_pg_db_passwd: " << m_pg_db_passwd << endl;
-    m_pg_db_port = m_config->get( "DB-PORT" ); 
     DEBUG "m_pg_db_passwd: " << m_pg_db_port << endl;
     
     DEBUG "========== init end ==========" << endl;
 
 }
 
+
+DatabaseProxy::DatabaseProxy( TeamDataBase team_db ){      
+    DEBUG "========== init begin ========== \n" ;
+
+    m_pg_db_name = team_db.getDatabase_name ();
+    m_pg_db_host = team_db.getServer_name (); 
+    m_pg_db_user = team_db.getDB_user (); 
+    m_pg_db_passwd = team_db.getDB_password (); 
+    m_pg_db_port =  team_db.getPort_no (); 
+    
+    DEBUG "m_pg_db_name: " << m_pg_db_name << endl ;
+    DEBUG "m_pg_db_host: " << m_pg_db_host << endl;
+    DEBUG "m_pg_db_user: " << m_pg_db_user << endl;
+    DEBUG "m_pg_db_passwd: " << m_pg_db_passwd << endl;
+    DEBUG "m_pg_db_passwd: " << m_pg_db_port << endl;
+    
+    DEBUG "========== init end ==========" << endl;
+}
+
 DatabaseProxy::~DatabaseProxy() {
     DEBUG "========== destructor begin =========="  << endl;
-    delete m_config;
+//     delete m_config;
     DEBUG "========== destructor end =========="  << endl;
     
 }

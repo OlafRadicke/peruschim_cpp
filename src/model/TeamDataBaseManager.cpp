@@ -45,7 +45,7 @@ std::vector<TeamDataBase> TeamDataBaseManager::getAllTeamDataBases ( void ) {
 }
 
 
-std::vector<TeamDataBase> TeamDataBaseManager::getAllTeamDataBases (  std::string accountID  ) {
+std::vector<TeamDataBase> TeamDataBaseManager::getAllTeamDataBases (  std::string account_name  ) {
     
     DatabaseProxy database_proxy;
     vector< vector<string> > sqlResult;
@@ -66,7 +66,10 @@ std::vector<TeamDataBase> TeamDataBaseManager::getAllTeamDataBases (  std::strin
                 db_sslmode, \
                 owner_id  \
             FROM db_account \
-            WHERE owner_id=" + DatabaseProxy::replace( accountID ) + " ;"
+            WHERE owner_id=( \
+                SELECT account_id FROM db_account \
+                WHERE account_name='" + DatabaseProxy::replace( account_name ) + "' \
+                );"
     );
 
     for ( unsigned int i=0; i<sqlResult.size(); i++) {

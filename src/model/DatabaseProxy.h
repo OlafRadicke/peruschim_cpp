@@ -7,6 +7,7 @@
 #include <pqxx/pqxx>
 
 #include "Config.h"
+#include "TeamDataBase.h"
 
 using namespace std;
  
@@ -16,8 +17,16 @@ public:
 
     string m_dbbackent;
     
+    /**
+     * The default construktor set the database connection on the system 
+     * database.
+     **/
     DatabaseProxy( );
-    DatabaseProxy( int i ) { cout << "[" << __FILE__ << ":" << __LINE__ << "] " << endl; };
+    
+    /**
+     * use a defined team data base.
+     **/
+    DatabaseProxy( TeamDataBase team_db );
     ~DatabaseProxy();
     
      /**
@@ -72,7 +81,7 @@ private:
     /**
      * Global config class.
      */
-    Config           *m_config;
+//     Config           *m_config;
     
     
     /** PostreSQL database name */    
