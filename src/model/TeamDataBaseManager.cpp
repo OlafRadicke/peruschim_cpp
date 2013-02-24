@@ -52,9 +52,8 @@ std::vector<TeamDataBase> TeamDataBaseManager::getAllTeamDataBases (  std::strin
     vector<TeamDataBase> dataBaseList;
     
     DEBUG std::endl;
-    sqlResult = database_proxy.sqlGet 
-    ( 
-            "SELECT \
+    
+    string sqlCommand =  "SELECT \
                 account_id, \
                 account_name, \
                 server_name, \
@@ -67,10 +66,13 @@ std::vector<TeamDataBase> TeamDataBaseManager::getAllTeamDataBases (  std::strin
                 owner_id  \
             FROM db_account \
             WHERE owner_id=( \
-                SELECT account_id FROM db_account \
-                WHERE account_name='" + DatabaseProxy::replace( account_name ) + "' \
-                );"
-    );
+                SELECT id FROM a23t_account \
+                WHERE login_name='" + DatabaseProxy::replace( account_name ) + "' \
+                );";
+        
+    
+    DEBUG "sqlCommand: "  << sqlCommand << std::endl;            
+    sqlResult = database_proxy.sqlGet ( sqlCommand );
 
     for ( unsigned int i=0; i<sqlResult.size(); i++) {
         DEBUG "push_back (" <<  i << "): " << sqlResult[i][0] << std::endl;

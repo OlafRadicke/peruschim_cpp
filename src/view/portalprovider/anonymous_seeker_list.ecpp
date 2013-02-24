@@ -39,9 +39,10 @@
     };
     DEBUG "Autorisiert!!" << std::endl;
 
-    
     dataBaseList = TeamDataBaseManager::getAllTeamDataBases ( userSession.getUserName () );
+    DEBUG "dataBaseList.size(): " << dataBaseList.size() << endl;
     seekerList = SeekerManager::getAllSeekers ( dataBaseList );
+    DEBUG "seekerList.size(): " << seekerList.size() << endl;
     
 
 </%cpp>
@@ -58,7 +59,7 @@
     <br />
     <& "mainmenu" &>
     <br />
-    <div class="innergroupbox">
+    <div class="centerbox">
         
         <h1>Personaldatenbank</h1>
 

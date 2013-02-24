@@ -8,6 +8,10 @@ div#header-logo{
 
 }
 
+div#header-logo a {
+    text-decoration:none;
+}
+
 div#logo-red {
     color: #FFFFFF;
     text-align: center;
@@ -75,11 +79,12 @@ div#header-logo h1 {
 }
 
 /* -------- Main box (with 2 columns) -------------------------- */
-div.mainbox{
+
+div.columnbox{
 /*    text-align: center; */
     border-style: solid;
     border-color: #C3C3C3;
-    width: 70% ;
+    width: 90% ;
     padding: 20px;
     margin: auto;
     border-radius: 10px;
@@ -97,8 +102,10 @@ div.mainbox{
     -webkit-box-shadow: 5px 5px 8px #B3B3B3;
 }
 
-/* -------- Inner box -------------------------- */
-div.innergroupbox{
+
+/* -------- center box -------------------------- */
+
+div.centerbox{
     text-align: center;
     border-style: solid;
     border-color: #C3C3C3;

@@ -3,7 +3,8 @@
 
 #include "Config.h"
 
-# define DEBUG cout << "[Config]" <<
+# define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 using namespace std;
 
@@ -82,13 +83,13 @@ string Config::getConfFile ( ){
 void Config::readConfigFile ( ){
     string completString = "";
     string line = "";
-    DEBUG "open: " << Config::m_confFilePath << endl;
+//     DEBUG "open: " << Config::m_confFilePath << endl;
     // open fiele to read....
     ifstream config_file ( Config::m_confFilePath.c_str ()  );
     if ( config_file.is_open () ) {
         while ( config_file.good () ) {
             getline ( config_file, line );
-            DEBUG line << endl;
+//             DEBUG line << endl;
             m_configStrings.push_back ( line );
         }
     }else{

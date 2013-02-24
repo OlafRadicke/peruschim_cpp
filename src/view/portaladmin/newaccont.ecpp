@@ -83,7 +83,7 @@
     <br />
     <& "mainmenu" &>
     <br />
-    <div class="innergroupbox">
+    <div class="centerbox">
         
         <h1>Neuen Account anlegen</h1>
 %       if ( feedback != "" ) {

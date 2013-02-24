@@ -86,13 +86,13 @@
     <br />
     <& "mainmenu" &>
     <br />
-    <div id="innergroupbox">
+    <div class="centerbox">
 
         <h1>Neuen Datenbankverbindung anlegen</h1>
 
 % if ( feedback != "" ) {
 
-        <div id="feedback-box">
+        <div class="feedback-box">
             <b><$ feedback $> </b>
         </div>
 

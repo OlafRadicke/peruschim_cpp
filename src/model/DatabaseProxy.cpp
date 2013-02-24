@@ -26,7 +26,7 @@ DatabaseProxy::DatabaseProxy( ) :
     DEBUG "m_pg_db_host: " << m_pg_db_host << endl;
     DEBUG "m_pg_db_user: " << m_pg_db_user << endl;
     DEBUG "m_pg_db_passwd: " << m_pg_db_passwd << endl;
-    DEBUG "m_pg_db_passwd: " << m_pg_db_port << endl;
+    DEBUG "m_pg_db_port: " << m_pg_db_port << endl;
     
     DEBUG "========== init end ==========" << endl;
 

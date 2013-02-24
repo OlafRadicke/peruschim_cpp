@@ -140,7 +140,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Neuen Datenbankverbindung anlegen</title>
+    <title>Datenbankverbindung verändern oder löschen</title>
     <meta charset = "UTF-8" />
     <& "style" &>
 </head>
@@ -150,9 +150,9 @@
     <& "mainmenu" &>
     <br />
 
-    <div class="innergroupbox">
+    <div class="centerbox">
 
-        <h1>Neuen Datenbankverbindung anlegen</h1>
+        <h1>Datenbankverbindung verändern oder löschen</h1>
 
 % if ( feedback != "" ) {
 
@@ -172,7 +172,7 @@
                 <input type="submit" name="load" value="laden">
             </p>
             <p>Aktuel geladen und angezeigt wird die Verbindung mit der ID: <$ loadedTeamDataBaseID $> </p>
-            <div class="innergroupbox">
+            <div class="centerbox">
                 <p>Verbindungsname*:<br><input 
                         name="account_name" 
                         type="text" 
@@ -202,7 +202,6 @@
                         type="text" 
                         size="15" 
                         maxlength="15" 
-                        required="required"
                         value="<$ value_db_encoding $>" ></p>
                 <p>Datenbank-User-Name*:<br><input 
                         name="db_user" 

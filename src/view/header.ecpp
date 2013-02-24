@@ -1,8 +1,11 @@
+
 <div id="header-logo">
-    <div id="logo-red">
-        <h1>ARTIKEL</h1>
-    </div>
-    <div id="logo-blue">
-        <h1>23t</h1>
-    </div>
+    <a href="home">
+        <div id="logo-red">
+            <h1>ARTIKEL</h1>
+        </div>
+        <div id="logo-blue">
+            <h1>23t</h1>
+        </div>
+    </a>
 </div>

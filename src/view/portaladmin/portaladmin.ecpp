@@ -50,30 +50,32 @@
 
     <div class="mainmenue">
         <ul>
-            <li class="tableft"><a href="home">Home</a></li>
-            <li class="tabmiddle"><a href="sucherportal">Sucherportal</a></li>
-            <li class="tabmiddle"><a href="portalprovider">Anbieterportal</a></li>
-            <li class="tabmiddle"><a href="vermittlerportal">Vermittlerportal</a></li>
-            <li class="tabmiddle_activ"><a href="portaladmin">Adminportal</a></li>
-            <li class="tabright"><a href="logout">Abmelden</a></li>
+            <li class="tableft"         ><a href="home">Home</a></li>
+            <li class="tabmiddle"       ><a href="portalseeker">Sucherportal</a></li>
+            <li class="tabmiddle"       ><a href="portalprovider">Anbieterportal</a></li>
+            <li class="tabmiddle"       ><a href="portaloperator">Vermittlerportal</a></li>
+            <li class="tabmiddle_activ" ><a href="portaladmin">Administrationsportal</a></li>
+            <li class="tabright"        ><a href="logout">Abmelden</a></li>
         </ul>
     </div>
 
-    <div class="mainbox">
-        <ul>
-            <li><b>Portal-Accounts</b>
-                <ul>
-                    <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Account für das Webportal anlegen.</li>        
-                </ul>
-            </li>
-            <li><b>Projekt- bzw. Datenbank-Accounts</b>
-                <ul>
-                    <li><a href="add_db_connection"><b>Datenbank-Verbindung hinzufügen:</b></a> Einen Datenbank-Account einrichten, um sich mit einem Projekt zu verbinden.</li>
-                    <li><a href="edit_db_connection"><b>Datenbank-Verbindung bearbeiten und löschen:</b></a> Hier können Datenbank-Vergindung bearbeiten oder löschen werden. Gelöscht wird aber nicht die Team-Datenbank selbst.</li>
-                </ul>
-            </li>
-        </ul>
-
+    <div class="centerbox">
+        <h1>Administrationsportal</h1>
+        <div class="columnbox">
+            <ul>
+                <li><b>Portal-Accounts</b>
+                    <ul>
+                        <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Account für das Webportal anlegen.</li>        
+                    </ul>
+                </li>
+                <li><b>Projekt- bzw. Datenbank-Accounts</b>
+                    <ul>
+                        <li><a href="add_db_connection"><b>Datenbank-Verbindung hinzufügen:</b></a> Einen Datenbank-Account einrichten, um sich mit einem Projekt zu verbinden.</li>
+                        <li><a href="edit_db_connection"><b>Datenbank-Verbindung bearbeiten und löschen:</b></a> Hier können Datenbank-Vergindung bearbeiten oder löschen werden. Gelöscht wird aber nicht die Team-Datenbank selbst.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 
 </body>

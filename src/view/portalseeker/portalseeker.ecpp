@@ -1,7 +1,6 @@
 <%pre>
-
-    #include <vector>
-    #include <string>
+    // put your includes here
+    // #include "foo.h"
     #include "../../model/WebACL.h"
     #include "../../model/UserSession.h"
 
@@ -22,13 +21,12 @@
 </%session>
 
 <%cpp>
+
+
     // ACL Check
-    std::vector<std::string> allowedSiteRolls;
-    allowedSiteRolls.push_back ( "admin" );
-    allowedSiteRolls.push_back ( "provider" );
-    bool check = userSession.isInRole ( allowedSiteRolls );
+    bool check = userSession.isInRole ( "admin" );
     DEBUG "check: " << check << std::endl;
-    if ( userSession.isInRole ( allowedSiteRolls ) == false ) {
+    if ( userSession.isInRole ( "admin" ) == false ) {
         DEBUG "Nicht autorisiert!!" << std::endl;
         return reply.redirect ( "/access_denied" );
     };
@@ -36,6 +34,7 @@
 
 
 </%cpp>
+
 
 <!DOCTYPE HTML>
 <html>
@@ -52,8 +51,8 @@
     <div class="mainmenue">
         <ul>
             <li class="tableft"         ><a href="home">Home</a></li>
-            <li class="tabmiddle"       ><a href="portalseeker">Sucherportal</a></li>
-            <li class="tabmiddle_activ" ><a href="portalprovider">Anbieterportal</a></li>
+            <li class="tabmiddle_activ" ><a href="portalseeker">Sucherportal</a></li>
+            <li class="tabmiddle"       ><a href="portalprovider">Anbieterportal</a></li>
             <li class="tabmiddle"       ><a href="portaloperator">Vermittlerportal</a></li>
             <li class="tabmiddle"       ><a href="portaladmin">Administrationsportal</a></li>
             <li class="tabright"        ><a href="logout">Abmelden</a></li>
@@ -61,13 +60,14 @@
     </div>
 
     <div class="centerbox">
-        <h1>Anbieterportal</h1>
+        <h1>Sucherportal</h1>
         <div class="columnbox">
             <ul>
-                <li><b>Suchen</b>
-                <ul>
-                    <li><a href="anonymous_seeker_list"><b>Personaldatenbank durchsuchen:</b></a> Datenbank nach geeignetem Personal durchsuchen.</li>        
-                </ul>
+                <li><b>A</b>
+                    <ul>
+                        <li><a href=""><b>B:</b></a> ccc.</li>        
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
