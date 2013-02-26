@@ -17,6 +17,7 @@
 </%config>
 
 <%args>
+    std::string stuff_filter = "";
 </%args>
 <%session scope="global">
     UserSession userSession;
@@ -26,6 +27,7 @@
     
     std::vector<TeamDataBase> dataBaseList;
     std::vector<SeekerData> seekerList;
+    std::vector<std::string> seekersStuffList;
 
     // ACL Check
     std::vector<std::string> allowedSiteRolls;
@@ -41,9 +43,15 @@
 
     dataBaseList = TeamDataBaseManager::getAllTeamDataBases ( userSession.getUserName () );
     DEBUG "dataBaseList.size(): " << dataBaseList.size() << endl;
-    seekerList = SeekerManager::getAllSeekers ( dataBaseList );
+    if ( stuff_filter == "" ) {
+        DEBUG "kein filter" << std::endl;
+        seekerList = SeekerManager::getAllSeekers ( dataBaseList );
+    } else {
+        DEBUG "Filter: " << stuff_filter << std::endl;
+        seekerList = SeekerManager::getStuffSelectedSeekers ( dataBaseList, stuff_filter );
+    }
     DEBUG "seekerList.size(): " << seekerList.size() << endl;
-    
+    seekersStuffList = SeekerManager::getAllOfferSeekersStuff ( dataBaseList );
 
 </%cpp>
 
@@ -63,18 +71,47 @@
         
         <h1>Personaldatenbank</h1>
 
-
-        <table>
-            <tr>
-                <th>Datenbank</th><th>ID-Nr</th><th>drei</th>
-            </tr>
-%           for ( unsigned int i=0; i<seekerList.size(); i++ ) {
+        <div class="centerbox">
+            <form method="post" action="anonymous_seeker_list">
+                <select name="stuff_filter" size="1">
+%               for ( unsigned int i=0; i<seekersStuffList.size(); i++) {
+%                   if ( stuff_filter == seekersStuffList[i] ) {
+                    <option selected value="<$  seekersStuffList[i] $>"><$ seekersStuffList[i] $></option>
+%                   } else {
+                    <option value="<$  seekersStuffList[i] $>"><$ seekersStuffList[i] $></option>
+%                   }
+%               }
+%               if ( stuff_filter == "" ) {
+                    <option selected value="all">Alle Qualifikationen</option>
+%               } else {
+                    <option value="all">Alle Qualifikationen</option>
+%               }
+                </select>
+                <input id="filter_button" type="submit" name="filter_button" value="Filtern">
+            </form >
+        </div>
+        <div class="centerbox">
+            <table>
                 <tr>
-                    <td><$ ( seekerList[i].getTeamDataBase ().getAccount_id ( ) )  $></td><td><$ ( seekerList[i].getSeeker_no () ) $></td><td>???</td>
+                    <th>Datenbank</th>
+                    <th>Sucher-ID-Nr</th>
+                    <th>Qualitäten</th>
                 </tr>
-%           }
-        </table>
+%               for ( unsigned int i2=0; i2<seekerList.size(); i2++ ) {
+                    <tr>
+                        <td><$ ( seekerList[i2].getTeamDataBase ().getAccount_id ( ) )  $></td>
+                        <td><$ ( seekerList[i2].getSeeker_no () ) $></td> 
+                        <td><ul>
+%                   vector<std::string> qList = seekerList[i2].getQualitys (  );
+%                   for ( unsigned int i3=0; i3<qList.size(); i3++ ) {
+                        <li><$ ( qList[i3] ) $></li>
+%                   }
+                        </ul></td>
+                    </tr>
+%               }
+            </table>
 
+        </div>
     </div>
 </body>
 </html>

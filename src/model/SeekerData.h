@@ -2,7 +2,12 @@
 #define SEEKERDATA_H 
 
 #include <string>
+#include <vector>
+#include "DatabaseProxy.h"
 #include "TeamDataBase.h"
+
+# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 
 
@@ -76,6 +81,12 @@ public:
 
     void setAddress_addition ( std::string address_addition ) { m_address_addition = address_addition; };
     std::string getAddress_addition ( void ) { return m_address_addition; }; 
+    
+    /**
+     * Get back a list of seeker qualitys.
+     * @return list of seeker qualitys
+     **/
+    std::vector<std::string> getQualitys ( void );
     
 
 private:

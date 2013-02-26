@@ -81,7 +81,7 @@ div#header-logo h1 {
 /* -------- Main box (with 2 columns) -------------------------- */
 
 div.columnbox{
-/*    text-align: center; */
+    text-align: left; 
     border-style: solid;
     border-color: #C3C3C3;
     width: 90% ;
@@ -314,6 +314,27 @@ input#save_button {
     -webkit-border-bottom-left-radius:5px;
     border-top-left-radius:5px;
     border-bottom-left-radius:5px;
+}
+
+/* -------- Tables   ------------------------------------------------------- */
+
+th {
+    background-color: #CC063B;
+    background: linear-gradient( left, #FF383B, #FFFFFF);
+    background: -webkit-linear-gradient( left, #FF383B, #FFFFFF);
+    background: -moz-linear-gradient( left, #FF383B, #FFFFFF);
+    background: -ms-linear-gradient( left, #FF383B, #FFFFFF);
+
+    padding: 5px 10px 5px 10px ;
+/*    margin: auto;*/
+}
+
+td {
+    background-color: #CC063B;
+    background: linear-gradient( left, #A0A0A0, #FFFFFF);
+    background: -webkit-linear-gradient( left, #A0A0A0, #FFFFFF);
+    background: -moz-linear-gradient( left, #A0A0A0, #FFFFFF);
+    background: -ms-linear-gradient( left, #A0A0A0, #FFFFFF);
 }
 
 </style>
