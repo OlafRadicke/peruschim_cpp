@@ -211,7 +211,7 @@
                         value="<$ value_db_user $>"></p>
                 <p>Passwort*:<br><input 
                         name="db_password" 
-                        type="text" 
+                        type="password"
                         size="40" 
                         maxlength="80" 
                         value="<$ value_db_password $>" ></p>

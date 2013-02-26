@@ -319,6 +319,7 @@ input#save_button {
 /* -------- Tables   ------------------------------------------------------- */
 
 th {
+    text-align: left; 
     background-color: #CC063B;
     background: linear-gradient( left, #FF383B, #FFFFFF);
     background: -webkit-linear-gradient( left, #FF383B, #FFFFFF);
@@ -330,11 +331,13 @@ th {
 }
 
 td {
+    text-align: left; 
     background-color: #CC063B;
     background: linear-gradient( left, #A0A0A0, #FFFFFF);
     background: -webkit-linear-gradient( left, #A0A0A0, #FFFFFF);
     background: -moz-linear-gradient( left, #A0A0A0, #FFFFFF);
     background: -ms-linear-gradient( left, #A0A0A0, #FFFFFF);
+    padding: 5px 10px 5px 10px ;
 }
 
 </style>
