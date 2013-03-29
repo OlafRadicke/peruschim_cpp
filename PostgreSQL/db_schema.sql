@@ -1,0 +1,199 @@
+START TRANSACTION;
+
+CREATE TABLE account (
+    id                  SERIAL                      PRIMARY KEY,
+    login_name          TEXT                        NOT NULL UNIQUE,
+    real_name           TEXT                        NOT NULL,
+    password_hash       TEXT                        NOT NULL,
+    password_salt       TEXT                        NOT NULL,
+    email               TEXT                        NOT NULL,
+    account_disable     boolean                     NOT NULL
+);
+-- COMMENT ON TABLE account IS 'table have the values of webgui accounts.';
+-- COMMENT ON COLUMN account.account_disable IS 'If set true than the account is disabled';
+
+
+-- Default accound "admin" with password "admin". 
+INSERT INTO account 
+( 
+    id,
+    login_name, 
+    real_name, 
+    password_hash, 
+    password_salt, 
+    email, 
+    account_disable 
+) 
+VALUES ( 
+    1,
+    'admin',
+    '',
+    '43b732f80b0308a1c26114e42d377e2f',
+    'fa37JncCHryDsbza',
+    '',
+    'FALSE'
+);
+
+CREATE TABLE acl_roll (
+    id              SERIAL    PRIMARY KEY,
+    name            TEXT      NOT NULL UNIQUE,
+    explanation     TEXT      NOT NULL
+);
+-- COMMENT ON TABLE acl_roll IS 'ACL rolls.';
+-- Default accound "admin" with password "admin". 
+
+-- Default rolls. 
+INSERT INTO acl_roll 
+( 
+    id,
+    name, 
+    explanation
+) 
+VALUES ( 
+    1,
+    'admin',
+    ''
+); 
+
+INSERT INTO acl_roll 
+( 
+    id,
+    name, 
+    explanation
+) 
+VALUES ( 
+    2,
+    'seeker',
+    ''
+);
+
+INSERT INTO acl_roll 
+( 
+    id,
+    name, 
+    explanation
+) 
+VALUES ( 
+    3,
+    'provider',
+    ''
+);
+
+
+CREATE TABLE account_acl_roll (
+    id              SERIAL    PRIMARY KEY,
+    account_id      INTEGER   NOT NULL,
+    acl_roll_id     INTEGER   NOT NULL,
+    FOREIGN KEY  (account_id) REFERENCES account (id),
+    FOREIGN KEY  (acl_roll_id) REFERENCES acl_roll (id)
+);
+-- COMMENT ON TABLE account_acl_roll IS 'Linking acconds with rolls.';
+
+-- admin account get all rolls.
+INSERT INTO account_acl_roll 
+( 
+    account_id, 
+    acl_roll_id
+) 
+VALUES ( 
+    1,
+    1
+);
+
+INSERT INTO account_acl_roll
+( 
+    account_id, 
+    acl_roll_id
+) 
+VALUES ( 
+    1,
+    2
+);
+
+INSERT INTO account_acl_roll
+( 
+    account_id, 
+    acl_roll_id
+) 
+VALUES ( 
+    1,
+    3
+);
+
+CREATE TABLE db_account (
+    account_id      SERIAL    PRIMARY KEY,
+    account_name    TEXT      NOT NULL UNIQUE,
+    server_name     TEXT      NOT NULL,
+    database_name   TEXT      NOT NULL,
+    port_no         INTEGER   NOT NULL,
+    db_encoding     TEXT      NOT NULL,
+    db_user         TEXT      NOT NULL,
+    db_password     TEXT      NOT NULL,
+    db_sslmode      TEXT      NOT NULL,
+    owner_id        INTEGER   NOT NULL,
+    FOREIGN KEY  (owner_id) REFERENCES account (id)
+);
+-- COMMENT ON TABLE db_account IS 'Variable postgressql accounds for crm data (team database).';
+-- COMMENT ON COLUMN db_account.account_id IS 'Link to a webgui user account.';
+
+
+CREATE TABLE edition (
+    id              SERIAL    PRIMARY KEY,
+    name            TEXT      NOT NULL UNIQUE,
+    publishername   TEXT      NOT NULL,
+    releasenumber   TEXT      NOT NULL,
+    releasedate     TEXT      NOT NULL,
+    releaseplace    TEXT      NOT NULL
+);
+
+-- Default value
+INSERT INTO edition
+( 
+    name, 
+    publishername,
+    releasenumber,
+    releasedate,
+    releaseplace
+) 
+VALUES ( 
+    "andere",
+    "",
+    0,
+    "",
+    ""
+);
+
+CREATE TABLE quote (
+    id              SERIAL    PRIMARY KEY,
+    series          TEXT      NOT NULL,
+    title           TEXT      NOT NULL,
+    chapter_begin   INTEGER   NOT NULL,
+    sentence_begin  INTEGER   NOT NULL,
+    chapter_end     INTEGER   NOT NULL,
+    sentence_end    INTEGER   NOT NULL,
+    note            TEXT      NOT NULL
+);
+
+CREATE TABLE label (
+    id              SERIAL    PRIMARY KEY,
+    title           TEXT      NOT NULL,
+    note            TEXT      NOT NULL
+);
+
+CREATE TABLE quote_edition (
+    id              SERIAL    PRIMARY KEY,
+    quote_id        INTEGER   NOT NULL,
+    edition_id      INTEGER   NOT NULL,
+    FOREIGN KEY  (quote_id)   REFERENCES quote (id),
+    FOREIGN KEY  (edition_id) REFERENCES edition (id)
+);
+
+CREATE TABLE quote_label (
+    id              SERIAL    PRIMARY KEY,
+    quote_id        INTEGER   NOT NULL,
+    label_id      INTEGER     NOT NULL,
+    FOREIGN KEY  (quote_id)   REFERENCES quote (id),
+    FOREIGN KEY  (label_id)   REFERENCES label (id)
+);
+
+COMMIT;

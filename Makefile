@@ -15,13 +15,17 @@ LIBS += -lpqxx -lpq
 
 CC = g++
 DIST = ./bin
-PROG_NAME = ./artikel23t.so
+PROG_NAME = ./peruschim_cpp
 
 
 OBJECTS = \
+./src/peruschim_cpp.o \
 ./src/model/AccountData.o \
 ./src/model/Config.o \
 ./src/model/DatabaseProxy.o \
+./src/model/Edition.o \
+./src/model/EditionManager.o \
+./src/model/Quote.o \
 ./src/model/SeekerData.o \
 ./src/model/SeekerManager.o \
 ./src/model/TeamDataBase.o \
@@ -54,7 +58,7 @@ clean:
 dist: convecpp $(PROG_NAME)
 	if [ ! -d $(DIST) ]; then mkdir $(DIST) ; fi
 	mv ./$(PROG_NAME) $(DIST)
-	cp ./exsamples/artikel23t.conf $(DIST)
+	cp ./exsamples/$(PROG_NAME).conf $(DIST)
 	cp ./exsamples/tntnet.conf $(DIST)
 	cp ./exsamples/tntnet.properties $(DIST)
 	cp ./AGPLv3.txt $(DIST)
@@ -62,7 +66,7 @@ dist: convecpp $(PROG_NAME)
 	cp ./LICENSE.txt $(DIST)
 
 $(PROG_NAME):  $(OBJECTS)
-	LANG=C LC_ALL=C  $(CC) $(CPPFLAGS) -shared -o $(PROG_NAME) $(OBJECTS) $(LIBS)
+	LANG=C LC_ALL=C  $(CC) $(CPPFLAGS) -o $(PROG_NAME) $(OBJECTS) $(LIBS)
 
 # ./src/model/WebACL.o: ./src/model/WebACL.cpp
 # 	$(CC) -o ./src/model/WebACL.o -I/usr/include -ltntdb ./src/model/WebACL.cpp
@@ -76,7 +80,7 @@ convecpp:
 
 # Für englische Fehlermeldungen LANG=C LC_ALL=C
 test: dist
-	cd $(DIST)&& ls && ${TNTNET} tntnet.conf
+	cd $(DIST)&& ls && $(PROG_NAME)
 
 install:
 	echo "ist noch nicht implementiert"

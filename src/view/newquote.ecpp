@@ -1,0 +1,189 @@
+<%pre>
+    #include "../model/EditionManager.h"
+    #include "../model/WebACL.h"
+    #include "../model/UserSession.h"
+    #include "../model/Edition.h"
+
+    # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+    # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+</%pre>
+
+<%config>
+</%config>
+
+<%args>
+    // define the query parameters
+    long edition_id = 0;
+    std::string book_title = "";
+    std::string chapter_begin = "";
+    std::string sentence_begin = "";
+    std::string chapter_end = "";
+    std::string sentence_end = "";
+    std::string labels = "";
+    std::string save_button;
+</%args>
+
+<%session scope="global">
+    // define your session scope variables here
+    // std::string mySessionState;
+    UserSession userSession;
+</%session>
+
+<%cpp>
+    std::vector<Edition> editionList;
+    std::string feedback = "";
+    Edition editionData;
+    Quote quoteData;
+
+    // ACL Check
+    bool check = userSession.isInRole ( "admin" );
+    DEBUG "check: " << check << std::endl;
+    if ( userSession.isInRole ( "admin" ) == false ) {
+        DEBUG "Nicht autorisiert!!" << std::endl;
+        return reply.redirect ( "/login" );
+    };
+    DEBUG "Autorisiert!!" << std::endl;
+    std::string userName  = userSession.getUserName();
+
+
+    // is button "create" kicked?
+    if ( save_button == "Speichern" ) {
+        DEBUG "edition_id" << edition_id << std::endl;
+        quoteData.setEditionID( edition_id );
+
+        DEBUG "book_title" << book_title << std::endl;
+        quoteData.getBookTitle( book_title );
+
+        DEBUG "chapter_begin" << chapter_begin << std::endl;
+        quoteData.setChapterBegin( chapter_begin );
+
+        DEBUG "sentence_begin" << sentence_begin << std::endl;
+        quoteData.setSentenceBegin ( sentence_begin );
+
+        DEBUG "chapter_end" << chapter_end << std::endl;
+        quoteData.setChapterEnd( chapter_end );
+
+        DEBUG "sentence_end" << sentence_end << std::endl;
+        quoteData.setSentenceEnd ( sentence_end );
+
+        DEBUG "labels" << labels << std::endl;
+        quoteData.setSentenceEnd ( labels );
+
+
+
+        quoteData.save( );
+        feedback = "Datenbankverbindung wurde gespeichert!";
+    } else {
+        editionList =  EditionManager::getAllEditions();  
+
+    }
+</%cpp>
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Home Artike23t</title>
+    <meta charset = "UTF-8" />
+    <& "style" &>
+</head>
+<body>
+
+    <& "header" &>
+    <br />
+
+    <div class="mainmenue">
+        <ul>
+            <li class="tableft"><a href="home">Home</a></li>
+            <li class="tabmiddle_activ"><a href="newquote">Neuer Vers</a></li>
+            <li class="tabmiddle"><a href="portalprovider">Anbieterportal</a></li>
+            <li class="tabmiddle"><a href="portaloperator">Vermittlerportal</a></li>
+            <li class="tabmiddle"><a href="portaladmin">Administrationsportal</a></li>
+            <li class="tabright"><a href="logout">Abmelden</a></li>
+        </ul>
+    </div>
+    <br />
+
+
+    <div class="centerbox">
+        <h1>Neuen Verseeintrag erstellen</h1>
+        <div class="columnbox">
+
+% if ( feedback != "" ) {
+
+        <div class="feedback-box">
+            <b><$ feedback $> </b>
+        </div>
+
+% } else {
+
+        <form method="post" >
+        m_bookTitle(""),
+        m_bookChapterBegin(0),
+        m_bookSentenceBegin(0),
+        m_bookChapterEnd(0),
+        m_bookSentenceEnd(0),
+        m_quoteLabels(),
+        m_note("")
+
+            <p>Edition:
+                <select name="edition_id" size="1">
+%               for ( unsigned int i=0; i<editionList.size(); i++) {
+                    <option value="<$  editionList[i].getID() $>"><$ editionList[i].getName() $></option>
+%               }
+                </select>
+            </p>
+
+            <p>Buch:
+                <select name="book_title" size="1">
+%               for ( unsigned int i=0; i<quoteData.allBibleBooks.size(); i++) {
+                    <option value="<$  quoteData.allBibleBooks[i] $>"><$ quoteData.allBibleBooks[i] $></option>
+%               }
+                </select>
+            </p>
+
+            <p>von Kapitel: <input 
+                    name="chapter_begin" 
+                    type="number" 
+                    min="1" 
+                    max="200"
+                    required="required"> Vers: <input 
+                    name="sentence_begin" 
+                    type="number" 
+                    min="1" 
+                    max="200"
+                    required="required"></p>
+
+            <p>Bis Kapitel: <input 
+                    name="chapter_end" 
+                    type="number" 
+                    min="1" 
+                    max="200"
+                    required="required"> Vers: <input 
+                    name="sentence_end" 
+                    type="number" 
+                    min="1" 
+                    max="200"
+                    required="required"></p>
+
+            <p>Schlagworte (Kommergetrennt): <br><input 
+                    name="labels" 
+                    type="text" 
+                    size="80" 
+                    maxlength="160"></p>
+
+
+            <p>Notizen/Anmerungen: <br><textarea 
+                    name="user_eingabe" 
+                    cols="80" 
+                    rows="10"></textarea></p>
+
+            <p><input id="save_button" type="submit" name="create" value="Speichern"></p>
+        </form>
+
+% }
+        </div>
+    </div>
+
+</body>
+</html>

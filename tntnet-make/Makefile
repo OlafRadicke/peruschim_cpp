@@ -11,6 +11,7 @@ TMP_SOURCES =  \
 ./src/view/login.cpp \
 ./src/view/logout.cpp \
 ./src/view/mainmenu.cpp \
+./src/view/newquote.cpp \
 ./src/view/portaladmin/add_db_connection.cpp  \
 ./src/view/portaladmin/edit_db_connection.cpp  \
 ./src/view/portaladmin/newaccont.cpp  \
@@ -29,6 +30,7 @@ OBJECTS =  \
 ./src/view/login.o \
 ./src/view/logout.o \
 ./src/view/mainmenu.o \
+./src/view/newquote.o \
 ./src/view/portaladmin/add_db_connection.o  \
 ./src/view/portaladmin/edit_db_connection.o  \
 ./src/view/portaladmin/newaccont.o \

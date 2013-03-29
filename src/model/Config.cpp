@@ -15,13 +15,13 @@ Config::Config () {
 //     Config config;
     
     // checked is user config exist
-    string homedir_conf =  "./artikel23t.conf" ;
+    string homedir_conf =  "./peruschim_cpp.conf" ;
     ifstream fin ( homedir_conf.c_str() );
     if (fin)  // if yes than use...
     {
         setConfFile ( homedir_conf );
     } else { // if not, use globale conf
-        setConfFile ( "/etc/artikel23t.conf" );
+        setConfFile ( "/etc/peruschim_cpp.conf" );
     }
     fin.close();
     readConfigFile ();     
