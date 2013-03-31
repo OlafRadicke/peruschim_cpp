@@ -177,7 +177,7 @@
                         class="full-width"
                         name="labels" 
                         type="text" 
-                        maxlength="160"></p>
+                        maxlength="300"></p>
 
 
                 <p>Notizen/Anmerungen: <br><textarea 
