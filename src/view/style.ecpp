@@ -1,5 +1,10 @@
 <style type="text/css">
 
+/* ---------------- clear -------------------------- */
+
+br.clear-both {
+   clear: both;         
+}
 /* -------- LOGO + Header -------------------------- */
 
 div#header-logo{
@@ -107,6 +112,24 @@ div.columnbox{
 
 div.centerbox{
     text-align: center;
+    border-style: solid;
+    border-color: #C3C3C3;
+    width: 70% ;
+    padding: 20px;
+    margin: auto;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+
+    box-shadow: 5px 5px 8px #B3B3B3;
+    -moz-box-shadow: 5px 5px 8px #B3B3B3;
+    -webkit-box-shadow: 5px 5px 8px #B3B3B3;
+}
+
+/* -------- flush left box -------------------------- */
+
+div.flush-left-box{
+    text-align: left;
     border-style: solid;
     border-color: #C3C3C3;
     width: 70% ;
@@ -276,7 +299,7 @@ div.mainmenue li a span {
     padding: 0px;
 }
 
-/* ----- delete button ----------------------------------------------------- */
+/* ----- Form delete button ------------------------------------------------ */
 
 input#delet_button {
     color: #FFFFFF;
@@ -296,7 +319,7 @@ input#delet_button {
     border-bottom-left-radius:5px;
 }
 
-/* ----- save button ----------------------------------------------------- */
+/* ----- Form save button ------------------------------------------------- */
 
 input#save_button {
     color: #FFFFFF;
@@ -314,6 +337,25 @@ input#save_button {
     -webkit-border-bottom-left-radius:5px;
     border-top-left-radius:5px;
     border-bottom-left-radius:5px;
+}
+
+/* -------- Form input ---------------------------------------------------- */
+
+input.full-width {
+    width: 100% ; 
+}
+
+
+input.half-width {
+    width: 50% ; 
+    padding: 20px;
+    margin: auto;
+}
+
+/* -------- Form textarea ---------------------------------------------------- */
+
+textarea.full-width {
+    width: 100% ; 
 }
 
 /* -------- Tables   ------------------------------------------------------- */

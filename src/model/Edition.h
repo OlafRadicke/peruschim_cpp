@@ -5,8 +5,8 @@
 #include <string>
 #include <vector>
 
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+// # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+// # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 class Edition
 {

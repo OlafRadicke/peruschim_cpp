@@ -35,7 +35,7 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
     // password salt request.
     try {
         DEBUG std::endl;
-        sqlResult = database_proxy.sqlGet ( "SELECT password_salt FROM a23t_account WHERE login_name = '" + masqu_name + "';");
+        sqlResult = database_proxy.sqlGet ( "SELECT password_salt FROM account WHERE login_name = '" + masqu_name + "';");
     } catch ( char * errstr ) {
         ERROR "Exception raised: " << errstr << '\n';
     }
@@ -61,7 +61,7 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
     DEBUG std::endl;
     try {
         DEBUG std::endl;
-        sqlResult = database_proxy.sqlGet ( "SELECT password_hash FROM a23t_account WHERE login_name = '" + masqu_name + "';");
+        sqlResult = database_proxy.sqlGet ( "SELECT password_hash FROM account WHERE login_name = '" + masqu_name + "';");
     } catch ( char * errstr ) {
         ERROR "Exception raised: " << errstr << '\n';
     }
@@ -123,7 +123,7 @@ void WebACL::createAccount (
     masqu_name = DatabaseProxy::replace( user_name );
     
     database_proxy.sqlSet( \
-        "INSERT INTO a23t_account \
+        "INSERT INTO account \
         ( login_name, real_name, password_hash, password_salt, email, account_disable )\
         VALUES \
         ( '" + DatabaseProxy::replace( user_name ) + "',  \
@@ -157,7 +157,7 @@ std::vector<AccountData> WebACL::getAllAccounts ( void ){
                 password_salt, \
                 email, \
                 account_disable  \
-            FROM a23t_account;"
+            FROM account;"
     );
 
     for ( unsigned int i=0; i<sqlResult.size(); i++) {
@@ -206,11 +206,11 @@ std::vector<std::string> WebACL::getRoll ( std::string user_name ){
     DEBUG std::endl;
     sqlResult = database_proxy.sqlGet 
     ( 
-            "SELECT a23t_roll.name \
-            FROM a23t_roll, a23t_account, a23t_account_rolls \
-            WHERE a23t_account.login_name = '" + DatabaseProxy::replace( user_name ) + "' \
-            AND a23t_account.id = a23t_account_rolls.account_id  \
-            AND a23t_account_rolls.roll_id = a23t_roll.id ;"
+            "SELECT acl_roll.name \
+            FROM acl_roll, account, account_acl_roll \
+            WHERE account.login_name = '" + DatabaseProxy::replace( user_name ) + "' \
+            AND account.id = account_acl_roll.account_id  \
+            AND account_acl_roll.acl_roll_id = acl_roll.id ;"
     );
 
     for ( unsigned int i=0; i<sqlResult.size(); i++) {
@@ -231,7 +231,7 @@ bool WebACL::isUserExist ( std::string user_name ){
     DEBUG std::endl;
     try {
         DEBUG std::endl;
-        sqlResult = database_proxy.sqlGet( "SELECT * FROM a23t_account \
+        sqlResult = database_proxy.sqlGet( "SELECT * FROM account \
             WHERE login_name = '" + DatabaseProxy::replace( user_name ) + "';");
     } catch ( ... ) {
         ERROR "Exception raised with: database_proxy.sqlSet ()" << endl;
@@ -269,7 +269,7 @@ void WebACL::setPassword (  std::string user_name, std::string new_password ) {
     DEBUG std::endl;
     try {
         DEBUG std::endl;
-        database_proxy.sqlSet( "UPDATE a23t_account \
+        database_proxy.sqlSet( "UPDATE account \
             SET password_hash = '" + password_hash + "',\
             SET password_salt = '" + password_salt + "',\
             WHERE login_name = '" + user_name + "';");

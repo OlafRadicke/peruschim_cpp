@@ -3,6 +3,7 @@
     #include "../model/WebACL.h"
     #include "../model/UserSession.h"
     #include "../model/Edition.h"
+    #include "../model/Quote.h"
 
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -15,11 +16,13 @@
     // define the query parameters
     long edition_id = 0;
     std::string book_title = "";
-    std::string chapter_begin = "";
-    std::string sentence_begin = "";
-    std::string chapter_end = "";
-    std::string sentence_end = "";
+    int chapter_begin = 0;
+    int sentence_begin = 0;
+    int chapter_end = 0;
+    int sentence_end = 0;
+    std::string quote_text = "";
     std::string labels = "";
+    std::string note = "";
     std::string save_button;
 </%args>
 
@@ -52,24 +55,28 @@
         quoteData.setEditionID( edition_id );
 
         DEBUG "book_title" << book_title << std::endl;
-        quoteData.getBookTitle( book_title );
+        quoteData.setBookTitle( book_title );
 
         DEBUG "chapter_begin" << chapter_begin << std::endl;
         quoteData.setChapterBegin( chapter_begin );
 
         DEBUG "sentence_begin" << sentence_begin << std::endl;
-        quoteData.setSentenceBegin ( sentence_begin );
+        quoteData.setSentenceBegin( sentence_begin );
 
         DEBUG "chapter_end" << chapter_end << std::endl;
         quoteData.setChapterEnd( chapter_end );
 
         DEBUG "sentence_end" << sentence_end << std::endl;
-        quoteData.setSentenceEnd ( sentence_end );
+        quoteData.setSentenceEnd( sentence_end );
+
+        DEBUG "quote_text" << quote_text << std::endl;
+        quoteData.setQuoteText( quote_text );
 
         DEBUG "labels" << labels << std::endl;
-        quoteData.setSentenceEnd ( labels );
+        quoteData.setLabels( labels );
 
-
+        DEBUG "note" << note << std::endl;
+        quoteData.setNote( note );
 
         quoteData.save( );
         feedback = "Datenbankverbindung wurde gespeichert!";
@@ -107,7 +114,6 @@
 
     <div class="centerbox">
         <h1>Neuen Verseeintrag erstellen</h1>
-        <div class="columnbox">
 
 % if ( feedback != "" ) {
 
@@ -117,69 +123,70 @@
 
 % } else {
 
-        <form method="post" >
-        m_bookTitle(""),
-        m_bookChapterBegin(0),
-        m_bookSentenceBegin(0),
-        m_bookChapterEnd(0),
-        m_bookSentenceEnd(0),
-        m_quoteLabels(),
-        m_note("")
+        <div class="flush-left-box">
+            <br class="clear-both">
+            <form method="post" >
 
-            <p>Edition:
-                <select name="edition_id" size="1">
-%               for ( unsigned int i=0; i<editionList.size(); i++) {
-                    <option value="<$  editionList[i].getID() $>"><$ editionList[i].getName() $></option>
-%               }
-                </select>
-            </p>
+                <p>Edition:
+                    <select name="edition_id" size="1">
+%                    for ( unsigned int i=0; i<editionList.size(); i++) {
+                        <option value="<$  editionList[i].getID() $>"><$ editionList[i].getName() $></option>
+%                    }
+                    </select>
+                </p>
 
-            <p>Buch:
-                <select name="book_title" size="1">
-%               for ( unsigned int i=0; i<quoteData.allBibleBooks.size(); i++) {
-                    <option value="<$  quoteData.allBibleBooks[i] $>"><$ quoteData.allBibleBooks[i] $></option>
-%               }
-                </select>
-            </p>
+                <p>Buch:
+                    <select name="book_title" size="1">
+%                   for ( unsigned int i=0; i<quoteData.allBibleBooks.size(); i++) {
+                        <option value="<$  quoteData.allBibleBooks[i] $>"><$ quoteData.allBibleBooks[i] $></option>
+%                   }
+                    </select>
+                </p>
 
-            <p>von Kapitel: <input 
-                    name="chapter_begin" 
-                    type="number" 
-                    min="1" 
-                    max="200"
-                    required="required"> Vers: <input 
-                    name="sentence_begin" 
-                    type="number" 
-                    min="1" 
-                    max="200"
-                    required="required"></p>
+                <p>von Kapitel: <input 
+                        name="chapter_begin" 
+                        type="number" 
+                        min="1" 
+                        max="200"
+                        required="required"> Vers: <input 
+                        name="sentence_begin" 
+                        type="number" 
+                        min="1" 
+                        max="200"
+                        required="required"></p>
 
-            <p>Bis Kapitel: <input 
-                    name="chapter_end" 
-                    type="number" 
-                    min="1" 
-                    max="200"
-                    required="required"> Vers: <input 
-                    name="sentence_end" 
-                    type="number" 
-                    min="1" 
-                    max="200"
-                    required="required"></p>
+                <p>Bis Kapitel: <input 
+                        name="chapter_end" 
+                        type="number" 
+                        min="1" 
+                        max="200"
+                        required="required"> Vers: <input 
+                        name="sentence_end" 
+                        type="number" 
+                        min="1" 
+                        max="200"
+                        required="required"></p>
 
-            <p>Schlagworte (Kommergetrennt): <br><input 
-                    name="labels" 
-                    type="text" 
-                    size="80" 
-                    maxlength="160"></p>
+                <p>Zitat: <br><input 
+                        class="full-width"
+                        name="quote_text" 
+                        type="text" 
+                        maxlength="400"></p>
+
+                <p>Schlagworte (Kommergetrennt): <br><input 
+                        class="full-width"
+                        name="labels" 
+                        type="text" 
+                        maxlength="160"></p>
 
 
-            <p>Notizen/Anmerungen: <br><textarea 
-                    name="user_eingabe" 
-                    cols="80" 
-                    rows="10"></textarea></p>
+                <p>Notizen/Anmerungen: <br><textarea 
+                        class="full-width"
+                        name="note" 
+                        rows="10"></textarea></p>
 
-            <p><input id="save_button" type="submit" name="create" value="Speichern"></p>
-        </form>
+                <p><input id="save_button" type="submit" name="create" value="Speichern"></p>
+            </form>
 
 % }
         </div>

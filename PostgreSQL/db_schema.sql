@@ -149,19 +149,40 @@ CREATE TABLE edition (
 -- Default value
 INSERT INTO edition
 ( 
-    name, 
+    id, 
+    name,
     publishername,
     releasenumber,
     releasedate,
     releaseplace
 ) 
 VALUES ( 
-    "andere",
-    "",
     0,
-    "",
-    ""
+    'andere',
+    '',
+    '',
+    '',
+    ''
 );
+
+-- INSERT INTO edition
+-- ( 
+--     id,
+--     name, 
+--     publishername,
+--     releasenumber,
+--     releasedate,
+--     releaseplace
+-- ) 
+-- VALUES ( 
+--     0,
+--     "andere",
+--     " ",
+--     " ",
+--     " ",
+--     " "
+-- );
+
 
 CREATE TABLE quote (
     id              SERIAL    PRIMARY KEY,

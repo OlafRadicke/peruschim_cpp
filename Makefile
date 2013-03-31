@@ -39,6 +39,7 @@ OBJECTS = \
 ./src/view/login.o \
 ./src/view/logout.o \
 ./src/view/mainmenu.o \
+./src/view/newquote.o \
 ./src/view/portaladmin/add_db_connection.o  \
 ./src/view/portaladmin/edit_db_connection.o  \
 ./src/view/portaladmin/newaccont.o  \
@@ -48,6 +49,8 @@ OBJECTS = \
 ./src/view/portalprovider/portalprovider.o \
 ./src/view/portalseeker/portalseeker.o \
 ./src/view/style.o
+
+all: dist
 
 clean:
 	make clean -f  $(TNTMAKEFILE)
@@ -76,6 +79,7 @@ $(PROG_NAME):  $(OBJECTS)
 
 
 convecpp:
+	############################## Start ##############################
 	make dist -f $(TNTMAKEFILE)
 
 # Für englische Fehlermeldungen LANG=C LC_ALL=C

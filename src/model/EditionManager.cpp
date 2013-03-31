@@ -3,12 +3,16 @@
 #include <list>
 #include <iostream>
 #include <cxxtools/log.h>
+#include <vector>
+#include <pqxx/pqxx>
 
-#include "DatabaseProxy.h"
+#include "Config.h"
+#include "EditionManager.h"
+#include "Edition.h"
 
 
-# define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 
 
@@ -16,17 +20,17 @@
 
 
 std::vector<Edition> EditionManager::getAllEditions ( void ){
-    vector<Edition> editionList;
+    std::vector<Edition> editionList;
     DEBUG std::endl;
     
     Config config;
-    db_name = config.get( "DB-NAME" );
-    db_host = config.get( "DB-HOST" ); 
-    db_user = config.get( "DB-USER" ); 
-    db_passwd = config.get( "DB-PASSWD" ); 
-    db_port = config.get( "DB-PORT" ); 
+    std::string db_name = config.get( "DB-NAME" );
+    std::string db_host = config.get( "DB-HOST" ); 
+    std::string db_user = config.get( "DB-USER" ); 
+    std::string db_passwd = config.get( "DB-PASSWD" ); 
+    std::string db_port = config.get( "DB-PORT" ); 
     
-    sqlcommand =    "SELECT \
+    std::string sqlcommand =    "SELECT \
                         id, \
                         name, \
                         publishername, \
@@ -43,7 +47,6 @@ std::vector<Edition> EditionManager::getAllEditions ( void ){
     pqxx::work  pg_worker( pg_conn );
     pqxx::result res;
     unsigned int     row_count;
-    unsigned int     col_count;
     vector<string>   list_1d;
     vector< vector<string> >  list_2d;
     res = pg_worker.exec( sqlcommand );         
@@ -62,7 +65,4 @@ std::vector<Edition> EditionManager::getAllEditions ( void ){
     
     pg_conn.disconnect();
     return editionList;
-}
-
-
 }
