@@ -23,7 +23,7 @@
     std::string quote_text = "";
     std::string labels = "";
     std::string note = "";
-    bool is_private_data = false;
+    std::string is_private_data = "false";
     std::string save_button;
     std::string create_button;
 </%args>
@@ -80,7 +80,11 @@
         quoteData.setNote( note );
 
         DEBUG "is_private_data" << is_private_data << std::endl;
-        quoteData.setIsPrivateData( is_private_data );
+        if ( is_private_data == "false" ) {
+            quoteData.setIsPrivateData( false );
+        } else {
+            quoteData.setIsPrivateData( true );
+        }
 
         quoteData.setOwnerID( userSession.getUserID() );
 
@@ -190,9 +194,11 @@
                         class="full-width"
                         name="note" 
                         rows="10"></textarea></p>
-                <p>Datensatz nicht öffentlicht sichtbar <input type="checkbox"
+                <p>Datensatz nicht öffentlicht sichtbar <input 
+                        type="checkbox"
                         id="is_private_data"
-                        value="true" /></p>
+                        value="true"
+                        name="is_private_data" /></p>
 
                 <p><input id="save_button" type="submit" name="create_button" value="Speichern"></p>
             </form>

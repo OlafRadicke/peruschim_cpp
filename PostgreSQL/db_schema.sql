@@ -173,6 +173,7 @@ CREATE TABLE quote (
     sentence_begin  INTEGER   NOT NULL,
     chapter_end     INTEGER   NOT NULL,
     sentence_end    INTEGER   NOT NULL,
+    quote_text      TEXT      NOT NULL,
     note            TEXT      NOT NULL,
     owner_id        BIGINT    NOT NULL,
     edition_id      BIGINT    NOT NULL,

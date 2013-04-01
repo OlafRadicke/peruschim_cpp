@@ -48,21 +48,23 @@ void Quote::saveAsNew() {
                         sentence_begin, \n\
                         chapter_end, \n\
                         sentence_end, \n\
+                        quote_text, \n\
                         note, \n\
                         owner_id, \n\
                         edition_id, \n\
                         privatedata \n\
                     ) VALUES ( \n\
                         " + this->m_ID + ", \n\
-                        '" + DatabaseProxy::replace( m_bookSeries ) + "', \n\
-                        '" + DatabaseProxy::replace( m_bookTitle ) + "', \n\
-                        " +  DatabaseProxy::convertIntToStr( m_bookChapterBegin ) + ", \n\
-                        " +  DatabaseProxy::convertIntToStr( m_bookSentenceBegin ) + ", \n\
-                        " +  DatabaseProxy::convertIntToStr( m_bookChapterEnd ) + ", \n\
-                        " +  DatabaseProxy::convertIntToStr( m_bookSentenceEnd ) + ", \n\
-                        '" + DatabaseProxy::replace( m_note ) + "', \n\
-                        '" + DatabaseProxy::replace( m_ownerID ) + "', \n\
-                        '" + DatabaseProxy::replace( m_editionID ) + "', \n\
+                        '" + DatabaseProxy::replace( this->m_bookSeries ) + "', \n\
+                        '" + DatabaseProxy::replace( this->m_bookTitle ) + "', \n\
+                        " +  DatabaseProxy::convertIntToStr( this->m_bookChapterBegin ) + ", \n\
+                        " +  DatabaseProxy::convertIntToStr( this->m_bookSentenceBegin ) + ", \n\
+                        " +  DatabaseProxy::convertIntToStr( this->m_bookChapterEnd ) + ", \n\
+                        " +  DatabaseProxy::convertIntToStr( this->m_bookSentenceEnd ) + ", \n\
+                        '" + DatabaseProxy::replace( this->m_quoteText ) + "', \n\
+                        '" + DatabaseProxy::replace( this->m_note ) + "', \n\
+                        '" + DatabaseProxy::replace( this->m_ownerID ) + "', \n\
+                        '" + DatabaseProxy::replace( this->m_editionID ) + "', \n\
                         '" + isPrivateData + "' \n\
                     ); \n";    
     
