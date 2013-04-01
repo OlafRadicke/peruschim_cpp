@@ -4,6 +4,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <pqxx/pqxx>
+
+#include "Config.h"
 
 /**
 * This class represent a data set of a session.
@@ -57,6 +60,13 @@ public:
      * @return login name.
      **/            
     std::string getUserName ( void ) { return m_username; };
+    
+
+    /**
+     * Get back the user ID.
+     * @return ID of user.
+     **/            
+    std::string getUserID ( void );    
     
 private:
     

@@ -55,7 +55,7 @@ std::vector<Edition> EditionManager::getAllEditions ( void ){
     
     for (row_count=0; row_count < res.size(); row_count++) {
         Edition edition;
-        edition.setID( res[row_count][0].as<long>() );
+        edition.setID( res[row_count][0].as<string>() );
         edition.setName( res[row_count][1].as<string>() );
         edition.setPublisherName( res[row_count][2].as<string>() );
         edition.setReleaseNumber( res[row_count][3].as<string>() );

@@ -16,6 +16,7 @@ public:
      * Constructor init strings.
      **/
     Edition():
+        m_id(""),
         m_name(""),
         m_publisherName(""),
         m_releaseNumber(""),
@@ -27,7 +28,7 @@ public:
     /**
      * Get ID.
      **/
-    long getID()
+    std::string getID()
     {
         return this->m_id;
     }
@@ -69,7 +70,7 @@ public:
      * Set name.
      * @param name new name.
      **/
-    void setID( long id )
+    void setID( std::string id )
     {
         this->m_id = id;
     }   
@@ -116,7 +117,7 @@ private:
      *  edition id
      * Example: "35333"
      **/
-    long m_id;
+    std::string m_id;
     
     /**
      *  edition name

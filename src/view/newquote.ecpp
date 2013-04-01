@@ -14,7 +14,7 @@
 
 <%args>
     // define the query parameters
-    long edition_id = 0;
+    std::string edition_id = "";
     std::string book_title = "";
     int chapter_begin = 0;
     int sentence_begin = 0;
@@ -23,7 +23,9 @@
     std::string quote_text = "";
     std::string labels = "";
     std::string note = "";
+    bool is_private_data = false;
     std::string save_button;
+    std::string create_button;
 </%args>
 
 <%session scope="global">
@@ -39,18 +41,17 @@
     Quote quoteData;
 
     // ACL Check
-    bool check = userSession.isInRole ( "admin" );
-    DEBUG "check: " << check << std::endl;
     if ( userSession.isInRole ( "admin" ) == false ) {
         DEBUG "Nicht autorisiert!!" << std::endl;
         return reply.redirect ( "/login" );
     };
-    DEBUG "Autorisiert!!" << std::endl;
     std::string userName  = userSession.getUserName();
 
 
+    DEBUG "save_button: " << save_button << std::endl;
+    DEBUG "create_button: " << create_button << std::endl;
     // is button "create" kicked?
-    if ( save_button == "Speichern" ) {
+    if ( create_button == "Speichern" ) {
         DEBUG "edition_id" << edition_id << std::endl;
         quoteData.setEditionID( edition_id );
 
@@ -78,8 +79,13 @@
         DEBUG "note" << note << std::endl;
         quoteData.setNote( note );
 
-        quoteData.save( );
-        feedback = "Datenbankverbindung wurde gespeichert!";
+        DEBUG "is_private_data" << is_private_data << std::endl;
+        quoteData.setIsPrivateData( is_private_data );
+
+        quoteData.setOwnerID( userSession.getUserID() );
+
+        quoteData.saveAsNew( );
+        feedback = "Der Verse wurde gespeichert!";
     } else {
         editionList =  EditionManager::getAllEditions();  
 
@@ -184,8 +190,11 @@
                         class="full-width"
                         name="note" 
                         rows="10"></textarea></p>
+                <p>Datensatz nicht öffentlicht sichtbar <input type="checkbox"
+                        id="is_private_data"
+                        value="true" /></p>
 
-                <p><input id="save_button" type="submit" name="create" value="Speichern"></p>
+                <p><input id="save_button" type="submit" name="create_button" value="Speichern"></p>
             </form>
 
 % }

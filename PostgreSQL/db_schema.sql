@@ -82,8 +82,8 @@ VALUES (
 
 CREATE TABLE account_acl_roll (
     id              SERIAL    PRIMARY KEY,
-    account_id      INTEGER   NOT NULL,
-    acl_roll_id     INTEGER   NOT NULL,
+    account_id      BIGINT    NOT NULL,
+    acl_roll_id     BIGINT    NOT NULL,
     FOREIGN KEY  (account_id) REFERENCES account (id),
     FOREIGN KEY  (acl_roll_id) REFERENCES acl_roll (id)
 );
@@ -120,19 +120,19 @@ VALUES (
     3
 );
 
-CREATE TABLE db_account (
-    account_id      SERIAL    PRIMARY KEY,
-    account_name    TEXT      NOT NULL UNIQUE,
-    server_name     TEXT      NOT NULL,
-    database_name   TEXT      NOT NULL,
-    port_no         INTEGER   NOT NULL,
-    db_encoding     TEXT      NOT NULL,
-    db_user         TEXT      NOT NULL,
-    db_password     TEXT      NOT NULL,
-    db_sslmode      TEXT      NOT NULL,
-    owner_id        INTEGER   NOT NULL,
-    FOREIGN KEY  (owner_id) REFERENCES account (id)
-);
+-- CREATE TABLE db_account (
+--     account_id      SERIAL    PRIMARY KEY,
+--     account_name    TEXT      NOT NULL UNIQUE,
+--     server_name     TEXT      NOT NULL,
+--     database_name   TEXT      NOT NULL,
+--     port_no         INTEGER   NOT NULL,
+--     db_encoding     TEXT      NOT NULL,
+--     db_user         TEXT      NOT NULL,
+--     db_password     TEXT      NOT NULL,
+--     db_sslmode      TEXT      NOT NULL,
+--     owner_id        INTEGER   NOT NULL,
+--     FOREIGN KEY  (owner_id) REFERENCES account (id)
+-- );
 -- COMMENT ON TABLE db_account IS 'Variable postgressql accounds for crm data (team database).';
 -- COMMENT ON COLUMN db_account.account_id IS 'Link to a webgui user account.';
 
@@ -165,25 +165,6 @@ VALUES (
     ''
 );
 
--- INSERT INTO edition
--- ( 
---     id,
---     name, 
---     publishername,
---     releasenumber,
---     releasedate,
---     releaseplace
--- ) 
--- VALUES ( 
---     0,
---     "andere",
---     " ",
---     " ",
---     " ",
---     " "
--- );
-
-
 CREATE TABLE quote (
     id              SERIAL    PRIMARY KEY,
     series          TEXT      NOT NULL,
@@ -192,29 +173,23 @@ CREATE TABLE quote (
     sentence_begin  INTEGER   NOT NULL,
     chapter_end     INTEGER   NOT NULL,
     sentence_end    INTEGER   NOT NULL,
-    note            TEXT      NOT NULL
-);
-
-CREATE TABLE label (
-    id              SERIAL    PRIMARY KEY,
-    title           TEXT      NOT NULL,
-    note            TEXT      NOT NULL
-);
-
-CREATE TABLE quote_edition (
-    id              SERIAL    PRIMARY KEY,
-    quote_id        INTEGER   NOT NULL,
-    edition_id      INTEGER   NOT NULL,
-    FOREIGN KEY  (quote_id)   REFERENCES quote (id),
+    note            TEXT      NOT NULL,
+    owner_id        BIGINT    NOT NULL,
+    edition_id      BIGINT    NOT NULL,
+    privatedata     BOOLEAN   NOT NULL,
+    FOREIGN KEY  (owner_id)   REFERENCES account (id),
     FOREIGN KEY  (edition_id) REFERENCES edition (id)
 );
+-- COMMENT ON TABLE quote IS 'Data sets of bible quotes.';
+-- COMMENT ON COLUMN quote.owner IS 'Owner and author of this data set.';
+-- COMMENT ON COLUMN quote.privatedata IS 'Is this value TRUE than the data set is private.';
+
 
 CREATE TABLE quote_label (
     id              SERIAL    PRIMARY KEY,
-    quote_id        INTEGER   NOT NULL,
-    label_id      INTEGER     NOT NULL,
-    FOREIGN KEY  (quote_id)   REFERENCES quote (id),
-    FOREIGN KEY  (label_id)   REFERENCES label (id)
+    quote_id        BIGINT    NOT NULL,
+    title           TEXT      NOT NULL,
+    FOREIGN KEY  (quote_id)   REFERENCES quote (id)
 );
 
 COMMIT;

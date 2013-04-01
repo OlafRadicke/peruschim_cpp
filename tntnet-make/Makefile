@@ -46,8 +46,6 @@ OBJECTS =  \
 clean:
 	rm -f $(TMP_SOURCES) 
 
-
-
 dist: $(OBJECTS) 
 
 %.cpp %.h: %.ecpp

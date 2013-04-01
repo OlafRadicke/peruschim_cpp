@@ -30,6 +30,12 @@ public:
     ~DatabaseProxy();
     
      /**
+     * Convert int to string.
+     * @param sqlcommand a sql command.
+     **/       
+    static std::string convertIntToStr( int number );  
+    
+     /**
      * Do a SQL command without result.
      * @param sqlcommand a sql command.
      **/      

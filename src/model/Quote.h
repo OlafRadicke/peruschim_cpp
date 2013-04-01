@@ -18,15 +18,17 @@ public:
      * Constructor init strings.
      **/
     Quote():
-        m_editionID(0),
-        m_bookSeries(""),
-        m_bookTitle(""),
-        m_bookChapterBegin(0),
-        m_bookSentenceBegin(0),
-        m_bookChapterEnd(0),
-        m_bookSentenceEnd(0),
-        m_quoteLabels(),
-        m_note(""),
+//         m_ID(""),
+//         m_editionID(""),
+//         m_bookSeries(""),
+//         m_bookTitle(""),
+//         m_bookChapterBegin(0),
+//         m_bookSentenceBegin(0),
+//         m_bookChapterEnd(0),
+//         m_bookSentenceEnd(0),
+//         m_quoteLabels(),
+//         m_note(""),
+//         m_ownerID("")
         allBibleBooks()
     {
         allBibleBooks.push_back("1. Mose");
@@ -115,7 +117,7 @@ public:
     /**
      * Get id of edition.
      **/
-    long getEditionID()
+    std::string getEditionID()
     {
         return this->m_editionID;
     }
@@ -137,6 +139,22 @@ public:
     }    
     
     /**
+     * Set id of the owner.
+     **/
+    std::string getOwnerID()
+    {
+        return this->m_ownerID;
+    }    
+    
+    /**
+     * get visible policy.
+     **/
+    bool isPrivateData( )
+    {
+        return this->m_isPrivateData;
+    }      
+    
+    /**
      * Get number of sentence begin.
      **/
     int setSentenceBegin ( )
@@ -151,6 +169,14 @@ public:
     {
         return this->m_bookChapterEnd;
     } 
+    
+    
+    /**
+     * Get id of this quote.
+     **/    
+    std::string setID( ) {
+        return this->m_ID;
+    }       
     
     /**
      * Set Note.
@@ -177,20 +203,42 @@ public:
     }
     
     /**
-     * Save date in database..
+     * Save date as new data set in database.
      **/
-    void save() {}
+    void saveAsNew();
+    
+    
+    /**
+     * Save date update in in database..
+     **/
+    void saveUpdate() {}    
     
     // sets ====================================================
     
     /**
      * Set id of edition.
      **/
-    void setEditionID( long id )
+    void setEditionID( std::string id )
     {
         this->m_editionID = id;
+    } 
+    
+    /**
+     * Set id of the owner.
+     **/
+    void setOwnerID( std::string id )
+    {
+        this->m_ownerID = id;
     }
-
+    
+    /**
+     * Set visible policy.
+     **/
+    void setIsPrivateData( bool visible )
+    {
+        this->m_isPrivateData = visible;
+    }   
+    
     /**
      * Set title of book.
      **/
@@ -203,23 +251,7 @@ public:
      * Set labels.
      * @param labels strin with comma separated label values
      **/
-    void setLabels( std::string labels )
-    {
-        m_quoteLabels.clear();
-        int found;
-        std::string separator = ",";
-        found = labels.find_first_of( separator );
-        while(found != string::npos){
-            if(found > 0){
-                m_quoteLabels.push_back(labels.substr(0,found));
-            }
-            labels = labels.substr(found+1);
-            found = labels.find_first_of(separator);
-        }
-        if(labels.length() > 0){
-            m_quoteLabels.push_back(labels);
-        }
-    }     
+    void setLabels( std::string labels ) ;
     
     /**
      * Set number of chapter begin.
@@ -243,6 +275,13 @@ public:
     void setChapterEnd( int number )
     {
         this->m_bookChapterEnd = number;
+    }
+    
+    /**
+     * Set id of this quote.
+     **/    
+    void setID( string id ) {
+        this->m_ID= id;
     }
     
     /**
@@ -272,10 +311,6 @@ public:
 
 private:    
     
-    /**
-     * The edition id.
-     **/
-    long m_editionID;
     
     /**
      * book series name
@@ -312,6 +347,28 @@ private:
      * Example: "27"
      **/
     int m_bookSentenceEnd;
+
+    /**
+     * The edition id.
+     **/
+    std::string m_editionID;    
+    
+
+    /**
+     * The id of this quote.
+     **/
+    std::string m_ID;
+    
+    /**
+     * Id of the owner of thes quote.
+     * Example: "27"
+     **/
+    std::string m_ownerID;
+    
+    /**
+     * If this value "true" then it's not visible for other user.
+     **/    
+    bool m_isPrivateData;
 
     /**
      * quote labels. Separated by commas.
