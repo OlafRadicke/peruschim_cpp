@@ -8,16 +8,19 @@ br.clear-both {
 /* -------- LOGO + Header -------------------------- */
 
 div#header-logo{
-    padding: 0px;
-    margin: 0px;
 
+    -moz-transform:rotate(8deg); /* Firefox 3.6 Firefox 4 */
+    -webkit-transform:rotate(8deg); /* Safari */
+    -o-transform:rotate(8deg); /* Opera */
+    -ms-transform:rotate(8deg); /* IE9 */
+    transform:rotate(8deg); /* W3C */   
 }
 
 div#header-logo a {
     text-decoration:none;
 }
 
-div#logo-red {
+div#logo-black {
     color: #FFFFFF;
     text-align: center;
 
@@ -30,11 +33,11 @@ div#logo-red {
     -webkit-border-top-left-radius: 15px;
 
 
-    background-color: #CC063B;
-    background: linear-gradient( top, #FF526F, #D40629);
-    background: -webkit-linear-gradient( top, #FF526F, #D40629);
-    background: -moz-linear-gradient( top, #FF526F, #D40629);
-    background: -ms-linear-gradient( top, #FF526F, #D40629);
+    background-color: #000000;
+    background: linear-gradient( top, #202020, #000000  );
+    background: -webkit-linear-gradient( top, #202020, #000000  );
+    background: -moz-linear-gradient( top, #202020, #000000  );
+    background: -ms-linear-gradient( top, #202020, #000000  );
 
 
     -moz-box-shadow: 5px 5px 8px #B3B3B3;
@@ -71,6 +74,7 @@ div#logo-blue {
     -moz-box-shadow: 5px 5px 8px #B3B3B3;
     -webkit-box-shadow: 5px 5px 8px #B3B3B3;
     box-shadow: 5px 5px 8px #B3B3B3;
+
 
     width: 300px ;
     margin-left: auto ;

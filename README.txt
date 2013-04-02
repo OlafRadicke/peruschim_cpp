@@ -30,19 +30,19 @@ chkconfig postgresql on
 # Zum postgres-Accound wechseln
 su - postgres
 # Neuen Datenbank-User anlegen
-createuser -W artikel23_user
+createuser -W peruschim_cpp
 # Datenbank erstellen und User zuweisen
-createdb -O artikel23_user  artikel23t_db
+createdb -O peruschim_cpp  peruschim_cpp
 # ggf. Anpassungen an der Konfiguration in
 /var/lib/pgsql/data/pg_hba.conf 
 # Server neu starten
 systemctl restart postgresql.service
 # Verbindung testen
-psql -U artikel23_user -h localhost -W artikel23t
+psql -U peruschim_cpp -h localhost -W peruschim_cpp
 # Log-Analyse:
  tail -n 60 /var/lib/pgsql/data/pg_log/postgresql-Sun.log
 # Tabellen erstellen:
-cat ./PostgreSQL/system_db_schema.sql | psql -U artikel23_user -h localhost -W artikel23t
+psql -h localhost -U peruschim_cpp peruschim_cpp < /peruschim_cpp/PostgreSQL/db_schema.sql
 
 
 STARTEN

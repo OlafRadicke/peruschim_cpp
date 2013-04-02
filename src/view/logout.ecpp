@@ -22,9 +22,7 @@
 </%session>
 
 <%cpp>
-
-    userSession.setUserName ( "logout" );
-    userSession.cleanRoll ();
+    userSession.lockout();
 </%cpp>
 
 

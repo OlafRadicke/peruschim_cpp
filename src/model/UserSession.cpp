@@ -44,6 +44,12 @@ std::string UserSession::getUserID ( void ) {
     return user_id;
 }
 
+void UserSession::lockout( ) { 
+    DEBUG "logout..." << endl;
+    this->m_userrolls.clear(); 
+    this->m_username = "";
+}  
+
 bool UserSession::isInRole ( std::string siteroll ) {
     DEBUG "siteroll: " << siteroll << std::endl;
     

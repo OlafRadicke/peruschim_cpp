@@ -16,7 +16,6 @@
 
 <%session scope="global">
     // define your session scope variables here
-    // std::string mySessionState;
     UserSession userSession;
 </%session>
 
@@ -24,14 +23,12 @@
 
 
     // ACL Check
-    bool check = userSession.isInRole ( "admin" );
-    DEBUG "check: " << check << std::endl;
-    if ( userSession.isInRole ( "admin" ) == false ) {
-        DEBUG "Nicht autorisiert!!" << std::endl;
-        return reply.redirect ( "/login" );
-    };
-    DEBUG "Autorisiert!!" << std::endl;
-    std::string userName  = userSession.getUserName();
+    // Diese Seite soll jeder lesen können.
+//     if ( userSession.isInRole ( "admin" ) == false ) {
+//         DEBUG "Nicht autorisiert!!" << std::endl;
+//         return reply.redirect ( "/login" );
+//     };
+//     std::string userName  = userSession.getUserName();
 
 </%cpp>
 
@@ -62,14 +59,21 @@
 
 
     <div class="centerbox">
-        <h1>Herzlich willkommen <$ userName $></h1>
+        <h1>Herzlich willkommen auf <i>PERUSCHIM</i></h1>
         <div class="columnbox">
-            <ul>
-                <li><b>A</b>
-                <ul>
-                    <li><a href=""><b>b:</b></a> c.</li>        
-                </ul>
-            </ul>
+<p>Mit <i>PERUSCHIM</i> kannst du deine Bibelverse, di du dir gerne merken willst, 
+speichern. Diese Verse kannst du dann mit Schlagworten versehen um sie schneller
+wieder zu finden. </p>
+<p>Du kannst auch nachschauen, welche Bibelstellen sich andere zu bestimmten Themen
+makert haben. Letztlich ist <i>PERUSCHIM</i> eine Bibelkonkordanz mit 
+Sozialem-Netzwerk-Charakter. Versemakierungen die du nicht mit anderen teilen 
+willst kannst du als "privat" makieren. </p>
+<i>PERUSCHIM</i> ist ein OpenSource-Projekt. Den Source-Code findest du hier:
+<a href="https://github.com/OlafRadicke/peruschim_cpp">github.com/OlafRadicke/peruschim_cpp</a>.
+</p>
+<p>Das Wort <i>PERUSCHIM</i> ist übrigens Hebräische und heißt "Pharisäer". Ich
+habe den Namen für das Projekt gewählt, mit es mich bei aller begeisterung für
+das Bibelstudium, daran erinnern soll nicht zum <i>Pharisäer</i> zu werden.</p>
 
         </div>
     </div>

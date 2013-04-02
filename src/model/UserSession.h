@@ -38,6 +38,11 @@ public:
     void cleanRoll ( ) { m_userrolls.clear(); } ;
     
     /**
+     * Session logout.
+     **/
+    void lockout( ) ;    
+    
+    /**
      * Check is user in this site rolle.
      * @param siteroll the roll of this site which are allowed is.
      * @return true or false.
