@@ -7,7 +7,6 @@
 #include <pqxx/pqxx>
 
 #include "Config.h"
-#include "TeamDataBase.h"
 
 using namespace std;
  
@@ -22,12 +21,6 @@ public:
      * database.
      **/
     DatabaseProxy( );
-    
-    /**
-     * use a defined team data base.
-     **/
-    DatabaseProxy( TeamDataBase team_db );
-    ~DatabaseProxy();
     
      /**
      * Convert int to string.

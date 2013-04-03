@@ -194,7 +194,7 @@
                         class="full-width"
                         name="note" 
                         rows="10"></textarea></p>
-                <p>Datensatz nicht öffentlicht sichtbar <input 
+                <p>Datensatz nicht öffentlicht sichtbar machen <input 
                         type="checkbox"
                         id="is_private_data"
                         value="true"

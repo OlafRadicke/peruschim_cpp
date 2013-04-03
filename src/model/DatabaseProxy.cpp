@@ -32,37 +32,11 @@ DatabaseProxy::DatabaseProxy( ) :
 
 }
 
-
-DatabaseProxy::DatabaseProxy( TeamDataBase team_db ){      
-    DEBUG "========== init begin ========== \n" ;
-
-    m_pg_db_name = team_db.getDatabase_name ();
-    m_pg_db_host = team_db.getServer_name (); 
-    m_pg_db_user = team_db.getDB_user (); 
-    m_pg_db_passwd = team_db.getDB_password (); 
-    m_pg_db_port =  team_db.getPort_no (); 
-    
-    DEBUG "m_pg_db_name: " << m_pg_db_name << endl ;
-    DEBUG "m_pg_db_host: " << m_pg_db_host << endl;
-    DEBUG "m_pg_db_user: " << m_pg_db_user << endl;
-    DEBUG "m_pg_db_passwd: " << m_pg_db_passwd << endl;
-    DEBUG "m_pg_db_passwd: " << m_pg_db_port << endl;
-    
-    DEBUG "========== init end ==========" << endl;
-}
-
 string DatabaseProxy::convertIntToStr( int number )
 {
    stringstream ss;//create a stringstream
    ss << number;//add number to the stream
    return ss.str();//return a string with the contents of the stream
-}
-
-DatabaseProxy::~DatabaseProxy() {
-    DEBUG "========== destructor begin =========="  << endl;
-//     delete m_config;
-    DEBUG "========== destructor end =========="  << endl;
-    
 }
 
 vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )

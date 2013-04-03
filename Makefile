@@ -26,10 +26,6 @@ OBJECTS = \
 ./src/model/Edition.o \
 ./src/model/EditionManager.o \
 ./src/model/Quote.o \
-./src/model/SeekerData.o \
-./src/model/SeekerManager.o \
-./src/model/TeamDataBase.o \
-./src/model/TeamDataBaseManager.o \
 ./src/model/UserSession.o \
 ./src/model/WebACL.o\
 ./src/view/access_denied.o \
@@ -40,12 +36,9 @@ OBJECTS = \
 ./src/view/logout.o \
 ./src/view/mainmenu.o \
 ./src/view/newquote.o \
-./src/view/portaladmin/add_db_connection.o  \
-./src/view/portaladmin/edit_db_connection.o  \
 ./src/view/portaladmin/newaccont.o  \
 ./src/view/portaladmin/portaladmin.o \
 ./src/view/portaloperator/portaloperator.o \
-./src/view/portalprovider/anonymous_seeker_list.o \
 ./src/view/portalprovider/portalprovider.o \
 ./src/view/portalseeker/portalseeker.o \
 ./src/view/style.o
