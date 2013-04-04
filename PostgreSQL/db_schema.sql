@@ -186,7 +186,7 @@ CREATE TABLE quote (
 -- COMMENT ON COLUMN quote.privatedata IS 'Is this value TRUE than the data set is private.';
 
 
-CREATE TABLE quote_label (
+CREATE TABLE quote_keyword (
     id              SERIAL    PRIMARY KEY,
     quote_id        BIGINT    NOT NULL,
     title           TEXT      NOT NULL,

@@ -68,14 +68,14 @@ void Quote::saveAsNew() {
                         '" + isPrivateData + "' \n\
                     ); \n";    
     
-    for (unsigned int i=0; this->m_quoteLabels.size()>i; i++ ) {
-        sqlcommand += "INSERT INTO quote_label \n\
+    for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) {
+        sqlcommand += "INSERT INTO quote_keyword \n\
                       ( \n\
                         quote_id, \n\
                         title \n\
                       ) VALUES ( \n\
                         " + this->m_ID + ", \n\
-                        '" + this->m_quoteLabels[i] + "' \n\
+                        '" + this->m_quoteKeywords[i] + "' \n\
                         );\n";
     }
  
@@ -96,20 +96,20 @@ void Quote::saveAsNew() {
     
 }
 
-void Quote::setLabels( std::string labels ) {
-    m_quoteLabels.clear();
+void Quote::setKeywords( std::string keywords ) {
+    m_quoteKeywords.clear();
     unsigned int found;
     std::string separator = ",";
-    found = labels.find_first_of( separator );
+    found = keywords.find_first_of( separator );
     while(found != string::npos){
         if(found > 0){
-            m_quoteLabels.push_back(labels.substr(0,found));
+            m_quoteKeywords.push_back(keywords.substr(0,found));
         }
-        labels = labels.substr(found+1);
-        found = labels.find_first_of(separator);
+        keywords = keywords.substr(found+1);
+        found = keywords.find_first_of(separator);
     }
-    if(labels.length() > 0){
-        m_quoteLabels.push_back(labels);
+    if(keywords.length() > 0){
+        m_quoteKeywords.push_back(keywords);
     }    
 }
 

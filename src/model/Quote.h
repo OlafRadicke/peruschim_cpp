@@ -26,7 +26,7 @@ public:
 //         m_bookSentenceBegin(0),
 //         m_bookChapterEnd(0),
 //         m_bookSentenceEnd(0),
-//         m_quoteLabels(),
+//         m_quoteKeywords(),
 //         m_note(""),
 //         m_ownerID("")
         allBibleBooks()
@@ -248,10 +248,10 @@ public:
     } 
     
     /**
-     * Set labels.
-     * @param labels strin with comma separated label values
+     * Set keywords.
+     * @param keywords strin with comma separated label values
      **/
-    void setLabels( std::string labels ) ;
+    void setKeywords( std::string keywords ) ;
     
     /**
      * Set number of chapter begin.
@@ -371,10 +371,10 @@ private:
     bool m_isPrivateData;
 
     /**
-     * quote labels. Separated by commas.
+     * quote keywords. Separated by commas.
      * Example: "Umkehr, Zöllner, Nachfolge"
      **/
-    std::vector<std::string> m_quoteLabels;
+    std::vector<std::string> m_quoteKeywords;
 
     /**
      * quote note.

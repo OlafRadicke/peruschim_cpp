@@ -21,7 +21,7 @@
     int chapter_end = 0;
     int sentence_end = 0;
     std::string quote_text = "";
-    std::string labels = "";
+    std::string keywords = "";
     std::string note = "";
     std::string is_private_data = "false";
     std::string save_button;
@@ -73,8 +73,8 @@
         DEBUG "quote_text" << quote_text << std::endl;
         quoteData.setQuoteText( quote_text );
 
-        DEBUG "labels" << labels << std::endl;
-        quoteData.setLabels( labels );
+        DEBUG "keywords" << keywords << std::endl;
+        quoteData.setKeywords( keywords );
 
         DEBUG "note" << note << std::endl;
         quoteData.setNote( note );
@@ -185,7 +185,7 @@
 
                 <p>Schlagworte (Kommergetrennt): <br><input 
                         class="full-width"
-                        name="labels" 
+                        name="keywords" 
                         type="text" 
                         maxlength="300"></p>
 
