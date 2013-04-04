@@ -343,6 +343,13 @@ input#save_button {
     border-bottom-left-radius:5px;
 }
 
+/* ----- Form keyword button ------------------------------------------------- */
+
+input.keyword_button {
+    width: 100% ; 
+    text-align: left;
+}
+
 /* -------- Form input ---------------------------------------------------- */
 
 input.full-width {

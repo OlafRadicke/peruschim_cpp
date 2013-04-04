@@ -3,6 +3,7 @@
     // #include "foo.h"
     #include "../model/WebACL.h"
     #include "../model/UserSession.h"
+    #include "../model/KeywordRegister.h"
 
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -30,13 +31,15 @@
 //     };
 //     std::string userName  = userSession.getUserName();
 
+    vector<string> keywordTitles = KeywordRegister::getAllKeywordTitles( );
+
 </%cpp>
 
 
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>PERUSCHIM - Home</title>
+    <title>PERUSCHIM - Schlagwortsuche</title>
     <meta charset = "UTF-8" />
     <& "style" &>
 </head>
@@ -47,9 +50,9 @@
 
     <div class="mainmenue">
         <ul>
-            <li class="tableft_activ"><a href="home">Home</a></li>
+            <li class="tableft"><a href="home">Home</a></li>
             <li class="tabmiddle"><a href="newquote">Neuer Vers</a></li>
-            <li class="tabmiddle"><a href="keyword-register">Schlagwortsuche</a></li>
+            <li class="tabmiddle_activ"><a href="keyword-directory">Schlagwortsuche</a></li>
             <li class="tabmiddle"><a href="portaloperator">Vermittlerportal</a></li>
             <li class="tabmiddle"><a href="portaladmin">Administrationsportal</a></li>
             <li class="tabright"><a href="logout">Abmelden</a></li>
@@ -59,21 +62,14 @@
 
 
     <div class="centerbox">
-        <h1>Herzlich willkommen auf <i>PERUSCHIM</i></h1>
+        <h1>Schlagwortsuche</h1>
         <div class="columnbox">
-<p>Mit <i>PERUSCHIM</i> kannst du deine Bibelverse, di du dir gerne merken willst, 
-speichern. Diese Verse kannst du dann mit Schlagworten versehen um sie schneller
-wieder zu finden. </p>
-<p>Du kannst auch nachschauen, welche Bibelstellen sich andere zu bestimmten Themen
-makert haben. Letztlich ist <i>PERUSCHIM</i> eine Bibelkonkordanz mit 
-Sozialem-Netzwerk-Charakter. Versemakierungen die du nicht mit anderen teilen 
-willst kannst du als "privat" makieren. </p>
-<i>PERUSCHIM</i> ist ein OpenSource-Projekt. Den Source-Code findest du hier:
-<a href="https://github.com/OlafRadicke/peruschim_cpp">github.com/OlafRadicke/peruschim_cpp</a>.
-</p>
-<p>Das Wort <i>PERUSCHIM</i> ist übrigens Hebräische und heißt "Pharisäer". Ich
-habe den Namen für das Projekt gewählt, mit es mich bei aller begeisterung für
-das Bibelstudium, daran erinnern soll nicht zum <i>Pharisäer</i> zu werden.</p>
+
+            <form method="post" >
+%           for ( unsigned int i=0; i<keywordTitles.size(); i++) {
+                <input class="keyword_button" type="submit" name="<$ keywordTitles[i] $>" value="<$ keywordTitles[i] $>">
+%           }
+            </form>
 
         </div>
     </div>

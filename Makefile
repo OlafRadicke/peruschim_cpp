@@ -5,9 +5,10 @@ TNTMAKEFILE = ./tntnet-make/Makefile
 
 CPPFLAGS = -Wall -Werror -pedantic  -Wno-long-long
 CPPFLAGS += -fPIC -O2  
-LIBS =  -ltntnet -lcxxtools 
+LIBS =  -ltntnet -lcxxtools -ltntdb
 LIBS += -L/usr/lib
 LIBS += -I/usr/include 
+#LIBS += -L/usr/local/lib/
 # tnt data base provider
 # CPPFLAGS_O += -ltntdb
 # pstgrsql 
@@ -25,12 +26,15 @@ OBJECTS = \
 ./src/model/DatabaseProxy.o \
 ./src/model/Edition.o \
 ./src/model/EditionManager.o \
+./src/model/KeywordData.o \
+./src/model/KeywordRegister.o \
 ./src/model/Quote.o \
 ./src/model/UserSession.o \
 ./src/model/WebACL.o\
 ./src/view/access_denied.o \
 ./src/view/favicon.o \
 ./src/view/home.o \
+./src/view/keyword-register.o \
 ./src/view/header.o \
 ./src/view/login.o \
 ./src/view/logout.o \

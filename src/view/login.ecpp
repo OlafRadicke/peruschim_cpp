@@ -48,7 +48,9 @@
     <br />
     <div class="smallgroupbox">
         <form method="post" >
-            <h2>Login:</h2>
+            <h2>Login</h2>
+            <p>Für den gewählten Bereich müssen du angemeldet sein. Bitte
+               authentifiziere dich...
             <p>Benutzer:<br><input name="name" type="text" size="40" maxlength="40"></p>
             <p>Passwort:<br><input name="password" type="password" size="40" maxlength="40"></p>
             <p><input type="submit" name="login" value="kicked"></p>

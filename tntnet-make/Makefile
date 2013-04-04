@@ -8,6 +8,7 @@ TMP_SOURCES =  \
 ./src/view/favicon.cpp \
 ./src/view/header.cpp \
 ./src/view/home.cpp \
+./src/view/keyword-register.cpp \
 ./src/view/login.cpp \
 ./src/view/logout.cpp \
 ./src/view/mainmenu.cpp \
@@ -24,6 +25,7 @@ OBJECTS =  \
 ./src/view/favicon.o \
 ./src/view/header.o \
 ./src/view/home.o \
+./src/view/keyword-register.o \
 ./src/view/login.o \
 ./src/view/logout.o \
 ./src/view/mainmenu.o \

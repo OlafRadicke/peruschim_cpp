@@ -48,4 +48,25 @@ psql -h localhost -U peruschim_cpp peruschim_cpp < /peruschim_cpp/PostgreSQL/db_
 STARTEN
 -------
 
-tntnet ./tntnet.conf
+nach dem Komplieren einfach die Datei ./peruschim_cp ausfüren.
+
+
+TROUBLESHOOTING
+---------------
+
+Wenn beim starten eine solche Fehlermeldung kommt:
+
+or@hamburg:~/a-z/g/git-repos/peruschim_cpp$ ./peruschim_cpp
+    /peruschim_cpp: error while loading shared libraries: libtntdb.so.3: cannot 
+    open shared object file: No such file or directory
+
+Ist dem System die shared libraries der libtntdb nicht bekannt. Stelle sicher
+das Tntdb installiert ist und kontrolliere die Konfiguration in /etc/ld.so.conf.d/
+ob der Pfad zur shared librarie konfiguriert ist. Wenn nicht lege eine 
+Konfigurationsdatei an mit den Namen /etc/ld.so.conf.d/tntdb.conf. Deren Inhalt
+muss lauten:
+/usr/local/lib/
+
+Oder je nach dem wo deine Lib installiert ist. Danach muss die Konfiguration
+vom System neu eingelesen werden. Das geschied mir dem Befehl: "ldconfig"
+
