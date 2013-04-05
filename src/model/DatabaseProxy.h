@@ -4,7 +4,6 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include <pqxx/pqxx>
 
 #include <tntdb/connection.h>
 #include <tntdb/connect.h>

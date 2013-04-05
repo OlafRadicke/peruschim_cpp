@@ -99,15 +99,7 @@ VALUES (
     2
 );
 
-INSERT INTO account_acl_roll
-( 
-    account_id, 
-    acl_roll_id
-) 
-VALUES ( 
-    1,
-    3
-);
+
 
 -- CREATE TABLE db_account (
 --     account_id      SERIAL    PRIMARY KEY,

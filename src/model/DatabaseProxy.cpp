@@ -17,7 +17,6 @@ string DatabaseProxy::convertIntToStr( int number )
 vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
 {
     Config config;
-    vector<string>            list_1d;
     vector< vector<string> >  list_2d;
     unsigned int     col_count;
     
@@ -26,22 +25,30 @@ vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
     tntdb::Result result;
     
     conn = tntdb::connect(conn_para);
-    DEBUG "SQLCODE: " << sqlcommand;
+    DEBUG "SQLCODE: " << sqlcommand << endl;
     result = conn.select( sqlcommand );
+    DEBUG "result.size()=" << result.size() << endl;
     for (tntdb::Result::const_iterator it = result.begin();
         it != result.end(); ++it
     ) {
+        vector<string>  list_1d;
         tntdb::Row row = *it;
         for ( col_count = 0; col_count != row.size(); col_count++ ) {       
-        
+            DEBUG "col_count: " << col_count << endl;
             std::string value;
             row[col_count].get(value); 
             DEBUG "value=" << value << endl;
-            list_1d.push_back( value );
+            string copy_value = value;
+            DEBUG "copy_value=" << copy_value << endl;
+            list_1d.push_back( copy_value );
         }
+        DEBUG "list_1d[0]=" << list_1d[0] << endl;
         list_2d.push_back( list_1d );
     }
     conn.close();
+    for ( unsigned int i = 0; i != list_2d.size(); i++ ) {    
+        DEBUG "list_2d[i]: " << list_2d[i][0] << endl;
+    }
     return list_2d;
 }    
 
