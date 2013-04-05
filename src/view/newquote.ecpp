@@ -43,7 +43,7 @@
     // ACL Check
     if ( userSession.isInRole ( "admin" ) == false ) {
         DEBUG "Nicht autorisiert!!" << std::endl;
-        return reply.redirect ( "/login" );
+        return reply.redirect ( "/newaccount" );
     };
     std::string userName  = userSession.getUserName();
 

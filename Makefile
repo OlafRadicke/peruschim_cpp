@@ -8,7 +8,6 @@ CPPFLAGS += -fPIC -O2
 LIBS =  -ltntnet -lcxxtools -ltntdb
 LIBS += -L/usr/lib
 LIBS += -I/usr/include 
-#LIBS += -L/usr/local/lib/
 # tnt data base provider
 # CPPFLAGS_O += -ltntdb
 # pstgrsql 
@@ -40,11 +39,8 @@ OBJECTS = \
 ./src/view/logout.o \
 ./src/view/mainmenu.o \
 ./src/view/newquote.o \
-./src/view/portaladmin/newaccont.o  \
+./src/view/portaladmin/newaccount.o  \
 ./src/view/portaladmin/portaladmin.o \
-./src/view/portaloperator/portaloperator.o \
-./src/view/portalprovider/portalprovider.o \
-./src/view/portalseeker/portalseeker.o \
 ./src/view/style.o
 
 all: dist

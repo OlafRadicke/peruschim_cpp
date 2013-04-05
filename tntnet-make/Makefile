@@ -13,11 +13,8 @@ TMP_SOURCES =  \
 ./src/view/logout.cpp \
 ./src/view/mainmenu.cpp \
 ./src/view/newquote.cpp \
-./src/view/portaladmin/newaccont.cpp  \
+./src/view/portaladmin/newaccount.cpp  \
 ./src/view/portaladmin/portaladmin.cpp \
-./src/view/portaloperator/portaloperator.cpp \
-./src/view/portalprovider/portalprovider.cpp \
-./src/view/portalseeker/portalseeker.cpp \
 ./src/view/style.cpp
 
 OBJECTS =  \
@@ -30,11 +27,8 @@ OBJECTS =  \
 ./src/view/logout.o \
 ./src/view/mainmenu.o \
 ./src/view/newquote.o \
-./src/view/portaladmin/newaccont.o \
+./src/view/portaladmin/newaccount.o \
 ./src/view/portaladmin/portaladmin.o \
-./src/view/portaloperator/portaloperator.o \
-./src/view/portalprovider/portalprovider.o \
-./src/view/portalseeker/portalseeker.o \
 ./src/view/style.o
 
 
