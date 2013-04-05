@@ -6,31 +6,6 @@
 
 using namespace std;
 
-DatabaseProxy::DatabaseProxy( ) : 
-    m_pg_db_name (""), 
-    m_pg_db_host (""), 
-    m_pg_db_user (""),
-    m_pg_db_passwd (""),
-    m_pg_db_port (""),
-    m_sqlQuotas ("'") 
-{      
-    DEBUG "========== init begin ========== \n" ;
-    Config config;
-//     m_config = new Config();
-    m_pg_db_name = config.get( "DB-NAME" );
-    m_pg_db_host = config.get( "DB-HOST" ); 
-    m_pg_db_user = config.get( "DB-USER" ); 
-    m_pg_db_passwd = config.get( "DB-PASSWD" ); 
-    m_pg_db_port = config.get( "DB-PORT" ); 
-    DEBUG "m_pg_db_name: " << m_pg_db_name << endl ;
-    DEBUG "m_pg_db_host: " << m_pg_db_host << endl;
-    DEBUG "m_pg_db_user: " << m_pg_db_user << endl;
-    DEBUG "m_pg_db_passwd: " << m_pg_db_passwd << endl;
-    DEBUG "m_pg_db_port: " << m_pg_db_port << endl;
-    
-    DEBUG "========== init end ==========" << endl;
-
-}
 
 string DatabaseProxy::convertIntToStr( int number )
 {
@@ -41,115 +16,74 @@ string DatabaseProxy::convertIntToStr( int number )
 
 vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
 {
-    DEBUG "sqlGet" <<  endl;
-    string conn_para = "password=" + m_pg_db_passwd +\
-        " dbname=" + m_pg_db_name + \
-        " host=" + m_pg_db_host + \
-        " port=" + m_pg_db_port + \
-        " user=" + m_pg_db_user ;    
-    pqxx::connection pg_conn( conn_para );
-    pqxx::work  pg_worker( pg_conn );
-    pqxx::result res;
-    unsigned int     row_count;
-    unsigned int     col_count;
-    vector<string>   list_1d;
+    Config config;
+    vector<string>            list_1d;
     vector< vector<string> >  list_2d;
-    res = pg_worker.exec( sqlcommand );         
-    pg_worker.commit();
-//     DEBUG " found: " << res.size() << endl;
+    unsigned int     col_count;
     
-    for (row_count=0; row_count < res.size(); row_count++) {
-//         DEBUG "row nr.:" << row_count  << endl;
-        for (col_count=0; col_count < res[row_count].size(); col_count++) {
-//             DEBUG "col nr.:" << col_count  << endl;
-//             DEBUG "value:" << res[row_count][col_count].as<string>() << "\t"  << endl;
-            list_1d.push_back ( res[row_count][col_count].as<string>() );
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn;
+    tntdb::Result result;
+    
+    conn = tntdb::connect(conn_para);
+    DEBUG "SQLCODE: " << sqlcommand;
+    result = conn.select( sqlcommand );
+    for (tntdb::Result::const_iterator it = result.begin();
+        it != result.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+        for ( col_count = 0; col_count != row.size(); col_count++ ) {       
+        
+            std::string value;
+            row[col_count].get(value); 
+            DEBUG "value=" << value << endl;
+            list_1d.push_back( value );
         }
-        list_2d.push_back ( list_1d );
-        list_1d.clear();
-    }    
-    
-    pg_conn.disconnect();
+        list_2d.push_back( list_1d );
+    }
+    conn.close();
     return list_2d;
-    
-}
+}    
 
 string DatabaseProxy::sqlGetSingle ( string sqlcommand )
 {
-    string conn_para = "password=" + m_pg_db_passwd +\
-        " dbname=" + m_pg_db_name + \
-        " host=" + m_pg_db_host + \
-        " port=" + m_pg_db_port + \
-        " user=" + m_pg_db_user ;    
-
-    pqxx::connection pg_conn( conn_para ); 
-    pqxx::work  pg_worker( pg_conn );
-    pqxx::result res;       
-    DEBUG  endl;
-    unsigned int     row_count;
+    Config config;
     unsigned int     col_count;
-
     
-    DEBUG  endl;
-    pg_worker.commit();
-    DEBUG " found: " << res.size() << endl;
-    DEBUG  endl;
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn;
+    tntdb::Result result;
     
-    for (row_count=0; row_count < res.size(); row_count++) {
-        DEBUG "row nr.:" << row_count  << endl;
-        for (col_count=0; col_count < res[row_count].size(); col_count++) {
-            DEBUG "col nr.:" << col_count  << endl;
-            DEBUG "value:" << res[row_count][col_count].as<string>() << "\t"  << endl;
-            return res[row_count][col_count].as<string>() ;
+    conn = tntdb::connect( conn_para );
+    result = conn.select( sqlcommand );
+    for (tntdb::Result::const_iterator it = result.begin();
+        it != result.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+        for ( col_count = 0; col_count != row.size(); col_count++ ) {       
+        
+            std::string value;
+            row[col_count].get(value); 
+            DEBUG "value=" << value << endl;
+            return value;
         }
     }    
-    DEBUG  endl;
-    pg_conn.disconnect();
     return "";
 }
 
-
 void DatabaseProxy::sqlSet ( string sqlcommand )
 {
-    string conn_para = "password=" + m_pg_db_passwd +\
-        " dbname=" + m_pg_db_name + \
-        " host=" + m_pg_db_host + \
-        " port=" + m_pg_db_port + \
-        " user=" + m_pg_db_user ;    
-
-    pqxx::connection pg_conn( conn_para ); 
-    pqxx::work  pg_worker( pg_conn );
-    pqxx::result res;         
-    DEBUG "sqlSet" << endl;
-    unsigned int     row;
-    unsigned int     col;
-    DEBUG "SQL-CODE: \n <code>" << sqlcommand  << "</code>" << endl;
-    DEBUG endl ;
-
-    DEBUG endl ;
-    res = pg_worker.exec ( sqlcommand );
-    DEBUG endl ;
-    pg_worker.commit();
-    DEBUG endl ;
-
+    Config config;
     
-//     catch ( ... ) {
-//         ERROR "unknow exception raised!"  << endl;
-//         return;
-//     }
-    DEBUG endl ;
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn;
+    tntdb::Result result;
     
-    for (row=0; row < res.size(); row++) {
-        DEBUG "row nr.:" << row  << endl;
-        for (col=0; col < res[row].size(); col++) {
-            DEBUG "col nr.:" << col  << endl;
-            DEBUG "value:" << res[row][col].as<string>() << "\t"  << endl;
-        }
-        DEBUG "end of loop" << endl;
-    }    
-    DEBUG  endl;    
-    pg_conn.disconnect();
+    conn = tntdb::connect( conn_para );
+    conn.execute( sqlcommand );
+    
 }
+
 
 std::string DatabaseProxy::replace (  std::string s ){
     if ( s == "" ) {
@@ -176,6 +110,4 @@ std::string DatabaseProxy::replace (
     return s;
 }
 
-void DatabaseProxy::setQuotaType ( string quotaTyp ){
-    m_sqlQuotas = quotaTyp;
-}
+

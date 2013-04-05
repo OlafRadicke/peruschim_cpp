@@ -27,7 +27,6 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
     std::string masqu_name = "";
     vector< vector<string> > sqlResult;
     DatabaseProxy database_proxy;
-    database_proxy.setQuotaType ( "'" );
     
     DEBUG std::endl;
     masqu_name = DatabaseProxy::replace( user_name, "'", "\\'" );
@@ -116,7 +115,6 @@ void WebACL::createAccount (
     std::string masqu_name = "";
     vector< vector<string> > sqlResult;
     DatabaseProxy database_proxy;
-    database_proxy.setQuotaType ( "'" );
     
     password_salt = WebACL::genRandomSalt ( 16 );
     password_hash = cxxtools::md5 ( new_password + password_salt );
@@ -257,13 +255,11 @@ void WebACL::setPassword (  std::string user_name, std::string new_password ) {
     std::string masqu_name = "";
     vector< vector<string> > sqlResult;
     DatabaseProxy database_proxy;
-    database_proxy.setQuotaType ( "'" );
     
     password_salt = genRandomSalt ( 16 );
     DEBUG "password_salt: " << password_salt << std::endl;
     password_hash = cxxtools::md5 ( new_password + password_salt );
     DEBUG "password_hash: " <<  password_hash <<  std::endl;
-    masqu_name = DatabaseProxy::replace( user_name, "'", "\\'" );
     
     DEBUG std::endl;
     DEBUG std::endl;

@@ -48,9 +48,9 @@
     <div class="mainmenue">
         <ul>
             <li class="tableft_activ"><a href="home">Home</a></li>
-            <li class="tabmiddle"><a href="newquote">Neuer Vers</a></li>
             <li class="tabmiddle"><a href="keyword-register">Schlagwortsuche</a></li>
-            <li class="tabmiddle"><a href="portaloperator">Vermittlerportal</a></li>
+            <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
+            <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
             <li class="tabmiddle"><a href="portaladmin">Administrationsportal</a></li>
             <li class="tabright"><a href="logout">Abmelden</a></li>
         </ul>

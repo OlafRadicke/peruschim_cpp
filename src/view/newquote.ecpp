@@ -41,8 +41,7 @@
     Quote quoteData;
 
     // ACL Check
-    if ( userSession.isInRole ( "admin" ) == false ) {
-        DEBUG "Nicht autorisiert!!" << std::endl;
+    if ( userSession.isInRole ( "user" ) == false ) {
         return reply.redirect ( "/newaccount" );
     };
     std::string userName  = userSession.getUserName();
@@ -112,11 +111,11 @@
     <div class="mainmenue">
         <ul>
             <li class="tableft"><a href="home">Home</a></li>
-            <li class="tabmiddle_activ"><a href="newquote">Neuer Vers</a></li>
-            <li class="tabmiddle"><a href="portalprovider">Anbieterportal</a></li>
-            <li class="tabmiddle"><a href="portaloperator">Vermittlerportal</a></li>
+            <li class="tabmiddle"><a href="keyword-register">Schlagwortsuche</a></li>
+            <li class="tabmiddle_activ"><a href="portalquote">Versverwaltung</a></li>
+            <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
             <li class="tabmiddle"><a href="portaladmin">Administrationsportal</a></li>
-            <li class="tabright" ><a href="logout">Abmelden</a></li>
+            <li class="tabright"><a href="logout">Abmelden</a></li>
         </ul>
     </div>
     <br />

@@ -15,6 +15,7 @@ TMP_SOURCES =  \
 ./src/view/newquote.cpp \
 ./src/view/portaladmin/newaccount.cpp  \
 ./src/view/portaladmin/portaladmin.cpp \
+./src/view/portalquote.cpp \
 ./src/view/style.cpp
 
 OBJECTS =  \
@@ -29,6 +30,7 @@ OBJECTS =  \
 ./src/view/newquote.o \
 ./src/view/portaladmin/newaccount.o \
 ./src/view/portaladmin/portaladmin.o \
+./src/view/portalquote.o \
 ./src/view/style.o
 
 

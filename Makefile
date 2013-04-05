@@ -41,6 +41,7 @@ OBJECTS = \
 ./src/view/newquote.o \
 ./src/view/portaladmin/newaccount.o  \
 ./src/view/portaladmin/portaladmin.o \
+./src/view/portalquote.o \
 ./src/view/style.o
 
 all: dist
@@ -78,6 +79,9 @@ convecpp:
 # Für englische Fehlermeldungen LANG=C LC_ALL=C
 test: dist
 	cd $(DIST)&& ls && $(PROG_NAME)
+
+debug:
+	cd $(DIST)&& gdb $(PROG_NAME)
 
 install:
 	echo "ist noch nicht implementiert"

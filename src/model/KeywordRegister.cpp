@@ -12,16 +12,11 @@ using namespace std;
 vector<string> KeywordRegister::getAllKeywordTitles( void ){
     vector<string> keywordList; 
     Config config;
-    string conn_para = "postgresql:";
-    conn_para += "password=" + config.get( "DB-PASSWD" );
-    conn_para += " dbname=" +  config.get( "DB-NAME" );
-    conn_para += " host=" + config.get( "DB-HOST" );
-    conn_para += " port=" + config.get( "DB-PORT" );
-    conn_para += " user=" + config.get( "DB-USER" );
+    
+    string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn;
     tntdb::Result result;
     
-
     conn = tntdb::connect(conn_para);
     result = conn.select( "SELECT DISTINCT ON (title) title FROM quote_keyword ORDER BY title" );
     for (tntdb::Result::const_iterator it = result.begin();

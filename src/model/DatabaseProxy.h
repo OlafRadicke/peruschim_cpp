@@ -6,6 +6,10 @@
 #include <iostream>
 #include <pqxx/pqxx>
 
+#include <tntdb/connection.h>
+#include <tntdb/connect.h>
+#include <tntdb/result.h>
+
 #include "Config.h"
 
 using namespace std;
@@ -15,12 +19,6 @@ class DatabaseProxy {
 public:
 
     string m_dbbackent;
-    
-    /**
-     * The default construktor set the database connection on the system 
-     * database.
-     **/
-    DatabaseProxy( );
     
      /**
      * Convert int to string.
@@ -68,36 +66,23 @@ public:
         const std::string& r 
     );
     
-    /**
-     * Set the type of quota.
-     * @param quotaTyp default set is '
-     */
-    void setQuotaType ( string quotaTyp ); 
+
 
 private:
-    
-    
-    /**
-     * Global config class.
-     */
-//     Config           *m_config;
-    
+
     
     /** PostreSQL database name */    
-    string           m_pg_db_name;
+//     string           m_pg_db_name;
     /** PostreSQL database host */    
-    string           m_pg_db_host;
+//     string           m_pg_db_host;
     /** PostreSQL database user */  
-    string           m_pg_db_user;
+//     string           m_pg_db_user;
     /** PostreSQL database password */  
-    string           m_pg_db_passwd;
+//     string           m_pg_db_passwd;
     /** PostreSQL database port */  
-    string           m_pg_db_port;
+//     string           m_pg_db_port;
     
-    /**
-     * The pyte of used quotas. Default is '
-     */
-    string              m_sqlQuotas;
+
 
    
 };

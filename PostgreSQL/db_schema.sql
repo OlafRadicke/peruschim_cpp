@@ -63,21 +63,10 @@ INSERT INTO acl_roll
 ) 
 VALUES ( 
     2,
-    'seeker',
+    'user',
     ''
 );
 
-INSERT INTO acl_roll 
-( 
-    id,
-    name, 
-    explanation
-) 
-VALUES ( 
-    3,
-    'provider',
-    ''
-);
 
 
 CREATE TABLE account_acl_roll (
