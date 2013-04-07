@@ -389,9 +389,22 @@ private:
      * Namen Levi, [...]".
      **/
     std::string m_quoteText;
+    
+    /**
+     * Search and replace function.
+     * @param rep search string
+     * @param rep replace string
+     * @param rep original string
+     * @return string with replacements
+     **/
+    string strReplace (string rep, string wit, string in);
 
-
-
+    /**
+     * Return a copy of the string with all the cased characters converted to 
+     * lowercase.
+     **/    
+    string lowercase ( string keywords );  
+    
 };
 
 #endif 

@@ -66,7 +66,12 @@
         <div class="columnbox-triple">
 
             <form method="post" >
+%           string lastLetter = ""; 
 %           for ( unsigned int i=0; i<keywordTitles.size(); i++) {
+%               if ( lastLetter != keywordTitles[i].substr (0,1) ) {
+%                   lastLetter = keywordTitles[i].substr (0,1);
+                    <h3><$ keywordTitles[i].substr (0,1) $></h3>
+%               }
                 <input class="keyword_button" type="submit" name="<$ keywordTitles[i] $>" value="<$ keywordTitles[i] $>">
 %           }
             </form>
