@@ -8,10 +8,6 @@ CPPFLAGS += -fPIC -O2
 LIBS =  -ltntnet -lcxxtools -ltntdb
 LIBS += -L/usr/lib
 LIBS += -I/usr/include 
-# tnt data base provider
-# CPPFLAGS_O += -ltntdb
-# pstgrsql 
-LIBS += -lpqxx -lpq 
 
 CC = g++
 DIST = ./bin

@@ -10,6 +10,7 @@ using namespace std;
 
 
 vector<string> KeywordRegister::getAllKeywordTitles( void ){
+    DEBUG std::endl;
     vector<string> keywordList; 
     Config config;
     

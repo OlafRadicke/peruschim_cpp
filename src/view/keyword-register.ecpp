@@ -30,7 +30,7 @@
 //         return reply.redirect ( "/login" );
 //     };
 //     std::string userName  = userSession.getUserName();
-
+    DEBUG "Schlagwortsuche" << endl;
     vector<string> keywordTitles = KeywordRegister::getAllKeywordTitles( );
 
 </%cpp>
@@ -63,7 +63,7 @@
 
     <div class="centerbox">
         <h1>Schlagwortsuche</h1>
-        <div class="columnbox">
+        <div class="columnbox-triple">
 
             <form method="post" >
 %           for ( unsigned int i=0; i<keywordTitles.size(); i++) {

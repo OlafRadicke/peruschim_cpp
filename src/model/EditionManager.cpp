@@ -1,14 +1,5 @@
 
-#include <string>
-#include <list>
-#include <iostream>
-#include <cxxtools/log.h>
-#include <vector>
-#include <pqxx/pqxx>
-
-#include "Config.h"
 #include "EditionManager.h"
-#include "Edition.h"
 
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -22,47 +13,41 @@
 std::vector<Edition> EditionManager::getAllEditions ( void ){
     std::vector<Edition> editionList;
     DEBUG std::endl;
-    
-    Config config;
-    std::string db_name = config.get( "DB-NAME" );
-    std::string db_host = config.get( "DB-HOST" ); 
-    std::string db_user = config.get( "DB-USER" ); 
-    std::string db_passwd = config.get( "DB-PASSWD" ); 
-    std::string db_port = config.get( "DB-PORT" ); 
-    
     std::string sqlcommand =    "SELECT \
                         id, \
                         name, \
                         publishername, \
                         releasenumber, \
                         releaseplace \
-                    FROM edition;";    
- 
-    string conn_para = "password=" + db_passwd +\
-        " dbname=" + db_name + \
-        " host=" + db_host + \
-        " port=" + db_port + \
-        " user=" + db_user ;    
-    pqxx::connection pg_conn( conn_para );
-    pqxx::work  pg_worker( pg_conn );
-    pqxx::result res;
-    unsigned int     row_count;
-    vector<string>   list_1d;
-    vector< vector<string> >  list_2d;
-    res = pg_worker.exec( sqlcommand );         
-    pg_worker.commit();
-//     DEBUG " found: " << res.size() << endl;
+                    FROM edition;";   
+    Config config;
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn;
+    tntdb::Result result;
     
-    for (row_count=0; row_count < res.size(); row_count++) {
+    conn = tntdb::connect(conn_para);
+    result = conn.select( sqlcommand );
+    for (tntdb::Result::const_iterator it = result.begin();
+        it != result.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+        string id;
+        string name;
+        string publisherName;
+        string releaseNumber;
+        string releasePlace;                
         Edition edition;
-        edition.setID( res[row_count][0].as<string>() );
-        edition.setName( res[row_count][1].as<string>() );
-        edition.setPublisherName( res[row_count][2].as<string>() );
-        edition.setReleaseNumber( res[row_count][3].as<string>() );
-        edition.setReleasePlace( res[row_count][4].as<string>() );
+        
+        edition.setID( row[0].getString () );
+        row[1].get( name ); 
+        edition.setName( name );
+        row[2].get( publisherName ); 
+        edition.setPublisherName( publisherName );
+        row[3].get( releaseNumber ); 
+        edition.setReleaseNumber( releaseNumber );
+        row[4].get( releasePlace ); 
+        edition.setReleasePlace( releasePlace );
         editionList.push_back ( edition );
     }    
-    
-    pg_conn.disconnect();
     return editionList;
 }

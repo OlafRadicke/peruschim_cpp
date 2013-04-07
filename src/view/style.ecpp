@@ -111,6 +111,30 @@ div.columnbox{
     -webkit-box-shadow: 5px 5px 8px #B3B3B3;
 }
 
+/* -------- Main box (with 3 columns) -------------------------- */
+
+div.columnbox-triple{
+    text-align: left; 
+    border-style: solid;
+    border-color: #C3C3C3;
+    width: 90% ;
+    padding: 20px;
+    margin: auto;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+
+    /* -- zweispaltig -- */
+    column-count: 3;
+    -moz-column-count: 3;
+    -moz-column-gap: 3em;
+    -webkit-column-count: 3;
+
+    box-shadow: 5px 5px 8px #B3B3B3;
+    -moz-box-shadow: 5px 5px 8px #B3B3B3;
+    -webkit-box-shadow: 5px 5px 8px #B3B3B3;
+}
+
 
 /* -------- center box -------------------------- */
 

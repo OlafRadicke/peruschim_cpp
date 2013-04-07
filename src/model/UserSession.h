@@ -4,9 +4,13 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <pqxx/pqxx>
+
+#include <tntdb/connection.h>
+#include <tntdb/connect.h>
+#include <tntdb/result.h>
 
 #include "Config.h"
+#include "DatabaseProxy.h"
 
 /**
 * This class represent a data set of a session.
