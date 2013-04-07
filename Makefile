@@ -19,6 +19,7 @@ PROG_NAME = ./peruschim_cpp
 
 
 OBJECTS = \
+./src/controller/Login.o \
 ./src/peruschim_cpp.o \
 ./src/model/AccountData.o \
 ./src/model/Config.o \

@@ -4,6 +4,7 @@ TNTNET=/usr/bin/tntnet
 
 
 TMP_SOURCES =  \
+./src/controller/Login.cpp \
 ./src/view/access_denied.cpp \
 ./src/view/favicon.cpp \
 ./src/view/header.cpp \
@@ -19,6 +20,7 @@ TMP_SOURCES =  \
 ./src/view/style.cpp
 
 OBJECTS =  \
+./src/controller/Login.o \
 ./src/view/access_denied.o \
 ./src/view/favicon.o \
 ./src/view/header.o \
@@ -41,6 +43,10 @@ clean:
 dist: $(OBJECTS) 
 
 %.cpp %.h: %.ecpp
+	$(ECPPC) $<
+
+
+%.cpp %.h: %.tnt.cpp
 	$(ECPPC) $<
 
 

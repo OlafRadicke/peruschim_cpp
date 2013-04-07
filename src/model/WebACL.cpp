@@ -2,7 +2,6 @@
 #include <string>
 #include <list>
 #include <iostream>
-// #include <pqxx/pqxx>
 
 #include <cxxtools/md5.h>
 #include <cxxtools/log.h>

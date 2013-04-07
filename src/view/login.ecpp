@@ -1,45 +1,5 @@
-<%pre>
-    // put your includes here
-    // #include "foo.h"
-    #include "../model/WebACL.h"
-    #include "../model/UserSession.h"
 
-    # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-    # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-</%pre>
-
-<%config>
-</%config>
-
-<%args>
-    // define the query parameters
-    // bar;
-    std::string name = "";
-    std::string password = "";
-</%args>
-
-<%session scope="global">
-    // define your session scope variables here
-    // std::string mySessionState;
-    UserSession userSession;
-</%session>
-
-<%cpp>
-    DEBUG endl;
-    DEBUG "WebACL::authUser: " << WebACL::authUser ( name, password ) << endl;
-    DEBUG endl;
-    if ( WebACL::authUser ( name, password ) == true ) {
-        DEBUG endl;
-        userSession.setUserName ( name );
-        userSession.addRoll (  WebACL::getRoll ( name ) );
-        return reply.redirect ( "/home" );
-    } else {
-        DEBUG endl;
-        // pass
-    };
-</%cpp>
-
-
+<%include>./src/controller/Login.ecpp</%include>
 
 <!DOCTYPE HTML>
 <html>
