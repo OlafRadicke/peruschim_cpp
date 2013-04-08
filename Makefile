@@ -38,7 +38,7 @@ OBJECTS = \
 ./src/view/logout.o \
 ./src/view/mainmenu.o \
 ./src/view/newquote.o \
-./src/view/portaladmin/newaccount.o  \
+./src/view/newaccount.o  \
 ./src/view/portaladmin/portaladmin.o \
 ./src/view/portalquote.o \
 ./src/view/templates/header.o
