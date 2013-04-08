@@ -8,8 +8,9 @@ tntnet
 tntnet-devel
 cxxtools
 cxxtools-devel
-libpqxx-devel 
-libpqxx
+tntdb
+
+Gegebenen Falls: Sqlite, PostreSQL, MySQL, Oracle
 
 
 INSTALLATION
