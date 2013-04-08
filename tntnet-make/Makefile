@@ -4,10 +4,10 @@ TNTNET=/usr/bin/tntnet
 
 
 TMP_SOURCES =  \
-./src/controller/Login.cpp \
+./src/controller/LoginController.cpp \
+./src/resources/favicon.cpp \
+./src/resources/style.cpp \
 ./src/view/access_denied.cpp \
-./src/view/favicon.cpp \
-./src/view/header.cpp \
 ./src/view/home.cpp \
 ./src/view/keyword-register.cpp \
 ./src/view/login.cpp \
@@ -17,13 +17,13 @@ TMP_SOURCES =  \
 ./src/view/portaladmin/newaccount.cpp  \
 ./src/view/portaladmin/portaladmin.cpp \
 ./src/view/portalquote.cpp \
-./src/view/style.cpp
+./src/view/templates/header.cpp
 
 OBJECTS =  \
-./src/controller/Login.o \
+./src/controller/LoginController.o \
+./src/resources/favicon.o \
+./src/resources/style.o \
 ./src/view/access_denied.o \
-./src/view/favicon.o \
-./src/view/header.o \
 ./src/view/home.o \
 ./src/view/keyword-register.o \
 ./src/view/login.o \
@@ -33,7 +33,7 @@ OBJECTS =  \
 ./src/view/portaladmin/newaccount.o \
 ./src/view/portaladmin/portaladmin.o \
 ./src/view/portalquote.o \
-./src/view/style.o
+./src/view/templates/header.o
 
 
 
@@ -50,8 +50,8 @@ dist: $(OBJECTS)
 	$(ECPPC) $<
 
 
-./src/view/favicon.cpp:
-	ecppc -b ./src/view/favicon.ico
+./src/resources/favicon.cpp:
+	ecppc -b ./src/resources/favicon.ico
 
 
 .SUFFIXES: .ecpp .gif .jpg .css .js .cpp

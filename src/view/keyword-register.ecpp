@@ -1,9 +1,9 @@
 <%pre>
     // put your includes here
     // #include "foo.h"
-    #include "../model/WebACL.h"
-    #include "../model/UserSession.h"
-    #include "../model/KeywordRegister.h"
+    #include "../models/WebACL.h"
+    #include "../models/UserSession.h"
+    #include "../models/KeywordRegister.h"
 
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -21,18 +21,7 @@
 </%session>
 
 <%cpp>
-
-
-    // ACL Check
-    // Diese Seite soll jeder lesen können.
-//     if ( userSession.isInRole ( "admin" ) == false ) {
-//         DEBUG "Nicht autorisiert!!" << std::endl;
-//         return reply.redirect ( "/login" );
-//     };
-//     std::string userName  = userSession.getUserName();
-    DEBUG "Schlagwortsuche" << endl;
     vector<string> keywordTitles = KeywordRegister::getAllKeywordTitles( );
-
 </%cpp>
 
 

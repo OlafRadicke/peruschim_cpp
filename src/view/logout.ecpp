@@ -1,18 +1,14 @@
 <%pre>
     // put your includes here
     // #include "foo.h"
-    #include "../model/WebACL.h"
-    #include "../model/UserSession.h"
+    #include "../models/WebACL.h"
+    #include "../models/UserSession.h"
 </%pre>
 
 <%config>
 </%config>
 
 <%args>
-    // define the query parameters
-    // bar;
-    std::string name = "";
-    std::string password = "";
 </%args>
 
 <%session scope="global">
@@ -24,8 +20,6 @@
 <%cpp>
     userSession.lockout();
 </%cpp>
-
-
 
 <!DOCTYPE HTML>
 <html>

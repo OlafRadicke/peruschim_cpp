@@ -2,8 +2,8 @@
     // put your includes here
     // #include "foo.h"
     #include <iostream>
-    #include "../../model/WebACL.h"
-    #include "../../model/UserSession.h"
+    #include "../../models/WebACL.h"
+    #include "../../models/UserSession.h"
 </%pre>
 
 <%config>

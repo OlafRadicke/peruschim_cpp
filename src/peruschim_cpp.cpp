@@ -1,7 +1,7 @@
 #include <tnt/tntnet.h>
 #include <string>
 
-#include "./model/Config.h"
+#include "./models/Config.h"
 
 int main ( int argc, char* argv[] )
 {

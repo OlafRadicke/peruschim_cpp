@@ -1,6 +1,6 @@
 <%pre>
-    #include "../model/WebACL.h"
-    #include "../model/UserSession.h"
+    #include "../models/WebACL.h"
+    #include "../models/UserSession.h"
 
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<

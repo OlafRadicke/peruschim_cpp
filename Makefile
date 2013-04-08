@@ -15,23 +15,23 @@ PROG_NAME = ./peruschim_cpp
 
 
 OBJECTS = \
-./src/controller/Login.o \
+./src/controller/LoginController.o \
 ./src/peruschim_cpp.o \
-./src/model/AccountData.o \
-./src/model/Config.o \
-./src/model/DatabaseProxy.o \
-./src/model/Edition.o \
-./src/model/EditionManager.o \
-./src/model/KeywordData.o \
-./src/model/KeywordRegister.o \
-./src/model/Quote.o \
-./src/model/UserSession.o \
-./src/model/WebACL.o\
+./src/models/AccountData.o \
+./src/models/Config.o \
+./src/models/DatabaseProxy.o \
+./src/models/Edition.o \
+./src/models/EditionManager.o \
+./src/models/KeywordData.o \
+./src/models/KeywordRegister.o \
+./src/models/Quote.o \
+./src/models/UserSession.o \
+./src/models/WebACL.o\
+./src/resources/favicon.o \
+./src/resources/style.o \
 ./src/view/access_denied.o \
-./src/view/favicon.o \
 ./src/view/home.o \
 ./src/view/keyword-register.o \
-./src/view/header.o \
 ./src/view/login.o \
 ./src/view/logout.o \
 ./src/view/mainmenu.o \
@@ -39,7 +39,7 @@ OBJECTS = \
 ./src/view/portaladmin/newaccount.o  \
 ./src/view/portaladmin/portaladmin.o \
 ./src/view/portalquote.o \
-./src/view/style.o
+./src/view/templates/header.o
 
 all: dist
 
@@ -62,8 +62,8 @@ dist: convecpp $(PROG_NAME)
 $(PROG_NAME):  $(OBJECTS)
 	LANG=C LC_ALL=C  $(CC) $(CPPFLAGS) -o $(PROG_NAME) $(OBJECTS) $(LIBS)
 
-# ./src/model/WebACL.o: ./src/model/WebACL.cpp
-# 	$(CC) -o ./src/model/WebACL.o -I/usr/include -ltntdb ./src/model/WebACL.cpp
+# ./src/models/WebACL.o: ./src/models/WebACL.cpp
+# 	$(CC) -o ./src/models/WebACL.o -I/usr/include -ltntdb ./src/models/WebACL.cpp
 
 %.o: %.cpp
 	LANG=C LC_ALL=C  $(CC)  $(CPPFLAGS) -o ./$@  -c ./$< $(LIBS)
