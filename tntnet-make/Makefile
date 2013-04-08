@@ -5,6 +5,8 @@ TNTNET=/usr/bin/tntnet
 
 TMP_SOURCES =  \
 ./src/controller/LoginController.cpp \
+./src/controller/LogoutController.cpp \
+./src/controller/NewAccountController.cpp \
 ./src/resources/favicon.cpp \
 ./src/resources/style.cpp \
 ./src/view/access_denied.cpp \
@@ -21,6 +23,8 @@ TMP_SOURCES =  \
 
 OBJECTS =  \
 ./src/controller/LoginController.o \
+./src/controller/LogoutController.o \
+./src/controller/NewAccountController.o \
 ./src/resources/favicon.o \
 ./src/resources/style.o \
 ./src/view/access_denied.o \

@@ -1,6 +1,5 @@
 #include <tnt/tntnet.h>
 #include <string>
-
 #include "./models/Config.h"
 
 int main ( int argc, char* argv[] )

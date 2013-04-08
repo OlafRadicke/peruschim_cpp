@@ -1,9 +1,11 @@
+
+
 <%pre>
-    // put your includes here
-    // #include "foo.h"
-    #include <iostream>
     #include "../../models/WebACL.h"
     #include "../../models/UserSession.h"
+
+    # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+    # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 </%pre>
 
 <%config>
@@ -26,10 +28,8 @@
     UserSession userSession;
 </%session>
 
+
 <%cpp>
-    
-    # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-    # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     
     // ACL Check
     if ( userSession.isInRole ( "admin" ) == false ) {
@@ -65,8 +65,6 @@
             }
         };
     }
-    
-
 </%cpp>
 
 

@@ -1,6 +1,4 @@
 <%pre>
-    // put your includes here
-    // #include "foo.h"
     #include "../../models/WebACL.h"
     #include "../../models/UserSession.h"
 
