@@ -39,7 +39,7 @@ OBJECTS = \
 ./src/view/mainmenu.o \
 ./src/view/newquote.o \
 ./src/view/newaccount.o  \
-./src/view/portaladmin/portaladmin.o \
+./src/view/portaladmin.o \
 ./src/view/portalquote.o \
 ./src/view/templates/header.o
 

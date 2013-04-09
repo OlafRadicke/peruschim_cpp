@@ -11,7 +11,7 @@ CREATE TABLE metadata (
 -- COMMENT ON COLUMN account.account_disable IS 'If set true than the account is disabled';
 
 -- Insert table versions number.
-INSERT INTO account 
+INSERT INTO metadata 
 ( 
     data_name, 
     data_parameter, 
