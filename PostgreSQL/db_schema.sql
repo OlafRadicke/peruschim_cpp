@@ -1,5 +1,30 @@
 START TRANSACTION;
 
+CREATE TABLE metadata (
+    id                  SERIAL                      PRIMARY KEY,
+    data_name           TEXT                        NOT NULL UNIQUE,
+    data_parameter      TEXT                        NOT NULL,
+    data_value          TEXT                        NOT NULL,
+    data_description    TEXT                        NOT NULL
+);
+-- COMMENT ON TABLE metadata IS 'table have the values of meta data. For example the database table version.';
+-- COMMENT ON COLUMN account.account_disable IS 'If set true than the account is disabled';
+
+-- Insert table versions number.
+INSERT INTO account 
+( 
+    data_name, 
+    data_parameter, 
+    data_value, 
+    data_description
+) 
+VALUES ( 
+    'tableversion',
+    'alpha',
+    '00001',
+    'Namber of table version'
+);
+
 CREATE TABLE account (
     id                  SERIAL                      PRIMARY KEY,
     login_name          TEXT                        NOT NULL UNIQUE,
