@@ -13,17 +13,16 @@
 </%config>
 
 <%args>
-string keyword = ""
+string keyword = "";
 </%args>
 
 <%session scope="global">
-    // define your session scope variables here
     UserSession userSession;
 </%session>
 
 <%cpp>
-     DEBUG "keyword: " << keyword << endl;
-    vector<string> keywordTitles = KeywordRegister::getAllKeywordTitles( );
+    DEBUG "keyword: " << keyword << endl;
+    vector< vector<string> > keywordTitlesCounts = KeywordRegister::getAllKeywordTitlesAndCounds();
 </%cpp>
 
 
@@ -87,19 +86,24 @@ string keyword = ""
         </div>
         <form method="post" >
 %               string lastLetter = ""; 
-%               for ( unsigned int i=0; i<keywordTitles.size(); i++) {
-%                   if ( lastLetter != keywordTitles[i].substr (0,1) ) {
-%                       lastLetter = keywordTitles[i].substr (0,1);
+%               for ( unsigned int i=0; i<keywordTitlesCounts.size(); i++) {
+%                   if ( lastLetter != keywordTitlesCounts[i][0].substr (0,1) ) {
+%                       lastLetter = keywordTitlesCounts[i][0].substr (0,1);
 %                       if ( i != 0 ) {
             </div>
 %                       }
             <h3>
-               <a name="letter_<$ keywordTitles[i].substr (0,1) $>"><$ keywordTitles[i].substr (0,1) $>
+               <a name="letter_<$ keywordTitlesCounts[i][0].substr (0,1) $>">
+                    <$ keywordTitlesCounts[i][0].substr (0,1) $>
                </a>
             </h3>
             <div class="columnbox-triple">
 %               }
-                <input class="keyword_button" type="submit" name="keyword" value="<$ keywordTitles[i] $>">
+                <button name="keyword" 
+                        class="full_width_button" 
+                        value="<$ keywordTitlesCounts[i][0] $>" 
+                        type="submit"><$ keywordTitlesCounts[i][0] $>(<$ keywordTitlesCounts[i][1] $>)
+                </button>
 %           }
             </div>
         </form>

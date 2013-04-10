@@ -17,7 +17,7 @@ class KeywordRegister {
     
 public:
     static vector<string> getAllKeywordTitles( void );
-    
+    static vector< vector<string> > getAllKeywordTitlesAndCounds( void );
 private:
     
 

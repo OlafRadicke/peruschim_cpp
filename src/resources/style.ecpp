@@ -367,9 +367,17 @@ input#save_button {
     border-bottom-left-radius:5px;
 }
 
-/* ----- Form keyword button ------------------------------------------------- */
+/* ----- Form keyword button ---------------------------------------------- */
 
 input.keyword_button {
+    width: 100% ; 
+    text-align: left;
+}
+
+/* ----- Button with a full width of column-------------------------------- */
+
+
+button.full_width_button {
     width: 100% ; 
     text-align: left;
 }

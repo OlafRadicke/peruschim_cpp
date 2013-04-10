@@ -30,3 +30,28 @@ vector<string> KeywordRegister::getAllKeywordTitles( void ){
     }    
     return keywordList;
 }
+
+vector< vector<string> > KeywordRegister::getAllKeywordTitlesAndCounds( void ){
+    DEBUG std::endl;
+    vector< vector<string> > keywordList; 
+    Config config;
+    
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn;
+    tntdb::Result result;
+    
+    conn = tntdb::connect(conn_para);
+    result = conn.select( "SELECT title, COUNT(title) As Anzahl \
+                            FROM quote_keyword GROUP BY title ORDER BY title" );
+    for (tntdb::Result::const_iterator it = result.begin();
+        it != result.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+        vector<string> dataSet;
+        std::string title;
+        dataSet.push_back( row[0].getString() ); 
+        dataSet.push_back( row[1].getString() ); 
+        keywordList.push_back( dataSet ); 
+    }    
+    return keywordList;
+}
