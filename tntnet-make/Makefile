@@ -7,6 +7,7 @@ TMP_SOURCES =  \
 ./src/controller/LoginController.cpp \
 ./src/controller/LogoutController.cpp \
 ./src/controller/NewAccountController.cpp \
+./src/controller/NewQuoteController.cpp \
 ./src/resources/favicon.cpp \
 ./src/resources/style.cpp \
 ./src/view/access_denied.cpp \
@@ -25,6 +26,7 @@ OBJECTS =  \
 ./src/controller/LoginController.o \
 ./src/controller/LogoutController.o \
 ./src/controller/NewAccountController.o \
+./src/controller/NewQuoteController.o \
 ./src/resources/favicon.o \
 ./src/resources/style.o \
 ./src/view/access_denied.o \

@@ -18,6 +18,7 @@ OBJECTS = \
 ./src/controller/LoginController.o \
 ./src/controller/LogoutController.o \
 ./src/controller/NewAccountController.o \
+./src/controller/NewQuoteController.o \
 ./src/peruschim_cpp.o \
 ./src/models/AccountData.o \
 ./src/models/Config.o \

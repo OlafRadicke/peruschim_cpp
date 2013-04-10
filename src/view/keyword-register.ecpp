@@ -13,6 +13,7 @@
 </%config>
 
 <%args>
+string keyword = ""
 </%args>
 
 <%session scope="global">
@@ -21,6 +22,7 @@
 </%session>
 
 <%cpp>
+     DEBUG "keyword: " << keyword << endl;
     vector<string> keywordTitles = KeywordRegister::getAllKeywordTitles( );
 </%cpp>
 
@@ -97,7 +99,7 @@
             </h3>
             <div class="columnbox-triple">
 %               }
-                <input class="keyword_button" type="submit" name="<$ keywordTitles[i] $>" value="<$ keywordTitles[i] $>">
+                <input class="keyword_button" type="submit" name="keyword" value="<$ keywordTitles[i] $>">
 %           }
             </div>
         </form>

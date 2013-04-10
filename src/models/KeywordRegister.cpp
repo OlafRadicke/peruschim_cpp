@@ -26,7 +26,6 @@ vector<string> KeywordRegister::getAllKeywordTitles( void ){
         tntdb::Row row = *it;
         std::string title;
         row[0].get(title); 
-        DEBUG "title=" << title << endl;
         keywordList.push_back( title ); 
     }    
     return keywordList;
