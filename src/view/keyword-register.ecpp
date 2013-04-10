@@ -22,7 +22,7 @@ string keyword = "";
 
 <%cpp>
     DEBUG "keyword: " << keyword << endl;
-    vector< vector<string> > keywordTitlesCounts = KeywordRegister::getAllKeywordTitlesAndCounds();
+    vector<KeywordCount> keywordTitlesCounts = KeywordRegister::getAllKeywordTitleAndCound();
 </%cpp>
 
 
@@ -87,22 +87,22 @@ string keyword = "";
         <form method="post" >
 %               string lastLetter = ""; 
 %               for ( unsigned int i=0; i<keywordTitlesCounts.size(); i++) {
-%                   if ( lastLetter != keywordTitlesCounts[i][0].substr (0,1) ) {
-%                       lastLetter = keywordTitlesCounts[i][0].substr (0,1);
+%                   if ( lastLetter != keywordTitlesCounts[i].Name.substr (0,1) ) {
+%                       lastLetter = keywordTitlesCounts[i].Name.substr (0,1);
 %                       if ( i != 0 ) {
             </div>
 %                       }
             <h3>
-               <a name="letter_<$ keywordTitlesCounts[i][0].substr (0,1) $>">
-                    <$ keywordTitlesCounts[i][0].substr (0,1) $>
+               <a name="letter_<$ keywordTitlesCounts[i].Name.substr (0,1) $>">
+                    <$ keywordTitlesCounts[i].Name.substr (0,1) $>
                </a>
             </h3>
             <div class="columnbox-triple">
 %               }
                 <button name="keyword" 
                         class="full_width_button" 
-                        value="<$ keywordTitlesCounts[i][0] $>" 
-                        type="submit"><$ keywordTitlesCounts[i][0] $>(<$ keywordTitlesCounts[i][1] $>)
+                        value="<$ keywordTitlesCounts[i].Name $>" 
+                        type="submit"><$ keywordTitlesCounts[i].Name $>(<$ keywordTitlesCounts[i].Count $>)
                 </button>
 %           }
             </div>

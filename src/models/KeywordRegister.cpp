@@ -31,9 +31,11 @@ vector<string> KeywordRegister::getAllKeywordTitles( void ){
     return keywordList;
 }
 
-vector< vector<string> > KeywordRegister::getAllKeywordTitlesAndCounds( void ){
+
+
+vector<KeywordCount> KeywordRegister::getAllKeywordTitleAndCound( void ){
     DEBUG std::endl;
-    vector< vector<string> > keywordList; 
+    vector< KeywordCount > keywordList; 
     Config config;
     
     string conn_para = config.get( "DB-DRIVER" );
@@ -47,10 +49,10 @@ vector< vector<string> > KeywordRegister::getAllKeywordTitlesAndCounds( void ){
         it != result.end(); ++it
     ) {
         tntdb::Row row = *it;
-        vector<string> dataSet;
+        KeywordCount dataSet = KeywordCount();
         std::string title;
-        dataSet.push_back( row[0].getString() ); 
-        dataSet.push_back( row[1].getString() ); 
+        dataSet.Name =  row[0].getString(); 
+        dataSet.Count = row[1].getString(); 
         keywordList.push_back( dataSet ); 
     }    
     return keywordList;
