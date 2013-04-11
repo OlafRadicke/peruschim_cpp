@@ -7,6 +7,7 @@ TMP_SOURCES =  \
 ./src/controller/LoginController.cpp \
 ./src/controller/LogoutController.cpp \
 ./src/controller/NewAccountController.cpp \
+./src/controller/NewQuoteController.cpp \
 ./src/resources/favicon.cpp \
 ./src/resources/style.cpp \
 ./src/view/access_denied.cpp \
@@ -17,7 +18,7 @@ TMP_SOURCES =  \
 ./src/view/mainmenu.cpp \
 ./src/view/newquote.cpp \
 ./src/view/newaccount.cpp  \
-./src/view/portaladmin/portaladmin.cpp \
+./src/view/portaladmin.cpp \
 ./src/view/portalquote.cpp \
 ./src/view/templates/header.cpp
 
@@ -25,6 +26,7 @@ OBJECTS =  \
 ./src/controller/LoginController.o \
 ./src/controller/LogoutController.o \
 ./src/controller/NewAccountController.o \
+./src/controller/NewQuoteController.o \
 ./src/resources/favicon.o \
 ./src/resources/style.o \
 ./src/view/access_denied.o \
@@ -35,7 +37,7 @@ OBJECTS =  \
 ./src/view/mainmenu.o \
 ./src/view/newquote.o \
 ./src/view/newaccount.o \
-./src/view/portaladmin/portaladmin.o \
+./src/view/portaladmin.o \
 ./src/view/portalquote.o \
 ./src/view/templates/header.o
 

@@ -18,6 +18,7 @@ OBJECTS = \
 ./src/controller/LoginController.o \
 ./src/controller/LogoutController.o \
 ./src/controller/NewAccountController.o \
+./src/controller/NewQuoteController.o \
 ./src/peruschim_cpp.o \
 ./src/models/AccountData.o \
 ./src/models/Config.o \
@@ -39,7 +40,7 @@ OBJECTS = \
 ./src/view/mainmenu.o \
 ./src/view/newquote.o \
 ./src/view/newaccount.o  \
-./src/view/portaladmin/portaladmin.o \
+./src/view/portaladmin.o \
 ./src/view/portalquote.o \
 ./src/view/templates/header.o
 

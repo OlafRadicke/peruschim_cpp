@@ -13,15 +13,16 @@
 </%config>
 
 <%args>
+string keyword = "";
 </%args>
 
 <%session scope="global">
-    // define your session scope variables here
     UserSession userSession;
 </%session>
 
 <%cpp>
-    vector<string> keywordTitles = KeywordRegister::getAllKeywordTitles( );
+    DEBUG "keyword: " << keyword << endl;
+    vector<KeywordCount> keywordTitlesCounts = KeywordRegister::getAllKeywordTitleAndCound();
 </%cpp>
 
 
@@ -52,20 +53,60 @@
 
     <div class="centerbox">
         <h1>Schlagwortsuche</h1>
-        <div class="columnbox-triple">
-
-            <form method="post" >
-%           string lastLetter = ""; 
-%           for ( unsigned int i=0; i<keywordTitles.size(); i++) {
-%               if ( lastLetter != keywordTitles[i].substr (0,1) ) {
-%                   lastLetter = keywordTitles[i].substr (0,1);
-                    <h3><$ keywordTitles[i].substr (0,1) $></h3>
-%               }
-                <input class="keyword_button" type="submit" name="<$ keywordTitles[i] $>" value="<$ keywordTitles[i] $>">
-%           }
-            </form>
-
+        <div class="centerbox">
+<a href="#letter_a">a</a> 
+<a href="#letter_b">b</a>
+<a href="#letter_c">c</a>
+<a href="#letter_d">d</a>
+<a href="#letter_e">e</a>
+<a href="#letter_f">f</a>
+<a href="#letter_g">g</a>
+<a href="#letter_h">h</a>
+<a href="#letter_i">i</a>
+<a href="#letter_j">j</a>
+<a href="#letter_k">k</a>
+<a href="#letter_l">l</a>
+<a href="#letter_m">m</a>
+<a href="#letter_n">n</a>
+<a href="#letter_o">o</a>
+<a href="#letter_p">p</a>
+<a href="#letter_q">q</a>
+<a href="#letter_r">r</a>
+<a href="#letter_s">s</a>
+<a href="#letter_t">t</a>
+<a href="#letter_u">u</a>
+<a href="#letter_v">v</a>
+<a href="#letter_w">w</a>
+<a href="#letter_x">x</a>
+<a href="#letter_y">y</a>
+<a href="#letter_z">z</a>
+<a href="#letter_ä">ä</a>
+<a href="#letter_ö">ö</a>
+<a href="#letter_ü">ü</a>
         </div>
+        <form method="post" >
+%               string lastLetter = ""; 
+%               for ( unsigned int i=0; i<keywordTitlesCounts.size(); i++) {
+%                   if ( lastLetter != keywordTitlesCounts[i].Name.substr (0,1) ) {
+%                       lastLetter = keywordTitlesCounts[i].Name.substr (0,1);
+%                       if ( i != 0 ) {
+            </div>
+%                       }
+            <h3>
+               <a name="letter_<$ keywordTitlesCounts[i].Name.substr (0,1) $>">
+                    <$ keywordTitlesCounts[i].Name.substr (0,1) $>
+               </a>
+            </h3>
+            <div class="columnbox-triple">
+%               }
+                <button name="keyword" 
+                        class="full_width_button" 
+                        value="<$ keywordTitlesCounts[i].Name $>" 
+                        type="submit"><$ keywordTitlesCounts[i].Name $>(<$ keywordTitlesCounts[i].Count $>)
+                </button>
+%           }
+            </div>
+        </form>
     </div>
 
 </body>
