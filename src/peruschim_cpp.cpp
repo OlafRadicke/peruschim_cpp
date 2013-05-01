@@ -12,6 +12,7 @@ int main ( int argc, char* argv[] )
     try
     {
         tnt::Tntnet app;
+//         Configurator configurator( app );
         app.listen( ip_addr, port );
         app.mapUrl( "^/login", "login" ).setPathInfo( "login" );
         app.mapUrl( "^/home", "home" ).setPathInfo( "home" );
