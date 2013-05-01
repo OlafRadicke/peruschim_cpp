@@ -12,28 +12,32 @@ void UserSession::addRoll ( std::vector<std::string> rolls ) {
     }
 }
 
-std::string UserSession::getUserID ( void ) { 
+std::string UserSession::getUserID ( ) {
     DEBUG std::endl;
     std::string user_id = "";
-
-    std::string sqlcommand =    "SELECT \n\
-                        id \n\
-                    FROM account \n\
-                    WHERE login_name='" + this->m_username + "';";    
-    DatabaseProxy dbProxy;
-    user_id = dbProxy.sqlGetSingle ( sqlcommand );
-    return user_id;
+    if ( this->m_userID != "" ) {
+        return this->m_userID;
+    } else {
+        std::string sqlcommand =    "SELECT \n\
+                            id \n\
+                        FROM account \n\
+                        WHERE login_name='" + this->m_username + "';";
+        DatabaseProxy dbProxy;
+        user_id = dbProxy.sqlGetSingle ( sqlcommand );
+        this->m_userID = user_id;
+        return user_id;
+    }
 }
 
-void UserSession::lockout( ) { 
+void UserSession::lockout( ) {
     DEBUG "logout..." << endl;
-    this->m_userrolls.clear(); 
+    this->m_userrolls.clear();
     this->m_username = "";
-}  
+}
 
 bool UserSession::isInRole ( std::string siteroll ) {
     DEBUG "siteroll: " << siteroll << std::endl;
-    
+
     for ( unsigned int i=0; i<m_userrolls.size(); i++) {
         if ( m_userrolls[i] == siteroll ) {
             DEBUG "true" << std::endl;
@@ -46,7 +50,7 @@ bool UserSession::isInRole ( std::string siteroll ) {
 
 bool UserSession::isInRole ( std::vector<std::string> siterolls ) {
     DEBUG "m_userrolls.size(): " << m_userrolls.size() << std::endl;
-    
+
     for ( unsigned int i=0; i<m_userrolls.size(); i++) {
         for ( unsigned int i2=0; i2<siterolls.size(); i2++) {
             if ( m_userrolls[i] == siterolls[i2] ) {

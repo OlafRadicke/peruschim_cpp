@@ -13,8 +13,7 @@
 </%args>
 
 <%session scope="global">
-    // define your session scope variables here
-    UserSession userSession;
+    // UserSession userSession;
 </%session>
 
 <%cpp>
@@ -50,12 +49,12 @@
     <div class="centerbox">
         <h1>Herzlich willkommen auf <i>PERUSCHIM</i></h1>
         <div class="columnbox">
-<p>Mit <i>PERUSCHIM</i> kannst du deine Bibelverse, di du dir gerne merken willst, 
+<p>Mit <i>PERUSCHIM</i> kannst du deine Bibelverse, di du dir gerne merken willst,
 speichern. Diese Verse kannst du dann mit Schlagworten versehen um sie schneller
 wieder zu finden. </p>
 <p>Du kannst auch nachschauen, welche Bibelstellen sich andere zu bestimmten Themen
-makert haben. Letztlich ist <i>PERUSCHIM</i> eine Bibelkonkordanz mit 
-Sozialem-Netzwerk-Charakter. Versemakierungen die du nicht mit anderen teilen 
+makert haben. Letztlich ist <i>PERUSCHIM</i> eine Bibelkonkordanz mit
+Sozialem-Netzwerk-Charakter. Versemakierungen die du nicht mit anderen teilen
 willst kannst du als "privat" makieren. </p>
 <i>PERUSCHIM</i> ist ein OpenSource-Projekt. Den Source-Code findest du hier:
 <a href="https://github.com/OlafRadicke/peruschim_cpp">github.com/OlafRadicke/peruschim_cpp</a>.

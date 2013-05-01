@@ -1,0 +1,80 @@
+<%pre>
+    // put your includes here
+    // #include "foo.h"
+    #include "models/WebACL.h"
+    #include "models/UserSession.h"
+    #include "models/Quote.h"
+    #include "models/QuoteRegister.h"
+
+    # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+    # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+</%pre>
+
+<%config>
+</%config>
+
+<%args>
+string keyword = "";
+</%args>
+
+<%session scope="global">
+    UserSession userSession;
+</%session>
+
+<%cpp>
+    DEBUG "keyword: " << keyword << endl;
+    std::vector<Quote> quoteList;
+    // ACL Check
+    if ( userSession.isInRole ( "user" ) == false ) {
+        DEBUG "Nicht eingelogt" << std::endl;
+        quoteList = QuoteRegister::getAllPubQuoteOfKeyword( keyword );
+    } else {
+        DEBUG "Eingelogt" << std::endl;
+        quoteList = QuoteRegister::getAllQuoteOfKeyword(
+            keyword,
+            userSession.getUserID() );
+    };
+
+</%cpp>
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>PERUSCHIM - Schlagwortdetails</title>
+    <meta charset = "UTF-8" />
+    <& "style" &>
+</head>
+<body>
+    <& "header" &>
+    <br />
+
+    <div class="mainmenue">
+        <ul>
+            <li class="tableft"><a href="home">Home</a></li>
+            <li class="tabmiddle_activ"><a href="keyword-register">Schlagwortsuche</a></li>
+            <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
+            <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
+            <li class="tabmiddle"><a href="portaladmin">Administrationsportal</a></li>
+            <li class="tabright"><a href="logout">Abmelden</a></li>
+        </ul>
+    </div>
+    <br />
+
+
+    <div class="columnbox-triple">
+        <form method="post" action="keyword-detail">
+%           for ( unsigned int i=0; i < quoteList.size(); i++) {
+                <button name="quote"
+                        class="full_width_button"
+                        value="<$ quoteList[i].getID( ) $>"
+                        type="submit">
+                    <$ quoteList[i].getBookTitle() $>&#160;
+                    <$ quoteList[i].getChapterBegin() $>:
+                    <$ quoteList[i].getSentenceBegin() $>
+                </button>
+%           }
+            </div>
+        </form>
+</body>
+</html>

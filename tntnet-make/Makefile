@@ -1,6 +1,7 @@
 
 ECPPC=/usr/bin/ecppc
 TNTNET=/usr/bin/tntnet
+LIBS = -I ./src
 
 
 TMP_SOURCES =  \
@@ -12,6 +13,7 @@ TMP_SOURCES =  \
 ./src/resources/style.cpp \
 ./src/view/access_denied.cpp \
 ./src/view/home.cpp \
+./src/view/keyword-detail.cpp \
 ./src/view/keyword-register.cpp \
 ./src/view/login.cpp \
 ./src/view/logout.cpp \
@@ -22,38 +24,15 @@ TMP_SOURCES =  \
 ./src/view/portalquote.cpp \
 ./src/view/templates/header.cpp
 
-OBJECTS =  \
-./src/controller/LoginController.o \
-./src/controller/LogoutController.o \
-./src/controller/NewAccountController.o \
-./src/controller/NewQuoteController.o \
-./src/resources/favicon.o \
-./src/resources/style.o \
-./src/view/access_denied.o \
-./src/view/home.o \
-./src/view/keyword-register.o \
-./src/view/login.o \
-./src/view/logout.o \
-./src/view/mainmenu.o \
-./src/view/newquote.o \
-./src/view/newaccount.o \
-./src/view/portaladmin.o \
-./src/view/portalquote.o \
-./src/view/templates/header.o
-
-
 
 clean:
-	rm -f $(TMP_SOURCES) 
+	rm -f $(TMP_SOURCES)
 
-dist: $(OBJECTS) 
+dist: $(TMP_SOURCES)
 
 %.cpp %.h: %.ecpp
-	$(ECPPC) $<
+	$(ECPPC) $(LIBS) $<
 
-
-%.cpp %.h: %.tnt.cpp
-	$(ECPPC) $<
 
 
 ./src/resources/favicon.cpp:

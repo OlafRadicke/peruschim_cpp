@@ -6,8 +6,6 @@ ABHÄNGIGKEITEN
 gcc-g++
 tntnet
 tntnet-devel
-cxxtools
-cxxtools-devel
 tntdb
 
 Gegebenen Falls: Sqlite, PostreSQL, MySQL, Oracle
@@ -35,7 +33,7 @@ createuser -W peruschim_cpp
 # Datenbank erstellen und User zuweisen
 createdb -O peruschim_cpp  peruschim_cpp
 # ggf. Anpassungen an der Konfiguration in
-/var/lib/pgsql/data/pg_hba.conf 
+/var/lib/pgsql/data/pg_hba.conf
 # Server neu starten
 systemctl restart postgresql.service
 # Verbindung testen
@@ -58,12 +56,12 @@ TROUBLESHOOTING
 Wenn beim starten eine solche Fehlermeldung kommt:
 
 or@hamburg:~/a-z/g/git-repos/peruschim_cpp$ ./peruschim_cpp
-    /peruschim_cpp: error while loading shared libraries: libtntdb.so.3: cannot 
+    /peruschim_cpp: error while loading shared libraries: libtntdb.so.3: cannot
     open shared object file: No such file or directory
 
 Ist dem System die shared libraries der libtntdb nicht bekannt. Stelle sicher
 das Tntdb installiert ist und kontrolliere die Konfiguration in /etc/ld.so.conf.d/
-ob der Pfad zur shared librarie konfiguriert ist. Wenn nicht lege eine 
+ob der Pfad zur shared librarie konfiguriert ist. Wenn nicht lege eine
 Konfigurationsdatei an mit den Namen /etc/ld.so.conf.d/tntdb.conf. Deren Inhalt
 muss lauten:
 /usr/local/lib/

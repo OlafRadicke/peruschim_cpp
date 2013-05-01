@@ -1,9 +1,9 @@
 <%pre>
-    // put your includes here
-    // #include "foo.h"
-    #include "../models/WebACL.h"
-    #include "../models/UserSession.h"
-    #include "../models/KeywordRegister.h"
+    #include "models/WebACL.h"
+    #include "models/UserSession.h"
+    #include "models/KeywordRegister.h"
+    #include "models/Quote.h"
+    #include "models/QuoteRegister.h"
 
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -23,6 +23,17 @@ string keyword = "";
 <%cpp>
     DEBUG "keyword: " << keyword << endl;
     vector<KeywordCount> keywordTitlesCounts = KeywordRegister::getAllKeywordTitleAndCound();
+
+    // ACL Check
+    if ( userSession.isInRole ( "user" ) == false ) {
+        DEBUG "Nicht eingelogt" << std::endl;
+        std::vector<Quote> quoteList = QuoteRegister::getAllPubQuoteOfKeyword( keyword );
+    } else {
+        DEBUG "Eingelogt" << std::endl;
+        vector<KeywordCount> keywordTitlesCounts =
+            KeywordRegister::getAllKeywordTitleAndCound();
+    };
+
 </%cpp>
 
 
@@ -54,7 +65,7 @@ string keyword = "";
     <div class="centerbox">
         <h1>Schlagwortsuche</h1>
         <div class="centerbox">
-<a href="#letter_a">a</a> 
+<a href="#letter_a">a</a>
 <a href="#letter_b">b</a>
 <a href="#letter_c">c</a>
 <a href="#letter_d">d</a>
@@ -84,8 +95,8 @@ string keyword = "";
 <a href="#letter_ö">ö</a>
 <a href="#letter_ü">ü</a>
         </div>
-        <form method="post" >
-%               string lastLetter = ""; 
+        <form method="post" action="keyword-detail">
+%               string lastLetter = "";
 %               for ( unsigned int i=0; i<keywordTitlesCounts.size(); i++) {
 %                   if ( lastLetter != keywordTitlesCounts[i].Name.substr (0,1) ) {
 %                       lastLetter = keywordTitlesCounts[i].Name.substr (0,1);
@@ -99,9 +110,9 @@ string keyword = "";
             </h3>
             <div class="columnbox-triple">
 %               }
-                <button name="keyword" 
-                        class="full_width_button" 
-                        value="<$ keywordTitlesCounts[i].Name $>" 
+                <button name="keyword"
+                        class="full_width_button"
+                        value="<$ keywordTitlesCounts[i].Name $>"
                         type="submit"><$ keywordTitlesCounts[i].Name $>(<$ keywordTitlesCounts[i].Count $>)
                 </button>
 %           }

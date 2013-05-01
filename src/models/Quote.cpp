@@ -6,13 +6,13 @@ void Quote::saveAsNew() {
     DEBUG std::endl;
     std::string sqlcommand = "";
     Config config;
-    vector<string>   list_1d;   
+    vector<string>   list_1d;
     std:: string isPrivateData = "false";
-    
+
     string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn;
-    tntdb::Result result;        
-            
+    tntdb::Result result;
+
     conn = tntdb::connect( conn_para );
     DEBUG std::endl;
     result = conn.select( "SELECT nextval('quote_id_seq'::regclass);" );
@@ -20,14 +20,14 @@ void Quote::saveAsNew() {
         it != result.end(); ++it)
     {
         tntdb::Row row = *it;
-        row[0].get( this->m_ID );  
-    }       
-    
+        row[0].get( this->m_ID );
+    }
+
     if ( m_isPrivateData ) {
         isPrivateData = "true";
     }
     DEBUG std::endl;
-    
+
     sqlcommand =   "START TRANSACTION; \n\
                     INSERT INTO quote \n\
                     ( \n\
@@ -53,11 +53,11 @@ void Quote::saveAsNew() {
                         " +  DatabaseProxy::convertIntToStr( this->m_bookSentenceEnd ) + ", \n\
                         '" + DatabaseProxy::replace( this->m_quoteText ) + "', \n\
                         '" + DatabaseProxy::replace( this->m_note ) + "', \n\
-                        '" + DatabaseProxy::replace( this->m_ownerID ) + "', \n\
-                        '" + DatabaseProxy::replace( this->m_editionID ) + "', \n\
+                        " + DatabaseProxy::replace( this->m_ownerID ) + ", \n\
+                        " + DatabaseProxy::replace( this->m_editionID ) + ", \n\
                         '" + isPrivateData + "' \n\
-                    ); \n";    
-    
+                    ); \n";
+
     for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) {
         sqlcommand += "INSERT INTO quote_keyword \n\
                       ( \n\
@@ -68,13 +68,13 @@ void Quote::saveAsNew() {
                         '" + this->m_quoteKeywords[i] + "' \n\
                         );\n";
     }
- 
+
     sqlcommand += "COMMIT;";
 
-    try {    
-        DEBUG "sqlcommand: " << sqlcommand << std::endl;   
-        conn.execute( sqlcommand );    
-        DEBUG std::endl;   
+    try {
+        DEBUG "sqlcommand: " << sqlcommand << std::endl;
+        conn.execute( sqlcommand );
+        DEBUG std::endl;
     } catch( char * str ) {
         ERROR  "Exception raised: " << str << '\n';
     }
@@ -83,7 +83,7 @@ void Quote::saveAsNew() {
 void Quote::setKeywords( std::string keywords ) {
     m_quoteKeywords.clear();
     unsigned int found;
-    
+
     keywords = strReplace ( " ", "", keywords );
     keywords = lowercase ( keywords );
     std::string separator = ",";
@@ -97,7 +97,7 @@ void Quote::setKeywords( std::string keywords ) {
     }
     if(keywords.length() > 0){
         m_quoteKeywords.push_back(keywords);
-    }    
+    }
 }
 
 string Quote::lowercase ( string keywords ) {

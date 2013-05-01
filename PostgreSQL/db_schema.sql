@@ -11,14 +11,14 @@ CREATE TABLE metadata (
 -- COMMENT ON COLUMN account.account_disable IS 'If set true than the account is disabled';
 
 -- Insert table versions number.
-INSERT INTO metadata 
-( 
-    data_name, 
-    data_parameter, 
-    data_value, 
+INSERT INTO metadata
+(
+    data_name,
+    data_parameter,
+    data_value,
     data_description
-) 
-VALUES ( 
+)
+VALUES (
     'tableversion',
     'alpha',
     '00001',
@@ -38,18 +38,18 @@ CREATE TABLE account (
 -- COMMENT ON COLUMN account.account_disable IS 'If set true than the account is disabled';
 
 
--- Default accound "admin" with password "admin". 
-INSERT INTO account 
-( 
+-- Default accound "admin" with password "admin".
+INSERT INTO account
+(
     id,
-    login_name, 
-    real_name, 
-    password_hash, 
-    password_salt, 
-    email, 
-    account_disable 
-) 
-VALUES ( 
+    login_name,
+    real_name,
+    password_hash,
+    password_salt,
+    email,
+    account_disable
+)
+VALUES (
     1,
     'admin',
     '',
@@ -65,28 +65,28 @@ CREATE TABLE acl_roll (
     explanation     TEXT      NOT NULL
 );
 -- COMMENT ON TABLE acl_roll IS 'ACL rolls.';
--- Default accound "admin" with password "admin". 
+-- Default accound "admin" with password "admin".
 
--- Default rolls. 
-INSERT INTO acl_roll 
-( 
+-- Default rolls.
+INSERT INTO acl_roll
+(
     id,
-    name, 
+    name,
     explanation
-) 
-VALUES ( 
+)
+VALUES (
     1,
     'admin',
     ''
-); 
+);
 
-INSERT INTO acl_roll 
-( 
+INSERT INTO acl_roll
+(
     id,
-    name, 
+    name,
     explanation
-) 
-VALUES ( 
+)
+VALUES (
     2,
     'user',
     ''
@@ -104,27 +104,25 @@ CREATE TABLE account_acl_roll (
 -- COMMENT ON TABLE account_acl_roll IS 'Linking acconds with rolls.';
 
 -- admin account get all rolls.
-INSERT INTO account_acl_roll 
-( 
-    account_id, 
+INSERT INTO account_acl_roll
+(
+    account_id,
     acl_roll_id
-) 
-VALUES ( 
+)
+VALUES (
     1,
     1
 );
 
 INSERT INTO account_acl_roll
-( 
-    account_id, 
+(
+    account_id,
     acl_roll_id
-) 
-VALUES ( 
+)
+VALUES (
     1,
     2
 );
-
-
 
 -- CREATE TABLE db_account (
 --     account_id      SERIAL    PRIMARY KEY,
@@ -154,15 +152,15 @@ CREATE TABLE edition (
 
 -- Default value
 INSERT INTO edition
-( 
-    id, 
+(
+    id,
     name,
     publishername,
     releasenumber,
     releasedate,
     releaseplace
-) 
-VALUES ( 
+)
+VALUES (
     0,
     'andere',
     '',
@@ -188,6 +186,9 @@ CREATE TABLE quote (
     FOREIGN KEY  (edition_id) REFERENCES edition (id)
 );
 -- COMMENT ON TABLE quote IS 'Data sets of bible quotes.';
+-- COMMENT ON COLUMN quote.series IS 'Name of a book series like "Bible".';
+-- COMMENT ON COLUMN quote.title IS 'Book title like "1. Mose".';
+-- COMMENT ON COLUMN quote.chapter_begin IS 'Chaper of the begin of quote';
 -- COMMENT ON COLUMN quote.owner IS 'Owner and author of this data set.';
 -- COMMENT ON COLUMN quote.privatedata IS 'Is this value TRUE than the data set is private.';
 

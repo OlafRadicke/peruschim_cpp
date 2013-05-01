@@ -4,10 +4,10 @@ TNTNET=/usr/bin/tntnet
 TNTMAKEFILE = ./tntnet-make/Makefile
 
 CPPFLAGS = -Wall -Werror -pedantic  -Wno-long-long
-CPPFLAGS += -fPIC -O2  
+CPPFLAGS += -fPIC -O2
 LIBS =  -ltntnet -lcxxtools -ltntdb
-LIBS += -L/usr/lib
-LIBS += -I/usr/include 
+LIBS += -I src
+
 
 CC = g++
 DIST = ./bin
@@ -28,12 +28,14 @@ OBJECTS = \
 ./src/models/KeywordData.o \
 ./src/models/KeywordRegister.o \
 ./src/models/Quote.o \
+./src/models/QuoteRegister.o \
 ./src/models/UserSession.o \
 ./src/models/WebACL.o\
 ./src/resources/favicon.o \
 ./src/resources/style.o \
 ./src/view/access_denied.o \
 ./src/view/home.o \
+./src/view/keyword-detail.o \
 ./src/view/keyword-register.o \
 ./src/view/login.o \
 ./src/view/logout.o \
@@ -63,13 +65,14 @@ dist: convecpp $(PROG_NAME)
 	cp ./LICENSE.txt $(DIST)
 
 $(PROG_NAME):  $(OBJECTS)
-	LANG=C LC_ALL=C  $(CC) $(CPPFLAGS) -o $(PROG_NAME) $(OBJECTS) $(LIBS)
+	LANG=C LC_ALL=C  $(CC) $(CPPFLAGS)  $(LIBS) -o $(PROG_NAME) $(OBJECTS)
 
-# ./src/models/WebACL.o: ./src/models/WebACL.cpp
-# 	$(CC) -o ./src/models/WebACL.o -I/usr/include -ltntdb ./src/models/WebACL.cpp
+testtest:
+	LANG=C LC_ALL=C  echo $(LIBS)
 
 %.o: %.cpp
-	LANG=C LC_ALL=C  $(CC)  $(CPPFLAGS) -o ./$@  -c ./$< $(LIBS)
+	LANG=C LC_ALL=C  echo $(LIBS)
+	LANG=C LC_ALL=C  $(CC) $(CPPFLAGS) $(LIBS) -I usr -o ./$@  -c ./$<
 
 
 convecpp:
@@ -78,8 +81,8 @@ convecpp:
 
 # Für englische Fehlermeldungen LANG=C LC_ALL=C
 test: dist
+	echo $(LIBS)
 	cd $(DIST)&& ls && $(PROG_NAME)
-
 debug:
 	cd $(DIST)&& gdb $(PROG_NAME)
 
@@ -92,4 +95,4 @@ uninstall:
 
 
 
-.PHONY: test clean install dist uninstall convecpp
+.PHONY: test clean instsrc/modelsall dist uninstall convecpp

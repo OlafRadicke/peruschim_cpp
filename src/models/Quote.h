@@ -1,5 +1,5 @@
 #ifndef QUOTE_H
-#define QUOTE_H 
+#define QUOTE_H
 
 #include <string>
 #include <vector>
@@ -12,25 +12,20 @@
 
 class Quote
 {
-    
+
 public:
     /**
      * Constructor init strings.
      **/
     Quote():
-//         m_ID(""),
-//         m_editionID(""),
-//         m_bookSeries(""),
-//         m_bookTitle(""),
-//         m_bookChapterBegin(0),
-//         m_bookSentenceBegin(0),
-//         m_bookChapterEnd(0),
-//         m_bookSentenceEnd(0),
-//         m_quoteKeywords(),
-//         m_note(""),
-//         m_ownerID("")
+//         m_quoteKeywords()
         allBibleBooks()
     {
+        this->m_ownerID = "0";
+        this->m_bookChapterBegin = 0;
+        this->m_bookSentenceBegin = 0;
+        this->m_bookChapterEnd = 0;
+        this->m_bookSentenceEnd = 0;
         allBibleBooks.push_back("1. Mose");
         allBibleBooks.push_back("2. Mose");
         allBibleBooks.push_back("3. Mose");
@@ -109,19 +104,11 @@ public:
         allBibleBooks.push_back("3. Johannes");
         allBibleBooks.push_back("Judas");
         allBibleBooks.push_back("Offenbarung");
-        
+
     };
-        
+
     vector<std::string> allBibleBooks;
-    
-    /**
-     * Get id of edition.
-     **/
-    std::string getEditionID()
-    {
-        return this->m_editionID;
-    }
-    
+
     /**
      * Get title of book.
      **/
@@ -129,71 +116,54 @@ public:
     {
         return this->m_bookTitle;
     }
-       
+
     /**
      * Get number of chapter begin.
      **/
     int getChapterBegin()
     {
         return this->m_bookChapterBegin;
-    }    
-    
-    /**
-     * Set id of the owner.
-     **/
-    std::string getOwnerID()
-    {
-        return this->m_ownerID;
-    }    
-    
-    /**
-     * get visible policy.
-     **/
-    bool isPrivateData( )
-    {
-        return this->m_isPrivateData;
-    }      
-    
-    /**
-     * Get number of sentence begin.
-     **/
-    int setSentenceBegin ( )
-    {
-        return this->m_bookSentenceBegin;
-    } 
-    
+    }
+
     /**
      * Get number of chapter end.
      **/
     int getChapterEnd()
     {
         return this->m_bookChapterEnd;
-    } 
-    
-    
+    }
+
+    /**
+     * Get id of edition.
+     **/
+    std::string getEditionID()
+    {
+        return this->m_editionID;
+    }
+
     /**
      * Get id of this quote.
-     **/    
-    std::string setID( ) {
+     **/
+    std::string getID( ) {
         return this->m_ID;
-    }       
-    
+    }
+
     /**
-     * Set Note.
+     * Get Note.
      **/
     std::string getNote( )
     {
         return this->m_note;
     }
-    
+
     /**
-     * Get number of sentence end.
+     * get id of the owner.
      **/
-    int getSentenceEnd ( )
+    std::string getOwnerID()
     {
-        return this->m_bookSentenceEnd;
-    } 
-    
+        return this->m_ownerID;
+    }
+
     /**
      * Get quote text.
      **/
@@ -201,58 +171,51 @@ public:
     {
         return this->m_quoteText;
     }
-    
+
+    /**
+     * Get number of sentence begin.
+     **/
+    int getSentenceBegin ( )
+    {
+        return this->m_bookSentenceBegin;
+    }
+
+    /**
+     * Get number of sentence end.
+     **/
+    int getSentenceEnd ( )
+    {
+        return this->m_bookSentenceEnd;
+    }
+
+    /**
+     * get visible policy.
+     **/
+    bool isPrivateData( )
+    {
+        return this->m_isPrivateData;
+    }
+
     /**
      * Save date as new data set in database.
      **/
     void saveAsNew();
-    
-    
+
     /**
      * Save date update in in database..
      **/
-    void saveUpdate() {}    
-    
+    void saveUpdate() {}
+
     // sets ====================================================
-    
-    /**
-     * Set id of edition.
-     **/
-    void setEditionID( std::string id )
-    {
-        this->m_editionID = id;
-    } 
-    
-    /**
-     * Set id of the owner.
-     **/
-    void setOwnerID( std::string id )
-    {
-        this->m_ownerID = id;
-    }
-    
-    /**
-     * Set visible policy.
-     **/
-    void setIsPrivateData( bool visible )
-    {
-        this->m_isPrivateData = visible;
-    }   
-    
+
     /**
      * Set title of book.
      **/
     void setBookTitle( std::string title )
     {
         this->m_bookTitle = title;
-    } 
-    
-    /**
-     * Set keywords.
-     * @param keywords strin with comma separated label values
-     **/
-    void setKeywords( std::string keywords ) ;
-    
+    }
+
     /**
      * Set number of chapter begin.
      **/
@@ -260,15 +223,7 @@ public:
     {
         this->m_bookChapterBegin = number;
     }
-    
-    /**
-     * Set number of sentence begin.
-     **/
-    void setSentenceBegin ( int number )
-    {
-        this->m_bookSentenceBegin  = number;
-    }
-    
+
     /**
      * Set number of chapter end.
      **/
@@ -276,30 +231,52 @@ public:
     {
         this->m_bookChapterEnd = number;
     }
-    
+
+    /**
+     * Set id of edition.
+     **/
+    void setEditionID( std::string id )
+    {
+        this->m_editionID = id;
+    }
+
     /**
      * Set id of this quote.
-     **/    
+     **/
     void setID( string id ) {
         this->m_ID= id;
     }
-    
+
+    /**
+     * Set visible policy.
+     **/
+    void setIsPrivateData( bool visible )
+    {
+        this->m_isPrivateData = visible;
+    }
+
+    /**
+     * Set keywords.
+     * @param keywords strin with comma separated label values
+     **/
+    void setKeywords( std::string keywords ) ;
+
     /**
      * Set Note.
      **/
     void setNote( std::string note )
     {
         this->m_note = note;
-    } 
-    
+    }
+
     /**
-     * Set number of sentence end.
+     * Set id of the owner.
      **/
-    void setSentenceEnd ( int number )
+    void setOwnerID( std::string id )
     {
-        this->m_bookSentenceEnd  = number;
-    } 
-    
+        this->m_ownerID = id;
+    }
+
     /**
      * Set quote text.
      * @param text new value.
@@ -307,11 +284,36 @@ public:
     void setQuoteText( std::string text )
     {
         this->m_quoteText = text;
-    }    
+    }
 
-private:    
-    
-    
+    /**
+     * Set number of sentence begin.
+     **/
+    void setSentenceBegin ( int number )
+    {
+        this->m_bookSentenceBegin  = number;
+    }
+
+    /**
+     * Set number of sentence end.
+     **/
+    void setSentenceEnd ( int number )
+    {
+        this->m_bookSentenceEnd  = number;
+    }
+
+    /**
+     * Set series text.
+     * @param text new value.
+     **/
+    void setSeries( std::string text )
+    {
+        this->m_bookSeries = text;
+    }
+
+private:
+
+
     /**
      * book series name
      * Example: "Bibel"
@@ -351,23 +353,23 @@ private:
     /**
      * The edition id.
      **/
-    std::string m_editionID;    
-    
+    std::string m_editionID;
+
 
     /**
      * The id of this quote.
      **/
     std::string m_ID;
-    
+
     /**
      * Id of the owner of thes quote.
      * Example: "27"
      **/
     std::string m_ownerID;
-    
+
     /**
      * If this value "true" then it's not visible for other user.
-     **/    
+     **/
     bool m_isPrivateData;
 
     /**
@@ -385,11 +387,11 @@ private:
 
     /**
      * quote text.
-     * Example: "Und nach diesem ging er hinaus und sah einen Zöllner, mit 
+     * Example: "Und nach diesem ging er hinaus und sah einen Zöllner, mit
      * Namen Levi, [...]".
      **/
     std::string m_quoteText;
-    
+
     /**
      * Search and replace function.
      * @param rep search string
@@ -400,11 +402,11 @@ private:
     string strReplace (string rep, string wit, string in);
 
     /**
-     * Return a copy of the string with all the cased characters converted to 
+     * Return a copy of the string with all the cased characters converted to
      * lowercase.
-     **/    
-    string lowercase ( string keywords );  
-    
+     **/
+    string lowercase ( string keywords );
+
 };
 
-#endif 
+#endif
