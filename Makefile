@@ -45,7 +45,6 @@ OBJECTS = \
 ./src/view/portaladmin.o \
 ./src/view/portalquote.o \
 ./src/view/templates/header.o
-#./src/view/templates/user-bar.o
 
 all: dist
 

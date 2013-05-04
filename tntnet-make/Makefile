@@ -23,7 +23,6 @@ TMP_SOURCES =  \
 ./src/view/portaladmin.cpp \
 ./src/view/portalquote.cpp \
 ./src/view/templates/header.cpp
-#./src/view/templates/user-bar.cpp
 
 
 clean:
