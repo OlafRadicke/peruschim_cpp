@@ -3,7 +3,7 @@
 /* ---------------- clear -------------------------- */
 
 br.clear-both {
-   clear: both;         
+   clear: both;
 }
 /* -------- LOGO + Header -------------------------- */
 
@@ -13,7 +13,7 @@ div#header-logo{
     -webkit-transform:rotate(8deg); /* Safari */
     -o-transform:rotate(8deg); /* Opera */
     -ms-transform:rotate(8deg); /* IE9 */
-    transform:rotate(8deg); /* W3C */   
+    transform:rotate(8deg); /* W3C */
 }
 
 div#header-logo a {
@@ -90,7 +90,7 @@ div#header-logo h1 {
 /* -------- Main box (with 2 columns) -------------------------- */
 
 div.columnbox{
-    text-align: left; 
+    text-align: left;
     border-style: solid;
     border-color: #C3C3C3;
     width: 90% ;
@@ -114,7 +114,7 @@ div.columnbox{
 /* -------- Main box (with 3 columns) -------------------------- */
 
 div.columnbox-triple{
-    text-align: left; 
+    text-align: left;
     border-style: solid;
     border-color: #C3C3C3;
     width: 90% ;
@@ -172,6 +172,23 @@ div.flush-left-box{
     -webkit-box-shadow: 5px 5px 8px #B3B3B3;
 }
 
+
+/* -------- simple box -------------------------- */
+
+div.simple-box{
+    text-align: left;
+    border-style: solid;
+    border-color: #C3C3C3;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    break-inside: avoid-column;
+    page-break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+}
+
 /* -------- small box (for dialogs) -------------------------- */
 div.smallgroupbox{
     text-align: center;
@@ -197,7 +214,7 @@ div.feedback-box{
     text-align: center;
     border-style: solid;
     border-color: #C3C3C3;
-    width: 85% ; 
+    width: 85% ;
     padding: 20px;
     margin: auto;
     border-radius: 10px;
@@ -370,7 +387,7 @@ input#save_button {
 /* ----- Form keyword button ---------------------------------------------- */
 
 input.keyword_button {
-    width: 100% ; 
+    width: 100% ;
     text-align: left;
 }
 
@@ -378,19 +395,19 @@ input.keyword_button {
 
 
 button.full_width_button {
-    width: 100% ; 
+    width: 100% ;
     text-align: left;
 }
 
 /* -------- Form input ---------------------------------------------------- */
 
 input.full-width {
-    width: 100% ; 
+    width: 100% ;
 }
 
 
 input.half-width {
-    width: 50% ; 
+    width: 50% ;
     padding: 20px;
     margin: auto;
 }
@@ -398,13 +415,13 @@ input.half-width {
 /* -------- Form textarea ---------------------------------------------------- */
 
 textarea.full-width {
-    width: 100% ; 
+    width: 100% ;
 }
 
 /* -------- Tables   ------------------------------------------------------- */
 
 th {
-    text-align: left; 
+    text-align: left;
     background-color: #CC063B;
     background: linear-gradient( left, #FF383B, #FFFFFF);
     background: -webkit-linear-gradient( left, #FF383B, #FFFFFF);
@@ -416,7 +433,7 @@ th {
 }
 
 td {
-    text-align: left; 
+    text-align: left;
     background-color: #CC063B;
     background: linear-gradient( left, #A0A0A0, #FFFFFF);
     background: -webkit-linear-gradient( left, #A0A0A0, #FFFFFF);

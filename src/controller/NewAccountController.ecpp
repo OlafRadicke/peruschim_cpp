@@ -1,6 +1,6 @@
 <%pre>
-    #include "../models/WebACL.h"
-    #include "../models/UserSession.h"
+    #include "models/WebACL.h"
+    #include "models/UserSession.h"
 
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -28,21 +28,21 @@
 
 
 <%cpp>
-    
+
     // ACL Check
     if ( userSession.isInRole ( "admin" ) == false ) {
         DEBUG "Nicht autorisiert!!" << std::endl;
         return reply.redirect ( "/access_denied" );
     };
     DEBUG "Autorisiert!!" << std::endl;
-    
+
     // is button "create" Speichern?
     if ( create == "Speichern" ) {
-    
+
         // check equal of new password.
         if ( password_a != password_b ) {
             feedback = "Das Passwort ist nicht gleich!";
-        } else {   
+        } else {
             // check is password empty.
             if ( password_b == "" ) {
                 feedback = "Kein Passwort gesetzt!";
@@ -57,7 +57,7 @@
                     } catch ( char * errstr ) {
                         ERROR "Exception raised: " << errstr << '\n';
                         feedback = "Es trat ein Problem auf: " + std::string ( errstr ) ;
-                    }            
+                    }
                     feedback = "Der Account wurde angelegt!";
                 }
             }

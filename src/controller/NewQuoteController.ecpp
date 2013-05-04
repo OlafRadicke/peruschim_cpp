@@ -1,9 +1,9 @@
 <%pre>
-    #include "../models/EditionManager.h"
-    #include "../models/WebACL.h"
-    #include "../models/UserSession.h"
-    #include "../models/Edition.h"
-    #include "../models/Quote.h"
+    #include "models/EditionManager.h"
+    #include "models/WebACL.h"
+    #include "models/UserSession.h"
+    #include "models/Edition.h"
+    #include "models/Quote.h"
 
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
