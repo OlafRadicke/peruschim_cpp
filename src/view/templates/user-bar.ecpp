@@ -1,0 +1,25 @@
+
+
+    <div class="user-bar">
+        <ul>
+% if (  userSession.isInRole ( "user" ) == true) {
+            <li >
+                <form method="post" action="keyword-detail">
+                    <select name="user_view" size="1">
+                        <option value="view_owen_itmems">Nur eigene Einträge Zeigen</option>
+                        <option value="view_owen_itmems">Alle Einträge Zeigen</option>
+                    </select>
+                    <button name="quote"
+                                class="full_width_button"
+                                value="view_change"
+                                type="submit">wechseln
+                    </button>
+            </li>
+            <li class="tabright"><a href="logout">Abmelden</a></li>
+% } else {
+            <li class="tabright"><a href="login">Anmelden</a></li>
+% }
+        </ul>
+    </div>
+
+
