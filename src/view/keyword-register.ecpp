@@ -14,6 +14,7 @@
 
 <%args>
 string keyword = "";
+string user_view;
 </%args>
 
 <%session scope="global">
@@ -33,6 +34,7 @@ string keyword = "";
         vector<KeywordCount> keywordTitlesCounts =
             KeywordRegister::getAllKeywordTitleAndCound();
     };
+    DEBUG "user_view: " << user_view << endl;
 
 </%cpp>
 
@@ -46,7 +48,8 @@ string keyword = "";
 </head>
 <body>
 
-    <& "header" &>
+    <%include>./src/view/parts/user-session.ecpp.html</%include>
+    <%include>./src/view/parts/head.ecpp.html</%include>
     <br />
 
     <div class="mainmenue">
@@ -95,6 +98,22 @@ string keyword = "";
 <a href="#letter_ö">ö</a>
 <a href="#letter_ü">ü</a>
         </div>
+
+% if (  userSession.isInRole ( "user" ) == true) {
+        <p>
+            <form method="post" action="keyword-detail">
+                <select name="user_view" size="1">
+                    <option value="view_owen_itmems">Nur eigene Einträge Zeigen</option>
+                    <option value="view_all_itmems">Alle Einträge Zeigen</option>
+                </select>
+                <button name="quote"
+                            value="view_change"
+                            type="submit">wechseln
+                </button>
+            </form>
+        </p>
+% }
+
         <form method="post" action="keyword-detail">
 %               string lastLetter = "";
 %               for ( unsigned int i=0; i<keywordTitlesCounts.size(); i++) {

@@ -222,6 +222,24 @@ div.feedback-box{
     -webkit-border-radius: 10px;
 }
 
+/* --------------- login link --------------------- */
+
+div.login-link {
+    width: 70% ;
+    padding: 20px;
+    margin: auto;
+    text-align: right;
+    padding: 0px;
+    margin: 5px;
+}
+
+div.login-link ul {
+    display: inline-block;
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
 /* --------------- main menue -------------------- */
 div.mainmenue{
     text-align: center;

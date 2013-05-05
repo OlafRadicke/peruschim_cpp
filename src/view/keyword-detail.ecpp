@@ -46,8 +46,8 @@ string keyword = "";
     <& "style" &>
 </head>
 <body>
-    <& "header" &>
-    <%include>./src/view/templates/user-bar.ecpp</%include>
+    <%include>./src/view/parts/user-session.ecpp.html</%include>
+    <%include>./src/view/parts/head.ecpp.html</%include>
     <br />
 
     <div class="mainmenue">

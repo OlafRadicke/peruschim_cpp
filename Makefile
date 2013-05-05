@@ -43,8 +43,7 @@ OBJECTS = \
 ./src/view/newquote.o \
 ./src/view/newaccount.o  \
 ./src/view/portaladmin.o \
-./src/view/portalquote.o \
-./src/view/templates/header.o
+./src/view/portalquote.o 
 
 all: dist
 

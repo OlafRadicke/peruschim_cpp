@@ -21,8 +21,7 @@ TMP_SOURCES =  \
 ./src/view/newquote.cpp \
 ./src/view/newaccount.cpp  \
 ./src/view/portaladmin.cpp \
-./src/view/portalquote.cpp \
-./src/view/templates/header.cpp
+./src/view/portalquote.cpp 
 
 
 clean:
