@@ -24,7 +24,7 @@
 </head>
 <body>
 
-    <& "header" &>
+    <%include>./src/views/parts/head.ecpp.html</%include>
     <br />
     <div class="smallgroupbox">
         <form method="post" >

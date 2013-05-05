@@ -10,8 +10,8 @@
     <& "style" &>
 </head>
 <body>
-
-    <& "header" &>
+    <%include>./src/views/parts/user-session.ecpp.html</%include>
+    <%include>./src/views/parts/head.ecpp.html</%include>
     <br />
 
     <div class="mainmenue">
@@ -58,48 +58,48 @@
                     </select>
                 </p>
 
-                <p>von Kapitel: <input 
-                        name="chapter_begin" 
-                        type="number" 
-                        min="1" 
+                <p>von Kapitel: <input
+                        name="chapter_begin"
+                        type="number"
+                        min="1"
                         max="200"
-                        required="required"> Vers: <input 
-                        name="sentence_begin" 
-                        type="number" 
-                        min="1" 
-                        max="200"
-                        required="required"></p>
-
-                <p>Bis Kapitel: <input 
-                        name="chapter_end" 
-                        type="number" 
-                        min="1" 
-                        max="200"
-                        required="required"> Vers: <input 
-                        name="sentence_end" 
-                        type="number" 
-                        min="1" 
+                        required="required"> Vers: <input
+                        name="sentence_begin"
+                        type="number"
+                        min="1"
                         max="200"
                         required="required"></p>
 
-                <p>Zitat: <br><input 
+                <p>Bis Kapitel: <input
+                        name="chapter_end"
+                        type="number"
+                        min="1"
+                        max="200"
+                        required="required"> Vers: <input
+                        name="sentence_end"
+                        type="number"
+                        min="1"
+                        max="200"
+                        required="required"></p>
+
+                <p>Zitat: <br><input
                         class="full-width"
-                        name="quote_text" 
-                        type="text" 
+                        name="quote_text"
+                        type="text"
                         maxlength="400"></p>
 
-                <p>Schlagworte (Kommergetrennt): <br><input 
+                <p>Schlagworte (Kommergetrennt): <br><input
                         class="full-width"
-                        name="keywords" 
-                        type="text" 
+                        name="keywords"
+                        type="text"
                         maxlength="300"></p>
 
 
-                <p>Notizen/Anmerungen: <br><textarea 
+                <p>Notizen/Anmerungen: <br><textarea
                         class="full-width"
-                        name="note" 
+                        name="note"
                         rows="10"></textarea></p>
-                <p>Datensatz nicht öffentlicht sichtbar machen <input 
+                <p>Datensatz nicht öffentlicht sichtbar machen <input
                         type="checkbox"
                         id="is_private_data"
                         value="true"

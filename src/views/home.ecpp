@@ -13,11 +13,11 @@
 </%args>
 
 <%session scope="global">
-    // UserSession userSession;
+UserSession userSession;
 </%session>
 
 <%cpp>
-
+DEBUG "home" << endl;
 </%cpp>
 
 
@@ -30,7 +30,8 @@
 </head>
 <body>
 
-    <& "header" &>
+    <%include>./src/views/parts/user-session.ecpp.html</%include>
+    <%include>./src/views/parts/head.ecpp.html</%include>
     <br />
 
     <div class="mainmenue">

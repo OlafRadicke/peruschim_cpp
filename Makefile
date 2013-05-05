@@ -33,17 +33,17 @@ OBJECTS = \
 ./src/models/WebACL.o\
 ./src/resources/favicon.o \
 ./src/resources/style.o \
-./src/view/access_denied.o \
-./src/view/home.o \
-./src/view/keyword-detail.o \
-./src/view/keyword-register.o \
-./src/view/login.o \
-./src/view/logout.o \
-./src/view/mainmenu.o \
-./src/view/newquote.o \
-./src/view/newaccount.o  \
-./src/view/portaladmin.o \
-./src/view/portalquote.o 
+./src/views/access_denied.o \
+./src/views/home.o \
+./src/views/keyword-detail.o \
+./src/views/keyword-register.o \
+./src/views/login.o \
+./src/views/logout.o \
+./src/views/mainmenu.o \
+./src/views/newquote.o \
+./src/views/newaccount.o  \
+./src/views/portaladmin.o \
+./src/views/portalquote.o
 
 all: dist
 

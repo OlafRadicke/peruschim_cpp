@@ -42,8 +42,8 @@
     <& "style" &>
 </head>
 <body>
-
-    <& "header" &>
+    <%include>./src/views/parts/user-session.ecpp.html</%include>
+    <%include>./src/views/parts/head.ecpp.html</%include>
     <br />
 
     <div class="mainmenue">
@@ -63,7 +63,7 @@
             <ul>
                 <li><b>Portal-Accounts</b>
                     <ul>
-                        <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Account für das Webportal anlegen.</li>        
+                        <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Account für das Webportal anlegen.</li>
                     </ul>
                 </li>
             </ul>

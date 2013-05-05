@@ -9,12 +9,13 @@
     <& "style" &>
 </head>
 <body>
-    <& "header" &>
+    <%include>./src/views/parts/user-session.ecpp.html</%include>
+    <%include>./src/views/parts/head.ecpp.html</%include>
     <br />
     <& "mainmenu" &>
     <br />
     <div class="centerbox">
-        
+
         <h1>Neuen Account anlegen</h1>
 %       if ( feedback != "" ) {
         <div class="feedback-box">

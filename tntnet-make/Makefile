@@ -11,17 +11,17 @@ TMP_SOURCES =  \
 ./src/controller/NewQuoteController.cpp \
 ./src/resources/favicon.cpp \
 ./src/resources/style.cpp \
-./src/view/access_denied.cpp \
-./src/view/home.cpp \
-./src/view/keyword-detail.cpp \
-./src/view/keyword-register.cpp \
-./src/view/login.cpp \
-./src/view/logout.cpp \
-./src/view/mainmenu.cpp \
-./src/view/newquote.cpp \
-./src/view/newaccount.cpp  \
-./src/view/portaladmin.cpp \
-./src/view/portalquote.cpp 
+./src/views/access_denied.cpp \
+./src/views/home.cpp \
+./src/views/keyword-detail.cpp \
+./src/views/keyword-register.cpp \
+./src/views/login.cpp \
+./src/views/logout.cpp \
+./src/views/mainmenu.cpp \
+./src/views/newquote.cpp \
+./src/views/newaccount.cpp  \
+./src/views/portaladmin.cpp \
+./src/views/portalquote.cpp
 
 
 clean:
