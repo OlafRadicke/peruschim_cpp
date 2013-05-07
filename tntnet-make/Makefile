@@ -5,10 +5,6 @@ LIBS = -I ./src
 
 
 TMP_SOURCES =  \
-./src/controller/LoginController.cpp \
-./src/controller/LogoutController.cpp \
-./src/controller/NewAccountController.cpp \
-./src/controller/NewQuoteController.cpp \
 ./src/resources/favicon.cpp \
 ./src/resources/style.cpp \
 ./src/views/access_denied.cpp \

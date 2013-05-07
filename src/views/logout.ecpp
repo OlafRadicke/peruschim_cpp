@@ -1,5 +1,5 @@
 
-<%include>./src/controller/LogoutController.ecpp</%include>
+<%include>./src/controller/LogoutController.tnt.cpp</%include>
 
 <!DOCTYPE HTML>
 <html>

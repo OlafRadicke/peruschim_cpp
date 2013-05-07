@@ -7,6 +7,7 @@
 #include <tntdb/connection.h>
 #include <tntdb/connect.h>
 #include <tntdb/result.h>
+#include <tntdb/statement.h>
 
 using namespace std;
 
@@ -46,9 +47,11 @@ public:
     static vector<string> getAllKeywordTitles( void );
 
     /**
-    * Get all used keywords with cound.
+    * Get all used keywords with cound. Public keywords and own private user
+    * keywords.
+    * @arg owner_id login id.
     **/
-    static vector<KeywordCount> getAllKeywordTitleAndCound( void );
+    static vector<KeywordCount> getAllKeywordTitleAndCound( const string owner_id );
 
     /**
     * Get all used keywords with cound of public quotes.

@@ -19,11 +19,11 @@ vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
     Config config;
     vector< vector<string> >  list_2d;
     unsigned int     col_count;
-    
+
     string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn;
     tntdb::Result result;
-    
+
     conn = tntdb::connect(conn_para);
     DEBUG "SQLCODE: " << sqlcommand << endl;
     result = conn.select( sqlcommand );
@@ -32,9 +32,9 @@ vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
     ) {
         vector<string>  list_1d;
         tntdb::Row row = *it;
-        for ( col_count = 0; col_count != row.size(); col_count++ ) {  
+        for ( col_count = 0; col_count != row.size(); col_count++ ) {
             std::string value;
-            row[col_count].get(value); 
+            row[col_count].get(value);
             string copy_value = value;
             list_1d.push_back( copy_value );
         }
@@ -42,45 +42,46 @@ vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
     }
     conn.close();
     return list_2d;
-}    
+}
 
 string DatabaseProxy::sqlGetSingle ( string sqlcommand )
 {
     Config config;
     unsigned int     col_count;
-    
+
     string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn;
     tntdb::Result result;
-    
+
     conn = tntdb::connect( conn_para );
     result = conn.select( sqlcommand );
     for (tntdb::Result::const_iterator it = result.begin();
         it != result.end(); ++it
     ) {
         tntdb::Row row = *it;
-        for ( col_count = 0; col_count != row.size(); col_count++ ) {       
-        
+        for ( col_count = 0; col_count != row.size(); col_count++ ) {
+
             std::string value;
-            row[col_count].get(value); 
+            row[col_count].get(value);
             DEBUG "value=" << value << endl;
             return value;
         }
-    }    
+    }
     return "";
 }
 
 void DatabaseProxy::sqlSet ( string sqlcommand )
 {
     Config config;
-    
+    DEBUG "sqlcommand: " << sqlcommand << endl;
+
     string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn;
     tntdb::Result result;
-    
+
     conn = tntdb::connect( conn_para );
     conn.execute( sqlcommand );
-    
+
 }
 
 
@@ -90,10 +91,10 @@ std::string DatabaseProxy::replace (  std::string s ){
     }
     return DatabaseProxy::replace ( s, "'", "\\'" );
 }
-    
-std::string DatabaseProxy::replace ( 
-    std::string s, 
-    const std::string& k, 
+
+std::string DatabaseProxy::replace (
+    std::string s,
+    const std::string& k,
     const std::string& r
 ){
     if ( s.length() == 0 ) {

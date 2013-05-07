@@ -1,6 +1,6 @@
 
 
-<%include>./src/controller/NewQuoteController.ecpp</%include>
+<%include>./src/controller/NewQuoteController.tnt.cpp</%include>
 
 <!DOCTYPE HTML>
 <html>

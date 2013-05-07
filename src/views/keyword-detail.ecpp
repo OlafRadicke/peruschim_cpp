@@ -1,42 +1,7 @@
-<%pre>
-    #include "models/WebACL.h"
-    #include "models/UserSession.h"
-    #include "models/Quote.h"
-    #include "models/QuoteRegister.h"
 
-    # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-    # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-</%pre>
 
-<%config>
-</%config>
 
-<%args>
-string keyword = "";
-</%args>
-
-<%session scope="global">
-    UserSession userSession;
-</%session>
-
-<%cpp>
-    DEBUG "keyword: " << keyword << endl;
-    bool isLogin = false;
-    std::vector<Quote> quoteList;
-    // ACL Check
-    if ( userSession.isInRole ( "user" ) == false ) {
-        DEBUG "Nicht eingelogt" << std::endl;
-        quoteList = QuoteRegister::getAllPubQuoteOfKeyword( keyword );
-    } else {
-        DEBUG "Eingelogt" << std::endl;
-        isLogin = true;
-        quoteList = QuoteRegister::getAllQuoteOfKeyword(
-            keyword,
-            userSession.getUserID() );
-    };
-
-</%cpp>
-
+<%include>./src/controller/KeywordDetailController.tnt.cpp</%include>
 
 <!DOCTYPE HTML>
 <html>
@@ -68,6 +33,21 @@ string keyword = "";
 
     <div class="centerbox">
         <h1>Schlagwort: <i><$ keyword $></i></h1>
+
+% if (  userSession.isInRole ( "user" ) == true) {
+        <p>
+            <form method="post" action="keyword-detail">
+                <select name="user_view" size="1">
+                    <option value="view_owen_itmems">Nur eigene Einträge Zeigen</option>
+                    <option value="view_all_itmems">Alle Einträge Zeigen</option>
+                </select>
+                <button name="quote"
+                            value="view_change"
+                            type="submit">wechseln
+                </button>
+            </form>
+        </p>
+% }
 
         <div class="columnbox">
             <form method="post" action="keyword-detail">

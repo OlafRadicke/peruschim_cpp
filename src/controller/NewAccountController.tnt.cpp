@@ -53,7 +53,7 @@
                 } else {
                     // create ne account...
                     try {
-                        WebACL::createAccount ( login_name, password_a, name, mail );
+                        WebACL::createAccount ( login_name, password_a, name, mail, "user" );
                     } catch ( char * errstr ) {
                         ERROR "Exception raised: " << errstr << '\n';
                         feedback = "Es trat ein Problem auf: " + std::string ( errstr ) ;

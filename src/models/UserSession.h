@@ -12,6 +12,8 @@
 #include "Config.h"
 #include "DatabaseProxy.h"
 
+enum ItemView { ALLITEMS, PRIVATEITEMS };
+
 /**
 * This class represent a data set of a session.
 **/
@@ -21,6 +23,7 @@ public:
 
 
     UserSession () : m_username( "" ), m_userID( "" ) {};
+
 
      /**
      * Add a roll.
@@ -65,6 +68,13 @@ public:
     };
 
     /**
+     * Get back the mode of item view.
+     */
+    ItemView getItemViewMode () {
+        return this->m_item_view;
+    }
+
+    /**
      * Get back the user login name.
      * @return login name.
      **/
@@ -76,6 +86,13 @@ public:
      * @return ID of user.
      **/
     std::string getUserID ( );
+
+    /**
+     * Set the mode of item view.
+     */
+    void setItemViewMode ( ItemView mode) {
+        this->m_item_view = mode;
+    }
 
 private:
 
@@ -94,6 +111,12 @@ private:
      * User ID
      **/
     std::string m_userID;
+
+    /**
+     * the mode of item view.
+     * Options: "all","public"
+     */
+    ItemView m_item_view;
 
 };
 

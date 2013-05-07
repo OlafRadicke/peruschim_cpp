@@ -1,5 +1,5 @@
 
-<%include>./src/controller/NewAccountController.ecpp</%include>
+<%include>./src/controller/NewAccountController.tnt.cpp</%include>
 
 <!DOCTYPE HTML>
 <html>

@@ -26,10 +26,10 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
     std::string masqu_name = "";
     vector< vector<string> > sqlResult;
     DatabaseProxy database_proxy;
-    
+
     DEBUG std::endl;
     masqu_name = DatabaseProxy::replace( user_name, "'", "\\'" );
-    
+
     // password salt request.
     try {
         DEBUG std::endl;
@@ -51,11 +51,11 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
 //        Logger::Logger ( "User not foaunt in data base?", Logger::LOG_LEVEL_WARN );
         ERROR "User not foaunt in data base?" << std::endl;
         return false;
-    }    
- 
-    password_hash_a = cxxtools::md5 ( password + password_salt );   
+    }
+
+    password_hash_a = cxxtools::md5 ( password + password_salt );
     DEBUG "password_hash_a: " << password_hash_a << std::endl;
-    
+
     DEBUG std::endl;
     try {
         DEBUG std::endl;
@@ -77,7 +77,7 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
         ERROR "User not foaunt in data base?" << std::endl;
         return false;
     }
-    
+
     // is equal ?
     if ( password_hash_b == password_hash_a ) {
         return true;
@@ -90,22 +90,23 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
 /* C ----------------------------------------------------------------------- */
 
 void WebACL::connectDataBase (){
-    
+
 }
 
-void WebACL::createAccount (  
-        std::string user_name, 
-        std::string new_password  
+void WebACL::createAccount (
+        std::string user_name,
+        std::string new_password
 ) {
-    WebACL::createAccount ( user_name, new_password,  "", "");        
+    WebACL::createAccount ( user_name, new_password,  "", "");
 }
-    
 
-void WebACL::createAccount (  
-        std::string user_name, 
-        std::string new_password,  
+
+void WebACL::createAccount (
+        std::string user_name,
+        std::string new_password,
         std::string real_name,
-        std::string email        
+        std::string email,
+        std::string roll
 ) {
 
     DEBUG "start..." << std::endl;
@@ -114,11 +115,11 @@ void WebACL::createAccount (
     std::string masqu_name = "";
     vector< vector<string> > sqlResult;
     DatabaseProxy database_proxy;
-    
+
     password_salt = WebACL::genRandomSalt ( 16 );
     password_hash = cxxtools::md5 ( new_password + password_salt );
     masqu_name = DatabaseProxy::replace( user_name );
-    
+
     database_proxy.sqlSet( \
         "INSERT INTO account \
         ( login_name, real_name, password_hash, password_salt, email, account_disable )\
@@ -132,6 +133,24 @@ void WebACL::createAccount (
         );"
     );
 
+    if ( roll != "" ) {
+        std::string sqlcommand =    "SELECT \n\
+                            id \n\
+                        FROM account \n\
+                        WHERE login_name='" + DatabaseProxy::replace( user_name ) + "';";
+        string user_id = database_proxy.sqlGetSingle ( sqlcommand );
+        database_proxy.sqlSet( \
+            "INSERT INTO account_acl_roll \
+                ( account_id, acl_roll_id )\
+            VALUES \
+                ( " + user_id + ",  \
+                    ( SELECT id FROM acl_roll \
+                      WHERE name = '" + DatabaseProxy::replace( roll ) + "' ) \
+                );"
+         );
+
+    }
+
 }
 
 /* G ----------------------------------------------------------------------- */
@@ -142,10 +161,10 @@ std::vector<AccountData> WebACL::getAllAccounts ( void ){
     DatabaseProxy database_proxy;
     vector< vector<string> > sqlResult;
     vector<AccountData> accounts;
-    
+
     DEBUG std::endl;
-    sqlResult = database_proxy.sqlGet 
-    ( 
+    sqlResult = database_proxy.sqlGet
+    (
             "SELECT \
                 id, \
                 login_name, \
@@ -177,7 +196,7 @@ std::vector<AccountData> WebACL::getAllAccounts ( void ){
             adata.setAccount_disable ( false );
         }
         accounts.push_back ( adata );
-    }  
+    }
     return accounts;
 }
 
@@ -199,10 +218,10 @@ std::vector<std::string> WebACL::getRoll ( std::string user_name ){
     DatabaseProxy database_proxy;
     vector< vector<string> > sqlResult;
     vector<std::string> rolls;
-    
+
     DEBUG std::endl;
-    sqlResult = database_proxy.sqlGet 
-    ( 
+    sqlResult = database_proxy.sqlGet
+    (
             "SELECT acl_roll.name \
             FROM acl_roll, account, account_acl_roll \
             WHERE account.login_name = '" + DatabaseProxy::replace( user_name ) + "' \
@@ -213,9 +232,9 @@ std::vector<std::string> WebACL::getRoll ( std::string user_name ){
     for ( unsigned int i=0; i<sqlResult.size(); i++) {
         DEBUG "push_back (" <<  i << "): " << sqlResult[i][0] << std::endl;
         rolls.push_back ( sqlResult[i][0] );
-    }  
-    
-    
+    }
+
+
     return rolls;
 }
 
@@ -233,7 +252,7 @@ bool WebACL::isUserExist ( std::string user_name ){
     } catch ( ... ) {
         ERROR "Exception raised with: database_proxy.sqlSet ()" << endl;
         return false;
-    }    
+    }
     if ( sqlResult.size() > 0 ) {
         return true;
     } else {
@@ -254,12 +273,12 @@ void WebACL::setPassword (  std::string user_name, std::string new_password ) {
     std::string masqu_name = "";
     vector< vector<string> > sqlResult;
     DatabaseProxy database_proxy;
-    
+
     password_salt = genRandomSalt ( 16 );
     DEBUG "password_salt: " << password_salt << std::endl;
     password_hash = cxxtools::md5 ( new_password + password_salt );
     DEBUG "password_hash: " <<  password_hash <<  std::endl;
-    
+
     DEBUG std::endl;
     DEBUG std::endl;
     try {

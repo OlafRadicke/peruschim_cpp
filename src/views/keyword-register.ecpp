@@ -1,43 +1,6 @@
-<%pre>
-    #include "models/WebACL.h"
-    #include "models/UserSession.h"
-    #include "models/KeywordRegister.h"
-    #include "models/Quote.h"
-    #include "models/QuoteRegister.h"
 
-    # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-    # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-</%pre>
 
-<%config>
-</%config>
-
-<%args>
-string keyword = "";
-string user_view;
-</%args>
-
-<%session scope="global">
-    UserSession userSession;
-</%session>
-
-<%cpp>
-    DEBUG "keyword: " << keyword << endl;
-    vector<KeywordCount> keywordTitlesCounts = KeywordRegister::getAllKeywordTitleAndCound();
-
-    // ACL Check
-    if ( userSession.isInRole ( "user" ) == false ) {
-        DEBUG "Nicht eingelogt" << std::endl;
-        std::vector<Quote> quoteList = QuoteRegister::getAllPubQuoteOfKeyword( keyword );
-    } else {
-        DEBUG "Eingelogt" << std::endl;
-        vector<KeywordCount> keywordTitlesCounts =
-            KeywordRegister::getAllKeywordTitleAndCound();
-    };
-    DEBUG "user_view: " << user_view << endl;
-
-</%cpp>
-
+<%include>./src/controller/KeywordRegisterController.tnt.cpp</%include>
 
 <!DOCTYPE HTML>
 <html>
@@ -68,43 +31,43 @@ string user_view;
     <div class="centerbox">
         <h1>Schlagwortsuche</h1>
         <div class="centerbox">
-<a href="#letter_a">a</a>
-<a href="#letter_b">b</a>
-<a href="#letter_c">c</a>
-<a href="#letter_d">d</a>
-<a href="#letter_e">e</a>
-<a href="#letter_f">f</a>
-<a href="#letter_g">g</a>
-<a href="#letter_h">h</a>
-<a href="#letter_i">i</a>
-<a href="#letter_j">j</a>
-<a href="#letter_k">k</a>
-<a href="#letter_l">l</a>
-<a href="#letter_m">m</a>
-<a href="#letter_n">n</a>
-<a href="#letter_o">o</a>
-<a href="#letter_p">p</a>
-<a href="#letter_q">q</a>
-<a href="#letter_r">r</a>
-<a href="#letter_s">s</a>
-<a href="#letter_t">t</a>
-<a href="#letter_u">u</a>
-<a href="#letter_v">v</a>
-<a href="#letter_w">w</a>
-<a href="#letter_x">x</a>
-<a href="#letter_y">y</a>
-<a href="#letter_z">z</a>
-<a href="#letter_ä">ä</a>
-<a href="#letter_ö">ö</a>
-<a href="#letter_ü">ü</a>
+            <a href="#letter_a">a</a>
+            <a href="#letter_b">b</a>
+            <a href="#letter_c">c</a>
+            <a href="#letter_d">d</a>
+            <a href="#letter_e">e</a>
+            <a href="#letter_f">f</a>
+            <a href="#letter_g">g</a>
+            <a href="#letter_h">h</a>
+            <a href="#letter_i">i</a>
+            <a href="#letter_j">j</a>
+            <a href="#letter_k">k</a>
+            <a href="#letter_l">l</a>
+            <a href="#letter_m">m</a>
+            <a href="#letter_n">n</a>
+            <a href="#letter_o">o</a>
+            <a href="#letter_p">p</a>
+            <a href="#letter_q">q</a>
+            <a href="#letter_r">r</a>
+            <a href="#letter_s">s</a>
+            <a href="#letter_t">t</a>
+            <a href="#letter_u">u</a>
+            <a href="#letter_v">v</a>
+            <a href="#letter_w">w</a>
+            <a href="#letter_x">x</a>
+            <a href="#letter_y">y</a>
+            <a href="#letter_z">z</a>
+            <a href="#letter_ä">ä</a>
+            <a href="#letter_ö">ö</a>
+            <a href="#letter_ü">ü</a>
         </div>
 
 % if (  userSession.isInRole ( "user" ) == true) {
         <p>
-            <form method="post" action="keyword-detail">
+            <form method="post" action="keyword-register">
                 <select name="user_view" size="1">
-                    <option value="view_owen_itmems">Nur eigene Einträge Zeigen</option>
-                    <option value="view_all_itmems">Alle Einträge Zeigen</option>
+                    <option value="privateitems">Nur eigene Einträge Zeigen</option>
+                    <option value="allitems">Alle Einträge Zeigen</option>
                 </select>
                 <button name="quote"
                             value="view_change"

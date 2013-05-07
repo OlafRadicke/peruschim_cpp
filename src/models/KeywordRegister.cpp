@@ -31,7 +31,7 @@ vector<string> KeywordRegister::getAllKeywordTitles( void ){
 
 
 
-vector<KeywordCount> KeywordRegister::getAllKeywordTitleAndCound( void ){
+vector<KeywordCount> KeywordRegister::getAllKeywordTitleAndCound( const string owner_id ){
     DEBUG std::endl;
     vector< KeywordCount > keywordList;
     Config config;
@@ -41,10 +41,26 @@ vector<KeywordCount> KeywordRegister::getAllKeywordTitleAndCound( void ){
     tntdb::Result result;
 
     conn = tntdb::connect(conn_para);
-    result = conn.select( "SELECT title, COUNT(title) As Anzahl \
-                            FROM quote_keyword GROUP BY title ORDER BY title" );
-    for (tntdb::Result::const_iterator it = result.begin();
-        it != result.end(); ++it
+/*     result = conn.select( "SELECT title, COUNT(title) As Anzahl \
+                             FROM quote_keyword GROUP BY title ORDER BY title" );
+*/
+
+    tntdb::Statement st = conn.prepare( "SELECT title, \
+                                COUNT(title) As Anzahl \
+                            FROM quote_keyword \
+                            WHERE quote_id in \
+                                ( SELECT id \
+                                  FROM quote \
+                                  WHERE privatedata = FALSE \
+                                  OR owner_id = :v1 \
+                                ) \
+                            GROUP BY title \
+                            ORDER BY title" );
+
+    st.set( "v1", owner_id ).execute();
+
+    for (tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); ++it
     ) {
         tntdb::Row row = *it;
         KeywordCount dataSet = KeywordCount();
