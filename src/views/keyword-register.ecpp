@@ -66,8 +66,13 @@
         <p>
             <form method="post" action="keyword-register">
                 <select name="user_view" size="1">
+% if ( userSession.getItemViewMode ( ) == PRIVATEITEMS ) {
+                    <option value="allitems" >Alle Einträge Zeigen</option>
+                    <option value="privateitems" selected>Nur eigene Einträge Zeigen</option>
+% } else {
+                    <option value="allitems" selected>Alle Einträge Zeigen</option>
                     <option value="privateitems">Nur eigene Einträge Zeigen</option>
-                    <option value="allitems">Alle Einträge Zeigen</option>
+% }
                 </select>
                 <button name="quote"
                             value="view_change"

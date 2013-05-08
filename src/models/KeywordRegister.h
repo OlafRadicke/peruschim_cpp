@@ -58,6 +58,13 @@ public:
     **/
     static vector<KeywordCount> getAllPubKeywordTitleAndCound( void );
 
+    /**
+    * Get only user own keywords.
+    * keywords.
+    * @arg owner_id login id.
+    **/
+    static vector<KeywordCount> getOwnKeywordTitleAndCound( const string owner_id );
+
 private:
 
 

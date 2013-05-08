@@ -10,9 +10,7 @@
 </%args>
 
 <%session scope="global">
-    // define your session scope variables here
-    // std::string mySessionState;
-    UserSession userSession;
+    UserSession userSession();
 </%session>
 
 <%cpp>

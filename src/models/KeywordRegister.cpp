@@ -41,9 +41,6 @@ vector<KeywordCount> KeywordRegister::getAllKeywordTitleAndCound( const string o
     tntdb::Result result;
 
     conn = tntdb::connect(conn_para);
-/*     result = conn.select( "SELECT title, COUNT(title) As Anzahl \
-                             FROM quote_keyword GROUP BY title ORDER BY title" );
-*/
 
     tntdb::Statement st = conn.prepare( "SELECT title, \
                                 COUNT(title) As Anzahl \
@@ -92,6 +89,46 @@ vector<KeywordCount> KeywordRegister::getAllPubKeywordTitleAndCound( void ) {
                             ORDER BY title" );
     for (tntdb::Result::const_iterator it = result.begin();
         it != result.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+        KeywordCount dataSet = KeywordCount();
+        std::string title;
+        dataSet.Name =  row[0].getString();
+        dataSet.Count = row[1].getString();
+        keywordList.push_back( dataSet );
+    }
+    return keywordList;
+
+}
+
+
+vector<KeywordCount> KeywordRegister::getOwnKeywordTitleAndCound( const string owner_id ){
+    DEBUG "owner_id" <<  owner_id << std::endl;
+
+    vector< KeywordCount > keywordList;
+    Config config;
+
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn;
+    tntdb::Result result;
+
+    conn = tntdb::connect(conn_para);
+
+    tntdb::Statement st = conn.prepare( "SELECT title, \
+                                COUNT(title) As Anzahl \
+                            FROM quote_keyword \
+                            WHERE quote_id in \
+                                ( SELECT id \
+                                  FROM quote \
+                                  WHERE owner_id = :v1 \
+                                ) \
+                            GROUP BY title \
+                            ORDER BY title" );
+
+    st.set( "v1", owner_id ).execute();
+
+    for (tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); ++it
     ) {
         tntdb::Row row = *it;
         KeywordCount dataSet = KeywordCount();

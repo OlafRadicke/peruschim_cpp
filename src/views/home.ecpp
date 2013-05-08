@@ -1,6 +1,6 @@
 <%pre>
-    #include "../models/WebACL.h"
-    #include "../models/UserSession.h"
+    #include "models/WebACL.h"
+    #include "models/UserSession.h"
 
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -17,7 +17,21 @@ UserSession userSession;
 </%session>
 
 <%cpp>
+
+DEBUG "Salz: " << WebACL::genRandomSalt ( 8 )  << endl;
 DEBUG "home" << endl;
+DEBUG "rand()"  << rand() << endl;
+DEBUG "rand()"  << rand() << endl;
+srand (time(NULL));
+DEBUG "rand()"  << rand() << endl;
+DEBUG "rand()"  << rand() << endl;
+srand (time(NULL));
+DEBUG "rand()"  << rand() << endl;
+DEBUG "rand()"  << rand() << endl;
+DEBUG "Salz: " << WebACL::genRandomSalt ( 8 )  << endl;
+
+
+
 </%cpp>
 
 

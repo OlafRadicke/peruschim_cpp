@@ -79,13 +79,13 @@ public:
      **/
     void setPassword (  std::string user_name, std::string new_password );
 
-private:
     /**
      * Generated a random string for password salt.
      * @para len length of sting.
      * @return a random string
      */
     std::string static genRandomSalt ( const int len ) ;
+private:
 
 };
 

@@ -201,6 +201,8 @@ std::vector<AccountData> WebACL::getAllAccounts ( void ){
 }
 
 string WebACL::genRandomSalt ( const int len) {
+    /* initialize random seed: */
+    srand (time(NULL));
     string randomString = "";
     static const char alphanum[] =
         "0123456789"
@@ -208,7 +210,9 @@ string WebACL::genRandomSalt ( const int len) {
         "abcdefghijklmnopqrstuvwxyz";
 
     for (int i = 0; i < len; ++i) {
-        randomString.push_back ( alphanum[rand() % (sizeof(alphanum) - 1)] );
+        int randNo = rand() % (sizeof(alphanum) - 1) ;
+        DEBUG "randNo: " << randNo << endl;
+        randomString.push_back ( alphanum[randNo] );
     }
 
     return randomString;

@@ -16,8 +16,10 @@ std::string UserSession::getUserID ( ) {
     DEBUG std::endl;
     std::string user_id = "";
     if ( this->m_userID != "" ) {
+        DEBUG std::endl;
         return this->m_userID;
     } else {
+        DEBUG std::endl;
         std::string sqlcommand =    "SELECT \n\
                             id \n\
                         FROM account \n\
@@ -33,6 +35,7 @@ void UserSession::lockout( ) {
     DEBUG "logout..." << endl;
     this->m_userrolls.clear();
     this->m_username = "";
+    this->m_userID = "";
 }
 
 bool UserSession::isInRole ( std::string siteroll ) {
