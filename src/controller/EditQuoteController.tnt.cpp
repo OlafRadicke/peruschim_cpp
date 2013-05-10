@@ -4,6 +4,7 @@
     #include "models/UserSession.h"
     #include "models/Edition.h"
     #include "models/Quote.h"
+    #include "models/QuoteRegister.h"
 
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -14,12 +15,13 @@
 
 <%args>
     // define the query parameters
+    std::string quote_id;
     std::string edition_id = "";
     std::string book_title = "";
-    int chapter_begin = 0;
-    int sentence_begin = 0;
-    int chapter_end = 0;
-    int sentence_end = 0;
+    int         chapter_begin = 0;
+    int         sentence_begin = 0;
+    int         chapter_end = 0;
+    int         sentence_end = 0;
     std::string quote_text = "";
     std::string keywords = "";
     std::string note = "";
@@ -45,6 +47,8 @@
         return reply.redirect ( "/access_denied" );
     };
     std::string userName  = userSession.getUserName();
+    DEBUG "quote_id: " << quote_id << endl;
+    quoteData = QuoteRegister::getQuoteWithID( quote_id );
 
 
     DEBUG "save_button: " << save_button << std::endl;

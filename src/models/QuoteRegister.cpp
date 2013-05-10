@@ -34,6 +34,47 @@ std::vector<Quote> QuoteRegister::getQuotes ( tntdb::Statement st ){
 
 }
 
+Quote QuoteRegister::getQuoteWithID( const std::string id ) {
+    DEBUG std::endl;
+    vector< Quote > quoteList;
+    Config config;
+
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn;
+//     tntdb::Result result;
+
+    DEBUG std::endl;
+    conn = tntdb::connect(conn_para);
+    tntdb::Statement st = conn.prepare( "SELECT \
+        title, \
+        chapter_begin, \
+        chapter_end, \
+        edition_id, \
+        id, \
+        privatedata, \
+        note, \
+        owner_id, \
+        quote_text, \
+        sentence_begin, \
+        sentence_end, \
+        series \
+    FROM quote \
+    WHERE id= :v1 " );
+    st.set( "v1", id )
+    .execute();
+
+    DEBUG std::endl;
+    quoteList = getQuotes ( st );
+    if ( quoteList.size() == 1 ) {
+        DEBUG std::endl;
+        return quoteList[0];
+    } else {
+        std::string errorinfo = "quote " + id + " is not exist!";
+        throw errorinfo;
+    }
+
+}
+
 std::vector<Quote> QuoteRegister::getAllPubQuoteOfKeyword( const std::string keyword ) {
     DEBUG std::endl;
     vector< Quote > quoteList;

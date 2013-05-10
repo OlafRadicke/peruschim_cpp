@@ -1,11 +1,11 @@
 
 
-<%include>./src/controller/NewQuoteController.tnt.cpp</%include>
+<%include>./src/controller/EditQuoteController.tnt.cpp</%include>
 
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>PERUSCHIM - Neuer Vers</title>
+    <title>PERUSCHIM - Vers bearbeiten</title>
     <meta charset = "UTF-8" />
     <& "style" &>
 </head>
@@ -27,7 +27,9 @@
 
 
     <div class="centerbox">
-        <h1>Neuen Verseeintrag erstellen</h1>
+        <h1>Verseintrag <i>"<$ quoteData.getBookTitle() $>&nbsp;
+            <$ quoteData.getChapterBegin() $>:<$ quoteData.getSentenceBegin() $>
+            (<$ quote_id $>)"</i> bearbeiten</h1>
 
 % if ( feedback != "" ) {
 

@@ -18,6 +18,7 @@ int main ( int argc, char* argv[] )
         app.mapUrl( "^/home", "home" ).setPathInfo( "home" );
         app.mapUrl( "^/newaccount", "newaccount" ).setPathInfo( "newaccount" );
         app.mapUrl( "^/newquote", "newquote" ).setPathInfo( "newquote" );
+        app.mapUrl( "^/editquote", "editquote" ).setPathInfo( "editquote" );
         app.mapUrl( "^/$", "home" ).setPathInfo( "home" );
 
         // ruft bei /keyword-detail/keyword die Komponente keyword-detail

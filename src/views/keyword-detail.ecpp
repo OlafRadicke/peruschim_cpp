@@ -29,7 +29,7 @@
     <div class="centerbox">
         <h1>Schlagwort: <i><$ keyword $></i></h1>
         <div class="columnbox">
-            <form method="post" action="keyword-detail">
+            <form method="post" action="editquote">
 % for ( unsigned int i=0; i < quoteList.size(); i++) {
                     <div class="simple-box">
                         <h2>
@@ -49,7 +49,7 @@
                             </li>
                         </ul>
 %     if ( isLogin == true && quoteList[i].getOwnerID() == userSession.getUserID() ) {
-                        <button name="quote"
+                        <button name="quote_id"
                                 class="full_width_button"
                                 value="<$ quoteList[i].getID( ) $>"
                                 type="submit">Bearbeiten

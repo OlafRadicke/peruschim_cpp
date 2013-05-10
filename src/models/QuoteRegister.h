@@ -38,6 +38,13 @@ public:
         const std::string keyword,
         const std::string userID );
 
+    /**
+     * Get a storaged quotes with a specific id.
+     * @arg id the id of quote.
+     * @return type of Quote with data from the database.
+     */
+    static Quote getQuoteWithID( const std::string id );
+
 private:
     /**
      * A basic function for get lists of Quote from database.
