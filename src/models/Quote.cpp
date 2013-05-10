@@ -2,6 +2,38 @@
 #include "Quote.h"
 
 
+std::vector<std::string> Quote::getKeywords() {
+    DEBUG std::endl;
+    Config config;
+
+
+    if ( this->m_quoteKeywords.size() < 1 && this->m_ID != "") {
+        string conn_para = config.get( "DB-DRIVER" );
+        tntdb::Connection conn;
+        tntdb::Result result;
+
+        conn = tntdb::connect( conn_para );
+        DEBUG std::endl;
+        tntdb::Statement st = conn.prepare( "SELECT title \
+            FROM quote_keyword \
+            WHERE quote_id = :v1 \
+            ORDER BY title" );
+        st.set("v1", this->m_ID ).execute();
+
+        for ( tntdb::Statement::const_iterator it = st.begin();
+            it != st.end(); ++it ) {
+            DEBUG std::endl;
+            tntdb::Row row = *it;
+            Quote dataQuote = Quote();
+
+            this->m_quoteKeywords.push_back( row[0].getString() );
+
+        }
+
+    }
+    return this->m_quoteKeywords;
+}
+
 void Quote::saveAsNew() {
     DEBUG std::endl;
     std::string sqlcommand = "";

@@ -41,7 +41,6 @@ std::vector<Quote> QuoteRegister::getAllPubQuoteOfKeyword( const std::string key
 
     string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn;
-//     tntdb::Result result;
 
     conn = tntdb::connect(conn_para);
     tntdb::Statement st = conn.prepare( "SELECT \
@@ -62,16 +61,13 @@ std::vector<Quote> QuoteRegister::getAllPubQuoteOfKeyword( const std::string key
         SELECT quote_id \
         FROM quote_keyword \
         WHERE title= :v1) \
+    AND privatedata = 'FALSE'\
     ORDER BY series, title, chapter_begin" );
     st.set("v1", keyword).execute();
-
-    DEBUG "keyword: " << keyword  << std::endl;
-//     DEBUG "st.end(): " << st.end()  << std::endl;
 
     for (tntdb::Statement::const_iterator it = st.begin();
         it != st.end(); ++it
     ) {
-        DEBUG std::endl;
         tntdb::Row row = *it;
         Quote dataQuote = Quote();
 
@@ -121,11 +117,12 @@ std::vector<Quote> QuoteRegister::getAllQuoteOfKeyword(
         sentence_end, \
         series \
     FROM quote \
-    WHERE id in ( \
+    WHERE ( privatedata = 'FALSE'\
+        OR owner_id= :v2 ) \
+    AND  id in ( \
         SELECT quote_id \
         FROM quote_keyword \
         WHERE title= :v1) \
-    AND owner_id= :v2 \
     ORDER BY series, title, chapter_begin" );
     st.set( "v1", keyword )
     .set( "v2", userID )

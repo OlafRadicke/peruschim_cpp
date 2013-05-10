@@ -21,46 +21,32 @@
             <li class="tabmiddle_activ"><a href="keyword-register">Schlagwortsuche</a></li>
             <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
             <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
-            <li class="tabmiddle"><a href="portaladmin">Administrationsportal</a></li>
-% if ( isLogin == true) {
-            <li class="tabright"><a href="logout">Abmelden</a></li>
-% } else {
-            <li class="tabright"><a href="login">Anmelden</a></li>
-% }
+            <li class="tabright"><a href="portaladmin">Administrationsportal</a></li>
         </ul>
     </div>
     <br />
 
     <div class="centerbox">
         <h1>Schlagwort: <i><$ keyword $></i></h1>
-
-% if (  userSession.isInRole ( "user" ) == true) {
-        <p>
-            <form method="post" action="keyword-detail">
-                <select name="user_view" size="1">
-                    <option value="view_owen_itmems">Nur eigene Einträge Zeigen</option>
-                    <option value="view_all_itmems">Alle Einträge Zeigen</option>
-                </select>
-                <button name="quote"
-                            value="view_change"
-                            type="submit">wechseln
-                </button>
-            </form>
-        </p>
-% }
-
         <div class="columnbox">
             <form method="post" action="keyword-detail">
 % for ( unsigned int i=0; i < quoteList.size(); i++) {
                     <div class="simple-box">
-                        <b>
+                        <h2>
                             <$ quoteList[i].getBookTitle() $>&#160;
                             <$ quoteList[i].getChapterBegin() $>:
                             <$ quoteList[i].getSentenceBegin() $>
-                        </b>
+                        </h2>
                         <ul>
-                            <li>Zeitat: <i><$ quoteList[i].getQuoteText() $></i></li>
+                            <li>Zitat: <i><$ quoteList[i].getQuoteText() $></i></li>
                             <li>Notiz: <i><$ quoteList[i].getNote() $></i></li>
+                            <li>Schlagworte: <ul>
+%     std::vector<std::string> keywordList = quoteList[i].getKeywords();
+%     for ( unsigned int i2=0; i2 <  keywordList.size(); i2++) {
+                                <li><i><$ keywordList[i2] $></i>
+%     }
+                            </ul>
+                            </li>
                         </ul>
 %     if ( isLogin == true && quoteList[i].getOwnerID() == userSession.getUserID() ) {
                         <button name="quote"

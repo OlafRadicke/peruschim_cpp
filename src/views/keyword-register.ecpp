@@ -21,8 +21,7 @@
             <li class="tabmiddle_activ"><a href="keyword-register">Schlagwortsuche</a></li>
             <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
             <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
-            <li class="tabmiddle"><a href="portaladmin">Administrationsportal</a></li>
-            <li class="tabright"><a href="logout">Abmelden</a></li>
+            <li class="tabright"><a href="portaladmin">Administrationsportal</a></li>
         </ul>
     </div>
     <br />

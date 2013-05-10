@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <tntdb/statement.h>
 #include "DatabaseProxy.h"
 #include "Edition.h"
 
@@ -147,6 +148,12 @@ public:
     std::string getID( ) {
         return this->m_ID;
     }
+
+
+    /**
+     * Get back the keyword list.
+     **/
+    std::vector<std::string> getKeywords();
 
     /**
      * Get Note.
