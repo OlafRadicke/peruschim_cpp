@@ -6,7 +6,6 @@ std::vector<std::string> Quote::getKeywords() {
     DEBUG std::endl;
     Config config;
 
-
     if ( this->m_quoteKeywords.size() < 1 && this->m_ID != "") {
         string conn_para = config.get( "DB-DRIVER" );
         tntdb::Connection conn;
@@ -29,9 +28,42 @@ std::vector<std::string> Quote::getKeywords() {
             this->m_quoteKeywords.push_back( row[0].getString() );
 
         }
-
     }
     return this->m_quoteKeywords;
+}
+
+std::string Quote::getKeywordsAsString(){
+    DEBUG std::endl;
+    Config config;
+    std::string keywordsAsString = "";
+
+    if ( this->m_quoteKeywords.size() < 1 && this->m_ID != "") {
+        string conn_para = config.get( "DB-DRIVER" );
+        tntdb::Connection conn;
+        tntdb::Result result;
+        std::string seperator = "";
+
+        conn = tntdb::connect( conn_para );
+        DEBUG std::endl;
+        tntdb::Statement st = conn.prepare( "SELECT title \
+            FROM quote_keyword \
+            WHERE quote_id = :v1 \
+            ORDER BY title" );
+        st.set("v1", this->m_ID ).execute();
+
+        for ( tntdb::Statement::const_iterator it = st.begin();
+            it != st.end(); ++it ) {
+            tntdb::Row row = *it;
+            Quote dataQuote = Quote();
+            DEBUG "single keyword: " <<  row[0].getString() << std::endl;
+            DEBUG "seperator: " <<  seperator << std::endl;
+            keywordsAsString += seperator + row[0].getString();
+            seperator =",";
+        }
+
+    }
+
+    return keywordsAsString;
 }
 
 void Quote::saveAsNew() {
@@ -112,6 +144,64 @@ void Quote::saveAsNew() {
     }
 }
 
+void Quote::saveUpdate(){
+    DEBUG std::endl;
+    std::string sqlcommand = "";
+    Config config;
+    vector<string>   list_1d;
+    std:: string isPrivateData = "false";
+
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn;
+    tntdb::Result result;
+
+    conn = tntdb::connect( conn_para );
+    DEBUG std::endl;
+
+    if ( m_isPrivateData ) {
+        isPrivateData = "true";
+    }
+    DEBUG std::endl;
+
+    sqlcommand =   "START TRANSACTION; \n\
+                    UPDATE quote SET \n\
+                        series = '" + DatabaseProxy::replace( this->m_bookSeries ) + "', \n\
+                        title = '" + DatabaseProxy::replace( this->m_bookTitle ) + "', \n\
+                        chapter_begin = " +  DatabaseProxy::convertIntToStr( this->m_bookChapterBegin ) + ", \n\
+                        sentence_begin = " +  DatabaseProxy::convertIntToStr( this->m_bookSentenceBegin ) + ", \n\
+                        chapter_end = " +  DatabaseProxy::convertIntToStr( this->m_bookChapterEnd ) + ", \n\
+                        sentence_end = " +  DatabaseProxy::convertIntToStr( this->m_bookSentenceEnd ) + ", \n\
+                        quote_text = '" + DatabaseProxy::replace( this->m_quoteText ) + "', \n\
+                        note = '" + DatabaseProxy::replace( this->m_note ) + "', \n\
+                        owner_id = " + DatabaseProxy::replace( this->m_ownerID ) + ", \n\
+                        edition_id = " + DatabaseProxy::replace( this->m_editionID ) + ", \n\
+                        privatedata = '" + isPrivateData + "' \n\
+                    WHERE id = " + this->m_ID + "; \n";
+
+    sqlcommand += "\n DELETE FROM quote_keyword WHERE quote_id = " + this->m_ID + "; \n";
+
+    for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) {
+        sqlcommand += "INSERT INTO quote_keyword \n\
+                      ( \n\
+                        quote_id, \n\
+                        title \n\
+                      ) VALUES ( \n\
+                        " + this->m_ID + ", \n\
+                        '" + this->m_quoteKeywords[i] + "' \n\
+                        );\n";
+    }
+
+    sqlcommand += "COMMIT;";
+
+    try {
+        DEBUG "sqlcommand: " << sqlcommand << std::endl;
+        conn.execute( sqlcommand );
+        DEBUG std::endl;
+    } catch( char * str ) {
+        ERROR  "Exception raised: " << str << '\n';
+    }
+}
+
 void Quote::setKeywords( std::string keywords ) {
     m_quoteKeywords.clear();
     unsigned int found;
@@ -131,6 +221,7 @@ void Quote::setKeywords( std::string keywords ) {
         m_quoteKeywords.push_back(keywords);
     }
 }
+
 
 string Quote::lowercase ( string keywords ) {
     keywords = strReplace ( "A", "a", keywords);
@@ -164,7 +255,6 @@ string Quote::lowercase ( string keywords ) {
     keywords = strReplace ( "Ü", "ü", keywords);
     return keywords;
 }
-
 
 string Quote::strReplace (string rep, string wit, string in) {
   int pos;

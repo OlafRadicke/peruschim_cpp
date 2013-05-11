@@ -45,17 +45,32 @@
 
                 <p>Edition:
                     <select name="edition_id" size="1">
-%                    for ( unsigned int i=0; i<editionList.size(); i++) {
-                        <option value="<$  editionList[i].getID() $>"><$ editionList[i].getName() $></option>
-%                    }
+%     for ( unsigned int i=0; i<editionList.size(); i++) {
+%         if ( quoteData.getEditionID() == editionList[i].getName() ) {
+                        <option value="<$  editionList[i].getID() $>" selected>
+                            <$ editionList[i].getName() $>
+                        </option>
+%         }else {
+                        <option value="<$  editionList[i].getID() $>">
+                            <$ editionList[i].getName() $>
+                        </option>
+%         }
+%     }
                     </select>
                 </p>
 
                 <p>Buch:
                     <select name="book_title" size="1">
-%                   for ( unsigned int i=0; i<quoteData.allBibleBooks.size(); i++) {
-                        <option value="<$  quoteData.allBibleBooks[i] $>"><$ quoteData.allBibleBooks[i] $></option>
-%                   }
+%     for ( unsigned int i=0; i<quoteData.allBibleBooks.size(); i++) {
+%         if ( quoteData.getBookTitle() == quoteData.allBibleBooks[i] ) {
+                        <option value="<$  quoteData.allBibleBooks[i] $>" selected>
+                            <$ quoteData.allBibleBooks[i] $>
+                        </option>
+%         }else {
+                        <option value="<$  quoteData.allBibleBooks[i] $>">
+                            <$ quoteData.allBibleBooks[i] $>
+%         }
+%     }
                     </select>
                 </p>
 
@@ -64,11 +79,14 @@
                         type="number"
                         min="1"
                         max="200"
-                        required="required"> Vers: <input
+                        value="<$ quoteData.getChapterBegin() $>"
+                        required="required">
+                   Vers: <input
                         name="sentence_begin"
                         type="number"
                         min="1"
                         max="200"
+                        value="<$ quoteData.getSentenceBegin() $>"
                         required="required"></p>
 
                 <p>Bis Kapitel: <input
@@ -76,37 +94,50 @@
                         type="number"
                         min="1"
                         max="200"
-                        required="required"> Vers: <input
+                        value="<$ quoteData.getChapterEnd() $>"
+                        required="required">
+                   Vers: <input
                         name="sentence_end"
                         type="number"
                         min="1"
                         max="200"
+                        value="<$ quoteData.getSentenceEnd() $>"
                         required="required"></p>
 
                 <p>Zitat: <br><input
                         class="full-width"
                         name="quote_text"
                         type="text"
+                        value="<$ quoteData.getQuoteText() $>"
                         maxlength="400"></p>
 
                 <p>Schlagworte (Kommergetrennt): <br><input
                         class="full-width"
                         name="keywords"
                         type="text"
+                        value="<$ quoteData.getKeywordsAsString() $>"
                         maxlength="300"></p>
-
 
                 <p>Notizen/Anmerungen: <br><textarea
                         class="full-width"
                         name="note"
+                        value="<$ quoteData.getNote() $>"
                         rows="10"></textarea></p>
                 <p>Datensatz nicht öffentlicht sichtbar machen <input
                         type="checkbox"
                         id="is_private_data"
+%     if ( quoteData.isPrivateData( ) ) {
                         value="true"
+%     } else {
+                        value="false"
+%     }
                         name="is_private_data" /></p>
 
-                <p><input id="save_button" type="submit" name="create_button" value="Speichern"></p>
+                <p>
+                    <input id="save_button" type="submit" name="update_button" value="Speichern">
+                    <button id="save_button" type="submit" name="reset_button" value="reset">
+                        Zurücksetzen</button>
+                    <a href="/home" >Abbruch</a></p>
             </form>
 
 % }

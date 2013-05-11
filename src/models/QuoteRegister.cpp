@@ -44,6 +44,21 @@ Quote QuoteRegister::getQuoteWithID( const std::string id ) {
 //     tntdb::Result result;
 
     DEBUG std::endl;
+    DEBUG "SQL: " << "SELECT \
+        title, \
+        chapter_begin, \
+        chapter_end, \
+        edition_id, \
+        id, \
+        privatedata, \
+        note, \
+        owner_id, \
+        quote_text, \
+        sentence_begin, \
+        sentence_end, \
+        series \
+    FROM quote \
+    WHERE id= " <<  id << endl;
     conn = tntdb::connect(conn_para);
     tntdb::Statement st = conn.prepare( "SELECT \
         title, \

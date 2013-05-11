@@ -149,11 +149,15 @@ public:
         return this->m_ID;
     }
 
-
     /**
      * Get back the keyword list.
      **/
     std::vector<std::string> getKeywords();
+
+    /**
+     * Get back the keyword list as string like: "rot,blau,weis" .
+     **/
+    std::string getKeywordsAsString();
 
     /**
      * Get Note.
@@ -211,7 +215,7 @@ public:
     /**
      * Save date update in in database..
      **/
-    void saveUpdate() {}
+    void saveUpdate();
 
     // sets ====================================================
 

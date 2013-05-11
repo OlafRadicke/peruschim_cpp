@@ -26,14 +26,21 @@
     std::string keywords = "";
     std::string note = "";
     std::string is_private_data = "false";
-    std::string save_button;
-    std::string create_button;
+    std::string update_button;
+    std::string rest_button;
 </%args>
 
 <%session scope="global">
     // define your session scope variables here
     // std::string mySessionState;
     UserSession userSession;
+</%session>
+
+
+<%session>
+    // define your session scope variables here
+    // std::string mySessionState;
+    std::string session_quote_id;
 </%session>
 
 <%cpp>
@@ -48,13 +55,15 @@
     };
     std::string userName  = userSession.getUserName();
     DEBUG "quote_id: " << quote_id << endl;
-    quoteData = QuoteRegister::getQuoteWithID( quote_id );
+    DEBUG "session_quote_id: " << session_quote_id << endl;
 
-
-    DEBUG "save_button: " << save_button << std::endl;
-    DEBUG "create_button: " << create_button << std::endl;
+    DEBUG "create_button: " << update_button << std::endl;
     // is button "create" kicked?
-    if ( create_button == "Speichern" ) {
+    if ( update_button == "Speichern" ) {
+
+        DEBUG "session_quote_id" <<  session_quote_id << std::endl;
+        quoteData.setID( session_quote_id );
+
         DEBUG "edition_id: " << edition_id << std::endl;
         quoteData.setEditionID( edition_id );
 
@@ -92,10 +101,17 @@
         DEBUG "owner id: " << userSession.getUserID() << std::endl;
         quoteData.setOwnerID( userSession.getUserID() );
 
-        quoteData.saveAsNew( );
+        quoteData.saveUpdate();
         feedback = "Der Verse wurde gespeichert!";
     } else {
-        editionList =  EditionManager::getAllEditions();
+        if ( rest_button == "reset" ) {
+            editionList =  EditionManager::getAllEditions();
+            quoteData = QuoteRegister::getQuoteWithID( session_quote_id );
+        } else {
+            editionList =  EditionManager::getAllEditions();
+            session_quote_id = quote_id;
+            quoteData = QuoteRegister::getQuoteWithID( quote_id );
+        }
 
     }
 </%cpp>
