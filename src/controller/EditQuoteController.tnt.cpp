@@ -105,10 +105,10 @@
         feedback = "Der Verse wurde gespeichert!";
     } else {
         if ( rest_button == "reset" ) {
-            editionList =  EditionManager::getAllEditions();
+            editionList =  EditionManager::getAllEditions( userSession.getUserID() );
             quoteData = QuoteRegister::getQuoteWithID( session_quote_id );
         } else {
-            editionList =  EditionManager::getAllEditions();
+            editionList =  EditionManager::getAllEditions( userSession.getUserID() );
             session_quote_id = quote_id;
             quoteData = QuoteRegister::getQuoteWithID( quote_id );
         }

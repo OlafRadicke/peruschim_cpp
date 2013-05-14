@@ -128,17 +128,20 @@ VALUES (
 
 CREATE TABLE edition (
     id              SERIAL    PRIMARY KEY,
-    name            TEXT      NOT NULL UNIQUE,
+    owner_id        BIGINT    NOT NULL,
+    name            TEXT      NOT NULL,
     publishername   TEXT      NOT NULL,
     releasenumber   TEXT      NOT NULL,
     releasedate     TEXT      NOT NULL,
-    releaseplace    TEXT      NOT NULL
+    releaseplace    TEXT      NOT NULL,
+    FOREIGN KEY  (owner_id)   REFERENCES account (id)
 );
 
 -- Default value
 INSERT INTO edition
 (
     id,
+    owner_id,
     name,
     publishername,
     releasenumber,
@@ -147,6 +150,7 @@ INSERT INTO edition
 )
 VALUES (
     0,
+    1,
     'andere',
     '',
     '',

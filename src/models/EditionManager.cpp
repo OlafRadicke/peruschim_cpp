@@ -10,52 +10,81 @@
 /* G ----------------------------------------------------------------------- */
 
 
-std::vector<Edition> EditionManager::getAllEditions ( void ){
+std::vector<Edition> EditionManager::getAllEditions ( const string user_id ){
+    DEBUG "user_id: " << user_id  << std::endl;
     std::vector<Edition> editionList;
-    DEBUG std::endl;
-    std::string sqlcommand =    "SELECT \
+    Config config;
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn = tntdb::connect(conn_para);
+
+    tntdb::Statement st = conn.prepare( "SELECT \
                         id, \
                         name, \
                         publishername, \
                         releasenumber, \
-                        releaseplace \
-                    FROM edition;";  
-    DEBUG std::endl; 
-    Config config;
-    DEBUG std::endl;
-    string conn_para = config.get( "DB-DRIVER" );
-    DEBUG std::endl;
-    tntdb::Connection conn;
-    DEBUG std::endl;
-    tntdb::Result result;
-    DEBUG std::endl;
-    
-    conn = tntdb::connect(conn_para);
-    DEBUG std::endl;
-    result = conn.select( sqlcommand );
-    DEBUG std::endl;
-    for (tntdb::Result::const_iterator it = result.begin();
-        it != result.end(); ++it
+                        releaseplace, \
+                        releasedate \
+                    FROM edition \
+                    WHERE owner_id = :v1;");
+    st.set( "v1", user_id ).execute();
+
+    for (tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); ++it
     ) {
-        DEBUG std::endl;
         tntdb::Row row = *it;
-        DEBUG std::endl;           
         Edition edition;
-        DEBUG std::endl;
-        
+
         edition.setID( row[0].getString () );
-        DEBUG std::endl;
         edition.setName( row[1].getString () );
-        DEBUG std::endl;
         edition.setPublisherName( row[2].getString () );
-        DEBUG std::endl;
         edition.setReleaseNumber( row[3].getString () );
-        DEBUG std::endl;
         edition.setReleasePlace( row[4].getString () );
-        DEBUG std::endl;
-        
+        edition.setOwnerID( user_id );
+        edition.setReleaseDate( row[5].getString () );
+
         editionList.push_back ( edition );
-    }    
-    DEBUG std::endl;
+    }
+
+    DEBUG "editionList.size(): " <<  editionList.size() << std::endl;
     return editionList;
+}
+
+
+Edition EditionManager::getEditionByID ( const string id ) {
+    Edition edition;
+    Config config;
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn = tntdb::connect(conn_para);
+
+    tntdb::Statement st = conn.prepare( "SELECT \
+                        id, \
+                        owner_id, \
+                        name, \
+                        publishername, \
+                        releasenumber, \
+                        releaseplace, \
+                        releasedate \
+                    FROM edition \
+                    WHERE id= :v1 ;");
+    st.set( "v1", id ).execute();
+
+    for (tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+        Edition edition;
+
+        edition.setID( row[0].getString () );
+        edition.setOwnerID( row[1].getString () );
+        edition.setName( row[2].getString () );
+        edition.setPublisherName( row[3].getString () );
+        edition.setReleaseNumber( row[4].getString () );
+        edition.setReleasePlace( row[5].getString () );
+        edition.setReleaseDate( row[6].getString () );
+
+        return edition;
+    }
+    string errorinfo = "Edition with id " + id + " no found!";
+    throw errorinfo;
+
 }

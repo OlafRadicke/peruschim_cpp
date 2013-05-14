@@ -30,6 +30,7 @@ OBJECTS = \
 ./src/resources/favicon.o \
 ./src/resources/style.o \
 ./src/views/access_denied.o \
+./src/views/edit_editions.o \
 ./src/views/editquote.o \
 ./src/views/home.o \
 ./src/views/keyword-detail.o \

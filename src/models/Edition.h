@@ -1,6 +1,6 @@
 
 #ifndef EDITION_H
-#define EDITION_H 
+#define EDITION_H
 
 #include <string>
 #include <vector>
@@ -32,7 +32,7 @@ public:
     {
         return this->m_id;
     }
-    
+
     /**
      * Get name.
      **/
@@ -40,31 +40,39 @@ public:
     {
         return this->m_name;
     }
-    
+
     /**
     * Get publisher name.
     **/
     std::string getPublisherName( )
-    {   
+    {
         return this->m_publisherName;
-    }    
-    
+    }
+
+    /**
+    * Get release date.
+    **/
+    std::string getReleaseDate( )
+    {
+        return this->m_releaseDate;
+    }
+
     /**
     * Get release number.
     **/
     std::string  getReleaseNumber( )
-    {   
+    {
         return this->m_releaseNumber;
-    }   
-    
+    }
+
     /**
     * Get release place.
     **/
     std::string getReleasePlace( )
-    {   
+    {
         return this->m_releasePlace;
-    }    
-    
+    }
+
     // sets ==================================
     /**
      * Set name.
@@ -73,7 +81,7 @@ public:
     void setID( std::string id )
     {
         this->m_id = id;
-    }   
+    }
 
     /**
      * Set name.
@@ -83,47 +91,68 @@ public:
     {
         this->m_name = name;
     }
-    
+
+    /**
+     * Set id of owner.
+     * @param user_id id of owner.
+     **/
+    void setOwnerID( const std::string user_id ){
+        this->ownerID = user_id;
+    }
+
     /**
     * Set publisher name.
     * @param name new name.
     **/
     void setPublisherName( std::string name )
-    {   
+    {
         this->m_publisherName = name;
     }
-    
+
+    /**
+    * Set release date.
+    **/
+    void setReleaseDate( const std::string releaseDate )
+    {
+        this->m_releaseDate = releaseDate;
+    }
+
     /**
     * Set release number.
     * @param number new number.
     **/
     void setReleaseNumber( std::string number )
-    {   
+    {
         this->m_releaseNumber = number;
-    }  
-    
+    }
+
     /**
     * Set release place.
     * @param place new place.
     **/
     void setReleasePlace( std::string place )
-    {   
+    {
         this->m_releasePlace = place;
     }
-    
-private:    
+
+private:
 
     /**
      *  edition id
      * Example: "35333"
      **/
     std::string m_id;
-    
+
     /**
      *  edition name
      * Example: "Elberfelder"
      **/
     std::string m_name;
+
+    /**
+     *  ID of owner.
+     **/
+    std::string ownerID;
 
     /**
      *  edition publisher
@@ -152,5 +181,5 @@ private:
 
 };
 
-#endif 
+#endif
 

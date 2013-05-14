@@ -36,7 +36,14 @@
         </div>
 
 % } else {
+%     if ( 1 > editionList.size() ) {
+        <div class="feedback-box">
+            <b>Bevor ein erster Vers angelegt werden kann, muss zunächst eine
+                Bibelausgabe angelegt werden! <a href="/edit_editions">Jetzt
+                Bibelausgabe anlegen...</a></b>
+        </div>
 
+%     }
         <div class="flush-left-box">
             <br class="clear-both">
             <form method="post" >

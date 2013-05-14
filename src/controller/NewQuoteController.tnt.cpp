@@ -91,7 +91,7 @@
         quoteData.saveAsNew( );
         feedback = "Der Verse wurde gespeichert!";
     } else {
-        editionList =  EditionManager::getAllEditions();
+        editionList =  EditionManager::getAllEditions( userSession.getUserID() );
 
     }
 </%cpp>
