@@ -14,6 +14,11 @@
 <%args>
     std::string edit_edition_id;
     std::string modified_title;
+    std::string modified_publishername;
+    std::string modified_releasenumber;
+    std::string modified_releasedate;
+    std::string modified_releaseplace;
+
     std::string save_modified;
     std::string delete_edition_id;
     std::string new_edition;
@@ -49,9 +54,26 @@
     }
 
     if ( save_modified != "" ) {
+
         DEBUG "save_modified: " << save_modified << endl;
+        DEBUG "session_edition_id: " << session_edition_id << endl;
         DEBUG "modified_title: " << modified_title << endl;
         DEBUG "session_edition_id: " <<   session_edition_id;
+        DEBUG "modified_title: " << modified_title << endl;
+        DEBUG "modified_publishername: " << modified_publishername << endl;
+        DEBUG "modified_releasenumber: " << modified_releasenumber << endl;
+        DEBUG "modified_releasedate: " << modified_releasedate << endl;
+        DEBUG "modified_releaseplace: " << modified_releaseplace << endl  ;
+
+        editionData.setID( session_edition_id );
+        editionData.setName( modified_title );
+        editionData.setOwnerID( userSession.getUserID() );
+        editionData.setPublisherName( modified_publishername );
+        editionData.setReleaseDate( modified_releasedate );
+        editionData.setReleaseNumber( modified_releasenumber );
+        editionData.setReleasePlace( modified_releaseplace );
+
+        editionData.saveUpdate();
 
         feedback = "Die Änderungen  wurde gespeichert!";
     }

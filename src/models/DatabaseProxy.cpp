@@ -89,7 +89,7 @@ std::string DatabaseProxy::replace (  std::string s ){
     if ( s == "" ) {
         return "";
     }
-    return DatabaseProxy::replace ( s, "'", "\\'" );
+    return DatabaseProxy::replace ( s, "'", "''" );
 }
 
 std::string DatabaseProxy::replace (

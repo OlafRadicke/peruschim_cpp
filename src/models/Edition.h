@@ -4,9 +4,12 @@
 
 #include <string>
 #include <vector>
+#include <tntdb/statement.h>
+#include "Config.h"
+#include "DatabaseProxy.h"
 
-// # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-// # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 class Edition
 {
@@ -73,6 +76,11 @@ public:
         return this->m_releasePlace;
     }
 
+    /**
+     * Save date update in in database..
+     **/
+    void saveUpdate();
+
     // sets ==================================
     /**
      * Set name.
@@ -97,7 +105,7 @@ public:
      * @param user_id id of owner.
      **/
     void setOwnerID( const std::string user_id ){
-        this->ownerID = user_id;
+        this->m_owner_id = user_id;
     }
 
     /**
@@ -152,7 +160,7 @@ private:
     /**
      *  ID of owner.
      **/
-    std::string ownerID;
+    std::string m_owner_id;
 
     /**
      *  edition publisher

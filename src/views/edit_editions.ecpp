@@ -43,40 +43,40 @@
                             type="text"
                             size="40"
                             maxlength="40"
-                            value=<$ editionData.getName() $> >
+                            value="<$ editionData.getName() $>" >
                     </p>
                     <p>Verlag:<br>
                         <input name="modified_publishername"
                             type="text"
                             size="40"
                             maxlength="40"
-                            value=<$ editionData.getPublisherName( ) $> >
+                            value="<$ editionData.getPublisherName( ) $>" >
                     </p>
                     <p>Auflage:<br>
                         <input name="modified_releasenumber"
                             type="number"
                             size="40"
                             maxlength="40"
-                            value=<$ editionData.getReleaseNumber( ) $> >
+                            value="<$ editionData.getReleaseNumber( ) $>" >
                     </p>
                     <p>Erscheinungsdatum:<br>
                         <input name="modified_releasedate"
                             type="date"
                             size="40"
                             maxlength="40"
-                            value=<$ editionData.getReleaseDate( ) $> >
+                            value="<$ editionData.getReleaseDate( ) $>" >
                     </p>
                     <p>Erscheinungsort:<br>
                         <input name="modified_releaseplace"
                             type="text"
                             size="40"
                             maxlength="40"
-                            value=<$ editionData.getReleaseDate( ) $> >
+                            value="<$ editionData.getReleasePlace() $>" >
                     </p>
                     <p>
                         <button name="save_modified"
                                 value="<$ editionList[i].getID( ) $>"
-                                type="submit">Änderung speichern
+                                type="submit" >Änderung speichern
                         </button>
                     </p>
                 </div>
@@ -108,7 +108,6 @@
                     </button>
                 </div>
             </div>
-
         </form>
     </div>
 </body>
