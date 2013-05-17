@@ -470,4 +470,10 @@ td {
     padding: 5px 10px 5px 10px ;
 }
 
+p#foot {
+    color: lightslategray;
+    text-align: center;
+
+}
+
 </style>

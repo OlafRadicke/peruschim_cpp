@@ -53,7 +53,7 @@
 %                    for ( unsigned int i=0; i<editionList.size(); i++) {
                         <option value="<$  editionList[i].getID() $>"><$ editionList[i].getName() $></option>
 %                    }
-                    </select>
+                    </select> <a href="/edit_editions">Neue Bibelausgabe anlegen...</a>
                 </p>
 
                 <p>Buch:
@@ -118,5 +118,6 @@
         </div>
     </div>
 
+<%include>./src/views/parts/foot.ecpp.html</%include>
 </body>
 </html>

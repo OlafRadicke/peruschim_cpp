@@ -45,6 +45,9 @@ OBJECTS = \
 
 all: dist
 
+quick-clean:
+	make clean -f  $(TNTMAKEFILE)
+
 clean:
 	make clean -f  $(TNTMAKEFILE)
 	rm  $(OBJECTS)

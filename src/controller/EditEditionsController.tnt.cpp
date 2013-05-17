@@ -43,29 +43,16 @@
     if ( userSession.isInRole ( "user" ) == false ) {
         return reply.redirect ( "/access_denied" );
     };
-    DEBUG "session_edition_id: " << session_edition_id << endl;
 
     // edit action
     if ( edit_edition_id != "" ) {
-        DEBUG "edit_edition_id: " << edit_edition_id << endl;
         edition_title = EditionManager::getEditionByID( edit_edition_id ).getName() ;
         editionData = EditionManager::getEditionByID( edit_edition_id ) ;
         session_edition_id = edit_edition_id;
-        feedback = "Eintrag ändern...";
     }
 
     // save modifications action
     if ( save_modified != "" ) {
-
-        DEBUG "save_modified: " << save_modified << endl;
-        DEBUG "session_edition_id: " << session_edition_id << endl;
-        DEBUG "modified_title: " << modified_title << endl;
-        DEBUG "session_edition_id: " <<   session_edition_id;
-        DEBUG "modified_title: " << modified_title << endl;
-        DEBUG "modified_publishername: " << modified_publishername << endl;
-        DEBUG "modified_releasenumber: " << modified_releasenumber << endl;
-        DEBUG "modified_releasedate: " << modified_releasedate << endl;
-        DEBUG "modified_releaseplace: " << modified_releaseplace << endl  ;
 
         editionData.setID( session_edition_id );
         editionData.setName( modified_title );
@@ -101,7 +88,6 @@
         editionData.setOwnerID( userSession.getUserID() );
         editionData.saveAsNew();
 
-        feedback = "Der Verse wurde gespeichert!";
     }
 
     editionList =  EditionManager::getAllEditions( userSession.getUserID() );

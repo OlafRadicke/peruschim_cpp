@@ -144,5 +144,6 @@
         </div>
     </div>
 
+<%include>./src/views/parts/foot.ecpp.html</%include>
 </body>
 </html>

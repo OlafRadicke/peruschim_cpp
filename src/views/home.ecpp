@@ -81,5 +81,6 @@ das Bibelstudium, daran erinnern soll nicht zum <i>Pharisäer</i> zu werden.</p>
         </div>
     </div>
 
+<%include>./src/views/parts/foot.ecpp.html</%include>
 </body>
 </html>

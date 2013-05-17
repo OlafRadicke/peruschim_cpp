@@ -21,5 +21,7 @@
             <p><input type="submit" name="login" value="kicked"></p>
         </form>
     </div>
+
+<%include>./src/views/parts/foot.ecpp.html</%include>
 </body>
 </html>

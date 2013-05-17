@@ -33,5 +33,7 @@
             <p>Zur Anmeldung: <a href="login">Hier weiter klicken</a></p>
         </form>
     </div>
+
+<%include>./src/views/parts/foot.ecpp.html</%include>
 </body>
 </html>

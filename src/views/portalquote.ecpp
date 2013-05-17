@@ -35,7 +35,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>PERUSCHIM - Verwaltung</title>
+    <title>PERUSCHIM - Verwaltung der Verse</title>
     <meta charset = "UTF-8" />
     <& "style" &>
 </head>
@@ -55,7 +55,7 @@
     </div>
 
     <div class="centerbox">
-        <h1>Administrationsportal</h1>
+        <h1>Versverwaltungsportal</h1>
         <div class="columnbox">
             <ul>
                 <li><a href="newquote"><b>Neuer Vers:</b></a> Einen neuen Verseintrag erstellen.</li>
@@ -67,5 +67,6 @@
         </div>
     </div>
 
+<%include>./src/views/parts/foot.ecpp.html</%include>
 </body>
 </html>
