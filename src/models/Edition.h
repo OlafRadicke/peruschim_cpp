@@ -77,6 +77,11 @@ public:
     }
 
     /**
+     * Save date as new data set in database.
+     **/
+    void saveAsNew();
+
+    /**
      * Save date update in in database..
      **/
     void saveUpdate();

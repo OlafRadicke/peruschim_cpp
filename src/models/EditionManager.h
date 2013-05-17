@@ -20,6 +20,11 @@ class EditionManager {
 public:
 
 
+    /**
+     * Delete a edition data with a specifed id.
+     * @arg id a edition.
+     **/
+    static void deleteEditionByID ( const string id );
 
     /**
      * Get back all editions data of a user.
@@ -34,6 +39,12 @@ public:
      **/
     static Edition getEditionByID ( const string id );
 
+    /**
+     * Cecked if this edition in use of any quote.
+     * @arg id a edition.
+     * @return get back a number of quote that this edition us.
+     **/
+    static int isEditionInUse ( const string id );
 
 private:
 

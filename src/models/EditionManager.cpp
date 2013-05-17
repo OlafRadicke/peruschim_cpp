@@ -5,7 +5,17 @@
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
+/* D ----------------------------------------------------------------------- */
 
+void EditionManager::deleteEditionByID ( const string id ) {
+    Config config;
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn = tntdb::connect(conn_para);
+
+    tntdb::Statement st = conn.prepare( "DELETE FROM edition \
+                    WHERE id= :v1 ;");
+    st.set( "v1", id ).execute();
+}
 
 /* G ----------------------------------------------------------------------- */
 
@@ -86,5 +96,29 @@ Edition EditionManager::getEditionByID ( const string id ) {
     }
     string errorinfo = "Edition with id " + id + " no found!";
     throw errorinfo;
+
+}
+
+/* I ----------------------------------------------------------------------- */
+
+int EditionManager::isEditionInUse ( const string id ){
+    Config config;
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn = tntdb::connect(conn_para);
+
+    tntdb::Statement st = conn.prepare( " SELECT COUNT(edition_id) \
+         FROM quote \
+         WHERE edition_id = :v1 ;");
+    st.set( "v1", id ).execute();
+
+    for (tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+        Edition edition;
+
+        return row[0].getInt();
+    }
+    return 0;
 
 }

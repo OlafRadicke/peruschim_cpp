@@ -87,15 +87,39 @@ div#header-logo h1 {
     margin: 0px;
 }
 
+
+/* -------- simple box -------------------------- */
+
+div.simple-box{
+    text-align: left;
+    border-style: solid;
+    border-color: #C3C3C3;
+    padding: 5px;
+    margin: 5px;
+
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+
+    break-inside: avoid-column;
+    page-break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+}
+
 /* -------- Main box (with 2 columns) -------------------------- */
 
 div.columnbox{
     text-align: left;
     border-style: solid;
     border-color: #C3C3C3;
+/*
     width: 90% ;
     padding: 20px;
     margin: auto;
+*/
+    padding: 20px;
+    margin: 5px;
+
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -106,9 +130,11 @@ div.columnbox{
     -moz-column-gap: 2em;
     -webkit-column-count: 2;
 
+/*
     box-shadow: 5px 5px 8px #B3B3B3;
     -moz-box-shadow: 5px 5px 8px #B3B3B3;
     -webkit-box-shadow: 5px 5px 8px #B3B3B3;
+*/
 }
 
 /* -------- Main box (with 3 columns) -------------------------- */
@@ -117,9 +143,10 @@ div.columnbox-triple{
     text-align: left;
     border-style: solid;
     border-color: #C3C3C3;
-    width: 90% ;
+
     padding: 20px;
-    margin: auto;
+    margin: 5px;
+
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -130,9 +157,7 @@ div.columnbox-triple{
     -moz-column-gap: 3em;
     -webkit-column-count: 3;
 
-    box-shadow: 5px 5px 8px #B3B3B3;
-    -moz-box-shadow: 5px 5px 8px #B3B3B3;
-    -webkit-box-shadow: 5px 5px 8px #B3B3B3;
+
 }
 
 
@@ -173,21 +198,6 @@ div.flush-left-box{
 }
 
 
-/* -------- simple box -------------------------- */
-
-div.simple-box{
-    text-align: left;
-    border-style: solid;
-    border-color: #C3C3C3;
-    padding: 5px;
-    margin: 5px;
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    break-inside: avoid-column;
-    page-break-inside: avoid;
-    -webkit-column-break-inside: avoid;
-}
 
 /* -------- small box (for dialogs) -------------------------- */
 div.smallgroupbox{

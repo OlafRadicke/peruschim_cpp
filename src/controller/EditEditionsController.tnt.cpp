@@ -21,6 +21,7 @@
 
     std::string save_modified;
     std::string delete_edition_id;
+    std::string new_edition_title;
     std::string new_edition;
 </%args>
 
@@ -44,7 +45,7 @@
     };
     DEBUG "session_edition_id: " << session_edition_id << endl;
 
-
+    // edit action
     if ( edit_edition_id != "" ) {
         DEBUG "edit_edition_id: " << edit_edition_id << endl;
         edition_title = EditionManager::getEditionByID( edit_edition_id ).getName() ;
@@ -53,6 +54,7 @@
         feedback = "Eintrag ändern...";
     }
 
+    // save modifications action
     if ( save_modified != "" ) {
 
         DEBUG "save_modified: " << save_modified << endl;
@@ -78,16 +80,27 @@
         feedback = "Die Änderungen  wurde gespeichert!";
     }
 
+    // deleting action
     if ( delete_edition_id != "" ) {
         DEBUG "delete_edition_id: " << delete_edition_id << endl;
-
-        feedback = "Die Ausgabe wurde gelöscht!";
-        feedback = "Die Ausgabe wird noch von anderen Einträgen verwendet und \
-            kann deshalb nicht gelöscht werden!";
+        int useCount = EditionManager::isEditionInUse( delete_edition_id );
+        if ( useCount > 0 ) {
+            feedback = "Die Ausgabe wird noch von anderen Einträgen verwendet \
+                und kann deshalb nicht gelöscht werden!";
+        } else {
+            EditionManager::deleteEditionByID( delete_edition_id );
+            feedback = "Die Ausgabe wurde gelöscht!";
+        }
     }
 
+    // create new edition action
     if ( new_edition == "pushed" ) {
         DEBUG "new_edition: " << new_edition << endl;
+
+        editionData.setName( new_edition_title );
+        editionData.setOwnerID( userSession.getUserID() );
+        editionData.saveAsNew();
+
         feedback = "Der Verse wurde gespeichert!";
     }
 

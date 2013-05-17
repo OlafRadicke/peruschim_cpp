@@ -33,10 +33,24 @@
         </div>
 
 % }
+
         <form method="post" action="edit_editions">
+            <div class="simple-box">
+                Neuen Eintrag zu einer Ausgabe erstellen:&#160;
+                <input name="new_edition_title"
+                    type="text"
+                    size="40"
+                    maxlength="40">
+                &#160;
+                <button name="new_edition"
+                        value="pushed"
+                        type="submit">Speichern
+                </button>
+            </div>
+
             <div class="columnbox">
 % for ( unsigned int i=0; i < editionList.size(); i++) {
-%     if ( edit_edition_id != "" ) {
+%     if ( edit_edition_id == editionList[i].getID( ) ) {
                 <div class="simple-box">
                     <p>Titel:<br>
                         <input name="modified_title"
@@ -95,18 +109,7 @@
                 </div>
 %     }
 % }
-                <div class="simple-box">
-                    Neue Ausgabe erstellen:&#160;
-                    <input name="new_edition_title"
-                        type="text"
-                        size="40"
-                        maxlength="40">
-                    &#160;
-                    <button name="new_edition"
-                            value="pushed"
-                            type="submit">Speichern
-                    </button>
-                </div>
+
             </div>
         </form>
     </div>
