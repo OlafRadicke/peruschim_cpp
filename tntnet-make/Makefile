@@ -8,6 +8,7 @@ TMP_SOURCES =  \
 ./src/resources/favicon.cpp \
 ./src/resources/style.cpp \
 ./src/views/access_denied.cpp \
+./src/views/edit_account.cpp \
 ./src/views/edit_editions.cpp \
 ./src/views/editquote.cpp \
 ./src/views/home.cpp \

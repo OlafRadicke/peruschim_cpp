@@ -52,8 +52,7 @@
             <li class="tabmiddle"><a href="keyword-register">Schlagwortsuche</a></li>
             <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
             <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
-            <li class="tabmiddle_activ"><a href="portaladmin">Administrationsportal</a></li>
-            <li class="tabright"><a href="logout">Abmelden</a></li>
+            <li class="tabright_activ"><a href="portaladmin">Administrationsportal</a></li>
         </ul>
     </div>
 
@@ -61,11 +60,8 @@
         <h1>Administrationsportal</h1>
         <div class="columnbox">
             <ul>
-                <li><b>Portal-Accounts</b>
-                    <ul>
-                        <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Account für das Webportal anlegen.</li>
-                    </ul>
-                </li>
+                <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Account für das Webportal anlegen.</li>
+                <li><a href="edit_account"><b>Accounts bearbeiten:</b></a> Einen Account bearbeiten oder löschen.</li>
             </ul>
         </div>
     </div>
