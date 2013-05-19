@@ -59,7 +59,7 @@
         <div class="columnbox">
             <ul>
                 <li><a href="newquote"><b>Neuer Vers:</b></a> Einen neuen Verseintrag erstellen.</li>
-                <li><a href="newquote"><b>Verse bearbeiten:</b></a> Eigene Verse bearbeiten.</li>
+                <li><a href="editquote"><b>Verse bearbeiten:</b></a> Eigene Verse bearbeiten.</li>
                 <li><a href="edit_editions"><b>Ausgaben:</b></a> Einen neuen
                     Datensatz zu einer Bibel-Ausgabe anlegen oder bearbeiten.</li>
                 </li>

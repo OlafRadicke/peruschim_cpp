@@ -24,7 +24,7 @@
     <br />
     <div class="centerbox">
 
-        <h1>Neuen Account anlegen</h1>
+        <h1>User-Accounts</h1>
 % if ( feedback != "" ) {
         <div class="feedback-box">
             <b><$ feedback $> </b>
@@ -32,23 +32,65 @@
 % }
 
         <form method="post" >
-% if ( edit_account_id != "" ) {
-            <p>Login*:<br><input name="login_name" type="text" size="40" maxlength="80"></p>
-            <p>Vollständiger Name:<br><input name="name" type="text" size="40" maxlength="80"></p>
-            <p>E-Mail-Adresse:<br><input name="mail" type="text" size="40" maxlength="80"></p>
-            <p>Passwort*:<br><input name="password_a" type="password" size="40" maxlength="40"></p>
-            <p>Passwort*:<br><input name="password_b" type="password" size="40" maxlength="40"></p>
-            <p>*Pflichtfeld></p>
-            <p><button name="button_update_account"
-                        value="Speichern"
-                        type="submit">Speichern
-                </button></p>
-% }
 
-            <h1>User-Accounts</h1>
+
             <div class="columnbox">
 % for ( unsigned int i=0; i < accountList.size(); i++) {
                 <div class="simple-box">
+%     if ( edit_account_id == accountList[i].getID() ) {
+                    <h2>Account bearbeiten</h2>
+                    <p>
+                        <label for="login_name">Login*: </label>
+                        <br>
+                        <input
+                            class="full-size"
+                            name="login_name"
+                            type="text"
+                            maxlength="80">
+                    </p>
+                    <p>
+                        <label for="mail">Vollständiger Name: </label>
+                        <br>
+                        <input
+                            class="full-size"
+                            name="name"
+                            type="text"
+                            maxlength="80">
+                    </p>
+                    <p>
+                        <label for="mail">E-Mail-Adresse:</label>
+                        <br>
+                        <input
+                            class="full-size"
+                            name="mail"
+                            type="text"
+                            maxlength="80">
+                    </p>
+                    <p>
+                        Passwort*:
+                        <br>
+                        <input
+                            class="full-size"
+                            name="password_a"
+                            type="password"
+                            maxlength="40">
+                    </p>
+                    <p>
+                        Passwortwiederholung*:
+                        <br>
+                        <input
+                            class="full-size"
+                            name="password_b"
+                            type="password"
+                            maxlength="40">
+                    </p>
+                    <p>*Pflichtfeld</p>
+                    <p><button name="button_update_account"
+                                value="Speichern"
+                                type="submit">Speichern
+                        </button>
+                    </p>
+%     } else {
                     <i><b>"<$ accountList[i].getLogin_name() $>"</b></i>
                     (<$ accountList[i].getID() $>)&#160;
                     <button name="edit_account_id"
@@ -59,6 +101,7 @@
                             value="<$ accountList[i].getID() $>"
                             type="submit">Löschen
                     </button>
+%     }
                 </div>
 % }
             </div>

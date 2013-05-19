@@ -5,6 +5,35 @@
 br.clear-both {
    clear: both;
 }
+
+/* --------------- button -------------------------- */
+
+button {
+    border: 1px solid #006;
+}
+
+/* --------------- label -------------------------- */
+
+/*
+
+label.fix-size {
+    display: block;
+    width: 30%;
+    float: left;
+    margin: 2px 4px 6px 4px;
+    text-align: right;
+}
+*/
+
+/* ---------  input --------------------------------*/
+
+input { border: 1px solid #006; }
+
+input.full-size {
+    border: 1px solid #006;
+    width: 100%;
+}
+
 /* -------- LOGO + Header -------------------------- */
 
 div#header-logo{
