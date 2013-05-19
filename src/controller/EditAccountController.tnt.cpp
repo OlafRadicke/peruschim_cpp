@@ -36,9 +36,11 @@
     };
 
     std::vector<AccountData> accountList = WebACL::getAllAccounts();
+    AccountData accountData;
 
 
     if ( edit_account_id != "") {
+        accountData =  WebACL::getAccountsWithID ( edit_account_id );
         session_account_id = edit_account_id;
     }
 

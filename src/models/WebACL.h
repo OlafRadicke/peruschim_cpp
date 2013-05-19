@@ -6,6 +6,11 @@
 #include <string>
 #include <iostream>
 
+#include <tntdb/connection.h>
+#include <tntdb/connect.h>
+#include <tntdb/result.h>
+#include <tntdb/statement.h>
+
 #include "AccountData.h"
 
 class WebACL {
@@ -51,6 +56,12 @@ public:
             std::string roll = ""
     );
 
+    /**
+     * Get a account data with a specific id.
+     * @arg id id from a account.
+     * @return account data.
+     **/
+    static AccountData getAccountsWithID ( const std::string id );
 
     /**
      * Get back all account data.
@@ -59,7 +70,7 @@ public:
     static std::vector<AccountData> getAllAccounts ( void );
 
     /**
-     * Get back the role from a user.
+     * Get back the roles from a user.
      * @para user_name name of the user.
      * @return list of user roles
      **/

@@ -37,7 +37,7 @@
             <div class="columnbox">
 % for ( unsigned int i=0; i < accountList.size(); i++) {
                 <div class="simple-box">
-%     if ( edit_account_id == accountList[i].getID() ) {
+%     if ( session_account_id == accountList[i].getID() ) {
                     <h2>Account bearbeiten</h2>
                     <p>
                         <label for="login_name">Login*: </label>
@@ -46,6 +46,7 @@
                             class="full-size"
                             name="login_name"
                             type="text"
+                            value="<$ accountData.getLogin_name() $>"
                             maxlength="80">
                     </p>
                     <p>
@@ -55,6 +56,7 @@
                             class="full-size"
                             name="name"
                             type="text"
+                            value="<$ accountData.getReal_name() $>"
                             maxlength="80">
                     </p>
                     <p>
@@ -64,6 +66,7 @@
                             class="full-size"
                             name="mail"
                             type="text"
+                            value="<$ accountData.getEmail() $>"
                             maxlength="80">
                     </p>
                     <p>

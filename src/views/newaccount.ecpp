@@ -35,7 +35,7 @@
             <p>Vollständiger Name:<br><input name="name" type="text" size="40" maxlength="80"></p>
             <p>E-Mail-Adresse:<br><input name="mail" type="text" size="40" maxlength="80"></p>
             <p>Passwort*:<br><input name="password_a" type="password" size="40" maxlength="40"></p>
-            <p>Passwort*:<br><input name="password_b" type="password" size="40" maxlength="40"></p>
+            <p>Passwortwiederholung*:<br><input name="password_b" type="password" size="40" maxlength="40"></p>
             <p>*Pflichtfeld</p>
             <p><input type="submit" name="create" value="Speichern"></p>
         </form>

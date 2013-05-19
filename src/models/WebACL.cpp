@@ -155,6 +155,48 @@ void WebACL::createAccount (
 
 /* G ----------------------------------------------------------------------- */
 
+AccountData WebACL::getAccountsWithID ( const std::string id ){
+    Config config;
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn = tntdb::connect(conn_para);
+
+    tntdb::Statement st = conn.prepare( "SELECT \
+                login_name, \
+                real_name, \
+                password_hash, \
+                password_salt, \
+                email, \
+                account_disable  \
+            FROM account \
+            WHERE id = :v1;");
+    st.set( "v1", id ).execute();
+
+    for (tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+        AccountData adata;
+
+        adata.setID ( id );
+        adata.setLogin_name ( row[0].getString() );
+        adata.setReal_name ( row[1].getString() );
+        adata.setPassword_hash ( row[2].getString() );
+        adata.setPassword_salt ( row[3].getString() );
+        adata.setEmail ( row[4].getString() );
+        DEBUG "account_disable: "  << row[5].getString() << std::endl;
+        if ( row[5].getString() == "true" ) {
+            DEBUG "true" <<  std::endl;
+            adata.setAccount_disable ( true );
+
+        } else {
+            DEBUG "false" <<  std::endl;
+            adata.setAccount_disable ( false );
+        }
+        return adata;
+    }
+    std::string errorinfo = "no account found with this id" + id;
+    throw errorinfo;
+}
 
 std::vector<AccountData> WebACL::getAllAccounts ( void ){
 
