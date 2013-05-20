@@ -2,8 +2,8 @@
     #include "models/WebACL.h"
     #include "models/UserSession.h"
 
-    # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-    # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+    # define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+    # define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 </%pre>
 
 <%config>

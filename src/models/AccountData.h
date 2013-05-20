@@ -1,21 +1,29 @@
 #ifndef ACCOUNTDATA_H
-#define ACCOUNTDATA_H 
+#define ACCOUNTDATA_H
 
 #include <string>
+#include <iostream>
 
+#include <cxxtools/md5.h>
+
+#include <tntdb/connection.h>
+#include <tntdb/connect.h>
+#include <tntdb/statement.h>
+
+#include "Config.h"
 
 
 /**
 * This class represent a data set of the tabe a23t_account (system data base).
 **/
 class AccountData {
-    
+
 public:
-    
+
     /**
      * Constructor init strings.
      **/
-    AccountData () : 
+    AccountData () :
         m_id ( "" ),
         m_login_name ( "" ),
         m_real_name ( "" ),
@@ -24,43 +32,60 @@ public:
         m_email ( "" ),
         m_account_disable ( false )
     {};
-    
+
 //     void saveAccountData ( void );
-    
+
     void setID ( std::string id ) { m_id = id; };
     std::string getID ( void ) { return m_id; };
-    
+
     void setLogin_name ( std::string login_name ) { m_login_name = login_name; };
     std::string getLogin_name ( void ) { return m_login_name; };
-    
+
     void setReal_name ( std::string real_name ) { m_real_name = real_name; };
     std::string getReal_name ( void ) { return m_real_name; };
-    
+
     void setPassword_hash ( std::string password_hash ) { m_password_hash = password_hash; };
     std::string getPassword_hash ( void ) { return m_password_hash; };
-    
+
+    /**
+     * Set a new passwort.
+     * @arg newpassword the new password.
+     */
+    void setNewPassword ( std::string newpassword );
+
     void setPassword_salt ( std::string password_salt ) { m_password_salt = password_salt; };
     std::string getPassword_salt ( void ) { return m_password_salt; };
-    
+
     void setEmail ( std::string email ) { m_email = email; };
     std::string getEmail ( void ) { return m_email; };
-    
+
     void setAccount_disable ( bool account_disable ) { m_account_disable = account_disable; };
     bool getAccount_disable ( void ) { return m_account_disable; };
-    
+
+
+    /**
+     * Save date update in in database..
+     **/
+    void saveUpdate();
+
 private:
 
-    
     std::string m_id;
     std::string m_login_name;
     std::string m_real_name;
     std::string m_password_hash;
     std::string m_password_salt;
     std::string m_email;
-    bool        m_account_disable;   
-    
-    
+    bool        m_account_disable;
+
+    /**
+     * Generated a random string for password salt.
+     * @para len length of sting.
+     * @return a random string
+     */
+    std::string static genRandomSalt ( const int len ) ;
+
 };
 
 
-#endif 
+#endif

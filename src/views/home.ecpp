@@ -2,8 +2,8 @@
     #include "models/WebACL.h"
     #include "models/UserSession.h"
 
-    # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-    # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+    # define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+    # define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 </%pre>
 
 <%config>
@@ -63,7 +63,7 @@ DEBUG "Salz: " << WebACL::genRandomSalt ( 8 )  << endl;
     <div class="centerbox">
         <h1>Herzlich willkommen auf <i>PERUSCHIM</i></h1>
         <div class="columnbox">
-<p>Mit <i>PERUSCHIM</i> kannst du deine Bibelverse, di du dir gerne merken willst,
+<p>Mit <i>PERUSCHIM</i> kannst du deine Bibelverse, die du dir gerne merken willst,
 speichern. Diese Verse kannst du dann mit Schlagworten versehen um sie schneller
 wieder zu finden. </p>
 <p>Du kannst auch nachschauen, welche Bibelstellen sich andere zu bestimmten Themen

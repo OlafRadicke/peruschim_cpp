@@ -9,12 +9,8 @@
 #include "DatabaseProxy.h"
 #include "WebACL.h"
 
-
 # define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-
-
-
 /* A ----------------------------------------------------------------------- */
 
 
@@ -250,13 +246,11 @@ string WebACL::genRandomSalt ( const int len) {
         "0123456789"
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz";
-
     for (int i = 0; i < len; ++i) {
         int randNo = rand() % (sizeof(alphanum) - 1) ;
         DEBUG "randNo: " << randNo << endl;
         randomString.push_back ( alphanum[randNo] );
     }
-
     return randomString;
 }
 

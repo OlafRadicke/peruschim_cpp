@@ -70,7 +70,7 @@
                             maxlength="80">
                     </p>
                     <p>
-                        Passwort*:
+                        Passwort**:
                         <br>
                         <input
                             class="full-size"
@@ -79,7 +79,7 @@
                             maxlength="40">
                     </p>
                     <p>
-                        Passwortwiederholung*:
+                        Passwortwiederholung:
                         <br>
                         <input
                             class="full-size"
@@ -87,7 +87,18 @@
                             type="password"
                             maxlength="40">
                     </p>
-                    <p>*Pflichtfeld</p>
+                    <p>
+                        Account deaktiviert <input
+                        type="checkbox"
+                        value="true"
+                        name="is_inactive" />
+
+                    </p>
+
+                    <p>
+                        *Pflichtfeld, **Wenn kein Passwort gesetzt wurde, wird das
+                        alte Passwort nicht verändert
+                    </p>
                     <p><button name="button_update_account"
                                 value="Speichern"
                                 type="submit">Speichern
