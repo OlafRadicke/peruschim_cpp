@@ -254,6 +254,25 @@ string WebACL::genRandomSalt ( const int len) {
     return randomString;
 }
 
+std::vector<std::string> WebACL::getAllRolls ( ){
+    DatabaseProxy database_proxy;
+    vector< vector<string> > sqlResult;
+    vector<std::string> rolls;
+
+    DEBUG std::endl;
+    sqlResult = database_proxy.sqlGet
+    (
+            "SELECT DISTINCT name FROM acl_roll ;"
+    );
+
+    for ( unsigned int i=0; i<sqlResult.size(); i++) {
+        DEBUG "push_back (" <<  i << "): " << sqlResult[i][0] << std::endl;
+        rolls.push_back ( sqlResult[i][0] );
+    }
+    return rolls;
+}
+
+
 std::vector<std::string> WebACL::getRoll ( std::string user_name ){
     DatabaseProxy database_proxy;
     vector< vector<string> > sqlResult;
@@ -300,9 +319,20 @@ bool WebACL::isUserExist ( std::string user_name ){
     }
 }
 
-/* S ----------------------------------------------------------------------- */
+bool WebACL::isUserInRole ( const std::string login_name, const std::string roll ) {
+    std::vector<std::string> userrolls = WebACL::getRoll( login_name );
+    DEBUG "m_userrolls.size(): " << userrolls.size() << std::endl;
+
+    for ( unsigned int i=0; i< userrolls.size(); i++) {
+        if ( userrolls[i] == roll ) {
+            return true;
+        }
+    }
+    return false;
+}
 
 /* S ----------------------------------------------------------------------- */
+
 
 
 void WebACL::setPassword (  std::string user_name, std::string new_password ) {

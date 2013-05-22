@@ -35,9 +35,9 @@
 
 
             <div class="columnbox">
-% for ( unsigned int i=0; i < accountList.size(); i++) {
+% for ( unsigned int i_account = 0; i_account < accountList.size(); i_account++) {
                 <div class="simple-box">
-%     if ( session_account_id == accountList[i].getID() ) {
+%     if ( session_account_id == accountList[i_account].getID() ) {
                     <h2>Account bearbeiten</h2>
                     <p>
                         <label for="login_name">Login*: </label>
@@ -87,14 +87,27 @@
                             type="password"
                             maxlength="40">
                     </p>
+                    <p><b>Rollen:</b>
+                        <select name="userrolls" size="3" multiple>
+%         for ( unsigned int i_rolls = 0; i_rolls < allRolls.size(); i_rolls++ ) {
+%             if ( WebACL::isUserInRole( accountData.getLogin_name(), allRolls[i_rolls]) ) {
+                            <option value="<$  allRolls[i_rolls] $>" selected>
+                                <$ allRolls[i_rolls] $>
+                            </option>
+%             } else {
+                            <option value="<$  allRolls[i_rolls] $>">
+                                <$ allRolls[i_rolls] $>
+                            </option>
+%             }
+%         }
+                        </select>
+                    </p>
                     <p>
                         Account deaktiviert <input
                         type="checkbox"
                         value="true"
                         name="is_inactive" />
-
                     </p>
-
                     <p>
                         *Pflichtfeld, **Wenn kein Passwort gesetzt wurde, wird das
                         alte Passwort nicht verändert
@@ -105,14 +118,14 @@
                         </button>
                     </p>
 %     } else {
-                    <i><b>"<$ accountList[i].getLogin_name() $>"</b></i>
-                    (<$ accountList[i].getID() $>)&#160;
+                    <i><b>"<$ accountList[i_account].getLogin_name() $>"</b></i>
+                    (<$ accountList[i_account].getID() $>)&#160;
                     <button name="edit_account_id"
-                            value="<$ accountList[i].getID() $>"
+                            value="<$ accountList[i_account].getID() $>"
                             type="submit">Bearbeiten
                     </button>&#160;
                     <button name="delete_account_id"
-                            value="<$ accountList[i].getID() $>"
+                            value="<$ accountList[i_account].getID() $>"
                             type="submit">Löschen
                     </button>
 %     }

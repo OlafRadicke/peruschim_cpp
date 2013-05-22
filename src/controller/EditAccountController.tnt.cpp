@@ -39,10 +39,15 @@
 
     std::vector<AccountData> accountList = WebACL::getAllAccounts();
     AccountData accountData;
+    std::vector<std::string> userRolls;
+    std::vector<std::string> allRolls;
+
 
     // if a account selected for editing?
     if ( edit_account_id != "") {
         accountData =  WebACL::getAccountsWithID ( edit_account_id );
+        std::vector<std::string> userRolls = WebACL::getRoll ( accountData.getLogin_name() );
+        allRolls = WebACL::getAllRolls();
         session_account_id = edit_account_id;
     }
 

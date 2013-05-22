@@ -17,7 +17,6 @@
 
 <%cpp>
     DEBUG endl;
-    DEBUG "WebACL::authUser: " << WebACL::authUser ( name, password ) << endl;
     DEBUG endl;
     if ( WebACL::authUser ( name, password ) == true ) {
         DEBUG endl;

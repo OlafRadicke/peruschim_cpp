@@ -71,25 +71,42 @@ public:
     static std::vector<AccountData> getAllAccounts ( void );
 
     /**
+     * Get back all exist roles.
+     * @return list of user roles
+     **/
+    static std::vector<std::string> getAllRolls();
+
+    /**
      * Get back the roles from a user.
      * @para user_name name of the user.
      * @return list of user roles
      **/
-    static std::vector<std::string> getRoll ( std::string user_name );
+    static std::vector<std::string> getRoll( std::string user_name );
 
     /**
      * Check is user in database exist.
      * @para user_name name of the user.
      * @return true = exist, false = no exist.
      **/
-    static bool isUserExist ( std::string user_name );
+    static bool isUserExist( std::string user_name );
+
+    /**
+     * Check is user in a roll.
+     * @para user_name name of the user.
+     * @para roll roll.
+     * @return true = has roll, false = has no this roll.
+     **/
+    static bool isUserInRole(
+        const std::string user_name,
+        const std::string roll
+    );
 
     /**
      * Set a new password from a user.
      * @para user_name name of the user.
      * @para new_password new password phrase.
      **/
-    void setPassword (  std::string user_name, std::string new_password );
+    void setPassword(  std::string user_namelogin_name, std::string new_password );
 
     /**
      * Generated a random string for password salt.
