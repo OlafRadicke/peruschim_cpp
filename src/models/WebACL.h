@@ -106,7 +106,10 @@ public:
      * @para user_name name of the user.
      * @para new_password new password phrase.
      **/
-    void setPassword(  std::string user_namelogin_name, std::string new_password );
+    void setPassword(
+        std::string user_namelogin_name,
+        std::string new_password
+    );
 
     /**
      * Generated a random string for password salt.
@@ -114,6 +117,18 @@ public:
      * @return a random string
      */
     std::string static genRandomSalt ( const int len ) ;
+
+    /**
+     * Reset user rolls. So it's delete all rolls of a user and than reset
+     * with the given grup list.
+     * @para user_id id of the user.
+     * @para user_rolls list of rolls.
+     */
+    void static reSetUserRolls(
+        const std::string user_id,
+        const std::vector<std::string> user_rolls
+    );
+
 private:
 
 };

@@ -29,7 +29,10 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
     // password salt request.
     try {
         DEBUG std::endl;
-        sqlResult = database_proxy.sqlGet ( "SELECT password_salt FROM account WHERE login_name = '" + masqu_name + "';");
+        sqlResult = database_proxy.sqlGet ( "SELECT password_salt \
+             FROM account \
+             WHERE login_name = '" + masqu_name + "' \
+             AND account_disable != TRUE ;");
     } catch ( char * errstr ) {
         ERROR "Exception raised: " << errstr << '\n';
     }
@@ -179,8 +182,9 @@ AccountData WebACL::getAccountsWithID ( const std::string id ){
         adata.setPassword_hash ( row[2].getString() );
         adata.setPassword_salt ( row[3].getString() );
         adata.setEmail ( row[4].getString() );
-        DEBUG "account_disable: "  << row[5].getString() << std::endl;
-        if ( row[5].getString() == "true" ) {
+        DEBUG "account_disable: "  << row[5].getBool() << std::endl;
+//         if ( row[5].getString() == "t" ) {
+        if ( row[5].getBool() ) {
             DEBUG "true" <<  std::endl;
             adata.setAccount_disable ( true );
 
@@ -211,7 +215,8 @@ std::vector<AccountData> WebACL::getAllAccounts ( void ){
                 password_salt, \
                 email, \
                 account_disable  \
-            FROM account;"
+            FROM account \
+            ORDER BY login_name;"
     );
 
     for ( unsigned int i=0; i<sqlResult.size(); i++) {
@@ -262,7 +267,7 @@ std::vector<std::string> WebACL::getAllRolls ( ){
     DEBUG std::endl;
     sqlResult = database_proxy.sqlGet
     (
-            "SELECT DISTINCT name FROM acl_roll ;"
+            "SELECT DISTINCT name FROM acl_roll ORDER BY name;"
     );
 
     for ( unsigned int i=0; i<sqlResult.size(); i++) {
@@ -285,7 +290,8 @@ std::vector<std::string> WebACL::getRoll ( std::string user_name ){
             FROM acl_roll, account, account_acl_roll \
             WHERE account.login_name = '" + DatabaseProxy::replace( user_name ) + "' \
             AND account.id = account_acl_roll.account_id  \
-            AND account_acl_roll.acl_roll_id = acl_roll.id ;"
+            AND account_acl_roll.acl_roll_id = acl_roll.id \
+            ORDER BY acl_roll.name;"
     );
 
     for ( unsigned int i=0; i<sqlResult.size(); i++) {
@@ -336,8 +342,6 @@ bool WebACL::isUserInRole ( const std::string login_name, const std::string roll
 
 
 void WebACL::setPassword (  std::string user_name, std::string new_password ) {
-
-    DEBUG "start..." << std::endl;
     std::string password_hash = "";
     std::string password_salt = "";
     std::string masqu_name = "";
@@ -361,4 +365,29 @@ void WebACL::setPassword (  std::string user_name, std::string new_password ) {
         ERROR "Exception raised with: database_proxy.sqlSet ()" << endl;
     }
 
+}
+
+void WebACL::reSetUserRolls(
+    const std::string user_id,
+    const std::vector<std::string> user_rolls
+){
+
+    DEBUG "reSetUserRolls" << std::endl;
+    Config config;
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn = tntdb::connect(conn_para);
+
+    tntdb::Statement st = conn.prepare( "DELETE FROM account_acl_roll \
+                WHERE account_id = :v1;");
+    st.set( "v1", user_id ).execute();
+
+    for ( unsigned int i_roll = 0; i_roll < user_rolls.size(); i_roll++ ) {
+        DEBUG "user_rolls[i_roll]: " << user_rolls[i_roll] << std::endl;
+        tntdb::Statement st = conn.prepare( "INSERT INTO account_acl_roll  \
+                    ( account_id, acl_roll_id ) \n \
+                    VALUES \n \
+                    ( :v1, ( SELECT id FROM acl_roll WHERE name= :v2 ) );");
+        st.set( "v1", user_id )
+        .set( "v2", user_rolls[i_roll] ).execute();
+    }
 }

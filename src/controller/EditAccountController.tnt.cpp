@@ -16,6 +16,7 @@
     std::string mail;
     std::string password_a;
     std::string password_b;
+    std::string userrolls[];
     bool is_inactive;
     std::string button_update_account;
 
@@ -49,10 +50,13 @@
         std::vector<std::string> userRolls = WebACL::getRoll ( accountData.getLogin_name() );
         allRolls = WebACL::getAllRolls();
         session_account_id = edit_account_id;
+        DEBUG "accountData.getAccount_disable(): " << accountData.getAccount_disable() << endl;
+
     }
 
     // is button account data update pushed?
     if ( button_update_account == "Speichern" ) {
+        feedback = "";
         DEBUG "Speichern" << endl;
         DEBUG "session_account_id: " << session_account_id << endl;
         accountData.setID( session_account_id );
@@ -64,6 +68,8 @@
         accountData.setEmail( mail );
         DEBUG "is_inactive: " << is_inactive << endl;
         accountData.setAccount_disable( is_inactive );
+
+        WebACL::reSetUserRolls( session_account_id, userrolls);
         accountData.saveUpdate();
 
         // check if new password set.
@@ -75,9 +81,13 @@
             } else {
                 // check is password empty.
                 accountData.setNewPassword( password_a );
+                session_account_id = "";
+                feedback = "Die Daten wurden gespeichert und das Passwort neu gesetzt!";
             };
+        } else {
+            session_account_id = "";
+            feedback = "Die Daten wurden gespeichert!";
         };
-
     }
 </%cpp>
 

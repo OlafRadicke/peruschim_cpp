@@ -105,17 +105,23 @@
                     <p>
                         Account deaktiviert <input
                         type="checkbox"
-                        value="true"
-                        name="is_inactive" />
-                    </p>
-                    <p>
-                        *Pflichtfeld, **Wenn kein Passwort gesetzt wurde, wird das
-                        alte Passwort nicht verändert
+                        name="is_inactive"
+                        value="is_inactive"
+% if ( accountData.getAccount_disable() ) {
+                        checked
+% }
+                        />
                     </p>
                     <p><button name="button_update_account"
                                 value="Speichern"
                                 type="submit">Speichern
                         </button>
+                    </p>
+                    <hr>
+                    <p>
+                        <small>*Pflichtfeld</small><br>
+                        <small>**Wenn kein Passwort gesetzt wurde, wird das
+                        alte Passwort nicht verändert</small>
                     </p>
 %     } else {
                     <i><b>"<$ accountList[i_account].getLogin_name() $>"</b></i>

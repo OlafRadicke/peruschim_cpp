@@ -1,6 +1,9 @@
 
 #include "AccountData.h"
 
+# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+
 string AccountData::genRandomSalt ( const int len) {
     /* initialize random seed: */
     srand (time(NULL));
@@ -19,7 +22,8 @@ string AccountData::genRandomSalt ( const int len) {
 
 void AccountData::saveUpdate(){
 
-    DEBUG std::endl;
+    DEBUG "saveUpdate" << std::endl;
+    DEBUG "m_account_disable: " << m_account_disable << std::endl;
     std::string sqlcommand = "";
     Config config;
 
@@ -43,7 +47,7 @@ void AccountData::saveUpdate(){
 
 void AccountData::setNewPassword ( std::string newpassword ) {
 
-    DEBUG std::endl;
+    DEBUG "setNewPassword" << std::endl;
     std::string sqlcommand = "";
     std::string password_salt;
     std::string password_hash;
