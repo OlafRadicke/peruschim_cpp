@@ -44,7 +44,7 @@
                         <br>
                         <input
                             class="full-size"
-                            name="login_name"
+                            id="login_name"
                             type="text"
                             value="<$ accountData.getLogin_name() $>"
                             maxlength="80">
@@ -54,7 +54,7 @@
                         <br>
                         <input
                             class="full-size"
-                            name="name"
+                            id="name"
                             type="text"
                             value="<$ accountData.getReal_name() $>"
                             maxlength="80">
@@ -64,7 +64,7 @@
                         <br>
                         <input
                             class="full-size"
-                            name="mail"
+                            id="mail"
                             type="text"
                             value="<$ accountData.getEmail() $>"
                             maxlength="80">
@@ -74,7 +74,7 @@
                         <br>
                         <input
                             class="full-size"
-                            name="password_a"
+                            id="password_a"
                             type="password"
                             maxlength="40">
                     </p>
@@ -83,12 +83,12 @@
                         <br>
                         <input
                             class="full-size"
-                            name="password_b"
+                            id="password_b"
                             type="password"
                             maxlength="40">
                     </p>
                     <p><b>Rollen:</b>
-                        <select name="userrolls" size="3" multiple>
+                        <select id="userrolls" size="3" multiple>
 %         for ( unsigned int i_rolls = 0; i_rolls < allRolls.size(); i_rolls++ ) {
 %             if ( WebACL::isUserInRole( accountData.getLogin_name(), allRolls[i_rolls]) ) {
                             <option value="<$  allRolls[i_rolls] $>" selected>
@@ -105,7 +105,7 @@
                     <p>
                         Account deaktiviert <input
                         type="checkbox"
-                        name="is_inactive"
+                        id="is_inactive"
                         value="is_inactive"
 % if ( accountData.getAccount_disable() ) {
                         checked

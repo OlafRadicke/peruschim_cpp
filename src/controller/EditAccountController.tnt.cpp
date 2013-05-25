@@ -45,6 +45,7 @@
 
 
     // if a account selected for editing?
+    DEBUG "edit_account_id: " << edit_account_id << endl;
     if ( edit_account_id != "") {
         accountData =  WebACL::getAccountsWithID ( edit_account_id );
         std::vector<std::string> userRolls = WebACL::getRoll ( accountData.getLogin_name() );

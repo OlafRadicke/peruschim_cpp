@@ -81,7 +81,7 @@
         </p>
 % }
 
-        <form method="post" action="keyword-detail">
+        <form method="post" action="keyword_detail">
 %               string lastLetter = "";
 %               for ( unsigned int i=0; i<keywordTitlesCounts.size(); i++) {
 %                   if ( lastLetter != keywordTitlesCounts[i].Name.substr (0,1) ) {
@@ -89,10 +89,8 @@
 %                       if ( i != 0 ) {
             </div>
 %                       }
-            <h3>
-               <a name="letter_<$ keywordTitlesCounts[i].Name.substr (0,1) $>">
-                    <$ keywordTitlesCounts[i].Name.substr (0,1) $>
-               </a>
+            <h3 id="letter_<$ keywordTitlesCounts[i].Name.substr (0,1) $>" >
+                <$ keywordTitlesCounts[i].Name.substr (0,1) $>
             </h3>
             <div class="columnbox-triple">
 %               }
