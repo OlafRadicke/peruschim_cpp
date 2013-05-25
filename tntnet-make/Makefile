@@ -12,15 +12,18 @@ TMP_SOURCES =  \
 ./src/views/edit_editions.cpp \
 ./src/views/editquote.cpp \
 ./src/views/home.cpp \
-./src/views/keyword-detail.cpp \
-./src/views/keyword-register.cpp \
+./src/views/keyword_detail.cpp \
+./src/views/keyword_register.cpp \
 ./src/views/login.cpp \
 ./src/views/logout.cpp \
 ./src/views/mainmenu.cpp \
+./src/views/newaccount.cpp \
 ./src/views/newquote.cpp \
 ./src/views/newaccount.cpp  \
+./src/views/portalaccount.cpp \
 ./src/views/portaladmin.cpp \
-./src/views/portalquote.cpp
+./src/views/portalquote.cpp \
+./src/views/reset_own_password.cpp
 
 
 clean:

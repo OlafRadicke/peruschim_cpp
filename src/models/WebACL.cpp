@@ -32,7 +32,7 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
         sqlResult = database_proxy.sqlGet ( "SELECT password_salt \
              FROM account \
              WHERE login_name = '" + masqu_name + "' \
-             AND account_disable != TRUE ;");
+             AND account_disable IS NOT TRUE ;");
     } catch ( char * errstr ) {
         ERROR "Exception raised: " << errstr << '\n';
     }
@@ -79,8 +79,12 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
 
     // is equal ?
     if ( password_hash_b == password_hash_a ) {
+        DEBUG "Passwor ist rihtig" << std::endl;
         return true;
     } else {
+        DEBUG "Passwor ist falsch" << std::endl;
+        DEBUG "password_hash_b: " << password_hash_b << std::endl;
+        DEBUG "password_hash_a: " << password_hash_a << std::endl;
         return false;
     }
 }

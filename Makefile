@@ -6,7 +6,7 @@ TNTMAKEFILE = ./tntnet-make/Makefile
 CPPFLAGS = -Wall -Werror -pedantic  -Wno-long-long
 CPPFLAGS += -fPIC -O2
 LIBS =  -ltntnet -lcxxtools -ltntdb
-LIBS += -I src
+LIBS += -I ./src
 
 
 CC = g++
@@ -34,15 +34,17 @@ OBJECTS = \
 ./src/views/edit_editions.o \
 ./src/views/editquote.o \
 ./src/views/home.o \
-./src/views/keyword-detail.o \
-./src/views/keyword-register.o \
+./src/views/keyword_detail.o \
+./src/views/keyword_register.o \
 ./src/views/login.o \
 ./src/views/logout.o \
 ./src/views/mainmenu.o \
+./src/views/newaccount.o \
 ./src/views/newquote.o \
-./src/views/newaccount.o  \
+./src/views/portalaccount.o \
 ./src/views/portaladmin.o \
-./src/views/portalquote.o
+./src/views/portalquote.o \
+./src/views/reset_own_password.o
 
 all: dist
 

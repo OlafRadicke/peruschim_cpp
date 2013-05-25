@@ -85,7 +85,7 @@ public:
      * Get back the user ID.
      * @return ID of user.
      **/
-    std::string getUserID ( );
+    std::string getUserID();
 
     /**
      * Set the mode of item view.
