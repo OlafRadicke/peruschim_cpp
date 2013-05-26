@@ -113,6 +113,9 @@
         affirmation = "";
         feedback = "";
         DEBUG "will löschen: " << affirmation_delete_account_id << endl;
+        AccountData accountData;
+        accountData.setID( affirmation_delete_account_id );
+        accountData.deleteAllData();
         feedback = "Der Account mit der Id " + affirmation_delete_account_id + " wurde gelöscht!";
         accountList = WebACL::getAllAccounts();
     }
