@@ -24,7 +24,6 @@ public:
 
     UserSession () : m_username( "" ), m_userID( "" ) {};
 
-
      /**
      * Add a roll.
      * @param roll account roll.

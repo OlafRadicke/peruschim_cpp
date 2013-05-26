@@ -4,6 +4,41 @@
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
+
+// D --------------------------------------------------------------------------
+
+void AccountData::deleteAllData() {
+
+    DEBUG "saveUpdate" << std::endl;
+    DEBUG "m_account_disable: " << m_account_disable << std::endl;
+    std::string sqlcommand = "";
+    Config config;
+
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn = tntdb::connect( conn_para );
+    tntdb::Transaction trans(conn);
+
+    conn.prepare( "DELETE FROM  account_acl_roll \n\
+        WHERE account_id= :v1 ;").set( "v1",  m_id ).execute();
+
+    conn.prepare( "DELETE FROM  edition \n\
+        WHERE owner_id= :v1 ;").set( "v1",  m_id ).execute();
+
+    conn.prepare( "DELETE FROM  quote_keyword \n\
+        WHERE quote_id IN ( SELECT id FROM quote WHERE owner_id= :v1 );")
+    .set( "v1",  m_id ).execute();
+
+    conn.prepare( "DELETE FROM  quote \n\
+        WHERE owner_id= :v1 ;").set( "v1",  m_id ).execute();
+
+    conn.prepare( "DELETE FROM  account \n\
+        WHERE id= :v1 ;").set( "v1",  m_id ).execute();
+
+    trans.commit();
+}
+
+// G --------------------------------------------------------------------------
+
 string AccountData::genRandomSalt ( const int len) {
     /* initialize random seed: */
     srand (time(NULL));
@@ -19,6 +54,8 @@ string AccountData::genRandomSalt ( const int len) {
     }
     return randomString;
 }
+
+// S --------------------------------------------------------------------------
 
 void AccountData::saveUpdate(){
 

@@ -9,6 +9,7 @@
 #include <tntdb/connection.h>
 #include <tntdb/connect.h>
 #include <tntdb/statement.h>
+#include <tntdb/transaction.h>
 
 #include "Config.h"
 
@@ -33,7 +34,11 @@ public:
         m_account_disable ( false )
     {};
 
-//     void saveAccountData ( void );
+
+    /**
+     * Delet all data of this account
+     */
+    void deleteAllData();
 
     void setID( std::string id ) { m_id = id; };
     std::string getID ( void ) { return m_id; };
