@@ -10,7 +10,6 @@
 </%config>
 
 <%args>
-    std::string feedback;
     std::string login_name;
     std::string name;
     std::string mail;
@@ -22,13 +21,17 @@
 
     std::string edit_account_id;
     std::string delete_account_id;
+    std::string affirmation_delete_account_id;
 </%args>
+
 <%session scope="global">
     UserSession userSession;
 </%session>
 
 <%session>
+    std::string feedback;
     std::string session_account_id;
+    std::string affirmation;
 </%session>
 
 <%cpp>
@@ -47,6 +50,8 @@
     // if a account selected for editing?
     DEBUG "edit_account_id: " << edit_account_id << endl;
     if ( edit_account_id != "") {
+        affirmation = "";
+        feedback = "";
         accountData =  WebACL::getAccountsWithID ( edit_account_id );
         std::vector<std::string> userRolls = WebACL::getRoll ( accountData.getLogin_name() );
         allRolls = WebACL::getAllRolls();
@@ -57,6 +62,7 @@
 
     // is button account data update pushed?
     if ( button_update_account == "Speichern" ) {
+        affirmation = "";
         feedback = "";
         DEBUG "Speichern" << endl;
         DEBUG "session_account_id: " << session_account_id << endl;
@@ -89,7 +95,28 @@
             session_account_id = "";
             feedback = "Die Daten wurden gespeichert!";
         };
+        accountList = WebACL::getAllAccounts();
     }
+
+    // is button delete account pushed?
+    if ( delete_account_id != "" ) {
+        affirmation = "";
+        feedback = "";
+        session_account_id = delete_account_id;
+        affirmation = "Account mit ID " + session_account_id + " und allen \
+             zugehörigen Daten wirklich löschen?";
+
+    }
+
+    // if delete affirmation clicked.
+    if ( affirmation_delete_account_id != "" ) {
+        affirmation = "";
+        feedback = "";
+        DEBUG "will löschen: " << affirmation_delete_account_id << endl;
+        feedback = "Der Account mit der Id " + affirmation_delete_account_id + " wurde gelöscht!";
+        accountList = WebACL::getAllAccounts();
+    }
+
 </%cpp>
 
 

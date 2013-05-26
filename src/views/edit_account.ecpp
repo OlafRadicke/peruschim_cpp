@@ -32,19 +32,27 @@
 % }
 
         <form method="post" >
-
-
+% if ( affirmation != "" ) {
+            <div class="feedback-box">
+                <b><$ affirmation $> </b><br>
+                <button name="affirmation_delete_account_id"
+                        value="<$ session_account_id $>"
+                        type="submit">Löschen besätigen
+                </button>
+            </div>
+% }
             <div class="columnbox">
 % for ( unsigned int i_account = 0; i_account < accountList.size(); i_account++) {
                 <div class="simple-box">
-%     if ( session_account_id == accountList[i_account].getID() ) {
+<!-- %     if ( session_account_id == accountList[i_account].getID() ) { -->
+%     if ( edit_account_id == accountList[i_account].getID() ) {
                     <h2>Account bearbeiten</h2>
                     <p>
                         <label for="login_name">Login*: </label>
                         <br>
                         <input
                             class="full-size"
-                            id="login_name"
+                            name="login_name"
                             type="text"
                             value="<$ accountData.getLogin_name() $>"
                             maxlength="80">
@@ -54,7 +62,7 @@
                         <br>
                         <input
                             class="full-size"
-                            id="name"
+                            name="name"
                             type="text"
                             value="<$ accountData.getReal_name() $>"
                             maxlength="80">
@@ -64,7 +72,7 @@
                         <br>
                         <input
                             class="full-size"
-                            id="mail"
+                            name="mail"
                             type="text"
                             value="<$ accountData.getEmail() $>"
                             maxlength="80">
@@ -74,7 +82,7 @@
                         <br>
                         <input
                             class="full-size"
-                            id="password_a"
+                            name="password_a"
                             type="password"
                             maxlength="40">
                     </p>
@@ -83,7 +91,7 @@
                         <br>
                         <input
                             class="full-size"
-                            id="password_b"
+                            name="password_b"
                             type="password"
                             maxlength="40">
                     </p>
@@ -105,7 +113,7 @@
                     <p>
                         Account deaktiviert <input
                         type="checkbox"
-                        id="is_inactive"
+                        name="is_inactive"
                         value="is_inactive"
 % if ( accountData.getAccount_disable() ) {
                         checked
