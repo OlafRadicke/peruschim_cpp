@@ -26,11 +26,14 @@
     std::string is_private_data = "false";
     std::string save_button;
     std::string create_button;
+    std::string look_up_button;
 </%args>
 
+<%session>
+    std::string bibleserverComURL = "";
+</%session>
+
 <%session scope="global">
-    // define your session scope variables here
-    // std::string mySessionState;
     UserSession userSession;
 </%session>
 
@@ -49,6 +52,35 @@
 
     DEBUG "save_button: " << save_button << std::endl;
     DEBUG "create_button: " << create_button << std::endl;
+    DEBUG "look_up_button: " << look_up_button << std::endl;
+    
+    if ( look_up_button == "clicked" ) {   
+        DEBUG "getBibleserverComURL..." << std::endl;
+        quoteData.setEditionID( edition_id );
+        quoteData.setBookTitle( book_title );
+        quoteData.setChapterBegin( chapter_begin );
+        quoteData.setSentenceBegin( sentence_begin );
+        DEBUG std::endl;
+        quoteData.setChapterEnd( chapter_end );
+        quoteData.setSentenceEnd( sentence_end );
+        quoteData.setQuoteText( quote_text );
+        DEBUG std::endl;
+        quoteData.setKeywords( keywords );
+        DEBUG std::endl;
+        quoteData.setNote( note );
+        DEBUG std::endl;
+        if ( is_private_data == "false" ) {
+            quoteData.setIsPrivateData( false );
+        } else {
+            quoteData.setIsPrivateData( true );
+        }            
+        DEBUG std::endl;
+        DEBUG "quoteData.getBibleserverComURL(): " << quoteData.getBibleserverComURL() << std::endl;
+        DEBUG std::endl;
+        bibleserverComURL = quoteData.getBibleserverComURL();
+        DEBUG "bibleserverComURL: " << bibleserverComURL << std::endl;
+    }
+    
     // is button "create" kicked?
     if ( create_button == "Speichern" ) {
         DEBUG "edition_id: " << edition_id << std::endl;
@@ -94,4 +126,5 @@
         editionList =  EditionManager::getAllEditions( userSession.getUserID() );
 
     }
+    
 </%cpp>

@@ -36,15 +36,23 @@
         </div>
 
 % } else {
-%     if ( 1 > editionList.size() ) {
-        <div class="feedback-box">
-            <b>Bevor ein erster Vers angelegt werden kann, muss zunächst eine
-                Bibelausgabe angelegt werden! <a href="/edit_editions">Jetzt
-                Bibelausgabe anlegen...</a></b>
-        </div>
 
+%     if ( bibleserverComURL != "" ) {
+        <div class="feedback-box">
+            Dau kanst unter der folgenden URL deine bibelstelle nachschlagen: <br>
+            <b><$ bibleserverComURL $> </b>
+        </div>
 %     }
+
+
         <div class="flush-left-box">
+%     if ( 1 > editionList.size() ) {
+            <div class="feedback-box">
+                <b>Bevor ein erster Vers angelegt werden kann, muss zunächst eine
+                    Bibelausgabe angelegt werden! <a href="/edit_editions">Jetzt
+                    Bibelausgabe anlegen...</a></b>
+            </div>
+%     }
             <br class="clear-both">
             <form method="post" >
 
@@ -58,9 +66,13 @@
 
                 <p>Buch:
                     <select name="book_title" size="1">
-%                   for ( unsigned int i=0; i<quoteData.allBibleBooks.size(); i++) {
+%     for ( unsigned int i=0; i<quoteData.allBibleBooks.size(); i++) {
+%         if ( quoteData.allBibleBooks[i] == quoteData.getBookTitle() ) {
+                        <option value="<$  quoteData.allBibleBooks[i] $>" selected><$ quoteData.allBibleBooks[i] $></option>
+%         } else { 
                         <option value="<$  quoteData.allBibleBooks[i] $>"><$ quoteData.allBibleBooks[i] $></option>
-%                   }
+%         }
+%     }
                     </select>
                 </p>
 
@@ -69,11 +81,17 @@
                         type="number"
                         min="1"
                         max="200"
+%     if ( quoteData.getChapterBegin() > 0 ) {
+                        value="<$ quoteData.getChapterBegin() $>"
+%     }
                         required="required"> Vers: <input
                         name="sentence_begin"
                         type="number"
                         min="1"
                         max="200"
+%     if ( quoteData.getSentenceBegin() > 0 ) {
+                        value="<$ quoteData.getSentenceBegin() $>"
+%     }
                         required="required"></p>
 
                 <p>Bis Kapitel: <input
@@ -81,37 +99,58 @@
                         type="number"
                         min="1"
                         max="200"
+%     if ( quoteData.getChapterEnd() > 0 ) {
+                        value="<$ quoteData.getChapterEnd() $>"
+%     }
                         required="required"> Vers: <input
                         name="sentence_end"
                         type="number"
                         min="1"
                         max="200"
+%     if ( quoteData.getSentenceEnd() > 0 ) {
+                        value="<$ quoteData.getSentenceEnd() $>"
+%     }
                         required="required"></p>
 
-                <p>Zitat: <br><input
+                <p>
+                    Zitat: <br>
+                    <input
                         class="full-width"
                         name="quote_text"
                         type="text"
-                        maxlength="400"></p>
+                        value="<$ quoteData.getQuoteText() $>"
+                        maxlength="400">
+                    <button name="look_up_button"
+                            value="clicked"
+                            type="submit">Auf bibleserver.com nachschlagen
+                    </button>
+                </p>
 
                 <p>Schlagworte (Kommergetrennt): <br><input
                         class="full-width"
                         name="keywords"
                         type="text"
+                        value="<$ quoteData.getKeywordsAsString() $>"
                         maxlength="300"></p>
 
 
                 <p>Notizen/Anmerungen: <br><textarea
                         class="full-width"
                         name="note"
+                        value="<$ quoteData.getNote( ) $>"
                         rows="10"></textarea></p>
                 <p>Datensatz nicht öffentlicht sichtbar machen <input
                         type="checkbox"
                         id="is_private_data"
-                        value="true"
+                        value="<$ quoteData.isPrivateData( ) $>"
                         name="is_private_data" /></p>
 
-                <p><input id="save_button" type="submit" name="create_button" value="Speichern"></p>
+                <p>
+                    <button id="save_button" 
+                            name="create_button"
+                            value="Speichern"
+                            type="submit">Speichern
+                    </button></p>
             </form>
 
 % }

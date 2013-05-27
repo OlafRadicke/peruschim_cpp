@@ -19,12 +19,16 @@ DATENBANK VORBEREITEN
 
 (unter Fedora 17)
 # Server installieren
+# Redhat, Fedora...
 yum -y install postgresql-server
-# Datenbank initalisieren
+#Debian...
+aptitude install  postgresql
+
+# Datenbank initalisieren (Redhat/Fedora)
 service postgresql initdb
-# Server starten
+# Server starten (Redhat/Fedora)
 systemctl start postgresql.service
-# Einstellen das nach Systemstart Datenbank automatisch startet.
+# Einstellen das nach Systemstart Datenbank automatisch startet. (Redhat/Fedora)
 chkconfig postgresql on
 # Zum postgres-Accound wechseln
 su - postgres
@@ -33,7 +37,11 @@ createuser -W peruschim_cpp
 # Datenbank erstellen und User zuweisen
 createdb -O peruschim_cpp  peruschim_cpp
 # ggf. Anpassungen an der Konfiguration in
+# Rdehat/Fedora
 /var/lib/pgsql/data/pg_hba.conf
+# Debian...
+/etc/postgresql/9.1/main/pg_hba.conf
+
 # Server neu starten
 systemctl restart postgresql.service
 # Verbindung testen

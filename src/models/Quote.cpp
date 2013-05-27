@@ -1,7 +1,191 @@
 
 #include "Quote.h"
 
+    Quote::Quote():
+        allBibleBooks(),
+        BibleserverComNames()
+    {
+        this->m_ownerID = "0";
+        this->m_bookChapterBegin = 0;
+        this->m_bookSentenceBegin = 0;
+        this->m_bookChapterEnd = 0;
+        this->m_bookSentenceEnd = 0;
+        allBibleBooks.push_back("1. Mose");
+        allBibleBooks.push_back("2. Mose");
+        allBibleBooks.push_back("3. Mose");
+        allBibleBooks.push_back("4. Mose");
+        allBibleBooks.push_back("5. Mose");
+        allBibleBooks.push_back("Josua");
+        allBibleBooks.push_back("Richter");
+        allBibleBooks.push_back("Rut");
+        allBibleBooks.push_back("1. Samuel");
+        allBibleBooks.push_back("2. Samuel");
+        allBibleBooks.push_back("1. Könige");
+        allBibleBooks.push_back("2. Könige");
+        allBibleBooks.push_back("1. Chronik");
+        allBibleBooks.push_back("2. Chronik");
+        allBibleBooks.push_back("Esra");
+        allBibleBooks.push_back("Nehemia");
+        allBibleBooks.push_back("Tobit");
+        allBibleBooks.push_back("Judit");
+        allBibleBooks.push_back("Ester");
+        allBibleBooks.push_back("1. Makkabäer");
+        allBibleBooks.push_back("2. Makkabäer");
+        allBibleBooks.push_back("3. Makkabäer");
+        allBibleBooks.push_back("4. Makkabäer");
+        allBibleBooks.push_back("Ijob");
+        allBibleBooks.push_back("Psalmen");
+        allBibleBooks.push_back("Sprichwörter");
+        allBibleBooks.push_back("Kohelet");
+        allBibleBooks.push_back("Hoheslied");
+        allBibleBooks.push_back("Weisheit");
+        allBibleBooks.push_back("Jesus Sirach");
+        allBibleBooks.push_back("Gebet des Manasse");
+        allBibleBooks.push_back("Psalmen Salomos");
+        allBibleBooks.push_back("Klagelieder Jeremias");
+        allBibleBooks.push_back("Jesaja");
+        allBibleBooks.push_back("Jeremia");
+        allBibleBooks.push_back("Ezechiel");
+        allBibleBooks.push_back("Baruch");
+        allBibleBooks.push_back("Brief des Jeremia");
+        allBibleBooks.push_back("Daniel");
+        allBibleBooks.push_back("Hosea");
+        allBibleBooks.push_back("Joel");
+        allBibleBooks.push_back("Amos");
+        allBibleBooks.push_back("Obadja");
+        allBibleBooks.push_back("Jona");
+        allBibleBooks.push_back("Micha");
+        allBibleBooks.push_back("Nahum");
+        allBibleBooks.push_back("Habakuk");
+        allBibleBooks.push_back("Zefanja");
+        allBibleBooks.push_back("Haggai");
+        allBibleBooks.push_back("Sacharja");
+        allBibleBooks.push_back("Maleachi");
+        allBibleBooks.push_back("Matthäus");
+        allBibleBooks.push_back("Markus");
+        allBibleBooks.push_back("Lukas");
+        allBibleBooks.push_back("Johannes");
+        allBibleBooks.push_back("Apostelgeschichte");
+        allBibleBooks.push_back("Römer");
+        allBibleBooks.push_back("1. Korinther");
+        allBibleBooks.push_back("2. Korinther");
+        allBibleBooks.push_back("Galater");
+        allBibleBooks.push_back("Epheser");
+        allBibleBooks.push_back("Philipper");
+        allBibleBooks.push_back("Kolosser");
+        allBibleBooks.push_back("1. Thessalonicher");
+        allBibleBooks.push_back("2. Thessalonicher");
+        allBibleBooks.push_back("1. Timotheus");
+        allBibleBooks.push_back("2. Timotheus");
+        allBibleBooks.push_back("Titus");
+        allBibleBooks.push_back("Philemon");
+        allBibleBooks.push_back("Hebräer");
+        allBibleBooks.push_back("Jakobus");
+        allBibleBooks.push_back("1. Petrus");
+        allBibleBooks.push_back("2. Petrus");
+        allBibleBooks.push_back("1. Johannes");
+        allBibleBooks.push_back("2. Johannes");
+        allBibleBooks.push_back("3. Johannes");
+        allBibleBooks.push_back("Judas");
+        allBibleBooks.push_back("Offenbarung");
+        
+     
 
+        
+        
+        BibleserverComNames["1. Mose"] = "1.Mose";
+        BibleserverComNames["2. Mose"] = "2.Mose";
+        BibleserverComNames["3. Mose"] = "3.Mose";
+        BibleserverComNames["4. Mose"] = "4.Mose";
+        BibleserverComNames["5. Mose"] = "5.Mose";
+        BibleserverComNames["Josua"] = "Josua";
+        BibleserverComNames["Richter"] = "Richter";
+        BibleserverComNames["Rut"] = "Rut";
+        BibleserverComNames["1. Samuel"] = "1.Samuel";
+        BibleserverComNames["2. Samuel"] = "2.Samuel";
+        BibleserverComNames["1. Könige"] = "1.Könige";
+        BibleserverComNames["2. Könige"] = "2.Könige";
+        BibleserverComNames["1. Chronik"] = "1.Chronik";
+        BibleserverComNames["2. Chronik"] = "2.Chronik";
+        BibleserverComNames["Esra"] = "Esra";
+        BibleserverComNames["Nehemia"] = "Nehemia";
+        BibleserverComNames["Tobit"] = "Tobit";
+        BibleserverComNames["Judit"] = "Judit";
+        BibleserverComNames["Ester"] = "Esther";
+        BibleserverComNames["1. Makkabäer"] = "1.Makkabäer";
+        BibleserverComNames["2. Makkabäer"] = "2.Makkabäer";
+        BibleserverComNames["3. Makkabäer"] = "";
+        BibleserverComNames["4. Makkabäer"] = "";
+        BibleserverComNames["Ijob"] = "Hiob";
+        BibleserverComNames["Psalmen"] = "Psalmen";
+        BibleserverComNames["Sprichwörter"] = "Sprüche";
+        BibleserverComNames["Kohelet"] = "Prediger";
+        BibleserverComNames["Hoheslied"] = "Hoheslied";
+        BibleserverComNames["Weisheit"] = "Weisheit";
+        BibleserverComNames["Jesus Sirach"] = "Jesus Sirach";
+        BibleserverComNames["Gebet des Manasse"] = "";
+        BibleserverComNames["Psalmen Salomos"] = "";
+        BibleserverComNames["Klagelieder Jeremias"] = "Klagelieder";
+        BibleserverComNames["Jesaja"] = "Jesaja";
+        BibleserverComNames["Jeremia"] = "Jeremia";
+        BibleserverComNames["Ezechiel"] = "Hesekiel";
+        BibleserverComNames["Baruch"] = "Baruch";
+        BibleserverComNames["Brief des Jeremia"] = "";
+        BibleserverComNames["Daniel"] = "Daniel";
+        BibleserverComNames["Hosea"] = "Hosea";
+        BibleserverComNames["Joel"] = "Joel";
+        BibleserverComNames["Amos"] = "Amos";
+        BibleserverComNames["Obadja"] = "Obadja";
+        BibleserverComNames["Jona"] = "Jona";
+        BibleserverComNames["Micha"] = "Micha";
+        BibleserverComNames["Nahum"] = "Nahum";
+        BibleserverComNames["Habakuk"] = "Habakuk";
+        BibleserverComNames["Zefanja"] = "Zefanja";
+        BibleserverComNames["Haggai"] = "Haggai";
+        BibleserverComNames["Sacharja"] = "Sacharja";
+        BibleserverComNames["Maleachi"] = "Maleachi";
+        BibleserverComNames["Matthäus"] = "Matthäus";
+        BibleserverComNames["Markus"] = "Markus";
+        BibleserverComNames["Lukas"] = "Lukas";
+        BibleserverComNames["Johannes"] = "Johannes";
+        BibleserverComNames["Apostelgeschichte"] = "Apostelgeschichte";
+        BibleserverComNames["Römer"] = "Römer";
+        BibleserverComNames["1. Korinther"] = "1.Korinther";
+        BibleserverComNames["2. Korinther"] = "2.Korinther";
+        BibleserverComNames["Galater"] = "Galater";
+        BibleserverComNames["Epheser"] = "Epheser";
+        BibleserverComNames["Philipper"] = "Philipper";
+        BibleserverComNames["Kolosser"] = "Kolosser";
+        BibleserverComNames["1. Thessalonicher"] = "1.Thessalonicher";
+        BibleserverComNames["2. Thessalonicher"] = "2.Thessalonicher";
+        BibleserverComNames["1. Timotheus"] = "1.Timotheus";
+        BibleserverComNames["2. Timotheus"] = "2.Timotheus";
+        BibleserverComNames["Titus"] = "Titus";
+        BibleserverComNames["Philemon"] = "Philemon";
+        BibleserverComNames["Hebräer"] = "Hebräer";
+        BibleserverComNames["Jakobus"] = "Jakobus";
+        BibleserverComNames["1. Petrus"] = "1.Petrus";
+        BibleserverComNames["2. Petrus"] = "2.Petrus";
+        BibleserverComNames["1. Johannes"] = "1.Johannes";
+        BibleserverComNames["2. Johannes"] = "2.Johannes";
+        BibleserverComNames["3. Johannes"] = "3.Johannes";
+        BibleserverComNames["Judas"] = "Judas";
+        BibleserverComNames["Offenbarung"] = "Offenbarung";
+    }
+
+
+const std::string Quote::getBibleserverComURL() {
+    if( this->m_bookTitle == "" ) return "";
+    if( this->m_bookChapterBegin == 0 ) return "";
+    
+    std::stringstream sstr;
+    sstr << this->m_bookChapterBegin;   
+    
+    std::string url = "http://www.bibleserver.com/text/EU/";
+    url += BibleserverComNames[this->m_bookTitle] + "/" + sstr.str();
+    return url;
+}
+    
 std::vector<std::string> Quote::getKeywords() {
     DEBUG std::endl;
     Config config;
@@ -61,6 +245,14 @@ std::string Quote::getKeywordsAsString(){
             seperator =",";
         }
 
+    } else {
+        std::string seperator ="";
+        for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) { 
+            DEBUG "single keyword: " <<  this->m_quoteKeywords[i];
+            DEBUG "seperator: " <<  seperator << std::endl;
+            keywordsAsString += seperator + this->m_quoteKeywords[i];
+            seperator =",";
+        }        
     }
 
     return keywordsAsString;
@@ -205,21 +397,31 @@ void Quote::saveUpdate(){
 void Quote::setKeywords( std::string keywords ) {
     m_quoteKeywords.clear();
     unsigned int found;
-
+    unsigned int keywordsize = 0;
+    
+    DEBUG std::endl;
+    if ( keywords == "" ) return;
+    DEBUG std::endl;
     keywords = strReplace ( " ", "", keywords );
+    DEBUG std::endl;
     keywords = lowercase ( keywords );
+    DEBUG std::endl;
     std::string separator = ",";
-    found = keywords.find_first_of( separator );
-    while(found != string::npos){
-        if(found > 0){
-            m_quoteKeywords.push_back(keywords.substr(0,found));
-        }
-        keywords = keywords.substr(found+1);
+    found = keywords.find_first_of( separator, 0 );
+    DEBUG std::endl;
+    while(found!=std::string::npos){
+        DEBUG "found: " << found << std::endl;
+        string keyword = keywords.substr(0,found);
+        m_quoteKeywords.push_back( keyword );
+        DEBUG "keyword: " << keyword << std::endl;
+        keywordsize = keyword.size();
+        keywords = keywords.substr(found+keywordsize+1);
+        if ( keywords == "" ) break;
+        DEBUG  "keywords: " << keywords << std::endl;
         found = keywords.find_first_of(separator);
+        DEBUG  "found: " << found << std::endl;
     }
-    if(keywords.length() > 0){
-        m_quoteKeywords.push_back(keywords);
-    }
+    DEBUG "m_quoteKeywords.size(): "  << m_quoteKeywords.size() << std::endl;
 }
 
 

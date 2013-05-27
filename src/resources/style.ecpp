@@ -10,7 +10,29 @@ br.clear-both {
 
 button {
     border: 1px solid #006;
+    color: #FFFFFF;
+
+    background-color: #1907A5;
+    background: linear-gradient( top, #1907A5, #12057A);
+    background: -webkit-linear-gradient( top, #1907A5, #12057A);
+    background: -moz-linear-gradient( top, #1907A5, #12057A);
+    background: -ms-linear-gradient( top, #1907A5, #12057A);
+
+
+    -moz-border-radius-topright:5px;
+    -moz-border-radius-bottomright:5px;
+    -webkit-border-top-right-radius:5px;
+    -webkit-border-bottom-right-radius:5px;
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+    -moz-border-radius-topleft:5px;
+    -moz-border-radius-bottomleft:5px;
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-bottom-left-radius:5px;
+    border-top-left-radius:5px;
+    border-bottom-left-radius:5px;
 }
+
 
 /* --------------- label -------------------------- */
 
@@ -92,18 +114,15 @@ div#logo-blue {
     -moz-border-radius-bottomleft: 15px;
     -webkit-border-bottom-left-radius: 15px;
 
-
     background-color: #1907A5;
     background: linear-gradient( top, #1907A5, #12057A);
     background: -webkit-linear-gradient( top, #1907A5, #12057A);
     background: -moz-linear-gradient( top, #1907A5, #12057A);
     background: -ms-linear-gradient( top, #1907A5, #12057A);
 
-
     -moz-box-shadow: 5px 5px 8px #B3B3B3;
     -webkit-box-shadow: 5px 5px 8px #B3B3B3;
     box-shadow: 5px 5px 8px #B3B3B3;
-
 
     width: 300px ;
     margin-left: auto ;
@@ -255,7 +274,7 @@ div.feedback-box{
     border-color: #C3C3C3;
     width: 85% ;
     padding: 20px;
-    margin: auto;
+    margin: 5px auto 5px auto;
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;

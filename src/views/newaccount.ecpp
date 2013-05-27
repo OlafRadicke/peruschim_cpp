@@ -37,7 +37,11 @@
             <p>Passwort*:<br><input name="password_a" type="password" size="40" maxlength="40"></p>
             <p>Passwortwiederholung*:<br><input name="password_b" type="password" size="40" maxlength="40"></p>
             <p>*Pflichtfeld</p>
-            <p><input type="submit" name="create" value="Speichern"></p>
+            <p>
+                <button name="create"
+                            value="Speichern"
+                            type="submit">Speichern
+                </button></p>
         </form>
     </div>
 <%include>./src/views/parts/foot.ecpp.html</%include>
