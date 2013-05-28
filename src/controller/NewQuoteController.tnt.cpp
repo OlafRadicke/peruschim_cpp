@@ -53,8 +53,8 @@
     DEBUG "save_button: " << save_button << std::endl;
     DEBUG "create_button: " << create_button << std::endl;
     DEBUG "look_up_button: " << look_up_button << std::endl;
-    
-    if ( look_up_button == "clicked" ) {   
+
+    if ( look_up_button == "clicked" ) {
         DEBUG "getBibleserverComURL..." << std::endl;
         quoteData.setEditionID( edition_id );
         quoteData.setBookTitle( book_title );
@@ -66,21 +66,20 @@
         quoteData.setQuoteText( quote_text );
         DEBUG std::endl;
         quoteData.setKeywords( keywords );
-        DEBUG std::endl;
         quoteData.setNote( note );
-        DEBUG std::endl;
-        if ( is_private_data == "false" ) {
-            quoteData.setIsPrivateData( false );
-        } else {
+        DEBUG "is_private_data: " <<  is_private_data << std::endl;
+        if ( is_private_data == "true" ) {
             quoteData.setIsPrivateData( true );
-        }            
+        } else {
+            quoteData.setIsPrivateData( false );
+        }
         DEBUG std::endl;
         DEBUG "quoteData.getBibleserverComURL(): " << quoteData.getBibleserverComURL() << std::endl;
         DEBUG std::endl;
         bibleserverComURL = quoteData.getBibleserverComURL();
         DEBUG "bibleserverComURL: " << bibleserverComURL << std::endl;
     }
-    
+
     // is button "create" kicked?
     if ( create_button == "Speichern" ) {
         DEBUG "edition_id: " << edition_id << std::endl;
@@ -111,10 +110,10 @@
         quoteData.setNote( note );
 
         DEBUG "is_private_data: " << is_private_data << std::endl;
-        if ( is_private_data == "false" ) {
-            quoteData.setIsPrivateData( false );
-        } else {
+        if ( is_private_data == "true" ) {
             quoteData.setIsPrivateData( true );
+        } else {
+            quoteData.setIsPrivateData( false );
         }
 
         DEBUG "owner id: " << userSession.getUserID() << std::endl;
@@ -126,5 +125,5 @@
         editionList =  EditionManager::getAllEditions( userSession.getUserID() );
 
     }
-    
+
 </%cpp>

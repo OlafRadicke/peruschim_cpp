@@ -150,7 +150,8 @@ std::vector<Quote> QuoteRegister::getAllQuoteOfKeyword(
         const std::string keyword,
         const std::string userID ){
 
-    DEBUG std::endl;
+    DEBUG "keyword: " << keyword <<  std::endl;
+    DEBUG "userID: " << userID << std::endl;
     vector< Quote > quoteList;
     Config config;
 

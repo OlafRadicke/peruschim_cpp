@@ -5,6 +5,7 @@
         allBibleBooks(),
         BibleserverComNames()
     {
+        this->m_isPrivateData = false;
         this->m_ownerID = "0";
         this->m_bookChapterBegin = 0;
         this->m_bookSentenceBegin = 0;
@@ -89,10 +90,7 @@
         allBibleBooks.push_back("Judas");
         allBibleBooks.push_back("Offenbarung");
 
-
-
-
-
+        // the maching with book name of bibleserver.com
         BibleserverComNames["1. Mose"] = "1.Mose";
         BibleserverComNames["2. Mose"] = "2.Mose";
         BibleserverComNames["3. Mose"] = "3.Mose";

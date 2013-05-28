@@ -29,6 +29,27 @@
 
     <div class="centerbox">
         <h1>Schlagwortsuche</h1>
+
+% if (  userSession.isInRole ( "user" ) == true) {
+        <div>
+            <form method="post" action="keyword_register">
+                <select name="user_view" size="1">
+% if ( userSession.getItemViewMode ( ) == PRIVATEITEMS ) {
+                    <option value="allitems" >Alle Einträge Zeigen</option>
+                    <option value="privateitems" selected>Nur eigene Einträge Zeigen</option>
+% } else {
+                    <option value="allitems" selected>Alle Einträge Zeigen</option>
+                    <option value="privateitems">Nur eigene Einträge Zeigen</option>
+% }
+                </select>
+                <button name="quote"
+                            value="view_change"
+                            type="submit">wechseln
+                </button>
+            </form>
+        </div>
+        <br>
+% }
         <div class="centerbox">
             <a href="#letter_a">a</a>
             <a href="#letter_b">b</a>
@@ -60,26 +81,6 @@
             <a href="#letter_ö">ö</a>
             <a href="#letter_ü">ü</a>
         </div>
-
-% if (  userSession.isInRole ( "user" ) == true) {
-        <p>
-            <form method="post" action="keyword-register">
-                <select name="user_view" size="1">
-% if ( userSession.getItemViewMode ( ) == PRIVATEITEMS ) {
-                    <option value="allitems" >Alle Einträge Zeigen</option>
-                    <option value="privateitems" selected>Nur eigene Einträge Zeigen</option>
-% } else {
-                    <option value="allitems" selected>Alle Einträge Zeigen</option>
-                    <option value="privateitems">Nur eigene Einträge Zeigen</option>
-% }
-                </select>
-                <button name="quote"
-                            value="view_change"
-                            type="submit">wechseln
-                </button>
-            </form>
-        </p>
-% }
 
         <form method="post" action="keyword_detail">
 %               string lastLetter = "";

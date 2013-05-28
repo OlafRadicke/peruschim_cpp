@@ -37,14 +37,6 @@
 
 % } else {
 
-%     if ( bibleserverComURL != "" ) {
-        <div class="feedback-box">
-            Dau kanst unter der folgenden URL deine bibelstelle nachschlagen: <br>
-            <b><a href="<$ bibleserverComURL $>"><$ bibleserverComURL $></a></b>
-        </div>
-%     }
-
-
         <div class="flush-left-box">
 %     if ( 1 > editionList.size() ) {
             <div class="feedback-box">
@@ -110,16 +102,21 @@
 %     if ( quoteData.getSentenceEnd() > 0 ) {
                         value="<$ quoteData.getSentenceEnd() $>"
 %     }
-                        required="required"></p>
-
+                        required="required">
+                </p>
+%     if ( bibleserverComURL != "" ) {
+                <div class="feedback-box">
+                    Dau kanst unter der folgenden URL deine bibelstelle nachschlagen: <br>
+                    <b><a href="<$ bibleserverComURL $>"><$ bibleserverComURL $></a></b>
+                </div>
+%     }
                 <p>
                     Zitat: <br>
-                    <input
-                        class="full-width"
+% DEBUG "quoteData.getNote( ): " << quoteData.getNote( ) << std::endl;
+                    <textarea
                         name="quote_text"
-                        type="text"
-                        value="<$ quoteData.getQuoteText() $>"
-                        maxlength="400">
+                        cols="80"
+                        rows="2"><$ quoteData.getQuoteText() $></textarea> <br>
                     <button name="look_up_button"
                             value="clicked"
                             type="submit">Auf bibleserver.com nachschlagen
@@ -134,16 +131,22 @@
                         maxlength="300"></p>
 
 
-                <p>Notizen/Anmerungen: <br><textarea
-                        class="full-width"
+                <p>Notizen/Anmerungen: <br>
+                    <textarea
                         name="note"
-                        value="<$ quoteData.getNote( ) $>"
-                        rows="10"></textarea></p>
+                        cols="80"
+                        rows="10"><$ quoteData.getNote( ) $></textarea>
+                </p>
                 <p>Datensatz nicht öffentlicht sichtbar machen <input
                         type="checkbox"
                         id="is_private_data"
-                        value="<$ quoteData.isPrivateData( ) $>"
-                        name="is_private_data" /></p>
+                        value="true"
+                        name="is_private_data"
+%     if ( quoteData.isPrivateData() ) {
+                        checked ></p>
+%     } else {
+                        ></p>
+%     }
 
                 <p>
                     <button id="save_button"

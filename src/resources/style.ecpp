@@ -9,14 +9,42 @@ br.clear-both {
 /* --------------- button -------------------------- */
 
 button {
-    border: 1px solid #006;
+    padding: 2px;
+    border: 2px solid #006;
     color: #FFFFFF;
 
-    background-color: #1907A5;
-    background: linear-gradient( top, #1907A5, #12057A);
-    background: -webkit-linear-gradient( top, #1907A5, #12057A);
-    background: -moz-linear-gradient( top, #1907A5, #12057A);
-    background: -ms-linear-gradient( top, #1907A5, #12057A);
+    background-color: #6870fe;
+    background: linear-gradient( top, #6870fe, #12057A);
+    background: -webkit-linear-gradient( top, #6870fe, #12057A);
+    background: -moz-linear-gradient( top, #6870fe, #12057A);
+    background: -ms-linear-gradient( top, #6870fe, #12057A);
+
+
+    -moz-border-radius-topright:5px;
+    -moz-border-radius-bottomright:5px;
+    -webkit-border-top-right-radius:5px;
+    -webkit-border-bottom-right-radius:5px;
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+    -moz-border-radius-topleft:5px;
+    -moz-border-radius-bottomleft:5px;
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-bottom-left-radius:5px;
+    border-top-left-radius:5px;
+    border-bottom-left-radius:5px;
+}
+/* ----------------- select -------------------------- */
+
+select {
+    padding: 2px;
+    border: 2px solid #006;
+    color: #FFFFFF;
+
+    background-color: #6870fe;
+    background: linear-gradient( top, #6870fe, #12057A);
+    background: -webkit-linear-gradient( top, #6870fe, #12057A);
+    background: -moz-linear-gradient( top, #6870fe, #12057A);
+    background: -ms-linear-gradient( top, #6870fe, #12057A);
 
 
     -moz-border-radius-topright:5px;
@@ -33,6 +61,15 @@ button {
     border-bottom-left-radius:5px;
 }
 
+option  {
+    color: #FFFFFF;
+
+    background-color: #000000;
+    background: linear-gradient( top, #202020, #000000);
+    background: -webkit-linear-gradient( top, #202020, #000000);
+    background: -moz-linear-gradient( top, #202020, #000000);
+    background: -ms-linear-gradient( top, #202020, #000000);
+}
 
 /* --------------- label -------------------------- */
 

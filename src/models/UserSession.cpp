@@ -39,15 +39,11 @@ void UserSession::lockout( ) {
 }
 
 bool UserSession::isInRole ( std::string siteroll ) {
-    DEBUG "siteroll: " << siteroll << std::endl;
-
     for ( unsigned int i=0; i<m_userrolls.size(); i++) {
         if ( m_userrolls[i] == siteroll ) {
-            DEBUG "true" << std::endl;
             return true;
         }
     }
-    DEBUG "false" << std::endl;
     return false;
 }
 

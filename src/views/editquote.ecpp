@@ -134,9 +134,16 @@
                         name="is_private_data" /></p>
 
                 <p>
-                    <input id="save_button" type="submit" name="update_button" value="Speichern">
-                    <button id="save_button" type="submit" name="reset_button" value="reset">
-                        Zurücksetzen</button>
+                    <button
+                        id="save_button"
+                        type="submit"
+                        name="update_button"
+                        value="Speichern">Speichern</button>
+                    <button
+                        id="reset_button"
+                        type="submit"
+                        name="reset_button"
+                        value="reset">Zurücksetzen</button>
                     <a href="/home" >Abbruch</a></p>
             </form>
 
