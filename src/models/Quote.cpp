@@ -88,11 +88,11 @@
         allBibleBooks.push_back("3. Johannes");
         allBibleBooks.push_back("Judas");
         allBibleBooks.push_back("Offenbarung");
-        
-     
 
-        
-        
+
+
+
+
         BibleserverComNames["1. Mose"] = "1.Mose";
         BibleserverComNames["2. Mose"] = "2.Mose";
         BibleserverComNames["3. Mose"] = "3.Mose";
@@ -177,15 +177,15 @@
 const std::string Quote::getBibleserverComURL() {
     if( this->m_bookTitle == "" ) return "";
     if( this->m_bookChapterBegin == 0 ) return "";
-    
+
     std::stringstream sstr;
-    sstr << this->m_bookChapterBegin;   
-    
+    sstr << this->m_bookChapterBegin;
+
     std::string url = "http://www.bibleserver.com/text/EU/";
     url += BibleserverComNames[this->m_bookTitle] + "/" + sstr.str();
     return url;
 }
-    
+
 std::vector<std::string> Quote::getKeywords() {
     DEBUG std::endl;
     Config config;
@@ -247,12 +247,12 @@ std::string Quote::getKeywordsAsString(){
 
     } else {
         std::string seperator ="";
-        for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) { 
+        for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) {
             DEBUG "single keyword: " <<  this->m_quoteKeywords[i];
             DEBUG "seperator: " <<  seperator << std::endl;
             keywordsAsString += seperator + this->m_quoteKeywords[i];
             seperator =",";
-        }        
+        }
     }
 
     return keywordsAsString;
@@ -398,7 +398,7 @@ void Quote::setKeywords( std::string keywords ) {
     m_quoteKeywords.clear();
     unsigned int found;
     unsigned int keywordsize = 0;
-    
+
     DEBUG std::endl;
     if ( keywords == "" ) return;
     DEBUG std::endl;
@@ -415,11 +415,17 @@ void Quote::setKeywords( std::string keywords ) {
         m_quoteKeywords.push_back( keyword );
         DEBUG "keyword: " << keyword << std::endl;
         keywordsize = keyword.size();
-        keywords = keywords.substr(found+keywordsize+1);
+        DEBUG "Start Index: " << (keywordsize+1) << std::endl;
+        keywords = keywords.substr(keywordsize+1);
         if ( keywords == "" ) break;
         DEBUG  "keywords: " << keywords << std::endl;
         found = keywords.find_first_of(separator);
         DEBUG  "found: " << found << std::endl;
+    }
+    // is rest not empty.
+    if ( keywords != "") {
+        DEBUG "keywords: " << keywords << std::endl;
+        m_quoteKeywords.push_back( keywords );
     }
     DEBUG "m_quoteKeywords.size(): "  << m_quoteKeywords.size() << std::endl;
 }
