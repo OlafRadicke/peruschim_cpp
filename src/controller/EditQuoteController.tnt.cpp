@@ -28,19 +28,17 @@
     std::string is_private_data = "false";
     std::string update_button;
     std::string rest_button;
+    std::string look_up_button;
 </%args>
 
 <%session scope="global">
-    // define your session scope variables here
-    // std::string mySessionState;
     UserSession userSession;
 </%session>
 
 
 <%session>
-    // define your session scope variables here
-    // std::string mySessionState;
     std::string session_quote_id;
+    std::string bibleserverComURL;
 </%session>
 
 <%cpp>
@@ -53,9 +51,45 @@
     if ( userSession.isInRole ( "user" ) == false ) {
         return reply.redirect ( "/access_denied" );
     };
+
     std::string userName  = userSession.getUserName();
     DEBUG "quote_id: " << quote_id << endl;
     DEBUG "session_quote_id: " << session_quote_id << endl;
+
+    editionList =  EditionManager::getAllEditions( userSession.getUserID() );
+
+    if ( quote_id != "" ) {
+        session_quote_id = quote_id;
+        quoteData = QuoteRegister::getQuoteWithID( quote_id );
+    }
+
+
+    if ( look_up_button == "clicked" ) {
+        DEBUG "getBibleserverComURL..." << std::endl;
+        quoteData.setEditionID( edition_id );
+        quoteData.setBookTitle( book_title );
+        quoteData.setChapterBegin( chapter_begin );
+        quoteData.setSentenceBegin( sentence_begin );
+        DEBUG std::endl;
+        quoteData.setChapterEnd( chapter_end );
+        quoteData.setSentenceEnd( sentence_end );
+        quoteData.setQuoteText( quote_text );
+        DEBUG std::endl;
+        quoteData.setKeywords( keywords );
+        quoteData.setNote( note );
+        DEBUG "is_private_data: " <<  is_private_data << std::endl;
+        if ( is_private_data == "true" ) {
+            quoteData.setIsPrivateData( true );
+        } else {
+            quoteData.setIsPrivateData( false );
+        }
+        DEBUG std::endl;
+        DEBUG "quoteData.getBibleserverComURL(): " << quoteData.getBibleserverComURL() << std::endl;
+        DEBUG std::endl;
+        bibleserverComURL = quoteData.getBibleserverComURL();
+        DEBUG "bibleserverComURL: " << bibleserverComURL << std::endl;
+    }
+
 
     DEBUG "create_button: " << update_button << std::endl;
     // is button "create" kicked?
@@ -103,15 +137,11 @@
 
         quoteData.saveUpdate();
         feedback = "Der Verse wurde gespeichert!";
-    } else {
-        if ( rest_button == "reset" ) {
-            editionList =  EditionManager::getAllEditions( userSession.getUserID() );
-            quoteData = QuoteRegister::getQuoteWithID( session_quote_id );
-        } else {
-            editionList =  EditionManager::getAllEditions( userSession.getUserID() );
-            session_quote_id = quote_id;
-            quoteData = QuoteRegister::getQuoteWithID( quote_id );
-        }
-
     }
+
+    if ( rest_button == "reset" ) {
+        editionList =  EditionManager::getAllEditions( userSession.getUserID() );
+        quoteData = QuoteRegister::getQuoteWithID( session_quote_id );
+    }
+
 </%cpp>

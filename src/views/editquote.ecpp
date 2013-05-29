@@ -103,13 +103,24 @@
                         max="200"
                         value="<$ quoteData.getSentenceEnd() $>"
                         required="required"></p>
-
-                <p>Zitat: <br><input
-                        class="full-width"
+%     if ( bibleserverComURL != "" ) {
+                <div class="feedback-box">
+                    Dau kanst unter der folgenden URL deine bibelstelle nachschlagen: <br>
+                    <b><a href="<$ bibleserverComURL $>"><$ bibleserverComURL $></a></b>
+                </div>
+%     }
+                <p>
+                    Zitat: <br>
+                    <textarea
                         name="quote_text"
-                        type="text"
-                        value="<$ quoteData.getQuoteText() $>"
-                        maxlength="400"></p>
+                        cols="80"
+                        rows="2"><$ quoteData.getQuoteText() $></textarea> <br>
+                    <button name="look_up_button"
+                            value="clicked"
+                            type="submit">Auf bibleserver.com nachschlagen
+                    </button>
+                </p>
+
 
                 <p>Schlagworte (Kommergetrennt): <br><input
                         class="full-width"
@@ -122,6 +133,7 @@
                         class="full-width"
                         name="note"
                         value="<$ quoteData.getNote() $>"
+                        cols="80"
                         rows="10"></textarea></p>
                 <p>Datensatz nicht öffentlicht sichtbar machen <input
                         type="checkbox"

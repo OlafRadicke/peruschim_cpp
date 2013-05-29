@@ -112,7 +112,6 @@
 %     }
                 <p>
                     Zitat: <br>
-% DEBUG "quoteData.getNote( ): " << quoteData.getNote( ) << std::endl;
                     <textarea
                         name="quote_text"
                         cols="80"

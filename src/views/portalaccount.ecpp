@@ -59,6 +59,11 @@
                         <b>Passwort ändern:</b>
                     </a> Mein Passwort ändern.
                 </li>
+                <li>
+                    <a href="reset_own_password">
+                        <b>Verse berbeiten:</b>
+                    </a> Die eigenen Verse auflisten und bearbeiten..
+                </li>
 
             </ul>
         </div>
