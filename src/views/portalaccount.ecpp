@@ -60,7 +60,7 @@
                     </a> Mein Passwort ändern.
                 </li>
                 <li>
-                    <a href="reset_own_password">
+                    <a href="edit_own_verses">
                         <b>Verse berbeiten:</b>
                     </a> Die eigenen Verse auflisten und bearbeiten..
                 </li>

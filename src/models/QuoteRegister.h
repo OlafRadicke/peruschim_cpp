@@ -28,6 +28,14 @@ public:
     static std::vector<Quote> getAllPubQuoteOfKeyword( const std::string keyword );
 
 
+
+    /**
+     * Get all quotes of user own quote to.
+     * @arg userID Id of a user.
+     * @return A vector of type Quote.
+     */
+    static std::vector<Quote> getAllQuoteOfUser( const std::string userID );    
+    
     /**
      * Get all quotes of a keyword. If user login he get here own quote to.
      * @arg keyword The name of a keyword.

@@ -16,6 +16,7 @@ PROG_NAME = ./peruschim_cpp
 
 OBJECTS = \
 ./src/peruschim_cpp.o \
+./src/controller/EditOwnVerses.o \
 ./src/models/AccountData.o \
 ./src/models/Config.o \
 ./src/models/DatabaseProxy.o \

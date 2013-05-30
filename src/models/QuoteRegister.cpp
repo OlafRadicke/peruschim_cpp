@@ -146,6 +146,37 @@ std::vector<Quote> QuoteRegister::getAllPubQuoteOfKeyword( const std::string key
 
 }
 
+std::vector<Quote> QuoteRegister::getAllQuoteOfUser( const std::string userID ) {
+    DEBUG "userID: " << userID << std::endl;
+    vector< Quote > quoteList;
+    Config config;
+
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn;
+
+    conn = tntdb::connect(conn_para);
+    tntdb::Statement st = conn.prepare( "SELECT \
+        title, \
+        chapter_begin, \
+        chapter_end, \
+        edition_id, \
+        id, \
+        privatedata, \
+        note, \
+        owner_id, \
+        quote_text, \
+        sentence_begin, \
+        sentence_end, \
+        series \
+    FROM quote \
+    WHERE owner_id= :v1  \
+    ORDER BY series, title, chapter_begin" );
+    st.set( "v1", userID ).execute();
+
+    return getQuotes ( st );
+}
+    
+
 std::vector<Quote> QuoteRegister::getAllQuoteOfKeyword(
         const std::string keyword,
         const std::string userID ){
