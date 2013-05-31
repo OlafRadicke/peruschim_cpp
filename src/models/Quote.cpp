@@ -1,5 +1,7 @@
-
 #include "Quote.h"
+
+# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
     Quote::Quote():
         allBibleBooks(),
@@ -414,16 +416,20 @@ void Quote::setKeywords( std::string keywords ) {
         DEBUG "keyword: " << keyword << std::endl;
         keywordsize = keyword.size();
         DEBUG "Start Index: " << (keywordsize+1) << std::endl;
-        keywords = keywords.substr(keywordsize+1);
-        if ( keywords == "" ) break;
-        DEBUG  "keywords: " << keywords << std::endl;
-        found = keywords.find_first_of(separator);
-        DEBUG  "found: " << found << std::endl;
-    }
-    // is rest not empty.
-    if ( keywords != "") {
-        DEBUG "keywords: " << keywords << std::endl;
-        m_quoteKeywords.push_back( keywords );
+        DEBUG "keywords.size(): " << keywords.size() << std::endl;
+        if ( keywords.size() > (keywordsize+1) ) {
+            keywords = keywords.substr(keywordsize+1);
+            DEBUG  "keywords: " << keywords << std::endl;
+            found = keywords.find_first_of(separator);
+            DEBUG  "found: " << found << std::endl;
+            if ( found==std::string::npos ) {
+                DEBUG  "ENDE ENDE ENDE!!!" << std::endl;
+                break;
+            }
+        } else {
+            keywords == "";
+            break;
+        }
     }
     DEBUG "m_quoteKeywords.size(): "  << m_quoteKeywords.size() << std::endl;
 }

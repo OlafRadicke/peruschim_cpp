@@ -1,6 +1,7 @@
 # include "Edition.h"
 
-
+# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 void Edition::saveAsNew(){
     DEBUG std::endl;

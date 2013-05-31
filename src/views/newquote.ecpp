@@ -68,7 +68,7 @@
                     </select>
                 </p>
 
-                <p>von Kapitel: <input
+                <p><b>von</b><br>Kapitel: <input
                         name="chapter_begin"
                         type="number"
                         min="1"
@@ -86,7 +86,7 @@
 %     }
                         required="required"></p>
 
-                <p>Bis Kapitel: <input
+                <p><b>Bis</b><br>Kapitel: <input
                         name="chapter_end"
                         type="number"
                         min="1"
@@ -114,7 +114,7 @@
                     Zitat: <br>
                     <textarea
                         name="quote_text"
-                        cols="80"
+                        class="full-width"
                         rows="2"><$ quoteData.getQuoteText() $></textarea> <br>
                     <button name="look_up_button"
                             value="clicked"
@@ -132,8 +132,8 @@
 
                 <p>Notizen/Anmerungen: <br>
                     <textarea
+                        class="full-width"
                         name="note"
-                        cols="80"
                         rows="10"><$ quoteData.getNote( ) $></textarea>
                 </p>
                 <p>Datensatz nicht öffentlicht sichtbar machen <input

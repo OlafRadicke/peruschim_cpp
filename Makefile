@@ -33,6 +33,7 @@ OBJECTS = \
 ./src/views/edit_account.o \
 ./src/views/edit_editions.o \
 ./src/views/editquote.o \
+./src/views/export_own_verses.o \
 ./src/views/home.o \
 ./src/views/keyword_detail.o \
 ./src/views/keyword_register.o \

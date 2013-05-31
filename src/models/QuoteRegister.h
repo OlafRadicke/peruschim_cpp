@@ -8,10 +8,6 @@
 //#include "Edition.h"
 #include "Quote.h"
 
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-
-
 /**
  * Managed quote informations.
  */
@@ -27,10 +23,15 @@ public:
      */
     static std::vector<Quote> getAllPubQuoteOfKeyword( const std::string keyword );
 
-
-
     /**
-     * Get all quotes of user own quote to.
+     * Get a export of user quote data in json format.
+     * @arg userID Id of a user.
+     * @return A json document.
+     */
+    static std::string getJsonExport( const std::string userID );
+    
+    /**
+     * Get all quotes of user own quote.
      * @arg userID Id of a user.
      * @return A vector of type Quote.
      */
@@ -61,5 +62,7 @@ private:
     static std::vector<Quote> getQuotes ( tntdb::Statement st );
 
 };
+
+
 
 #endif

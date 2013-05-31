@@ -7,11 +7,12 @@
 #include <sstream>
 
 #include <tntdb/statement.h>
+#include <cxxtools/jsonserializer.h>
+#include <cxxtools/serializationinfo.h>
+
 #include "DatabaseProxy.h"
 #include "Edition.h"
 
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 
 class Quote
@@ -33,7 +34,7 @@ public:
     /**
      * Get title of book.
      **/
-    std::string getBookTitle()
+    const std::string getBookTitle() const 
     {
         return this->m_bookTitle;
     }
@@ -41,7 +42,7 @@ public:
     /**
      * Get number of chapter begin.
      **/
-    int getChapterBegin()
+    const int getChapterBegin() const
     {
         return this->m_bookChapterBegin;
     }
@@ -49,7 +50,7 @@ public:
     /**
      * Get number of chapter end.
      **/
-    int getChapterEnd()
+    const int getChapterEnd() const
     {
         return this->m_bookChapterEnd;
     }
@@ -57,7 +58,7 @@ public:
     /**
      * Get id of edition.
      **/
-    std::string getEditionID()
+    const std::string getEditionID() const
     {
         return this->m_editionID;
     }
@@ -82,7 +83,7 @@ public:
     /**
      * Get Note.
      **/
-    std::string getNote( )
+    const std::string getNote() const 
     {
         return this->m_note;
     }
@@ -98,7 +99,7 @@ public:
     /**
      * Get quote text.
      **/
-    std::string getQuoteText()
+    const std::string getQuoteText() const
     {
         return this->m_quoteText;
     }
@@ -106,7 +107,7 @@ public:
     /**
      * Get number of sentence begin.
      **/
-    int getSentenceBegin ( )
+    const int getSentenceBegin() const
     {
         return this->m_bookSentenceBegin;
     }
@@ -114,7 +115,7 @@ public:
     /**
      * Get number of sentence end.
      **/
-    int getSentenceEnd ( )
+    const int getSentenceEnd() const 
     {
         return this->m_bookSentenceEnd;
     }
@@ -122,7 +123,7 @@ public:
     /**
      * get visible policy.
      **/
-    bool isPrivateData( )
+    const bool isPrivateData() const
     {
         return this->m_isPrivateData;
     }
@@ -242,6 +243,14 @@ public:
         this->m_bookSeries = text;
     }
 
+
+    /**
+     * quote keywords. Separated by commas.
+     * Example: "Umkehr, Zöllner, Nachfolge"
+     **/
+    std::vector<std::string> m_quoteKeywords;    
+    
+    
 private:
 
 
@@ -304,12 +313,6 @@ private:
     bool m_isPrivateData;
 
     /**
-     * quote keywords. Separated by commas.
-     * Example: "Umkehr, Zöllner, Nachfolge"
-     **/
-    std::vector<std::string> m_quoteKeywords;
-
-    /**
      * quote note.
      * Example: "Eine kurze Notiz."
      **/
@@ -344,5 +347,8 @@ private:
      */
     map<string, string> BibleserverComNames;
 };
+
+
+
 
 #endif

@@ -20,6 +20,7 @@ TMP_SOURCES =  \
 ./src/views/newaccount.cpp \
 ./src/views/newquote.cpp \
 ./src/views/newaccount.cpp  \
+./src/views/export_own_verses.cpp \
 ./src/views/portalaccount.cpp \
 ./src/views/portaladmin.cpp \
 ./src/views/portalquote.cpp \

@@ -64,6 +64,16 @@
                         <b>Verse berbeiten:</b>
                     </a> Die eigenen Verse auflisten und bearbeiten..
                 </li>
+                <li>
+                    <a href="export_own_verses">
+                        <b>Verse exportieren:</b>
+                    </a> Exportieren der eigenen Verse. Zum sichern, migrieren oder bearbeiten.
+                </li>
+                <li>
+                    <a href="import_own_verses">
+                        <b>Verse importieren:</b>
+                    </a> Importieren von eigenen Versen. Zum migrieren oder wegen externer bearbeitung.
+                </li>
 
             </ul>
         </div>

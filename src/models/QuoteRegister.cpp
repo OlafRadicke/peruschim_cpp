@@ -4,6 +4,9 @@
 #include "Quote.h"
 #include "QuoteRegister.h"
 
+# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+
 std::vector<Quote> QuoteRegister::getQuotes ( tntdb::Statement st ){
     DEBUG std::endl;
     vector< Quote > quoteList;
@@ -145,6 +148,55 @@ std::vector<Quote> QuoteRegister::getAllPubQuoteOfKeyword( const std::string key
     return quoteList;
 
 }
+
+/**
+* define how to serialize the configuration
+* @arg si serialization info
+* @arg Quote
+*/
+void operator<<= ( cxxtools::SerializationInfo& si, const Quote& quote )
+{
+    si.addMember("book-title") <<= quote.getBookTitle();
+    si.addMember("chapter-begin") <<= quote.getChapterBegin();
+    si.addMember("chapter-end") <<= quote.getChapterEnd();
+    si.addMember("edition-id") <<= quote.getEditionID();
+//     static Edition EditionManager::getEditionByID ( quote.getEditionID() );
+    si.addMember("keywords") <<= quote.m_quoteKeywords;
+    si.addMember("note") <<= quote.getNote();
+    si.addMember("quote-text") <<= quote.getQuoteText();
+    si.addMember("sentence-begin") <<= quote.getSentenceBegin();
+    si.addMember("sentence-end") <<= quote.getSentenceEnd();
+    si.addMember("private-data") <<= quote.isPrivateData();
+} 
+
+std::string QuoteRegister::getJsonExport( const std::string userID ) {
+    std::string jason_text;
+    DEBUG "userID: " << userID << std::endl;
+    
+    std::vector<Quote> allUserQuotes = QuoteRegister::getAllQuoteOfUser( userID );
+        
+    for ( unsigned int i_q = 0; i_q < allUserQuotes.size(); i_q++ ) {
+        DEBUG "i_q: " << i_q << std::endl;
+        allUserQuotes[i_q].getKeywords();
+        for ( unsigned int i_k = 0; i_k < allUserQuotes[i_q].m_quoteKeywords.size(); i_k++ ) {
+            DEBUG "allUserQuotes[i_q].m_quoteKeywords[i_k]: " << allUserQuotes[i_q].m_quoteKeywords[i_k] << std::endl;
+        }
+        // serialize to json
+        try
+        {
+            cxxtools::JsonSerializer serializer( std::cout );
+            // this makes it just nice to read
+            serializer.beautify(true);
+            serializer.serialize( allUserQuotes[i_q] ).finish();
+        }
+        catch (const std::exception& e)
+        {
+            std::cerr << e.what() << std::endl;
+        }
+    }
+    return jason_text;
+}
+
 
 std::vector<Quote> QuoteRegister::getAllQuoteOfUser( const std::string userID ) {
     DEBUG "userID: " << userID << std::endl;
