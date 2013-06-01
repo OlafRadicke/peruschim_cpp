@@ -150,7 +150,21 @@ std::vector<Quote> QuoteRegister::getAllPubQuoteOfKeyword( const std::string key
 }
 
 /**
-* define how to serialize the configuration
+* define how to serialize the Edition
+* @arg si serialization info
+* @arg Edition
+*/
+void operator<<= ( cxxtools::SerializationInfo& si, const Edition& edition )
+{
+    si.addMember("name") <<= edition.getName();
+    si.addMember("publisher-name") <<= edition.getPublisherName();
+    si.addMember("release-date") <<= edition.getReleaseDate();
+    si.addMember("release-number") <<= edition.getReleaseNumber();
+    si.addMember("release-place") <<= edition.getReleasePlace();
+}
+
+/**
+* define how to serialize the Quote
 * @arg si serialization info
 * @arg Quote
 */
@@ -159,7 +173,6 @@ void operator<<= ( cxxtools::SerializationInfo& si, const Quote& quote )
     si.addMember("book-title") <<= quote.getBookTitle();
     si.addMember("chapter-begin") <<= quote.getChapterBegin();
     si.addMember("chapter-end") <<= quote.getChapterEnd();
-    si.addMember("edition-id") <<= quote.getEditionID();
 //     static Edition EditionManager::getEditionByID ( quote.getEditionID() );
     si.addMember("keywords") <<= quote.m_quoteKeywords;
     si.addMember("note") <<= quote.getNote();
@@ -167,14 +180,16 @@ void operator<<= ( cxxtools::SerializationInfo& si, const Quote& quote )
     si.addMember("sentence-begin") <<= quote.getSentenceBegin();
     si.addMember("sentence-end") <<= quote.getSentenceEnd();
     si.addMember("private-data") <<= quote.isPrivateData();
-} 
+    si.addMember("edition") <<= EditionManager::getEditionByID( quote.getEditionID() );
+//     si.addMember("edition-id") <<= quote.getEditionID();
+}
 
 std::string QuoteRegister::getJsonExport( const std::string userID ) {
     std::string jason_text;
     DEBUG "userID: " << userID << std::endl;
-    
+
     std::vector<Quote> allUserQuotes = QuoteRegister::getAllQuoteOfUser( userID );
-        
+
     for ( unsigned int i_q = 0; i_q < allUserQuotes.size(); i_q++ ) {
         DEBUG "i_q: " << i_q << std::endl;
         allUserQuotes[i_q].getKeywords();
@@ -227,7 +242,7 @@ std::vector<Quote> QuoteRegister::getAllQuoteOfUser( const std::string userID ) 
 
     return getQuotes ( st );
 }
-    
+
 
 std::vector<Quote> QuoteRegister::getAllQuoteOfKeyword(
         const std::string keyword,

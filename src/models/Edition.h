@@ -29,7 +29,7 @@ public:
     /**
      * Get ID.
      **/
-    std::string getID()
+    const std::string getID() const
     {
         return this->m_id;
     }
@@ -37,7 +37,7 @@ public:
     /**
      * Get name.
      **/
-    std::string getName()
+    const std::string getName() const
     {
         return this->m_name;
     }
@@ -45,7 +45,7 @@ public:
     /**
     * Get publisher name.
     **/
-    std::string getPublisherName( )
+    const std::string getPublisherName( ) const
     {
         return this->m_publisherName;
     }
@@ -53,7 +53,7 @@ public:
     /**
     * Get release date.
     **/
-    std::string getReleaseDate( )
+    const std::string getReleaseDate( ) const
     {
         return this->m_releaseDate;
     }
@@ -61,7 +61,7 @@ public:
     /**
     * Get release number.
     **/
-    std::string  getReleaseNumber( )
+    const std::string  getReleaseNumber( ) const
     {
         return this->m_releaseNumber;
     }
@@ -69,7 +69,7 @@ public:
     /**
     * Get release place.
     **/
-    std::string getReleasePlace( )
+    const std::string getReleasePlace( ) const
     {
         return this->m_releasePlace;
     }

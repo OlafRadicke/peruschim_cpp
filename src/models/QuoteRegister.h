@@ -6,6 +6,7 @@
 #include <tntdb/statement.h>
 #include "DatabaseProxy.h"
 //#include "Edition.h"
+#include "EditionManager.h"
 #include "Quote.h"
 
 /**
@@ -29,14 +30,14 @@ public:
      * @return A json document.
      */
     static std::string getJsonExport( const std::string userID );
-    
+
     /**
      * Get all quotes of user own quote.
      * @arg userID Id of a user.
      * @return A vector of type Quote.
      */
-    static std::vector<Quote> getAllQuoteOfUser( const std::string userID );    
-    
+    static std::vector<Quote> getAllQuoteOfUser( const std::string userID );
+
     /**
      * Get all quotes of a keyword. If user login he get here own quote to.
      * @arg keyword The name of a keyword.
