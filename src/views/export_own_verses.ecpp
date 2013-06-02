@@ -23,13 +23,13 @@
     <br />
     <div class="centerbox">
 
-        <h1>Verseexport</h1>
+        <h1>Versexport</h1>
 % if ( feedback != "" ) {
         <div class="feedback-box">
             <b><$ feedback $> </b>
         </div>
 % }
-        <p>Json-Export: <br>
+        <p>Für den Export aller deiner Verse in JSON-Format:<br>
             <textarea
                 class="jason_text"
                 name="jason_text"
