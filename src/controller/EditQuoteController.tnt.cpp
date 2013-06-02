@@ -136,7 +136,7 @@
         quoteData.setOwnerID( userSession.getUserID() );
 
         quoteData.saveUpdate();
-        feedback = "Der Verse wurde gespeichert!";
+        feedback = "Der Vers wurde gespeichert!";
     }
 
     if ( rest_button == "reset" ) {

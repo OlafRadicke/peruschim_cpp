@@ -14,7 +14,7 @@
     <div class="smallgroupbox">
         <form method="post" >
             <h2>Logout</h2>
-            <p>Sie sind jetzt ausgelogt!</p>
+            <p>Du bist jetzt ausgelogt!</p>
         </form>
     </div>
 

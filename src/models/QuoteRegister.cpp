@@ -1,8 +1,11 @@
 
+#include <cxxtools/jsondeserializer.h>
+#include <cxxtools/serializationinfo.h>
 
 #include "Config.h"
 #include "Quote.h"
 #include "QuoteRegister.h"
+#include "EditionManager.h"
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -149,6 +152,7 @@ std::vector<Quote> QuoteRegister::getAllPubQuoteOfKeyword( const std::string key
 
 }
 
+
 /**
 * define how to serialize the Edition
 * @arg si serialization info
@@ -182,40 +186,74 @@ void operator<<= ( cxxtools::SerializationInfo& si, const Quote& quote )
     si.addMember("edition") <<= EditionManager::getEditionByID( quote.getEditionID() );
 }
 
+/**
+* define how to deserialize the Quote
+* @arg si serialization info
+* @arg Quote
+*/
+void operator>>= ( const cxxtools::SerializationInfo& si, Quote quote)
+{
+    quote.setBookTitle( si.getMember( "book-title" ) );
+    quote.setChapterBegin( si.getMember("chapter-begin") );
+    quote.setChapterEnd( si.getMember("chapter-end") );
+    quote.setKeywords( si.getMember("keywords") );
+    quote.setNote( si.getMember("note") );
+    quote.setQuoteText( si.getMember("quote-text") );
+    quote.setSentenceBegin( si.getMember("sentence-begin") );
+    quote.setSentenceEnd( si.getMember("sentence-end"));
+    si.getMember("private-data") <<= quote.isPrivateData();
+    quote.setEdition( si.getMember("edition");
+}
+/**
+ * define a container object for user quotes export.
+ */
+struct QuoteExportContainer
+{
+    std::vector<Quote> allUserQuotes;
+};
+
+
+/**
+* define how to serialize the QuoteExportContainer
+* @arg si serialization info
+* @arg QuoteExportContainer
+*/
+void operator<<= ( cxxtools::SerializationInfo& si, const QuoteExportContainer& quoteContainer )
+{
+    si.addMember("user-quotes") <<= quoteContainer.allUserQuotes;
+}
+
+/**
+* define how to deserialize the QuoteExportContainer
+* @arg si serialization info
+* @arg QuoteExportContainer
+*/
+void operator>>= ( const cxxtools::SerializationInfo& si, QuoteExportContainer quoteContainer)
+{
+    si.getMember("user-quotes") >>= quoteContainer.allUserQuotes;
+}
+
 std::string QuoteRegister::getJsonExport( const std::string userID ) {
-    std::string jason_text;
+    std::string json_text;
     DEBUG "userID: " << userID << std::endl;
 
-    std::vector<Quote> allUserQuotes = QuoteRegister::getAllQuoteOfUser( userID );
-
-    for ( unsigned int i_q = 0; i_q < allUserQuotes.size(); i_q++ ) {
-        DEBUG "i_q: " << i_q << std::endl;
-        for ( unsigned int i_k = 0; i_k < allUserQuotes[i_q].m_quoteKeywords.size(); i_k++ ) {
-            DEBUG "allUserQuotes[i_q].m_quoteKeywords[i_k]: " << allUserQuotes[i_q].m_quoteKeywords[i_k] << std::endl;
-        }
-        // serialize to json
-        try
-        {
-            std::stringstream sstream;
-            cxxtools::JsonSerializer serializer( sstream );
-            // this makes it just nice to read
-            serializer.beautify(true);
-            serializer.serialize( allUserQuotes[i_q] ).finish();
-
-            while (sstream.good())
-            {
-                char c = sstream.get();
-                if (sstream.good())
-                    jason_text += c;
-
-            }
-        }
-        catch (const std::exception& e)
-        {
-            std::cerr << e.what() << std::endl;
-        }
+    QuoteExportContainer quoteContainer;
+    quoteContainer.allUserQuotes = QuoteRegister::getAllQuoteOfUser( userID );
+    try
+    {
+//         std::stringstream sstream;
+//         cxxtools::JsonSerializer serializer( sstream );
+//         // this makes it just nice to read
+//         serializer.beautify(true);
+//         serializer.serialize( quoteContainer ).finish();
+//         json_text = sstream.str();
     }
-    return jason_text;
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+
+    return json_text;
 }
 
 
@@ -292,4 +330,32 @@ std::vector<Quote> QuoteRegister::getAllQuoteOfKeyword(
     return getQuotes ( st );
 }
 
+void QuoteRegister::jsonImport( const std::string jsonText ) {
+    try
+    {
+        // define a empty config object
+        QuoteExportContainer quoteContainer;
+        std::stringstream sstream;
+        sstream.str( jsonText );
 
+        // read json configuration struct from stdin:
+        cxxtools::JsonDeserializer deserializer( sstream );
+        deserializer.deserialize( quoteContainer );
+        DEBUG "quoteContainer.allUserQuotes.size(): "
+            << quoteContainer.allUserQuotes.size() <<  std::endl;
+
+        // print configuration
+//         std::cout << "encoding=" << config.encoding << '\n'
+//                 << "plugIns=";
+//         for (unsigned n = 0; n < quoteContainer.allUserQuotes.size(); ++n)
+//         std::cout << config.plugIns[n] << ' ';
+//         std::cout << '\n'
+//                 << "indent.length=" << config.indent.length << '\n'
+//                 << "indent.useSpace=" << config.indent.useSpace << '\n';
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+
+}

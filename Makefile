@@ -35,6 +35,7 @@ OBJECTS = \
 ./src/views/editquote.o \
 ./src/views/export_own_verses.o \
 ./src/views/home.o \
+./src/views/import_own_verses.o \
 ./src/views/keyword_detail.o \
 ./src/views/keyword_register.o \
 ./src/views/login.o \

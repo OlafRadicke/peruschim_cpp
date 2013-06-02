@@ -37,7 +37,7 @@
                 <b><$ affirmation $> </b><br>
                 <button name="affirmation_delete_account_id"
                         value="<$ session_account_id $>"
-                        type="submit">Löschen besätigen
+                        type="submit">Löschen bestätigen
                 </button>
             </div>
 % }

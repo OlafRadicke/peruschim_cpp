@@ -64,7 +64,7 @@
 
         editionData.saveUpdate();
 
-        feedback = "Die Änderungen  wurde gespeichert!";
+        feedback = "Die Änderungen wurden gespeichert!";
     }
 
     // deleting action
@@ -76,7 +76,7 @@
                 und kann deshalb nicht gelöscht werden!";
         } else {
             EditionManager::deleteEditionByID( delete_edition_id );
-            feedback = "Die Ausgabe wurde gelöscht!";
+            feedback = "Die Ausgabe wurde gelöscht.";
         }
     }
 

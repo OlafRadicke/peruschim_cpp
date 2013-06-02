@@ -61,21 +61,21 @@ DEBUG "Salz: " << WebACL::genRandomSalt ( 8 )  << endl;
 
 
     <div class="centerbox">
-        <h1>Herzlich willkommen auf <i>PERUSCHIM</i></h1>
+        <h1>Herzlich Willkommen auf <i>PERUSCHIM</i></h1>
         <div class="columnbox">
-<p>Mit <i>PERUSCHIM</i> kannst du deine Bibelverse, die du dir gerne merken willst,
-speichern. Diese Verse kannst du dann mit Schlagworten versehen um sie schneller
-wieder zu finden. </p>
-<p>Du kannst auch nachschauen, welche Bibelstellen sich andere zu bestimmten Themen
-makert haben. Letztlich ist <i>PERUSCHIM</i> eine Bibelkonkordanz mit
-Sozialem-Netzwerk-Charakter. Versemakierungen die du nicht mit anderen teilen
-willst kannst du als "privat" makieren. </p>
+<p>Mit <i>PERUSCHIM</i> kannst du dir Bibelverse, die du dir gerne merken willst,
+speichern. Diese Verse kannst du mit Schlagwörtern versehen, um sie schneller
+wiederzufinden. </p>
+<p>Du kannst auch nachschauen, welche Bibelstellen sich Andere zu bestimmten Themen
+markiert haben. <i>PERUSCHIM</i> ist eine Bibelkonkordanz mit
+Sozialem-Netzwerk-Charakter. Versmarkierungen, die du nicht mit anderen teilen
+möchtest, kannst du als "privat" markieren. </p>
 <p><i>PERUSCHIM</i> ist ein OpenSource-Projekt. Den Source-Code findest du hier:
 <a href="https://github.com/OlafRadicke/peruschim_cpp">github.com/OlafRadicke/peruschim_cpp</a>.
 </p>
-<p>Das Wort <i>PERUSCHIM</i> ist übrigens Hebräische und heißt "Pharisäer". Ich
-habe den Namen für das Projekt gewählt, mit es mich bei aller begeisterung für
-das Bibelstudium, daran erinnern soll nicht zum <i>Pharisäer</i> zu werden.</p>
+<p>Das Wort <i>PERUSCHIM</i> ist übrigens Hebräisch und heißt "Pharisäer". Ich
+habe den Namen für das Projekt gewählt, damit es mich bei aller Begeisterung für
+das Bibelstudium daran erinnern soll, nicht zum <i>Pharisäer</i> zu werden.</p>
 
         </div>
     </div>

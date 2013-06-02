@@ -30,11 +30,11 @@ public:
      * Try to build the Bibleserver.com url.
      */
     const std::string getBibleserverComURL();
-    
+
     /**
      * Get title of book.
      **/
-    const std::string getBookTitle() const 
+    const std::string getBookTitle() const
     {
         return this->m_bookTitle;
     }
@@ -83,7 +83,7 @@ public:
     /**
      * Get Note.
      **/
-    const std::string getNote() const 
+    const std::string getNote() const
     {
         return this->m_note;
     }
@@ -115,7 +115,7 @@ public:
     /**
      * Get number of sentence end.
      **/
-    const int getSentenceEnd() const 
+    const int getSentenceEnd() const
     {
         return this->m_bookSentenceEnd;
     }
@@ -166,6 +166,18 @@ public:
 
     /**
      * Set id of edition.
+     * @TODO Create an new edition if id new.
+     **/
+    void setEdition( Edition edition )
+    {
+//         if ( edition != exist ) {
+//             edition.saveAsNew();
+//         }
+        this->m_editionID = edition.getID();
+    }
+
+    /**
+     * Set id of edition.
      **/
     void setEditionID( std::string id )
     {
@@ -189,9 +201,17 @@ public:
 
     /**
      * Set keywords.
-     * @param keywords strin with comma separated label values
+     * @param keywords string with comma separated label values
      **/
     void setKeywords( std::string keywords ) ;
+
+    /**
+     * Set keywords.
+     * @param keywordList list of keywors
+     **/
+    void setKeywords( std::vector<std::string> keywordList ) {
+        m_quoteKeywords = keywordList;
+    };
 
     /**
      * Set Note.
@@ -244,13 +264,8 @@ public:
     }
 
 
-    /**
-     * quote keywords. Separated by commas.
-     * Example: "Umkehr, Zöllner, Nachfolge"
-     **/
-    std::vector<std::string> m_quoteKeywords;    
-    
-    
+
+
 private:
 
 
@@ -295,11 +310,16 @@ private:
      **/
     std::string m_editionID;
 
-
     /**
      * The id of this quote.
      **/
     std::string m_ID;
+
+    /**
+     * quote keywords. Separated by commas.
+     * Example: "Umkehr, Zöllner, Nachfolge"
+     **/
+    std::vector<std::string> m_quoteKeywords;
 
     /**
      * Id of the owner of thes quote.
@@ -340,8 +360,8 @@ private:
      * lowercase.
      **/
     string lowercase ( string keywords );
-    
-    
+
+
     /**
      * Mapping bible books name of bibleserver.com
      */

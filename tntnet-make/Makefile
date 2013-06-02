@@ -11,6 +11,7 @@ TMP_SOURCES =  \
 ./src/views/edit_account.cpp \
 ./src/views/edit_editions.cpp \
 ./src/views/editquote.cpp \
+./src/views/import_own_verses.cpp \
 ./src/views/home.cpp \
 ./src/views/keyword_detail.cpp \
 ./src/views/keyword_register.cpp \

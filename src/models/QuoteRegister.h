@@ -6,7 +6,7 @@
 #include <tntdb/statement.h>
 #include "DatabaseProxy.h"
 //#include "Edition.h"
-#include "EditionManager.h"
+// #include "EditionManager.h"
 #include "Quote.h"
 
 /**
@@ -54,6 +54,12 @@ public:
      * @return type of Quote with data from the database.
      */
     static Quote getQuoteWithID( const std::string id );
+
+    /**
+     * Make a JSON-Import of user quotes.
+     * @arg jsonText test in json fomat with user verses/quotes.
+     */
+    static void jsonImport( const std::string jsonText );
 
 private:
     /**

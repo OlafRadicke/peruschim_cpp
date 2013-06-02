@@ -120,7 +120,7 @@
         quoteData.setOwnerID( userSession.getUserID() );
 
         quoteData.saveAsNew( );
-        feedback = "Der Verse wurde gespeichert!";
+        feedback = "Der Vers wurde gespeichert!";
     } else {
         editionList =  EditionManager::getAllEditions( userSession.getUserID() );
 

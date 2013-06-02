@@ -187,7 +187,6 @@ const std::string Quote::getBibleserverComURL() {
 }
 
 std::vector<std::string> Quote::getKeywords() {
-    DEBUG std::endl;
     Config config;
 
     if ( this->m_quoteKeywords.size() < 1 && this->m_ID != "") {
@@ -196,7 +195,6 @@ std::vector<std::string> Quote::getKeywords() {
         tntdb::Result result;
 
         conn = tntdb::connect( conn_para );
-        DEBUG std::endl;
         tntdb::Statement st = conn.prepare( "SELECT title \
             FROM quote_keyword \
             WHERE quote_id = :v1 \
@@ -205,12 +203,9 @@ std::vector<std::string> Quote::getKeywords() {
 
         for ( tntdb::Statement::const_iterator it = st.begin();
             it != st.end(); ++it ) {
-            DEBUG std::endl;
             tntdb::Row row = *it;
             Quote dataQuote = Quote();
-
             this->m_quoteKeywords.push_back( row[0].getString() );
-
         }
     }
     return this->m_quoteKeywords;
