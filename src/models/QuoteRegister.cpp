@@ -173,15 +173,13 @@ void operator<<= ( cxxtools::SerializationInfo& si, const Quote& quote )
     si.addMember("book-title") <<= quote.getBookTitle();
     si.addMember("chapter-begin") <<= quote.getChapterBegin();
     si.addMember("chapter-end") <<= quote.getChapterEnd();
-//     static Edition EditionManager::getEditionByID ( quote.getEditionID() );
-    si.addMember("keywords") <<= quote.m_quoteKeywords;
+    si.addMember("keywords") <<= const_cast<Quote*>(&quote)->getKeywords();
     si.addMember("note") <<= quote.getNote();
     si.addMember("quote-text") <<= quote.getQuoteText();
     si.addMember("sentence-begin") <<= quote.getSentenceBegin();
     si.addMember("sentence-end") <<= quote.getSentenceEnd();
     si.addMember("private-data") <<= quote.isPrivateData();
     si.addMember("edition") <<= EditionManager::getEditionByID( quote.getEditionID() );
-//     si.addMember("edition-id") <<= quote.getEditionID();
 }
 
 std::string QuoteRegister::getJsonExport( const std::string userID ) {
@@ -192,17 +190,25 @@ std::string QuoteRegister::getJsonExport( const std::string userID ) {
 
     for ( unsigned int i_q = 0; i_q < allUserQuotes.size(); i_q++ ) {
         DEBUG "i_q: " << i_q << std::endl;
-        allUserQuotes[i_q].getKeywords();
         for ( unsigned int i_k = 0; i_k < allUserQuotes[i_q].m_quoteKeywords.size(); i_k++ ) {
             DEBUG "allUserQuotes[i_q].m_quoteKeywords[i_k]: " << allUserQuotes[i_q].m_quoteKeywords[i_k] << std::endl;
         }
         // serialize to json
         try
         {
-            cxxtools::JsonSerializer serializer( std::cout );
+            std::stringstream sstream;
+            cxxtools::JsonSerializer serializer( sstream );
             // this makes it just nice to read
             serializer.beautify(true);
             serializer.serialize( allUserQuotes[i_q] ).finish();
+
+            while (sstream.good())
+            {
+                char c = sstream.get();
+                if (sstream.good())
+                    jason_text += c;
+
+            }
         }
         catch (const std::exception& e)
         {
