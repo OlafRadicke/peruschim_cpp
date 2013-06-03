@@ -17,6 +17,14 @@ class QuoteRegister
 
 public:
 
+
+    /**
+     * Delete all of user own quote.
+     * @arg userID Id of a user.
+     * @return A vector of type Quote.
+     */
+    static void deleteAllQuoteOfUser( const std::string userID );
+
     /**
      * Get all public makiert quotes of a keyword.
      * @arg keyword The name of a keyword.

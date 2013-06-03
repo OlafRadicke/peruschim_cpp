@@ -1,6 +1,7 @@
 
 #include <cxxtools/jsondeserializer.h>
 #include <cxxtools/serializationinfo.h>
+#include <tntdb/transaction.h>
 
 #include "Config.h"
 #include "Quote.h"
@@ -9,6 +10,23 @@
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+
+void QuoteRegister::deleteAllQuoteOfUser( const std::string userID ){
+    DEBUG "deleteAllQuoteOfUser: " << userID << std::endl;
+    std::string sqlcommand = "";
+    Config config;
+
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn = tntdb::connect( conn_para );
+    tntdb::Transaction trans(conn);
+    conn.prepare( "DELETE FROM  quote_keyword \n\
+        WHERE quote_id IN ( SELECT id FROM quote WHERE owner_id= :v1 );")
+    .set( "v1",  userID ).execute();
+
+    conn.prepare( "DELETE FROM  quote \n\
+        WHERE owner_id= :v1 ;").set( "v1",  userID ).execute();
+    trans.commit();
+}
 
 std::vector<Quote> QuoteRegister::getQuotes ( tntdb::Statement st ){
     DEBUG std::endl;
@@ -167,6 +185,28 @@ void operator<<= ( cxxtools::SerializationInfo& si, const Edition& edition )
     si.addMember("release-place") <<= edition.getReleasePlace();
 }
 
+
+/**
+* define how to deserialize the Edition
+* @arg si serialization info
+* @arg Edition
+*/
+void operator>>= ( const cxxtools::SerializationInfo& si, Edition edition )
+{
+    std::string strValue;
+
+    si.getMember("name") >>= strValue;
+    edition.setName(strValue);
+    si.getMember("publisher-name") >>= strValue;
+    edition.setPublisherName(strValue);
+    si.getMember("release-date") >>= strValue;
+    edition.setReleaseDate(strValue);
+    si.getMember("release-number") >>= strValue;
+    edition.setReleaseNumber(strValue);
+    si.getMember("release-place") >>= strValue;
+    edition.setReleasePlace(strValue);
+}
+
 /**
 * define how to serialize the Quote
 * @arg si serialization info
@@ -193,16 +233,32 @@ void operator<<= ( cxxtools::SerializationInfo& si, const Quote& quote )
 */
 void operator>>= ( const cxxtools::SerializationInfo& si, Quote quote)
 {
-    quote.setBookTitle( si.getMember( "book-title" ) );
-    quote.setChapterBegin( si.getMember("chapter-begin") );
-    quote.setChapterEnd( si.getMember("chapter-end") );
-    quote.setKeywords( si.getMember("keywords") );
-    quote.setNote( si.getMember("note") );
-    quote.setQuoteText( si.getMember("quote-text") );
-    quote.setSentenceBegin( si.getMember("sentence-begin") );
-    quote.setSentenceEnd( si.getMember("sentence-end"));
-    si.getMember("private-data") <<= quote.isPrivateData();
-    quote.setEdition( si.getMember("edition");
+    std::string strValue;
+    int intValue;
+    std::vector<std::string> vectorValue;
+    bool boolValue;
+    Edition editionValue;
+
+    si.getMember( "book-title" ) >>= strValue;
+    quote.setBookTitle( strValue );
+    si.getMember("chapter-begin") >>= intValue;
+    quote.setChapterBegin( intValue );
+    si.getMember("chapter-end") >>= intValue;
+    quote.setChapterEnd( intValue );
+    si.getMember("keywords") >>= vectorValue;
+    quote.setKeywords( vectorValue );
+    si.getMember("note") >>= strValue;
+    quote.setNote( strValue );
+    si.getMember("quote-text") >>= strValue;
+    quote.setQuoteText( strValue );
+    si.getMember("sentence-begin") >>= intValue;
+    quote.setSentenceBegin( intValue );
+    si.getMember("sentence-end") >>= intValue;
+    quote.setSentenceEnd( intValue );
+    si.getMember("private-data") >>= boolValue;
+    quote.setIsPrivateData( boolValue );
+    si.getMember("edition") >>= editionValue;
+    quote.setEdition( editionValue );
 }
 /**
  * define a container object for user quotes export.
@@ -241,12 +297,12 @@ std::string QuoteRegister::getJsonExport( const std::string userID ) {
     quoteContainer.allUserQuotes = QuoteRegister::getAllQuoteOfUser( userID );
     try
     {
-//         std::stringstream sstream;
-//         cxxtools::JsonSerializer serializer( sstream );
-//         // this makes it just nice to read
-//         serializer.beautify(true);
-//         serializer.serialize( quoteContainer ).finish();
-//         json_text = sstream.str();
+        std::stringstream sstream;
+        cxxtools::JsonSerializer serializer( sstream );
+        // this makes it just nice to read
+        serializer.beautify(true);
+        serializer.serialize( quoteContainer ).finish();
+        json_text = sstream.str();
     }
     catch (const std::exception& e)
     {

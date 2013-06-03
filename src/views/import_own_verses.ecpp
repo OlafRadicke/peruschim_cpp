@@ -31,6 +31,20 @@
 % }
 
         <form method="post" >
+
+% if ( clear_old_verses == "true" ) {
+            <div class="feedback-box">
+                <h2>Achtung!</h2>
+                <p>Du hast ausgewählt das alle vorhandenen Verse durch den Import
+                geöscht werden. Bitte besätige den Vorgang. Oder entfehne den
+                Haken unden und Klick erneut auf "Importieren".</p>
+                <p><button id="affirmation_clear_old"
+                        name="affirmation_clear_old"
+                        value="pushed"
+                        type="submit">Importieren</button><a href="/home">Abbrechen</a></p>
+
+                </div>
+% }
             <p>Kopiere hier deine zu importierenden Verse in JSON-Format ein:<br>
                 <textarea
                     class="jason_text"
@@ -42,8 +56,12 @@
                     type="checkbox"
                     id="clear_old_verses"
                     value="true"
-                    name="clear_old_verses" ></p>
-            <p><button id="save_button"
+                    name="clear_old_verses"
+% if ( clear_old_verses == "true" ) {
+                    checked
+% }
+                    ></p>
+            <p><button id="import_button"
                     name="import_button"
                     value="pushed"
                     type="submit">Importieren</button></p>
