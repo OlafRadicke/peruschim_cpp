@@ -36,12 +36,12 @@
             <div class="feedback-box">
                 <h2>Achtung!</h2>
                 <p>Du hast ausgewählt das alle vorhandenen Verse durch den Import
-                geöscht werden. Bitte besätige den Vorgang. Oder entfehne den
-                Haken unden und Klick erneut auf "Importieren".</p>
+                gelöscht werden. Bitte bestätige den Vorgang der entferne den
+                Haken unten und Klick erneut auf "Importieren".</p>
                 <p><button id="affirmation_clear_old"
                         name="affirmation_clear_old"
                         value="pushed"
-                        type="submit">Importieren</button><a href="/home">Abbrechen</a></p>
+                        type="submit">Importieren</button><br><a href="/home">Abbrechen</a></p>
 
                 </div>
 % }
