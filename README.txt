@@ -51,6 +51,12 @@ psql -U peruschim_cpp -h localhost -W peruschim_cpp
 # Tabellen erstellen:
 psql -h localhost -U peruschim_cpp peruschim_cpp < /peruschim_cpp/PostgreSQL/db_schema.sql
 
+PERUSCHIM ÜBERSETZEN
+
+# Der Parameter "-j 4" ist optional und weist gnu make an, vier cores zu
+# benutzen, bzw. 4 Jobs parallel auszuführen.
+make -j 4
+
 
 STARTEN
 -------

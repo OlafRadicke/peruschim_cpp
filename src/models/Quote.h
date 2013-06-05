@@ -1,3 +1,23 @@
+/**
+* @author Olaf Radicke <briefkasten@olaf-rdicke.de>
+* @date 2013
+* @copyright
+* Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or later
+* version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #ifndef QUOTE_H
 #define QUOTE_H
 
@@ -121,6 +141,14 @@ public:
     }
 
     /**
+     * Set data of edition.
+     **/
+    const Edition getTmpEditionData( )
+    {
+        return this->tmpEditionData;
+    }
+
+    /**
      * get visible policy.
      **/
     const bool isPrivateData() const
@@ -165,15 +193,11 @@ public:
     }
 
     /**
-     * Set id of edition.
-     * @TODO Create an new edition if id new.
+     * Set data of edition.
      **/
-    void setEdition( Edition edition )
+    void setTmpEditionData( Edition editionData )
     {
-//         if ( edition != exist ) {
-//             edition.saveAsNew();
-//         }
-        this->m_editionID = edition.getID();
+        this->tmpEditionData = editionData;
     }
 
     /**
@@ -366,6 +390,12 @@ private:
      * Mapping bible books name of bibleserver.com
      */
     map<string, string> BibleserverComNames;
+
+    /**
+     * Buffer for edition data. Is use only by JSON-deserializeing.
+     */
+    Edition tmpEditionData;
+    
 };
 
 

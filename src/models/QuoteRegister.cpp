@@ -1,3 +1,22 @@
+/**
+* @author Olaf Radicke <briefkasten@olaf-rdicke.de>
+* @date 2013
+* @copyright
+* Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or later
+* version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #include <cxxtools/jsondeserializer.h>
 #include <cxxtools/serializationinfo.h>
@@ -191,11 +210,13 @@ void operator<<= ( cxxtools::SerializationInfo& si, const Edition& edition )
 * @arg si serialization info
 * @arg Edition
 */
-void operator>>= ( const cxxtools::SerializationInfo& si, Edition edition )
+void operator>>= ( const cxxtools::SerializationInfo& si, Edition& edition )
 {
+    DEBUG "deserialize the Edition..." << std::endl;
     std::string strValue;
 
     si.getMember("name") >>= strValue;
+    DEBUG "strValue: " << strValue << std::endl;
     edition.setName(strValue);
     si.getMember("publisher-name") >>= strValue;
     edition.setPublisherName(strValue);
@@ -231,8 +252,9 @@ void operator<<= ( cxxtools::SerializationInfo& si, const Quote& quote )
 * @arg si serialization info
 * @arg Quote
 */
-void operator>>= ( const cxxtools::SerializationInfo& si, Quote quote)
+void operator>>= ( const cxxtools::SerializationInfo& si, Quote& quote)
 {
+    DEBUG "deserialize the Quote: " << std::endl;
     std::string strValue;
     int intValue;
     std::vector<std::string> vectorValue;
@@ -240,6 +262,7 @@ void operator>>= ( const cxxtools::SerializationInfo& si, Quote quote)
     Edition editionValue;
 
     si.getMember( "book-title" ) >>= strValue;
+    DEBUG "strValue: " << strValue << std::endl;
     quote.setBookTitle( strValue );
     si.getMember("chapter-begin") >>= intValue;
     quote.setChapterBegin( intValue );
@@ -258,7 +281,7 @@ void operator>>= ( const cxxtools::SerializationInfo& si, Quote quote)
     si.getMember("private-data") >>= boolValue;
     quote.setIsPrivateData( boolValue );
     si.getMember("edition") >>= editionValue;
-    quote.setEdition( editionValue );
+    quote.setTmpEditionData( editionValue );
 }
 /**
  * define a container object for user quotes export.
@@ -284,8 +307,9 @@ void operator<<= ( cxxtools::SerializationInfo& si, const QuoteExportContainer& 
 * @arg si serialization info
 * @arg QuoteExportContainer
 */
-void operator>>= ( const cxxtools::SerializationInfo& si, QuoteExportContainer quoteContainer)
+void operator>>= ( const cxxtools::SerializationInfo& si, QuoteExportContainer& quoteContainer)
 {
+    DEBUG "deserialize the QuoteExportContainer... " << std::endl;
     si.getMember("user-quotes") >>= quoteContainer.allUserQuotes;
 }
 
@@ -386,7 +410,7 @@ std::vector<Quote> QuoteRegister::getAllQuoteOfKeyword(
     return getQuotes ( st );
 }
 
-void QuoteRegister::jsonImport( const std::string jsonText ) {
+void QuoteRegister::jsonImport( const std::string jsonText, std::string owner_id ) {
     try
     {
         // define a empty config object
@@ -400,14 +424,15 @@ void QuoteRegister::jsonImport( const std::string jsonText ) {
         DEBUG "quoteContainer.allUserQuotes.size(): "
             << quoteContainer.allUserQuotes.size() <<  std::endl;
 
-        // print configuration
-//         std::cout << "encoding=" << config.encoding << '\n'
-//                 << "plugIns=";
-//         for (unsigned n = 0; n < quoteContainer.allUserQuotes.size(); ++n)
-//         std::cout << config.plugIns[n] << ' ';
-//         std::cout << '\n'
-//                 << "indent.length=" << config.indent.length << '\n'
-//                 << "indent.useSpace=" << config.indent.useSpace << '\n';
+
+        for (unsigned n = 0; n < quoteContainer.allUserQuotes.size(); ++n) {
+            DEBUG "n: " << n << std::endl;
+            quoteContainer.allUserQuotes[n].setOwnerID( owner_id );
+            Edition edition = quoteContainer.allUserQuotes[n].getTmpEditionData( );
+            edition.setOwnerID( owner_id );
+            quoteContainer.allUserQuotes[n].setEditionID( edition.saveAsNewIfNotExist() );
+            quoteContainer.allUserQuotes[n].saveAsNew();
+        }
     }
     catch (const std::exception& e)
     {
