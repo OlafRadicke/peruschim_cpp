@@ -71,6 +71,10 @@ option  {
     background: -ms-linear-gradient( top, #202020, #000000);
 }
 
+
+select.userrolls {background: darkblue; color: white;}
+option.userrolls  {background: darkblue}
+
 /* --------------- label -------------------------- */
 
 /*

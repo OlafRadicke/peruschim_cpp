@@ -112,14 +112,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             maxlength="40">
                     </p>
                     <p><b>Rollen:</b>
-                        <select id="userrolls" size="3" multiple>
+                        <select class="userrolls" id="userrolls" size="3" multiple >
 %         for ( unsigned int i_rolls = 0; i_rolls < allRolls.size(); i_rolls++ ) {
 %             if ( WebACL::isUserInRole( accountData.getLogin_name(), allRolls[i_rolls]) ) {
-                            <option value="<$  allRolls[i_rolls] $>" selected>
+                            <option class="userrolls" value="<$  allRolls[i_rolls] $>" selected>
                                 <$ allRolls[i_rolls] $>
                             </option>
 %             } else {
-                            <option value="<$  allRolls[i_rolls] $>">
+                            <option class="userrolls" value="<$  allRolls[i_rolls] $>">
                                 <$ allRolls[i_rolls] $>
                             </option>
 %             }
