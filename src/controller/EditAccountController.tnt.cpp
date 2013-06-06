@@ -94,6 +94,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         DEBUG "is_inactive: " << is_inactive << endl;
         accountData.setAccount_disable( is_inactive );
 
+        DEBUG "userrolls.size(): " << userrolls.size() << endl;
         WebACL::reSetUserRolls( session_account_id, userrolls);
         accountData.saveUpdate();
 

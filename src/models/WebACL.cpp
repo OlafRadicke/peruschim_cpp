@@ -119,7 +119,7 @@ void WebACL::createAccount (
         std::string user_name,
         std::string new_password
 ) {
-    WebACL::createAccount ( user_name, new_password,  "", "");
+    WebACL::createAccount ( user_name, new_password,  "", "", "user");
 }
 
 
