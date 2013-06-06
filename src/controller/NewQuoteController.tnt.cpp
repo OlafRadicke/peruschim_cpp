@@ -137,6 +137,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         quoteData.setOwnerID( userSession.getUserID() );
 
         quoteData.saveAsNew( );
+        bibleserverComURL = "";
         feedback = "Der Vers wurde gespeichert!";
     } else {
         DEBUG "userSession.getUserID(): " << userSession.getUserID() << std::endl;
