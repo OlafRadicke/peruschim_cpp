@@ -3,12 +3,21 @@
 ABHÄNGIGKEITEN
 --------------
 
-gcc-g++
-tntnet
-tntnet-devel
-tntdb
+- gcc-g++
+- tntnet
+- tntnet-devel
+- tntdb
+zum übersetzen von Tntnet:
+- automake
+- autoconf
+- libtool
+- postgresql-devel
+- zlib-devel
+- openssl-devel
 
-Gegebenen Falls: Sqlite, PostreSQL, MySQL, Oracle
+Peruschim benutzt PostgreSQL als Backend so das u.U. 
+"./configure --with-sqlite=no --with-mysql=no" beim übersetzen von tntdb
+angegeben werden muss.
 
 
 INSTALLATION

@@ -1,10 +1,10 @@
 
 
-TNTNET=/usr/bin/tntnet
+TNTNET=tntnet
 TNTMAKEFILE = ./tntnet-make/Makefile
 
 CPPFLAGS = -Wall -Werror -pedantic  -Wno-long-long
-CPPFLAGS += -fPIC -O2
+CPPFLAGS += -fPIC -O2 
 LIBS =  -ltntnet -lcxxtools -ltntdb
 LIBS += -I ./src
 

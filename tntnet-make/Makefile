@@ -1,6 +1,6 @@
 
-ECPPC=/usr/bin/ecppc
-TNTNET=/usr/bin/tntnet
+ECPPC=ecppc
+TNTNET=tntnet
 LIBS = -I ./src
 
 
