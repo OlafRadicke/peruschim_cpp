@@ -13,11 +13,12 @@ button {
     border: 2px solid #006;
     color: #FFFFFF;
 
-    background-color: #6870fe;
-    background: linear-gradient( top, #6870fe, #12057A);
-    background: -webkit-linear-gradient( top, #6870fe, #12057A);
-    background: -moz-linear-gradient( top, #6870fe, #12057A);
-    background: -ms-linear-gradient( top, #6870fe, #12057A);
+    background: #6870FE;
+    background-color: #6870FE;
+    background: linear-gradient( top, #6870FE, #12057A);
+    background: -webkit-linear-gradient( top, #6870FE, #12057A);
+    background: -moz-linear-gradient( top, #6870FE, #12057A);
+    background: -ms-linear-gradient( top, #6870FE, #12057A);
 
 
     -moz-border-radius-topright:5px;
@@ -40,11 +41,12 @@ select {
     border: 2px solid #006;
     color: #FFFFFF;
 
-    background-color: #6870fe;
-    background: linear-gradient( top, #6870fe, #12057A);
-    background: -webkit-linear-gradient( top, #6870fe, #12057A);
-    background: -moz-linear-gradient( top, #6870fe, #12057A);
-    background: -ms-linear-gradient( top, #6870fe, #12057A);
+    background: #6870FE;
+    background-color: #6870FE;
+    background: linear-gradient( top, #6870FE, #12057A);
+    background: -webkit-linear-gradient( top, #6870FE, #12057A);
+    background: -moz-linear-gradient( top, #6870FE, #12057A);
+    background: -ms-linear-gradient( top, #6870FE, #12057A);
 
 
     -moz-border-radius-topright:5px;

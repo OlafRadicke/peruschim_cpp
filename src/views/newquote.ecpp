@@ -92,7 +92,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %     if ( quoteData.getChapterBegin() > 0 ) {
                         value="<$ quoteData.getChapterBegin() $>"
 %     }
-                        required="required"> Vers: <input
+                        required /> Vers: <input
                         name="sentence_begin"
                         type="number"
                         min="1"
@@ -100,7 +100,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %     if ( quoteData.getSentenceBegin() > 0 ) {
                         value="<$ quoteData.getSentenceBegin() $>"
 %     }
-                        required="required"></p>
+                        required /></p>
 
                 <p><b>bis</b><br>Kapitel: <input
                         name="chapter_end"
@@ -110,7 +110,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %     if ( quoteData.getChapterEnd() > 0 ) {
                         value="<$ quoteData.getChapterEnd() $>"
 %     }
-                        required="required"> Vers: <input
+                        /> Vers: <input
                         name="sentence_end"
                         type="number"
                         min="1"
@@ -118,7 +118,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %     if ( quoteData.getSentenceEnd() > 0 ) {
                         value="<$ quoteData.getSentenceEnd() $>"
 %     }
-                        required="required">
+                        />
                 </p>
 %     if ( bibleserverComURL != "" ) {
                 <div class="feedback-box">
