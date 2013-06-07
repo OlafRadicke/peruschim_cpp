@@ -256,7 +256,7 @@ div.centerbox{
     text-align: center;
     border-style: solid;
     border-color: #C3C3C3;
-    width: 70% ;
+    width: 90% ;
     padding: 20px;
     margin: auto;
     border-radius: 10px;
