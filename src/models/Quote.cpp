@@ -1,9 +1,33 @@
 
+/**
+* @author Olaf Radicke <briefkasten@olaf-rdicke.de>
+* @date 2013
+* @copyright
+* Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or later
+* version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "Quote.h"
+
+# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
     Quote::Quote():
         allBibleBooks(),
-        BibleserverComNames()
+        BibleserverComNames(),
+        tmpEditionData()
     {
         this->m_isPrivateData = false;
         this->m_ownerID = "0";
@@ -185,7 +209,6 @@ const std::string Quote::getBibleserverComURL() {
 }
 
 std::vector<std::string> Quote::getKeywords() {
-    DEBUG std::endl;
     Config config;
 
     if ( this->m_quoteKeywords.size() < 1 && this->m_ID != "") {
@@ -194,7 +217,6 @@ std::vector<std::string> Quote::getKeywords() {
         tntdb::Result result;
 
         conn = tntdb::connect( conn_para );
-        DEBUG std::endl;
         tntdb::Statement st = conn.prepare( "SELECT title \
             FROM quote_keyword \
             WHERE quote_id = :v1 \
@@ -203,12 +225,9 @@ std::vector<std::string> Quote::getKeywords() {
 
         for ( tntdb::Statement::const_iterator it = st.begin();
             it != st.end(); ++it ) {
-            DEBUG std::endl;
             tntdb::Row row = *it;
             Quote dataQuote = Quote();
-
             this->m_quoteKeywords.push_back( row[0].getString() );
-
         }
     }
     return this->m_quoteKeywords;
@@ -414,16 +433,23 @@ void Quote::setKeywords( std::string keywords ) {
         DEBUG "keyword: " << keyword << std::endl;
         keywordsize = keyword.size();
         DEBUG "Start Index: " << (keywordsize+1) << std::endl;
-        keywords = keywords.substr(keywordsize+1);
-        if ( keywords == "" ) break;
-        DEBUG  "keywords: " << keywords << std::endl;
-        found = keywords.find_first_of(separator);
-        DEBUG  "found: " << found << std::endl;
-    }
-    // is rest not empty.
-    if ( keywords != "") {
-        DEBUG "keywords: " << keywords << std::endl;
-        m_quoteKeywords.push_back( keywords );
+        DEBUG "keywords.size(): " << keywords.size() << std::endl;
+        if ( keywords.size() > (keywordsize+1) ) {
+            keywords = keywords.substr(keywordsize+1);
+            DEBUG  "keywords: " << keywords << std::endl;
+            found = keywords.find_first_of(separator);
+            DEBUG  "found: " << found << std::endl;
+            if ( found==std::string::npos ) {
+                DEBUG  "ENDE ENDE ENDE!!!" << std::endl;
+                if ( keywords.size() > 0 ) {
+                    m_quoteKeywords.push_back( keywords );
+                }
+                break;
+            }
+        } else {
+            keywords == "";
+            break;
+        }
     }
     DEBUG "m_quoteKeywords.size(): "  << m_quoteKeywords.size() << std::endl;
 }

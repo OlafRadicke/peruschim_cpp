@@ -1,3 +1,22 @@
+/**
+* @author Olaf Radicke <briefkasten@olaf-rdicke.de>
+* @date 2013
+* @copyright
+* Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or later
+* version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #ifndef EDITION_H
 #define EDITION_H
@@ -8,8 +27,6 @@
 #include "Config.h"
 #include "DatabaseProxy.h"
 
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 class Edition
 {
@@ -31,7 +48,7 @@ public:
     /**
      * Get ID.
      **/
-    std::string getID()
+    const std::string getID() const
     {
         return this->m_id;
     }
@@ -39,7 +56,7 @@ public:
     /**
      * Get name.
      **/
-    std::string getName()
+    const std::string getName() const
     {
         return this->m_name;
     }
@@ -47,7 +64,7 @@ public:
     /**
     * Get publisher name.
     **/
-    std::string getPublisherName( )
+    const std::string getPublisherName( ) const
     {
         return this->m_publisherName;
     }
@@ -55,7 +72,7 @@ public:
     /**
     * Get release date.
     **/
-    std::string getReleaseDate( )
+    const std::string getReleaseDate( ) const
     {
         return this->m_releaseDate;
     }
@@ -63,7 +80,7 @@ public:
     /**
     * Get release number.
     **/
-    std::string  getReleaseNumber( )
+    const std::string  getReleaseNumber( ) const
     {
         return this->m_releaseNumber;
     }
@@ -71,7 +88,7 @@ public:
     /**
     * Get release place.
     **/
-    std::string getReleasePlace( )
+    const std::string getReleasePlace( ) const
     {
         return this->m_releasePlace;
     }
@@ -80,6 +97,13 @@ public:
      * Save date as new data set in database.
      **/
     void saveAsNew();
+
+
+    /**
+     * Save date as new data set in database if data does not exist in data base.
+     * @return Return ID of Edition, new or old.
+     **/
+    std::string saveAsNewIfNotExist();
 
     /**
      * Save date update in in database..

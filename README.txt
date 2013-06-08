@@ -3,12 +3,21 @@
 ABHÄNGIGKEITEN
 --------------
 
-gcc-g++
-tntnet
-tntnet-devel
-tntdb
+- gcc-g++
+- tntnet
+- tntnet-devel
+- tntdb
+zum übersetzen von Tntnet:
+- automake
+- autoconf
+- libtool
+- postgresql-devel
+- zlib-devel
+- openssl-devel
 
-Gegebenen Falls: Sqlite, PostreSQL, MySQL, Oracle
+Peruschim benutzt PostgreSQL als Backend so das u.U. 
+"./configure --with-sqlite=no --with-mysql=no" beim übersetzen von tntdb
+angegeben werden muss.
 
 
 INSTALLATION
@@ -50,6 +59,12 @@ psql -U peruschim_cpp -h localhost -W peruschim_cpp
  tail -n 60 /var/lib/pgsql/data/pg_log/postgresql-Sun.log
 # Tabellen erstellen:
 psql -h localhost -U peruschim_cpp peruschim_cpp < /peruschim_cpp/PostgreSQL/db_schema.sql
+
+PERUSCHIM ÜBERSETZEN
+
+# Der Parameter "-j 4" ist optional und weist gnu make an, vier cores zu
+# benutzen, bzw. 4 Jobs parallel auszuführen.
+make -j 4
 
 
 STARTEN

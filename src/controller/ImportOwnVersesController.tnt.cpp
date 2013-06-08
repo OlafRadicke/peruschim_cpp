@@ -15,23 +15,25 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
+
 <%pre>
     #include "models/WebACL.h"
     #include "models/UserSession.h"
+    #include "models/QuoteRegister.h"
+    #include "models/Quote.h"
 
     # define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     # define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 </%pre>
 
-<%config>
-</%config>
-
 <%args>
     std::string feedback;
-    std::string password_a;
-    std::string password_b;
-    std::string button_update_account;
+    std::string jason_text;
+    std::string clear_old_verses;
+    std::string import_button;
+    std::string affirmation_clear_old;
 </%args>
+
 <%session scope="global">
     UserSession userSession;
 </%session>
@@ -43,25 +45,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         return reply.redirect ( "/access_denied" );
     };
 
-    AccountData accountData;
 
-    // is button account data update pushed?
-    if ( button_update_account == "Speichern" ) {
-        feedback = "";
 
-        // check if new password set.
-        if (password_a != "" ) {
-            DEBUG "password_a" << password_a << endl;
-            // check equal of new password.
-            if ( password_a != password_b ) {
-                feedback = "Das Passwort ist nicht gleich!";
-            } else {
-                accountData.setID( userSession.getUserID() );
-                accountData.setNewPassword( password_a );
-                feedback = "Die Daten wurden gespeichert und das Passwort neu gesetzt!";
-            };
-        } else {
-            feedback = "Es wurde kein Passwort gesetzt";
-        };
+    // is button "Importieren" kicked?
+    if ( import_button == "pushed" ) {
+        DEBUG "jason_text: " << jason_text << std::endl;
+        if ( clear_old_verses != "true" ) {
+            DEBUG "clear_old_verses: " << clear_old_verses << std::endl;
+            QuoteRegister::jsonImport( jason_text, userSession.getUserID() );
+            feedback = "Der Import ist abgeschloßen.";
+            clear_old_verses = "";
+        }
     }
+    // is button "Importieren" kicked?
+    if ( affirmation_clear_old == "pushed" ) {
+            DEBUG "clear_old_verses: " << clear_old_verses << std::endl;
+            feedback = "Die alten Verse wurden gelöscht";
+            QuoteRegister::deleteAllQuoteOfUser( userSession.getUserID() );
+            QuoteRegister::jsonImport( jason_text, userSession.getUserID() );
+            feedback += " und der Import erfogrich eingespielt.";
+            clear_old_verses = "";
+    }
+
+
+
+
 </%cpp>

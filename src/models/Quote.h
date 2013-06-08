@@ -1,3 +1,23 @@
+/**
+* @author Olaf Radicke <briefkasten@olaf-rdicke.de>
+* @date 2013
+* @copyright
+* Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or later
+* version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #ifndef QUOTE_H
 #define QUOTE_H
 
@@ -7,11 +27,12 @@
 #include <sstream>
 
 #include <tntdb/statement.h>
+#include <cxxtools/jsonserializer.h>
+#include <cxxtools/serializationinfo.h>
+
 #include "DatabaseProxy.h"
 #include "Edition.h"
 
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 
 class Quote
@@ -29,11 +50,11 @@ public:
      * Try to build the Bibleserver.com url.
      */
     const std::string getBibleserverComURL();
-    
+
     /**
      * Get title of book.
      **/
-    std::string getBookTitle()
+    const std::string getBookTitle() const
     {
         return this->m_bookTitle;
     }
@@ -41,7 +62,7 @@ public:
     /**
      * Get number of chapter begin.
      **/
-    int getChapterBegin()
+    const int getChapterBegin() const
     {
         return this->m_bookChapterBegin;
     }
@@ -49,7 +70,7 @@ public:
     /**
      * Get number of chapter end.
      **/
-    int getChapterEnd()
+    const int getChapterEnd() const
     {
         return this->m_bookChapterEnd;
     }
@@ -57,7 +78,7 @@ public:
     /**
      * Get id of edition.
      **/
-    std::string getEditionID()
+    const std::string getEditionID() const
     {
         return this->m_editionID;
     }
@@ -82,7 +103,7 @@ public:
     /**
      * Get Note.
      **/
-    std::string getNote( )
+    const std::string getNote() const
     {
         return this->m_note;
     }
@@ -98,7 +119,7 @@ public:
     /**
      * Get quote text.
      **/
-    std::string getQuoteText()
+    const std::string getQuoteText() const
     {
         return this->m_quoteText;
     }
@@ -106,7 +127,7 @@ public:
     /**
      * Get number of sentence begin.
      **/
-    int getSentenceBegin ( )
+    const int getSentenceBegin() const
     {
         return this->m_bookSentenceBegin;
     }
@@ -114,15 +135,23 @@ public:
     /**
      * Get number of sentence end.
      **/
-    int getSentenceEnd ( )
+    const int getSentenceEnd() const
     {
         return this->m_bookSentenceEnd;
     }
 
     /**
+     * Set data of edition.
+     **/
+    const Edition getTmpEditionData( )
+    {
+        return this->tmpEditionData;
+    }
+
+    /**
      * get visible policy.
      **/
-    bool isPrivateData( )
+    const bool isPrivateData() const
     {
         return this->m_isPrivateData;
     }
@@ -164,6 +193,14 @@ public:
     }
 
     /**
+     * Set data of edition.
+     **/
+    void setTmpEditionData( Edition editionData )
+    {
+        this->tmpEditionData = editionData;
+    }
+
+    /**
      * Set id of edition.
      **/
     void setEditionID( std::string id )
@@ -188,9 +225,17 @@ public:
 
     /**
      * Set keywords.
-     * @param keywords strin with comma separated label values
+     * @param keywords string with comma separated label values
      **/
     void setKeywords( std::string keywords ) ;
+
+    /**
+     * Set keywords.
+     * @param keywordList list of keywors
+     **/
+    void setKeywords( std::vector<std::string> keywordList ) {
+        m_quoteKeywords = keywordList;
+    };
 
     /**
      * Set Note.
@@ -242,6 +287,9 @@ public:
         this->m_bookSeries = text;
     }
 
+
+
+
 private:
 
 
@@ -286,11 +334,16 @@ private:
      **/
     std::string m_editionID;
 
-
     /**
      * The id of this quote.
      **/
     std::string m_ID;
+
+    /**
+     * quote keywords. Separated by commas.
+     * Example: "Umkehr, Zöllner, Nachfolge"
+     **/
+    std::vector<std::string> m_quoteKeywords;
 
     /**
      * Id of the owner of thes quote.
@@ -302,12 +355,6 @@ private:
      * If this value "true" then it's not visible for other user.
      **/
     bool m_isPrivateData;
-
-    /**
-     * quote keywords. Separated by commas.
-     * Example: "Umkehr, Zöllner, Nachfolge"
-     **/
-    std::vector<std::string> m_quoteKeywords;
 
     /**
      * quote note.
@@ -337,12 +384,21 @@ private:
      * lowercase.
      **/
     string lowercase ( string keywords );
-    
-    
+
+
     /**
      * Mapping bible books name of bibleserver.com
      */
     map<string, string> BibleserverComNames;
+
+    /**
+     * Buffer for edition data. Is use only by JSON-deserializeing.
+     */
+    Edition tmpEditionData;
+    
 };
+
+
+
 
 #endif

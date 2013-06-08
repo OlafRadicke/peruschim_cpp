@@ -1,4 +1,20 @@
 
+<#
+Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#>
 
 
 <%include>./src/controller/KeywordDetailController.tnt.cpp</%include>
@@ -31,31 +47,31 @@
         <div class="columnbox">
             <form method="post" action="editquote">
 % for ( unsigned int i=0; i < quoteList.size(); i++) {
-                    <div class="simple-box">
-                        <h2>
-                            <$ quoteList[i].getBookTitle() $>&#160;
-                            <$ quoteList[i].getChapterBegin() $>:
-                            <$ quoteList[i].getSentenceBegin() $>
-                        </h2>
-                        <ul>
-                            <li>Zitat: <i><$ quoteList[i].getQuoteText() $></i></li>
-                            <li>Notiz: <i><$ quoteList[i].getNote() $></i></li>
-                            <li>Schlagworte: <ul>
+                <div class="simple-box">
+                    <h2>
+                        <$ quoteList[i].getBookTitle() $>&#160;
+                        <$ quoteList[i].getChapterBegin() $>:
+                        <$ quoteList[i].getSentenceBegin() $>
+                    </h2>
+                    <ul>
+                        <li>Zitat: <i><$ quoteList[i].getQuoteText() $></i></li>
+                        <li>Notiz: <i><$ quoteList[i].getNote() $></i></li>
+                        <li>Schlagworte: <ul>
 %     std::vector<std::string> keywordList = quoteList[i].getKeywords();
 %     for ( unsigned int i2=0; i2 <  keywordList.size(); i2++) {
-                                <li><i><$ keywordList[i2] $></i>
+                            <li><i><$ keywordList[i2] $></i>
 %     }
-                            </ul>
-                            </li>
                         </ul>
+                        </li>
+                    </ul>
 %     if ( isLogin == true && quoteList[i].getOwnerID() == userSession.getUserID() ) {
-                        <button name="quote_id"
-                                class="full_width_button"
-                                value="<$ quoteList[i].getID( ) $>"
-                                type="submit">Bearbeiten
-                        </button>
+                    <button name="quote_id"
+                            class="full_width_button"
+                            value="<$ quoteList[i].getID( ) $>"
+                            type="submit">Bearbeiten
+                    </button>
 %     }
-                    </div>
+                </div>
 % }
             </form>
         </div>

@@ -20,7 +20,7 @@ int main ( int argc, char* argv[] )
         // ruft bei /keyword-detail/keyword die Komponente keyword-detail
         // auf und übergibt den Parameter "keywordp".
         // Mit 'request.getArg(0)' läst sich der Wert auslesen.
-        app.mapUrl("^/keyword-detail/(.*)", "keyword-detail").pushArg("$1");
+//         app.mapUrl("^/keyword-detail/(.*)", "keyword-detail").pushArg("$1");
 
         app.mapUrl( "^/(.*)$", "$1" );
         std::cout << "peruschim cpp is started and run on http://" <<  ip_addr \

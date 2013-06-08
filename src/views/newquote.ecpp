@@ -1,3 +1,19 @@
+<#
+Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#>
 
 
 <%include>./src/controller/NewQuoteController.tnt.cpp</%include>
@@ -27,7 +43,7 @@
 
 
     <div class="centerbox">
-        <h1>Neuen Verseeintrag erstellen</h1>
+        <h1>Neuen Verseintrag erstellen</h1>
 
 % if ( feedback != "" ) {
 
@@ -41,7 +57,7 @@
 %     if ( 1 > editionList.size() ) {
             <div class="feedback-box">
                 <b>Bevor ein erster Vers angelegt werden kann, muss zunächst eine
-                    Bibelausgabe angelegt werden! <a href="/edit_editions">Jetzt
+                    Bibelausgabe angelegt werden. <a href="/edit_editions">Jetzt
                     Bibelausgabe anlegen...</a></b>
             </div>
 %     }
@@ -68,7 +84,7 @@
                     </select>
                 </p>
 
-                <p>von Kapitel: <input
+                <p><b>von</b><br>Kapitel: <input
                         name="chapter_begin"
                         type="number"
                         min="1"
@@ -76,7 +92,7 @@
 %     if ( quoteData.getChapterBegin() > 0 ) {
                         value="<$ quoteData.getChapterBegin() $>"
 %     }
-                        required="required"> Vers: <input
+                        required /> Vers: <input
                         name="sentence_begin"
                         type="number"
                         min="1"
@@ -84,9 +100,9 @@
 %     if ( quoteData.getSentenceBegin() > 0 ) {
                         value="<$ quoteData.getSentenceBegin() $>"
 %     }
-                        required="required"></p>
+                        required /></p>
 
-                <p>Bis Kapitel: <input
+                <p><b>bis</b><br>Kapitel: <input
                         name="chapter_end"
                         type="number"
                         min="1"
@@ -94,7 +110,7 @@
 %     if ( quoteData.getChapterEnd() > 0 ) {
                         value="<$ quoteData.getChapterEnd() $>"
 %     }
-                        required="required"> Vers: <input
+                        /> Vers: <input
                         name="sentence_end"
                         type="number"
                         min="1"
@@ -102,11 +118,11 @@
 %     if ( quoteData.getSentenceEnd() > 0 ) {
                         value="<$ quoteData.getSentenceEnd() $>"
 %     }
-                        required="required">
+                        />
                 </p>
 %     if ( bibleserverComURL != "" ) {
                 <div class="feedback-box">
-                    Dau kanst unter der folgenden URL deine bibelstelle nachschlagen: <br>
+                    Du kanst unter der folgenden URL deine Bibelstelle nachschlagen: <br>
                     <b><a href="<$ bibleserverComURL $>"><$ bibleserverComURL $></a></b>
                 </div>
 %     }
@@ -114,7 +130,7 @@
                     Zitat: <br>
                     <textarea
                         name="quote_text"
-                        cols="80"
+                        class="full-width"
                         rows="2"><$ quoteData.getQuoteText() $></textarea> <br>
                     <button name="look_up_button"
                             value="clicked"
@@ -122,7 +138,7 @@
                     </button>
                 </p>
 
-                <p>Schlagworte (Kommergetrennt): <br><input
+                <p>Schlagworte (Komma getrennt): <br><input
                         class="full-width"
                         name="keywords"
                         type="text"
@@ -132,8 +148,8 @@
 
                 <p>Notizen/Anmerungen: <br>
                     <textarea
+                        class="full-width"
                         name="note"
-                        cols="80"
                         rows="10"><$ quoteData.getNote( ) $></textarea>
                 </p>
                 <p>Datensatz nicht öffentlicht sichtbar machen <input

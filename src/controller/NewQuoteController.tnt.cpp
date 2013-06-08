@@ -1,3 +1,20 @@
+<#
+Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#>
+
 <%pre>
     #include "models/EditionManager.h"
     #include "models/WebACL.h"
@@ -95,10 +112,18 @@
         quoteData.setSentenceBegin( sentence_begin );
 
         DEBUG "chapter_end: " << chapter_end << std::endl;
-        quoteData.setChapterEnd( chapter_end );
+        if ( chapter_end == 0 ) {
+            quoteData.setChapterEnd( chapter_begin );
+        } else {
+            quoteData.setChapterEnd( chapter_end );
+        }
 
         DEBUG "sentence_end: " << sentence_end << std::endl;
-        quoteData.setSentenceEnd( sentence_end );
+        if ( sentence_end == 0 ) {
+            quoteData.setSentenceEnd( sentence_begin );
+        } else {
+            quoteData.setSentenceEnd( sentence_end );
+        }
 
         DEBUG "quote_text: " << quote_text << std::endl;
         quoteData.setQuoteText( quote_text );
@@ -120,8 +145,10 @@
         quoteData.setOwnerID( userSession.getUserID() );
 
         quoteData.saveAsNew( );
-        feedback = "Der Verse wurde gespeichert!";
+        bibleserverComURL = "";
+        feedback = "Der Vers wurde gespeichert!";
     } else {
+        DEBUG "userSession.getUserID(): " << userSession.getUserID() << std::endl;
         editionList =  EditionManager::getAllEditions( userSession.getUserID() );
 
     }

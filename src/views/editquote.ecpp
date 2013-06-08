@@ -1,3 +1,19 @@
+<#
+Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#>
 
 
 <%include>./src/controller/EditQuoteController.tnt.cpp</%include>
@@ -74,7 +90,7 @@
                     </select>
                 </p>
 
-                <p>von Kapitel: <input
+                <p><b>von</b><br> Kapitel: <input
                         name="chapter_begin"
                         type="number"
                         min="1"
@@ -89,7 +105,7 @@
                         value="<$ quoteData.getSentenceBegin() $>"
                         required="required"></p>
 
-                <p>Bis Kapitel: <input
+                <p><b>bis</b><br> Kapitel: <input
                         name="chapter_end"
                         type="number"
                         min="1"
@@ -105,7 +121,7 @@
                         required="required"></p>
 %     if ( bibleserverComURL != "" ) {
                 <div class="feedback-box">
-                    Dau kanst unter der folgenden URL deine bibelstelle nachschlagen: <br>
+                    Du kannst unter der folgenden URL deine Bibelstelle nachschlagen: <br>
                     <b><a href="<$ bibleserverComURL $>"><$ bibleserverComURL $></a></b>
                 </div>
 %     }
@@ -122,20 +138,20 @@
                 </p>
 
 
-                <p>Schlagworte (Kommergetrennt): <br><input
+                <p>Schlagworte (Komma getrennt): <br><input
                         class="full-width"
                         name="keywords"
                         type="text"
                         value="<$ quoteData.getKeywordsAsString() $>"
                         maxlength="300"></p>
 
-                <p>Notizen/Anmerungen: <br><textarea
+                <p>Notizen/Anmerkungen: <br><textarea
                         class="full-width"
                         name="note"
                         value="<$ quoteData.getNote() $>"
                         cols="80"
                         rows="10"></textarea></p>
-                <p>Datensatz nicht öffentlicht sichtbar machen <input
+                <p>Datensatz nicht öffentlich sichtbar machen <input
                         type="checkbox"
                         id="is_private_data"
 %     if ( quoteData.isPrivateData( ) ) {

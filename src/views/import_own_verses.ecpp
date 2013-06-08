@@ -15,13 +15,12 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
-
-<%include>./src/controller/ResetOwnPasswordController.tnt.cpp</%include>
+<%include>./src/controller/ImportOwnVersesController.tnt.cpp</%include>
 
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Home Artike23t - Passwort ändern</title>
+    <title>Home Artike23t - Verse importieren</title>
     <meta charset = "UTF-8" />
     <& "style" &>
 </head>
@@ -41,39 +40,48 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <br />
     <div class="centerbox">
 
-        <h1>Neues Passwort setzen</h1>
+        <h1>Versimport</h1>
 % if ( feedback != "" ) {
         <div class="feedback-box">
             <b><$ feedback $> </b>
         </div>
 % }
+
         <form method="post" >
-            <div class="smallgroupbox">
-                <h2>Account bearbeiten</h2>
-                <p>
-                    Passwort**:
-                    <br>
-                    <input
-                        class="full-size"
-                        name="password_a"
-                        type="password"
-                        maxlength="40">
-                </p>
-                <p>
-                    Passwortwiederholung:
-                    <br>
-                    <input
-                        class="full-size"
-                        name="password_b"
-                        type="password"
-                        maxlength="40">
-                </p>
-                <p><button name="button_update_account"
-                            value="Speichern"
-                            type="submit">Speichern
-                    </button>
-                </p>
-            </div>
+
+% if ( clear_old_verses == "true" ) {
+            <div class="feedback-box">
+                <h2>Achtung!</h2>
+                <p>Du hast ausgewählt das alle vorhandenen Verse durch den Import
+                gelöscht werden. Bitte bestätige den Vorgang der entferne den
+                Haken unten und Klick erneut auf "Importieren".</p>
+                <p><button id="affirmation_clear_old"
+                        name="affirmation_clear_old"
+                        value="pushed"
+                        type="submit">Importieren</button><br><a href="/home">Abbrechen</a></p>
+
+                </div>
+% }
+            <p>Kopiere hier deine zu importierenden Verse in JSON-Format ein:<br>
+                <textarea
+                    class="jason_text"
+                    name="jason_text"
+                    cols="80"
+                    rows="10"><$ jason_text $></textarea>
+            </p>
+            <p>Vorhandenen Verse löschen<input
+                    type="checkbox"
+                    id="clear_old_verses"
+                    value="true"
+                    name="clear_old_verses"
+% if ( clear_old_verses == "true" ) {
+                    checked
+% }
+                    ></p>
+            <p><button id="import_button"
+                    name="import_button"
+                    value="pushed"
+                    type="submit">Importieren</button></p>
         </form>
     </div>
 <%include>./src/views/parts/foot.ecpp.html</%include>

@@ -1,3 +1,21 @@
+<#
+Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#>
+
+
 <%pre>
     #include "../models/WebACL.h"
     #include "../models/UserSession.h"
@@ -31,7 +49,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>PERUSCHIM - Verwaltung</title>
+    <title>PERUSCHIM - Mein Account</title>
     <meta charset = "UTF-8" />
     <& "style" &>
 </head>
@@ -51,7 +69,7 @@
     </div>
 
     <div class="centerbox">
-        <h1>Administrationsportal</h1>
+        <h1>Meine Daten verwalten</h1>
         <div class="columnbox">
             <ul>
                 <li>
@@ -63,6 +81,16 @@
                     <a href="edit_own_verses">
                         <b>Verse berbeiten:</b>
                     </a> Die eigenen Verse auflisten und bearbeiten..
+                </li>
+                <li>
+                    <a href="export_own_verses">
+                        <b>Verse exportieren:</b>
+                    </a> Exportieren der eigenen Verse zum Sichern, Migrieren oder Bearbeiten.
+                </li>
+                <li>
+                    <a href="import_own_verses">
+                        <b>Verse importieren:</b>
+                    </a> Importieren von eigenen Versen zum Migrieren oder zur externen Bearbeitung.
                 </li>
 
             </ul>

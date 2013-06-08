@@ -1,6 +1,6 @@
 
-ECPPC=/usr/bin/ecppc
-TNTNET=/usr/bin/tntnet
+ECPPC=ecppc
+TNTNET=tntnet
 LIBS = -I ./src
 
 
@@ -11,6 +11,7 @@ TMP_SOURCES =  \
 ./src/views/edit_account.cpp \
 ./src/views/edit_editions.cpp \
 ./src/views/editquote.cpp \
+./src/views/import_own_verses.cpp \
 ./src/views/home.cpp \
 ./src/views/keyword_detail.cpp \
 ./src/views/keyword_register.cpp \
@@ -20,6 +21,7 @@ TMP_SOURCES =  \
 ./src/views/newaccount.cpp \
 ./src/views/newquote.cpp \
 ./src/views/newaccount.cpp  \
+./src/views/export_own_verses.cpp \
 ./src/views/portalaccount.cpp \
 ./src/views/portaladmin.cpp \
 ./src/views/portalquote.cpp \
