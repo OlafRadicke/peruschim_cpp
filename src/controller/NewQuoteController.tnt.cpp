@@ -112,10 +112,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         quoteData.setSentenceBegin( sentence_begin );
 
         DEBUG "chapter_end: " << chapter_end << std::endl;
-        quoteData.setChapterEnd( chapter_end );
+        if ( chapter_end == 0 ) {
+            quoteData.setChapterEnd( chapter_begin );
+        } else {
+            quoteData.setChapterEnd( chapter_end );
+        }
 
         DEBUG "sentence_end: " << sentence_end << std::endl;
-        quoteData.setSentenceEnd( sentence_end );
+        if ( sentence_end == 0 ) {
+            quoteData.setSentenceEnd( sentence_begin );
+        } else {
+            quoteData.setSentenceEnd( sentence_end );
+        }
 
         DEBUG "quote_text: " << quote_text << std::endl;
         quoteData.setQuoteText( quote_text );
