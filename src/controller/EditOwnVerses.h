@@ -8,18 +8,15 @@
 #include "models/Quote.h"
 #include "models/QuoteRegister.h"
 
-namespace controller
+
+class EditOwnVerses : public tnt::Component
 {
-  class EditOwnVerses : public tnt::Component
-  {
-    public:
-      unsigned operator() (
-          tnt::HttpRequest& request, 
-          tnt::HttpReply& reply, 
-          tnt::QueryParams& qparam);
-  };
-
-  static tnt::ComponentFactoryImpl<EditOwnVerses> factory("controller/EditOwnVerses");
+public:
+    unsigned operator() (
+        tnt::HttpRequest& request,
+        tnt::HttpReply& reply,
+        tnt::QueryParams& qparam
+    );
+};
 
 
-}

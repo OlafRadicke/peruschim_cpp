@@ -1,4 +1,4 @@
-<!-- 
+<!--
 <%pre>
     #include "models/WebACL.h"
     #include "models/UserSession.h"
@@ -7,23 +7,30 @@
 
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-</%pre> 
+</%pre>
+
 
 
 <%session scope="global">
     UserSession userSession;
 </%session>
 
--->
 
-<%request 
-    scope="global" 
+<%request
+    scope="global"
     include="models/Quote.h"
     include="models/UserSession.h">
 
     UserSession userSession;
     std::vector<Quote>  quoteList;
 </%request>
+-->
+
+<%session scope="global" include="models/Quote.h">
+<!--   model::Accumulator accumulator; -->
+    std::vector<Quote> quoteList;
+</%session>
+
 
 <!DOCTYPE HTML>
 <html>
@@ -61,7 +68,7 @@
                 <ul>
                     <li>Zitat: <i><$ quoteList[i].getQuoteText() $></i></li>
                     <li>Notiz: <i><$ quoteList[i].getNote() $></i></li>
-                    <li>Schlagworte: 
+                    <li>Schlagworte:
                     <ul>
 %     std::vector<std::string> keywordList = quoteList[i].getKeywords();
 %     for ( unsigned int i2=0; i2 <  keywordList.size(); i2++) {
