@@ -4,7 +4,7 @@ TNTNET=tntnet
 TNTMAKEFILE = ./tntnet-make/Makefile
 
 CPPFLAGS = -Wall -Werror -pedantic  -Wno-long-long
-CPPFLAGS += -fPIC -O2 
+CPPFLAGS += -fPIC -O2
 LIBS =  -ltntnet -lcxxtools -ltntdb
 LIBS += -I ./src
 
@@ -33,6 +33,7 @@ OBJECTS = \
 ./src/views/access_denied.o \
 ./src/views/edit_account.o \
 ./src/views/edit_editions.o \
+./src/views/edit_own_verses.o \
 ./src/views/editquote.o \
 ./src/views/export_own_verses.o \
 ./src/views/home.o \

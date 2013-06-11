@@ -1,6 +1,11 @@
 
 
-<%session scope="global" include="models/Quote.h">
+<%session
+    scope="global"
+    include="models/Quote.h"
+    include="models/UserSession.h" >
+
+    UserSession userSession;
     std::vector<Quote> quoteList;
 </%session>
 
