@@ -1,7 +1,6 @@
 
 
 <%session scope="global" include="models/Quote.h">
-<!--   model::Accumulator accumulator; -->
     std::vector<Quote> quoteList;
 </%session>
 
