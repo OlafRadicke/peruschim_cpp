@@ -53,7 +53,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <form method="post" action="edit_editions">
             <div class="simple-box">
-                Neuen Eintrag zu einer Ausgabe erstellen:&#160;
+                Neuen Eintrag zu einer Bibelausgabe erstellen (Titel. z.B. Luther-, Elberfelder-, Einheitsübersetzung):&#160;
                 <input name="new_edition_title"
                     type="text"
                     size="40"
