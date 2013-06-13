@@ -19,7 +19,7 @@
 */
 
 #ifndef EDITIONMANAGER_H
-#define EDITIONMANAGERL_H
+#define EDITIONMANAGER_H
 
 #include <vector>
 #include <string>
