@@ -1,3 +1,7 @@
+
+#ifndef EDITOWNVERSES_H
+#define EDITOWNVERSES_H
+
 #include <tnt/component.h>
 #include <tnt/componentfactory.h>
 #include <tnt/httprequest.h>
@@ -19,4 +23,5 @@ public:
     );
 };
 
+#endif
 
