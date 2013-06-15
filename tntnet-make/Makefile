@@ -10,7 +10,7 @@ TMP_SOURCES =  \
 ./src/views/access_denied.cpp \
 ./src/views/edit_account.cpp \
 ./src/views/edit_editions.cpp \
-./src/views/edit_own_verses.cpp \
+./src/views/EditOwnVersesView.cpp \
 ./src/views/editquote.cpp \
 ./src/views/import_own_verses.cpp \
 ./src/views/home.cpp \

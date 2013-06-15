@@ -1,10 +1,10 @@
-#include "controller/EditOwnVerses.h"
+#include "controller/EditOwnVersesController.h"
 
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 
-static tnt::ComponentFactoryImpl<EditOwnVerses> factory("edit_own_verses");
+static tnt::ComponentFactoryImpl<EditOwnVerses> factory("EditOwnVersesController");
 
 unsigned EditOwnVerses::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
 {

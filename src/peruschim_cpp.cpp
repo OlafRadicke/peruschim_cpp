@@ -15,6 +15,11 @@ int main ( int argc, char* argv[] )
 //         Configurator configurator( app );
         app.listen( ip_addr, port );
         app.mapUrl( "^/login", "login" ).setPathInfo( "login" );
+
+//         app.mapUrl( "^/edit_own_verses$", "EditOwnVersesController" ).setPathInfo( "EditOwnVersesController" );
+//         app.mapUrl( "^/edit_own_verses$", "EditOwnVersesView" ).setPathInfo( "EditOwnVersesView" );
+        app.mapUrl( "^/EditOwnVerses$", "EditOwnVersesController" );
+        app.mapUrl( "^/EditOwnVerses$", "EditOwnVersesView" );
         app.mapUrl( "^/$", "home" ).setPathInfo( "home" );
 
         // ruft bei /keyword-detail/keyword die Komponente keyword-detail
