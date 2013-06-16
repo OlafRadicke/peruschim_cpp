@@ -36,7 +36,9 @@
     <div class="centerbox">
         <h1>Verwaltung der eigenen Verse</h1>
         <div class="columnbox">
-% std::cout << __FILE__ << __LINE__ << "EditOwnVersesView.ecpp" << std::endl;
+% std::cout << "[" << __FILE__ << ":" << __LINE__ << "]" << std::endl;
+% std::cout << "quoteList.size()" << quoteList.size() << std::endl;
+% std::cout << "userSession.getUserName( )" << userSession.getUserName( ) << std::endl;
 % for ( unsigned int i=0; i < quoteList.size(); i++) {
             <div class="simple-box">
                 <h2>

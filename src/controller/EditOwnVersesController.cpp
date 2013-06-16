@@ -8,9 +8,9 @@ static tnt::ComponentFactoryImpl<EditOwnVerses> factory("EditOwnVersesController
 
 unsigned EditOwnVerses::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
 {
-    TNT_SESSION_GLOBAL_VAR( UserSession, userSession, ()); // <%session> UserSession userSession
+    TNT_SESSION_GLOBAL_VAR( UserSession, userSession, ()); 
+    TNT_SESSION_GLOBAL_VAR( std::vector<Quote>, quoteList, ());
 
-    std::vector<Quote> quoteList;
     DEBUG "userSession.getUserName(): " << userSession.getUserName() << std::endl;
     // ACL Check
     if ( userSession.isInRole ( "user" ) == false ) {
