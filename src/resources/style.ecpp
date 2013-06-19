@@ -600,4 +600,8 @@ p#foot {
 
 }
 
+form {
+    display: inline;
+}
+
 </style>

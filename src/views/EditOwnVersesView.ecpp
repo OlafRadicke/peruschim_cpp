@@ -36,9 +36,6 @@
     <div class="centerbox">
         <h1>Verwaltung der eigenen Verse</h1>
         <div class="columnbox">
-% std::cout << "[" << __FILE__ << ":" << __LINE__ << "]" << std::endl;
-% std::cout << "quoteList.size()" << quoteList.size() << std::endl;
-% std::cout << "userSession.getUserName( )" << userSession.getUserName( ) << std::endl;
 % for ( unsigned int i=0; i < quoteList.size(); i++) {
             <div class="simple-box">
                 <h2>
@@ -47,24 +44,13 @@
                     <$ quoteList[i].getSentenceBegin() $>
                 </h2>
                 <ul>
-                    <li>Zitat: <i><$ quoteList[i].getQuoteText() $></i></li>
-                    <li>Notiz: <i><$ quoteList[i].getNote() $></i></li>
-                    <li>Schlagworte:
-                    <ul>
-%     std::vector<std::string> keywordList = quoteList[i].getKeywords();
-%     for ( unsigned int i2=0; i2 <  keywordList.size(); i2++) {
-                        <li><i><$ keywordList[i2] $></i>
-%     }
-                    </ul>
-                    </li>
-                </ul>
                 <form method="post" action="editquote">
                     <button name="quote_id"
                             value="<$ quoteList[i].getID( ) $>"
                             type="submit">Bearbeiten
                     </button>
                 </form>
-                <form method="post" action="edit_own_verses">
+                <form method="post" action="EditOwnVerses">
                     <button name="delete_id"
                             value="<$ quoteList[i].getID( ) $>"
                             type="submit">Löschen
