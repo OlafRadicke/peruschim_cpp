@@ -78,8 +78,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </a> Mein Passwort ändern.
                 </li>
                 <li>
-                    <a href="reset_own_password">
-                        <b>Verse bearbeiten:</b>
+                    <a href="EditOwnVerses">
+                        <b>Verse berbeiten:</b>
                     </a> Die eigenen Verse auflisten und bearbeiten.
                 </li>
                 <li>

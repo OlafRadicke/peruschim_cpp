@@ -25,8 +25,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 </%pre>
 
-<%config>
-</%config>
 
 <%args>
 string keyword = "";

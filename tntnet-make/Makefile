@@ -10,6 +10,7 @@ TMP_SOURCES =  \
 ./src/views/access_denied.cpp \
 ./src/views/edit_account.cpp \
 ./src/views/edit_editions.cpp \
+./src/views/EditOwnVersesView.cpp \
 ./src/views/editquote.cpp \
 ./src/views/import_own_verses.cpp \
 ./src/views/home.cpp \
@@ -26,6 +27,7 @@ TMP_SOURCES =  \
 ./src/views/portaladmin.cpp \
 ./src/views/portalquote.cpp \
 ./src/views/reset_own_password.cpp
+
 
 
 clean:

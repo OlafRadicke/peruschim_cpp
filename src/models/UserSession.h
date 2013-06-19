@@ -89,7 +89,7 @@ public:
     /**
      * Get back the mode of item view.
      */
-    ItemView getItemViewMode () {
+    ItemView getItemViewMode() {
         return this->m_item_view;
     }
 
@@ -97,7 +97,7 @@ public:
      * Get back the user login name.
      * @return login name.
      **/
-    std::string getUserName ( ) { return m_username; };
+    std::string getUserName() { return m_username; };
 
 
     /**

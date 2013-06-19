@@ -63,6 +63,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %     }
                         </ul>
                         </li>
+%     AccountData owner = WebACL::getAccountsWithID( quoteList[i].getOwnerID() );
+                        <li>Eigentümer: <i><$ owner.getLogin_name( ) $>(ID:<$ owner.getID( ) $>)</i></li>
                     </ul>
 %     if ( isLogin == true && quoteList[i].getOwnerID() == userSession.getUserID() ) {
                     <button name="quote_id"

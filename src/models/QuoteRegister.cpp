@@ -440,3 +440,4 @@ void QuoteRegister::jsonImport( const std::string jsonText, std::string owner_id
     }
 
 }
+

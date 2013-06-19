@@ -15,7 +15,7 @@ zum übersetzen von Tntnet:
 - zlib-devel
 - openssl-devel
 
-Peruschim benutzt PostgreSQL als Backend so das u.U. 
+Peruschim benutzt PostgreSQL als Backend so das u.U.
 "./configure --with-sqlite=no --with-mysql=no" beim übersetzen von tntdb
 angegeben werden muss.
 
@@ -71,6 +71,8 @@ STARTEN
 -------
 
 nach dem Komplieren einfach die Datei ./peruschim_cp ausfüren.
+Das initale Passwort von User "admin" ist "admin". Das Passwort
+sollte sofort nach der Installation geändert werden.
 
 
 TROUBLESHOOTING
