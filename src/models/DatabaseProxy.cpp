@@ -24,9 +24,6 @@
 # define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 
-using namespace std;
-
-
 string DatabaseProxy::convertIntToStr( int number )
 {
    stringstream ss;//create a stringstream

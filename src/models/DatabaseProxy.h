@@ -31,8 +31,6 @@
 
 #include "Config.h"
 
-using namespace std;
-
 class DatabaseProxy {
 
 public:

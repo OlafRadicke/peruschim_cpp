@@ -8,13 +8,16 @@
     UserSession userSession;
     std::vector<Quote> quoteList;
 
+
     std::string feedback;
     std::string affirmation_question;
     std::string session_verse_id;
-    std::string delete_verse_id;
-    std::string affirmation_delete_verse_id;
 </%session>
 
+<%args>
+    std::string delete_verse_id;
+    std::string affirmation_delete_verse_id;
+</%args>
 
 <!DOCTYPE HTML>
 <html>
@@ -50,10 +53,12 @@
 % if ( affirmation_question != "" ) {
         <div class="feedback-box">
             <b><$ affirmation_question $> </b><br>
-            <button name="affirmation_delete_verse_id"
-                    value="<$ session_verse_id $>"
-                    type="submit">Löschen bestätigen
-            </button>
+            <form method="post" action="EditOwnVerses">
+                <button name="affirmation_delete_verse_id"
+                        value="<$ session_verse_id $>"
+                        type="submit">Löschen bestätigen
+                </button>
+            </form>
         </div>
 % }
 

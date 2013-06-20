@@ -1,4 +1,7 @@
 #include "controller/EditOwnVersesController.h"
+#include "models/Quote.h"
+#include "models/QuoteRegister.h"
+#include "models/OString.h"
 
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -17,8 +20,8 @@ unsigned EditOwnVerses::operator() (tnt::HttpRequest& request, tnt::HttpReply& r
     TNT_SESSION_GLOBAL_VAR( std::string, affirmation_question, ());
     // id of selectetet verse.
     TNT_SESSION_GLOBAL_VAR( std::string, session_verse_id, ());
-    TNT_SESSION_GLOBAL_VAR( std::string, delete_verse_id, ());
-    TNT_SESSION_GLOBAL_VAR( std::string, affirmation_delete_verse_id, ());
+    std::string delete_verse_id = qparam.arg<std::string>("delete_verse_id");
+    std::string affirmation_delete_verse_id = qparam.arg<std::string>("affirmation_delete_verse_id");
 
     DEBUG "userSession.getUserName(): " << userSession.getUserName() << std::endl;
     // ACL Check
@@ -34,8 +37,12 @@ unsigned EditOwnVerses::operator() (tnt::HttpRequest& request, tnt::HttpReply& r
         affirmation_question = "";
         feedback = "";
         session_verse_id = delete_verse_id;
-        affirmation_question = "Bibelvers mit ID " + session_verse_id + " wirklich löschen?";
-
+        Quote quoteInfo = QuoteRegister::getQuoteWithID( session_verse_id );
+        affirmation_question = "Bibelvers mit "+ quoteInfo.getBookTitle() + " ";
+        affirmation_question += OString::IntToStr( quoteInfo.getChapterBegin() ) ;
+        affirmation_question += ":" + OString::IntToStr( quoteInfo.getSentenceBegin() );
+        affirmation_question += " (ID: " + session_verse_id + ") wirklich löschen?";
+        DEBUG "affirmation_question" << affirmation_question << std::endl;
     }
 
     // if delete affirmation clicked.

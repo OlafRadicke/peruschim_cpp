@@ -24,6 +24,7 @@ OBJECTS = \
 ./src/models/EditionManager.o \
 ./src/models/KeywordData.o \
 ./src/models/KeywordRegister.o \
+./src/models/OString.o \
 ./src/models/Quote.o \
 ./src/models/QuoteRegister.o \
 ./src/models/UserSession.o \

@@ -488,7 +488,7 @@ string Quote::lowercase ( string keywords ) {
     return keywords;
 }
 
-string Quote::strReplace (string rep, string wit, string in) {
+string Quote::strReplace (string rep, string with, string in) {
   int pos;
   while (true) {
     pos = in.find(rep);
@@ -496,7 +496,7 @@ string Quote::strReplace (string rep, string wit, string in) {
       break;
     } else {
       in.erase(pos, rep.length());
-      in.insert(pos, wit);
+      in.insert(pos, with);
     }
   }
   return in;

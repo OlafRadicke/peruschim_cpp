@@ -377,7 +377,7 @@ private:
      * @param rep original string
      * @return string with replacements
      **/
-    string strReplace (string rep, string wit, string in);
+    string strReplace (string rep, string with, string in);
 
     /**
      * Return a copy of the string with all the cased characters converted to
