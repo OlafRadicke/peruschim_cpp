@@ -53,7 +53,7 @@ unsigned EditOwnVerses::operator() (tnt::HttpRequest& request, tnt::HttpReply& r
 //         AccountData accountData;
 //         accountData.setID( affirmation_delete_verse_id );
 //         accountData.deleteAllData();
-        feedback = "Der Bibelverse mit der Id " + affirmation_delete_verse_id + " wurde gelöscht!";
+        feedback = "Der Bibelverse mit der ID " + affirmation_delete_verse_id + " wurde gelöscht!";
         affirmation_delete_verse_id = "";
     }
 
