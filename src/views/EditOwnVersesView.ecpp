@@ -7,6 +7,12 @@
 
     UserSession userSession;
     std::vector<Quote> quoteList;
+
+    std::string feedback;
+    std::string affirmation_question;
+    std::string session_verse_id;
+    std::string delete_verse_id;
+    std::string affirmation_delete_verse_id;
 </%session>
 
 
@@ -35,6 +41,22 @@
 
     <div class="centerbox">
         <h1>Verwaltung der eigenen Verse</h1>
+
+% if ( feedback != "" ) {
+        <div class="feedback-box">
+            <b><$ feedback $> </b>
+        </div>
+% }
+% if ( affirmation_question != "" ) {
+        <div class="feedback-box">
+            <b><$ affirmation_question $> </b><br>
+            <button name="affirmation_delete_verse_id"
+                    value="<$ session_verse_id $>"
+                    type="submit">Löschen bestätigen
+            </button>
+        </div>
+% }
+
         <div class="columnbox">
 % for ( unsigned int i=0; i < quoteList.size(); i++) {
             <div class="simple-box">
@@ -51,7 +73,7 @@
                     </button>
                 </form>
                 <form method="post" action="EditOwnVerses">
-                    <button name="delete_id"
+                    <button name="delete_verse_id"
                             value="<$ quoteList[i].getID( ) $>"
                             type="submit">Löschen
                     </button>
