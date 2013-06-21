@@ -30,7 +30,7 @@ unsigned EditOwnVerses::operator() (tnt::HttpRequest& request, tnt::HttpReply& r
         return reply.redirect ( "/access_denied" );
     }
     DEBUG "Eingelogt" << std::endl;
-    quoteList = QuoteRegister::getAllQuoteOfUser( userSession.getUserID() );
+//     quoteList = QuoteRegister::getAllQuoteOfUser( userSession.getUserID() );
 
     // is button delete pushed?
     if ( delete_verse_id != "" ) {
@@ -50,12 +50,11 @@ unsigned EditOwnVerses::operator() (tnt::HttpRequest& request, tnt::HttpReply& r
         affirmation_question = "";
         feedback = "";
         DEBUG "will löschen: " << affirmation_delete_verse_id << endl;
-//         AccountData accountData;
-//         accountData.setID( affirmation_delete_verse_id );
-//         accountData.deleteAllData();
+        QuoteRegister::deleteQuote( affirmation_delete_verse_id );
         feedback = "Der Bibelverse mit der ID " + affirmation_delete_verse_id + " wurde gelöscht!";
         affirmation_delete_verse_id = "";
     }
+    quoteList = QuoteRegister::getAllQuoteOfUser( userSession.getUserID() );
 
     DEBUG "quoteList.size(): " << quoteList.size() << std::endl;
     return DECLINED;

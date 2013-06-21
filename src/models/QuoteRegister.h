@@ -41,9 +41,15 @@ public:
     /**
      * Delete all of user own quote.
      * @arg userID Id of a user.
-     * @return A vector of type Quote.
      */
     static void deleteAllQuoteOfUser( const std::string userID );
+
+
+    /**
+     * Delete a quote by id.
+     * @arg quoteID Id of a user.
+     */
+    static void deleteQuote( const std::string quoteID );
 
     /**
      * Get all public makiert quotes of a keyword.
@@ -64,8 +70,8 @@ public:
      * @arg userID Id of a user.
      * @return A vector of type Quote.
      */
-    static std::vector<Quote> getAllQuoteOfUser( const std::string userID );    
-    
+    static std::vector<Quote> getAllQuoteOfUser( const std::string userID );
+
     /**
      * Get all quotes of a keyword. If user login he get here own quote to.
      * @arg keyword The name of a keyword.

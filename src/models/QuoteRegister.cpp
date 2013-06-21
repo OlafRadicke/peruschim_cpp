@@ -32,18 +32,33 @@
 
 void QuoteRegister::deleteAllQuoteOfUser( const std::string userID ){
     DEBUG "deleteAllQuoteOfUser: " << userID << std::endl;
-    std::string sqlcommand = "";
     Config config;
 
     string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn = tntdb::connect( conn_para );
     tntdb::Transaction trans(conn);
     conn.prepare( "DELETE FROM  quote_keyword \n\
-        WHERE quote_id IN ( SELECT id FROM quote WHERE owner_id= :v1 );")
+        WHERE quote_id IN ( SELECT id FROM quote WHERE owner_id= :v1 )")
     .set( "v1",  userID ).execute();
 
     conn.prepare( "DELETE FROM  quote \n\
         WHERE owner_id= :v1 ;").set( "v1",  userID ).execute();
+    trans.commit();
+}
+
+void QuoteRegister::deleteQuote( const std::string quoteID ) {
+    DEBUG "deleteQuote: " << quoteID << std::endl;
+    Config config;
+
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn = tntdb::connect( conn_para );
+    tntdb::Transaction trans(conn);
+    conn.prepare( "DELETE FROM  quote_keyword \n\
+        WHERE quote_id IN ( SELECT id FROM quote WHERE owner_id= :quoteid) ")
+    .set( "quoteid", quoteID ).execute();
+
+    conn.prepare( "DELETE FROM  quote \n\
+        WHERE id = :quoteid ;").set( "quoteid", quoteID ).execute();
     trans.commit();
 }
 
