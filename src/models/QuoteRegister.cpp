@@ -54,7 +54,7 @@ void QuoteRegister::deleteQuote( const std::string quoteID ) {
     tntdb::Connection conn = tntdb::connect( conn_para );
     tntdb::Transaction trans(conn);
     conn.prepare( "DELETE FROM  quote_keyword \n\
-        WHERE quote_id IN ( SELECT id FROM quote WHERE owner_id= :quoteid) ")
+        WHERE quote_id = :quoteid ")
     .set( "quoteid", quoteID ).execute();
 
     conn.prepare( "DELETE FROM  quote \n\
