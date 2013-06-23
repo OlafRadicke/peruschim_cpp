@@ -23,6 +23,7 @@
 #include <tntdb/transaction.h>
 
 #include "Config.h"
+#include "OString.h"
 #include "Quote.h"
 #include "QuoteRegister.h"
 #include "EditionManager.h"
@@ -142,7 +143,7 @@ Quote QuoteRegister::getQuoteWithID( const unsigned long id ) {
         DEBUG std::endl;
         return quoteList[0];
     } else {
-        std::string errorinfo = "quote " + id + " is not exist!";
+        std::string errorinfo = "quote " + OString::unsignedLongToStr( id ) + " is not exist!";
         throw errorinfo;
     }
 
@@ -312,7 +313,8 @@ struct QuoteExportContainer
 * @arg si serialization info
 * @arg QuoteExportContainer
 */
-void operator<<= ( cxxtools::SerializationInfo& si, const QuoteExportContainer& quoteContainer )
+void operator<<= ( cxxtools::SerializationInfo& si, 
+                   const QuoteExportContainer& quoteContainer )
 {
     si.addMember("user-quotes") <<= quoteContainer.allUserQuotes;
 }
@@ -322,13 +324,14 @@ void operator<<= ( cxxtools::SerializationInfo& si, const QuoteExportContainer& 
 * @arg si serialization info
 * @arg QuoteExportContainer
 */
-void operator>>= ( const cxxtools::SerializationInfo& si, QuoteExportContainer& quoteContainer)
+void operator>>= ( const cxxtools::SerializationInfo& si, 
+                   QuoteExportContainer& quoteContainer)
 {
     DEBUG "deserialize the QuoteExportContainer... " << std::endl;
     si.getMember("user-quotes") >>= quoteContainer.allUserQuotes;
 }
 
-std::string QuoteRegister::getJsonExport( const std::string userID ) {
+std::string QuoteRegister::getJsonExport( const unsigned long userID ) {
     std::string json_text;
     DEBUG "userID: " << userID << std::endl;
 
@@ -425,7 +428,8 @@ std::vector<Quote> QuoteRegister::getAllQuoteOfKeyword(
     return getQuotes ( st );
 }
 
-void QuoteRegister::jsonImport( const std::string jsonText, unsigned long owner_id ) {
+void QuoteRegister::jsonImport( const std::string jsonText, 
+                                unsigned long owner_id ) {
     try
     {
         // define a empty config object
@@ -445,7 +449,8 @@ void QuoteRegister::jsonImport( const std::string jsonText, unsigned long owner_
             quoteContainer.allUserQuotes[n].setOwnerID( owner_id );
             Edition edition = quoteContainer.allUserQuotes[n].getTmpEditionData( );
             edition.setOwnerID( owner_id );
-            quoteContainer.allUserQuotes[n].setEditionID( edition.saveAsNewIfNotExist() );
+            quoteContainer.allUserQuotes[n]
+                .setEditionID( edition.saveAsNewIfNotExist() );
             quoteContainer.allUserQuotes[n].saveAsNew();
         }
     }

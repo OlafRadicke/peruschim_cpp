@@ -79,7 +79,7 @@ public:
      * @return A vector of type Quote with quote of a public keyword and own.
      */
     static std::vector<Quote> getAllQuoteOfKeyword(
-        const unsigned long keywordID,
+        const std::string keyword,
         const unsigned long userID );
 
     /**

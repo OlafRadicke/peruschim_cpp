@@ -11,12 +11,12 @@
 
     std::string feedback;
     std::string affirmation_question;
-    std::string session_verse_id;
+    unsigned long session_verse_id;
 </%session>
 
 <%args>
-    std::string delete_verse_id;
-    std::string affirmation_delete_verse_id;
+    unsigned long delete_verse_id;
+    unsigned long affirmation_delete_verse_id;
 </%args>
 
 <!DOCTYPE HTML>

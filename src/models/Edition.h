@@ -99,7 +99,7 @@ public:
      * Save date as new data set in database if data does not exist in data base.
      * @return Return ID of Edition, new or old.
      **/
-    std::string saveAsNewIfNotExist();
+    unsigned long saveAsNewIfNotExist();
 
     /**
      * Save date update in in database..

@@ -42,7 +42,7 @@ class UserSession {
 public:
 
 
-    UserSession () : m_username( "" ), m_userID( "" ) {};
+    UserSession () : m_username( "" ), m_userID( 0 ) {};
 
      /**
      * Add a roll.
@@ -104,7 +104,7 @@ public:
      * Get back the user ID.
      * @return ID of user.
      **/
-    std::string getUserID();
+    unsigned long  getUserID();
 
     /**
      * Set the mode of item view.
@@ -129,7 +129,7 @@ private:
     /**
      * User ID
      **/
-    std::string m_userID;
+    unsigned long m_userID;
 
     /**
      * the mode of item view.

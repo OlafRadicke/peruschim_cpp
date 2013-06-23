@@ -18,6 +18,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+# include <tntdb/error.h>
 # include "Edition.h"
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -25,6 +26,7 @@
 
 void Edition::saveAsNew(){
     DEBUG std::endl;
+    /*
     std::string sqlcommand = "";
     Config config;
     vector<string>   list_1d;
@@ -40,7 +42,7 @@ void Edition::saveAsNew(){
         it != result.end(); ++it)
     {
         tntdb::Row row = *it;
-        this->m_id = row[0].getString();
+        this->m_ID = row[0].getInt();
     }
 
     sqlcommand =   "INSERT INTO edition  ( \n\
@@ -52,8 +54,8 @@ void Edition::saveAsNew(){
                         releasedate,  \n\
                         releaseplace  \n\
                     ) VALUES ( \n \
-                        " + DatabaseProxy::replace( this->m_id ) + ", \n\
-                        " + DatabaseProxy::replace( this->m_owner_id ) + ", \n\
+                        " + DatabaseProxy::replace( this->m_ID ) + ", \n\
+                        " + DatabaseProxy::replace( this->m_ownerID ) + ", \n\
                         '" + DatabaseProxy::replace( this->m_name ) + "',  \n\
                         '',  \n\
                         '',  \n\
@@ -65,12 +67,47 @@ void Edition::saveAsNew(){
         DEBUG "sqlcommand: " << sqlcommand << std::endl;
         conn.execute( sqlcommand );
         DEBUG std::endl;
-    } catch( char * str ) {
-        ERROR  "Exception raised: " << str << '\n';
+    } catch( const tntdb::Error& e ) {
+        ERROR  "Exception raised: " << e.what() << '\n';
     }
+    */
+//////////////////////////////////////////////////////////////////////////
+
+    Config config;
+
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn;
+    try {
+        conn = tntdb::connect( conn_para );
+        tntdb::Statement st = conn.prepare( 
+            "INSERT INTO edition  ( \
+                    owner_id,       \
+                    name,           \
+                    publishername,  \
+                    releasenumber,  \
+                    releasedate,    \
+                    releaseplace    \
+                ) VALUES (          \
+                    :owner_id,      \
+                    :name,          \
+                    '',             \
+                    '',             \
+                    '',             \
+                    ''              \
+                ) "
+                                        );
+        
+        st.set("owner_id", this->m_ownerID )
+        .set("name", this->m_name ).execute();
+        
+        this->m_ID = conn.lastInsertId("edition_id_seq");
+    } catch( const tntdb::Error& e ) {
+        ERROR  "Exception raised: " << e.what() << '\n';
+    }        
+    
 }
 
-std::string  Edition::saveAsNewIfNotExist(){
+unsigned long  Edition::saveAsNewIfNotExist(){
     DEBUG std::endl;
     bool editionFound = false;
     std::string sqlcommand = "";
@@ -86,14 +123,14 @@ std::string  Edition::saveAsNewIfNotExist(){
     tntdb::Statement st = conn.prepare( "SELECT id FROM edition \n\
                     WHERE owner_id = :v1  \n\
                     AND name = :v2; " );
-    st.set("v1", this->m_owner_id )
+    st.set("v1", this->m_ownerID )
     .set("v2", this->m_name ).execute();
 
     for ( tntdb::Statement::const_iterator it = st.begin();
         it != st.end(); ++it ) {
         tntdb::Row row = *it;
         DEBUG "id: " <<  row[0].getString() << std::endl;
-        this->m_id = row[0].getString();
+        this->m_ID = row[0].getInt();
         editionFound = true;
     }
 
@@ -101,11 +138,12 @@ std::string  Edition::saveAsNewIfNotExist(){
         // create new data set.
         saveAsNew();
     }
-    return this->m_id;
+    return this->m_ID;
 }
 
 void Edition::saveUpdate(){
     DEBUG std::endl;
+    /*
     std::string sqlcommand = "";
     Config config;
     vector<string>   list_1d;
@@ -117,13 +155,13 @@ void Edition::saveUpdate(){
     DEBUG std::endl;
 
     sqlcommand =   "UPDATE edition SET \n\
-                        owner_id = " + DatabaseProxy::replace( this->m_owner_id ) + ", \n\
+                        owner_id = " + DatabaseProxy::replace( this->m_ownerID ) + ", \n\
                         name = '" + DatabaseProxy::replace( this->m_name ) + "', \
                         publishername = '" + DatabaseProxy::replace( this->m_publisherName ) + "', \
                         releasenumber = '" + DatabaseProxy::replace( this->m_releaseNumber ) + "', \
                         releasedate = '" + DatabaseProxy::replace( this->m_releaseDate ) + "', \
                         releaseplace = '" + DatabaseProxy::replace( this->m_releasePlace ) + "' \
-                    WHERE id = " + this->m_id + "; \n";
+                    WHERE id = " + this->m_ID + "; \n";
 
 
     try {
@@ -133,4 +171,36 @@ void Edition::saveUpdate(){
     } catch( char * str ) {
         ERROR  "Exception raised: " << str << '\n';
     }
+    */
+////////////////////////////////////////////////////////////////////////////////
+    Config config;
+
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn;
+    try {
+        conn = tntdb::connect( conn_para );
+        tntdb::Statement st = conn.prepare( 
+            "UPDATE edition SET \n\
+                    owner_id = :ownerID, \n\
+                    name = :name, \
+                    publishername = :publisherName, \
+                    releasenumber = :releaseNumber, \
+                    releasedate = :releaseDate, \
+                    releaseplace = :releasePlace \
+                WHERE id = :id"
+        );
+        
+        st.set("ownerID", this->m_ownerID )
+        .set("name", this->m_name )
+        .set("publisherName", this->m_publisherName )
+        .set("releaseNumber", this->m_releaseNumber )
+        .set("releaseDate", this->m_releaseDate )
+        .set("releasePlace", this->m_releasePlace )
+        .set("id", this->m_ID ).execute();
+        
+    } catch( const tntdb::Error& e ) {
+        ERROR  "Exception raised: " << e.what() << '\n';
+    }     
+
+    
 }

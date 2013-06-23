@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </%config>
 
 <%args>
-    std::string edit_edition_id;
+    unsigned long edit_edition_id;
     std::string modified_title;
     std::string modified_publishername;
     std::string modified_releasenumber;
@@ -38,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     std::string modified_releaseplace;
 
     std::string save_modified;
-    std::string delete_edition_id;
+    unsigned long  delete_edition_id;
     std::string new_edition_title;
     std::string new_edition;
 </%args>

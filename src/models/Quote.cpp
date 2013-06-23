@@ -362,76 +362,75 @@ void Quote::saveAsNew() {
     if ( m_isPrivateData ) {
         isPrivateData = "true";
     }
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn = tntdb::connect( conn_para );
-    DEBUG std::endl;
-    tntdb::Transaction trans(conn);
-    conn.prepare(
-        "INSERT INTO quote \
-        ( \
-            series, \
-            title, \
-            chapter_begin, \
-            sentence_begin, \
-            chapter_end, \
-            sentence_end, \
-            quote_text, \
-            note, \
-            owner_id, \
-            edition_id, \
-            privatedata \
-        ) VALUES ( \
-            :bookSeries, \
-            :bookTitle, \
-            :bookChapterBegin, \
-            :bookSentenceBegin, \
-            :bookChapterEnd, \
-            :bookSentenceEnd, \
-            :quoteText, \
-            :note, \
-            :ownerID, \
-            :editionID, \
-            :isPrivateData \
-        )"
-    )
-    .set( "bookSeries", this->m_bookSeries )
-    .set( "bookTitle", this->m_bookTitle )
-    .set( "bookChapterBegin", this->m_bookChapterBegin )
-    .set( "bookSentenceBegin", this->m_bookSentenceBegin )
-    .set( "bookChapterEnd", this->m_bookChapterEnd )
-    .set( "bookSentenceEnd", this->m_bookSentenceEnd )
-    .set( "quoteText", this->m_quoteText )
-    .set( "note", this->m_note )
-    .set( "ownerID", this->m_ownerID )
-    .set( "editionID", this->m_editionID )
-    .set( "isPrivateData", isPrivateData ).execute();
-
-    DEBUG std::endl;
-    this->m_ID = conn.lastInsertId("quote_id_seq");
-    DEBUG std::endl;
-
-    for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) {
-        conn.prepare(
-            "INSERT INTO quote_keyword \
-                    ( \
-                        quote_id, \
-                        title \
-                    ) VALUES ( \
-                        :quote_id, \
-                        :title \
-                    )"
-        ).set( "quote_id", this->m_ID )
-        .set( "title", this->m_quoteKeywords[i] ).execute();
-    }
     try {
+        string conn_para = config.get( "DB-DRIVER" );
+        tntdb::Connection conn = tntdb::connect( conn_para );
+        DEBUG std::endl;
+        tntdb::Transaction trans(conn);
+        conn.prepare(
+            "INSERT INTO quote \
+            ( \
+                series, \
+                title, \
+                chapter_begin, \
+                sentence_begin, \
+                chapter_end, \
+                sentence_end, \
+                quote_text, \
+                note, \
+                owner_id, \
+                edition_id, \
+                privatedata \
+            ) VALUES ( \
+                :bookSeries, \
+                :bookTitle, \
+                :bookChapterBegin, \
+                :bookSentenceBegin, \
+                :bookChapterEnd, \
+                :bookSentenceEnd, \
+                :quoteText, \
+                :note, \
+                :ownerID, \
+                :editionID, \
+                :isPrivateData \
+            )"
+        )
+        .set( "bookSeries", this->m_bookSeries )
+        .set( "bookTitle", this->m_bookTitle )
+        .set( "bookChapterBegin", this->m_bookChapterBegin )
+        .set( "bookSentenceBegin", this->m_bookSentenceBegin )
+        .set( "bookChapterEnd", this->m_bookChapterEnd )
+        .set( "bookSentenceEnd", this->m_bookSentenceEnd )
+        .set( "quoteText", this->m_quoteText )
+        .set( "note", this->m_note )
+        .set( "ownerID", this->m_ownerID )
+        .set( "editionID", this->m_editionID )
+        .set( "isPrivateData", isPrivateData ).execute();
+
+        DEBUG std::endl;
+        this->m_ID = conn.lastInsertId("quote_id_seq");
+        DEBUG std::endl;
+
+        for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) {
+            conn.prepare(
+                "INSERT INTO quote_keyword \
+                        ( \
+                            quote_id, \
+                            title \
+                        ) VALUES ( \
+                            :quote_id, \
+                            :title \
+                        )"
+            ).set( "quote_id", this->m_ID )
+            .set( "title", this->m_quoteKeywords[i] ).execute();
+        }
+
         DEBUG std::endl;
         trans.commit();
-    } catch ( tntdb::SqlError sqlerr) {
-        DEBUG sqlerr.getSql () << std::endl;
-    } catch ( tntdb::Error sqlerr) {
-        DEBUG "Irgend ein Fehler...." << std::endl;
-    }
 
+    } catch( const tntdb::Error& e ) {
+        ERROR  "Exception raised: " << e.what() << '\n';
+    } 
 }
 
 void Quote::saveUpdate(){
@@ -499,51 +498,55 @@ void Quote::saveUpdate(){
     if ( m_isPrivateData ) {
         isPrivateData = "true";
     }
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn = tntdb::connect( conn_para );
-    tntdb::Transaction trans(conn);
-    conn.prepare(
-        "UPDATE quote SET \
-            series = :bookSeries, \
-            title = :bookTitle, \
-            chapter_begin = :bookChapterBegin, \
-            sentence_begin = :bookSentenceBegin, \
-            chapter_end = :bookChapterEnd, \
-            sentence_end = :bookSentenceEnd, \
-            quote_text = :quoteText, \
-            note = :note, \
-            owner_id = :ownerID, \
-            edition_id = :editionID, \
-            privatedata = :isPrivateData \
-        WHERE id = :id"
-    )
-    .set( "bookSeries", this->m_bookSeries )
-    .set( "bookTitle", this->m_bookTitle )
-    .set( "bookChapterBegin", this->m_bookChapterBegin )
-    .set( "bookSentenceBegin", this->m_bookSentenceBegin )
-    .set( "bookChapterEnd", this->m_bookChapterEnd )
-    .set( "bookSentenceEnd", this->m_bookSentenceEnd )
-    .set( "quoteText", this->m_quoteText )
-    .set( "note", this->m_note )
-    .set( "ownerID", this->m_ownerID )
-    .set( "editionID", this->m_editionID )
-    .set( "isPrivateData", isPrivateData )
-    .set( "id", this->m_ID ).execute();
-
-    for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) {
+    try {
+        string conn_para = config.get( "DB-DRIVER" );
+        tntdb::Connection conn = tntdb::connect( conn_para );
+        tntdb::Transaction trans(conn);
         conn.prepare(
-            "INSERT INTO quote_keyword \
-                    ( \
-                        quote_id, \
-                        title \
-                    ) VALUES ( \
-                        :quote_id, \
-                        :title \
-                    )"
-        ).set( "quote_id", this->m_ID )
-        .set( "title", this->m_quoteKeywords[i] ).execute();
-    }
-    trans.commit();
+            "UPDATE quote SET \
+                series = :bookSeries, \
+                title = :bookTitle, \
+                chapter_begin = :bookChapterBegin, \
+                sentence_begin = :bookSentenceBegin, \
+                chapter_end = :bookChapterEnd, \
+                sentence_end = :bookSentenceEnd, \
+                quote_text = :quoteText, \
+                note = :note, \
+                owner_id = :ownerID, \
+                edition_id = :editionID, \
+                privatedata = :isPrivateData \
+            WHERE id = :id"
+        )
+        .set( "bookSeries", this->m_bookSeries )
+        .set( "bookTitle", this->m_bookTitle )
+        .set( "bookChapterBegin", this->m_bookChapterBegin )
+        .set( "bookSentenceBegin", this->m_bookSentenceBegin )
+        .set( "bookChapterEnd", this->m_bookChapterEnd )
+        .set( "bookSentenceEnd", this->m_bookSentenceEnd )
+        .set( "quoteText", this->m_quoteText )
+        .set( "note", this->m_note )
+        .set( "ownerID", this->m_ownerID )
+        .set( "editionID", this->m_editionID )
+        .set( "isPrivateData", isPrivateData )
+        .set( "id", this->m_ID ).execute();
+
+        for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) {
+            conn.prepare(
+                "INSERT INTO quote_keyword \
+                        ( \
+                            quote_id, \
+                            title \
+                        ) VALUES ( \
+                            :quote_id, \
+                            :title \
+                        )"
+            ).set( "quote_id", this->m_ID )
+            .set( "title", this->m_quoteKeywords[i] ).execute();
+        }
+        trans.commit();
+    } catch( const tntdb::Error& e ) {
+        ERROR  "Exception raised: " << e.what() << '\n';
+    } 
 }
 
 void Quote::setKeywords( std::string keywords ) {

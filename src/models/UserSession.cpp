@@ -32,22 +32,34 @@ void UserSession::addRoll ( std::vector<std::string> rolls ) {
     }
 }
 
-std::string UserSession::getUserID ( ) {
+unsigned long UserSession::getUserID ( ) {
     DEBUG std::endl;
-    std::string user_id = "";
-    if ( this->m_userID != "" ) {
+    Config config;
+    if ( this->m_userID > 0 ) {
         DEBUG std::endl;
         return this->m_userID;
     } else {
-        DEBUG std::endl;
-        std::string sqlcommand =    "SELECT \n\
-                            id \n\
-                        FROM account \n\
-                        WHERE login_name='" + this->m_username + "';";
-        DatabaseProxy dbProxy;
-        user_id = dbProxy.sqlGetSingle ( sqlcommand );
-        this->m_userID = user_id;
-        return user_id;
+        string conn_para = config.get( "DB-DRIVER" );
+        tntdb::Connection conn;
+
+        conn = tntdb::connect(conn_para);
+        tntdb::Statement st = conn.prepare( 
+            "SELECT \
+                id \
+            FROM account \
+            WHERE login_name = :username" 
+        );
+        st.set("username", this->m_username ).execute(); 
+        
+        for (tntdb::Statement::const_iterator it = st.begin();
+            it != st.end(); ++it
+        ) {
+            tntdb::Row row = *it;
+
+            row[0].getInt() ;
+            this->m_userID = row[0].getInt();
+            return this->m_userID;
+        }
     }
 }
 
