@@ -41,7 +41,7 @@ public:
      * Convert int to string.
      * @param sqlcommand a sql command.
      **/
-    static std::string convertIntToStr( int number );
+//    static std::string convertIntToStr( int number );
 
      /**
      * Do a SQL command without result.
