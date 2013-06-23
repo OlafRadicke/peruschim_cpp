@@ -18,6 +18,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <tntdb/statement.h>
 #include "UserSession.h"
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -55,19 +56,17 @@ unsigned long UserSession::getUserID ( ) {
             it != st.end(); ++it
         ) {
             tntdb::Row row = *it;
-
-            row[0].getInt() ;
             this->m_userID = row[0].getInt();
-            return this->m_userID;
         }
     }
+    return this->m_userID;
 }
 
 void UserSession::lockout( ) {
     DEBUG "logout..." << endl;
     this->m_userrolls.clear();
     this->m_username = "";
-    this->m_userID = "";
+    this->m_userID = 0;
 }
 
 bool UserSession::isInRole ( std::string siteroll ) {

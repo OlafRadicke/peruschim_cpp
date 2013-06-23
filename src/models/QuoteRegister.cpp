@@ -143,7 +143,7 @@ Quote QuoteRegister::getQuoteWithID( const unsigned long id ) {
         DEBUG std::endl;
         return quoteList[0];
     } else {
-        std::string errorinfo = "quote " + OString::unsignedLongToStr( id ) + " is not exist!";
+        std::string errorinfo = "quote " + cxxtools::convert<std::string>( id ) + " is not exist!";
         throw errorinfo;
     }
 

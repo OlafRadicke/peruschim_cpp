@@ -26,52 +26,6 @@
 
 void Edition::saveAsNew(){
     DEBUG std::endl;
-    /*
-    std::string sqlcommand = "";
-    Config config;
-    vector<string>   list_1d;
-    std:: string isPrivateData = "false";
-    tntdb::Result result;
-    string conn_para = config.get( "DB-DRIVER" );
-
-    tntdb::Connection conn = tntdb::connect( conn_para );
-    DEBUG std::endl;
-
-    result = conn.select( "SELECT nextval('quote_id_seq'::regclass);" );
-    for (tntdb::Result::const_iterator it = result.begin();
-        it != result.end(); ++it)
-    {
-        tntdb::Row row = *it;
-        this->m_ID = row[0].getInt();
-    }
-
-    sqlcommand =   "INSERT INTO edition  ( \n\
-                        id, \n\
-                        owner_id,  \n\
-                        name,  \n\
-                        publishername,  \n\
-                        releasenumber,  \n\
-                        releasedate,  \n\
-                        releaseplace  \n\
-                    ) VALUES ( \n \
-                        " + DatabaseProxy::replace( this->m_ID ) + ", \n\
-                        " + DatabaseProxy::replace( this->m_ownerID ) + ", \n\
-                        '" + DatabaseProxy::replace( this->m_name ) + "',  \n\
-                        '',  \n\
-                        '',  \n\
-                        '',  \n\
-                        ''  \n\
-                    ) ";
-
-    try {
-        DEBUG "sqlcommand: " << sqlcommand << std::endl;
-        conn.execute( sqlcommand );
-        DEBUG std::endl;
-    } catch( const tntdb::Error& e ) {
-        ERROR  "Exception raised: " << e.what() << '\n';
-    }
-    */
-//////////////////////////////////////////////////////////////////////////
 
     Config config;
 
@@ -143,36 +97,7 @@ unsigned long  Edition::saveAsNewIfNotExist(){
 
 void Edition::saveUpdate(){
     DEBUG std::endl;
-    /*
-    std::string sqlcommand = "";
-    Config config;
-    vector<string>   list_1d;
-    std:: string isPrivateData = "false";
 
-    string conn_para = config.get( "DB-DRIVER" );
-
-    tntdb::Connection conn = tntdb::connect( conn_para );
-    DEBUG std::endl;
-
-    sqlcommand =   "UPDATE edition SET \n\
-                        owner_id = " + DatabaseProxy::replace( this->m_ownerID ) + ", \n\
-                        name = '" + DatabaseProxy::replace( this->m_name ) + "', \
-                        publishername = '" + DatabaseProxy::replace( this->m_publisherName ) + "', \
-                        releasenumber = '" + DatabaseProxy::replace( this->m_releaseNumber ) + "', \
-                        releasedate = '" + DatabaseProxy::replace( this->m_releaseDate ) + "', \
-                        releaseplace = '" + DatabaseProxy::replace( this->m_releasePlace ) + "' \
-                    WHERE id = " + this->m_ID + "; \n";
-
-
-    try {
-        DEBUG "sqlcommand: " << sqlcommand << std::endl;
-        conn.execute( sqlcommand );
-        DEBUG std::endl;
-    } catch( char * str ) {
-        ERROR  "Exception raised: " << str << '\n';
-    }
-    */
-////////////////////////////////////////////////////////////////////////////////
     Config config;
 
     string conn_para = config.get( "DB-DRIVER" );

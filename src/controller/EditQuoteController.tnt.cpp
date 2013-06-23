@@ -33,8 +33,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <%args>
     // define the query parameters
-    std::string quote_id;
-    std::string edition_id = "";
+    unsigned long  quote_id = 0;
+    unsigned long  edition_id = 0;
     std::string book_title = "";
     int         chapter_begin = 0;
     int         sentence_begin = 0;
@@ -55,7 +55,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 <%session>
-    std::string session_quote_id;
+    unsigned long session_quote_id;
     std::string bibleserverComURL;
 </%session>
 
@@ -76,7 +76,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     editionList =  EditionManager::getAllEditions( userSession.getUserID() );
 
-    if ( quote_id != "" ) {
+    if ( quote_id > 0 ) {
         session_quote_id = quote_id;
         quoteData = QuoteRegister::getQuoteWithID( quote_id );
     }

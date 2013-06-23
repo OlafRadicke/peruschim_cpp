@@ -81,7 +81,7 @@ public:
      * @arg id id from a account.
      * @return account data.
      **/
-    static AccountData getAccountsWithID ( const std::string id );
+    static AccountData getAccountsWithID ( const unsigned long id );
 
     /**
      * Get back all account data.

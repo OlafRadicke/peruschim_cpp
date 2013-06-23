@@ -14,10 +14,6 @@
     unsigned long session_verse_id;
 </%session>
 
-<%args>
-    unsigned long delete_verse_id;
-    unsigned long affirmation_delete_verse_id;
-</%args>
 
 <!DOCTYPE HTML>
 <html>

@@ -45,7 +45,7 @@ public:
      * Constructor init strings.
      **/
     AccountData () :
-        m_id ( "" ),
+        m_id ( 0 ),
         m_login_name ( "" ),
         m_real_name ( "" ),
         m_password_hash ( "" ),
@@ -60,8 +60,8 @@ public:
      */
     void deleteAllData();
 
-    void setID( std::string id ) { m_id = id; };
-    std::string getID ( void ) { return m_id; };
+    void setID( unsigned long id ) { m_id = id; };
+    unsigned long getID ( void ) { return m_id; };
 
     void setLogin_name( std::string login_name ) { m_login_name = login_name; };
     std::string getLogin_name( void ) { return m_login_name; };
@@ -95,7 +95,7 @@ public:
 
 private:
 
-    std::string m_id;
+    unsigned long m_id;
     std::string m_login_name;
     std::string m_real_name;
     std::string m_password_hash;

@@ -48,7 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </%session>
 
 <%session>
-    std::string session_edition_id;
+    unsigned long session_edition_id;
 </%session>
 
 <%cpp>
@@ -63,7 +63,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
 
     // edit action
-    if ( edit_edition_id != "" ) {
+    if ( edit_edition_id > 0 ) {
         edition_title = EditionManager::getEditionByID( edit_edition_id ).getName() ;
         editionData = EditionManager::getEditionByID( edit_edition_id ) ;
         session_edition_id = edit_edition_id;
@@ -86,7 +86,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     }
 
     // deleting action
-    if ( delete_edition_id != "" ) {
+    if ( delete_edition_id > 0 ) {
         DEBUG "delete_edition_id: " << delete_edition_id << endl;
         int useCount = EditionManager::isEditionInUse( delete_edition_id );
         if ( useCount > 0 ) {

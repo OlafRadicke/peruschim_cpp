@@ -177,7 +177,7 @@ void WebACL::createAccount (
 
 /* G ----------------------------------------------------------------------- */
 
-AccountData WebACL::getAccountsWithID ( const std::string id ){
+AccountData WebACL::getAccountsWithID ( const unsigned long id ){
     Config config;
     string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn = tntdb::connect(conn_para);
@@ -264,6 +264,10 @@ std::vector<AccountData> WebACL::getAllAccounts ( void ){
         accounts.push_back ( adata );
     }
     return accounts;
+    
+/////////////////////////////////////////////////////
+    
+    
 }
 
 string WebACL::genRandomSalt ( const int len) {
