@@ -56,7 +56,6 @@ unsigned EditOwnVerses::operator() (tnt::HttpRequest& request, tnt::HttpReply& r
     }
     quoteList = QuoteRegister::getAllQuoteOfUser( userSession.getUserID() );
 
-    DEBUG "quoteList.size(): " << quoteList.size() << std::endl;
     return DECLINED;
 }
 
