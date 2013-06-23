@@ -36,21 +36,17 @@ public:
      * Constructor init strings.
      **/
     Edition():
-        m_id(""),
-        m_name(""),
-        m_publisherName(""),
-        m_releaseNumber(""),
-        m_releaseDate(""),
-        m_releasePlace("")
+        m_ID(0),
+        m_ownerID(0)
     {}
 
 
     /**
      * Get ID.
      **/
-    const std::string getID() const
+    const unsigned long getID() const
     {
-        return this->m_id;
+        return this->m_ID;
     }
 
     /**
@@ -115,9 +111,9 @@ public:
      * Set name.
      * @param name new name.
      **/
-    void setID( std::string id )
+    void setID( unsigned long id )
     {
-        this->m_id = id;
+        this->m_ID = id;
     }
 
     /**
@@ -133,8 +129,8 @@ public:
      * Set id of owner.
      * @param user_id id of owner.
      **/
-    void setOwnerID( const std::string user_id ){
-        this->m_owner_id = user_id;
+    void setOwnerID( const unsigned long user_id ){
+        this->m_ownerID = user_id;
     }
 
     /**
@@ -178,7 +174,7 @@ private:
      *  edition id
      * Example: "35333"
      **/
-    std::string m_id;
+    unsigned long m_ID;
 
     /**
      *  edition name
@@ -189,7 +185,7 @@ private:
     /**
      *  ID of owner.
      **/
-    std::string m_owner_id;
+    unsigned long m_ownerID;
 
     /**
      *  edition publisher

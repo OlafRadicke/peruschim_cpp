@@ -34,6 +34,12 @@ std::string OString::IntToStr( const int number )
    return ss.str();//return a string with the contents of the stream
 }
 
+std::string unsignedLongToStr( unsigned long number )
+{
+   std::stringstream ss;//create a stringstream
+   ss << number;//add number to the stream
+   return ss.str();//return a string with the contents of the stream
+}
 
 std::string OString::LowerCase ( std::string keywords ) {
     keywords = StrReplace ( "A", "a", keywords);
@@ -69,8 +75,8 @@ std::string OString::LowerCase ( std::string keywords ) {
 }
 
 std::string OString::StrReplace (
-    const std::string s_string, 
-    const std::string r_string, 
+    const std::string s_string,
+    const std::string r_string,
     const std::string i_string
 ) {
   int pos;

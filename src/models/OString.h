@@ -35,13 +35,19 @@ public:
      * @param sqlcommand a sql command.
      **/
     static std::string IntToStr( const int number );
-    
+
+        /**
+     * Convert unsigned long number to string.
+     * @param sqlcommand a sql command.
+     **/
+    static std::string unsignedLongToStr( unsigned long number );
+
     /**
      * Return a copy of the string with all the cased characters converted to
      * lowercase.
      **/
-    static std::string LowerCase ( const std::string  ); 
-    
+    static std::string LowerCase ( const std::string  );
+
     /**
      * Search and replace function.
      * @param s_strin search string
@@ -50,11 +56,11 @@ public:
      * @return string with replacements
      **/
     static std::string StrReplace (
-        const std::string s_strin, 
-        const std::string r_string, 
+        const std::string s_strin,
+        const std::string r_string,
         const std::string i_string
-    );    
-    
+    );
+
 };
 
 

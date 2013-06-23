@@ -42,14 +42,14 @@ public:
      * Delete all of user own quote.
      * @arg userID Id of a user.
      */
-    static void deleteAllQuoteOfUser( const std::string userID );
+    static void deleteAllQuoteOfUser( const unsigned long userID );
 
 
     /**
      * Delete a quote by id.
      * @arg quoteID Id of a user.
      */
-    static void deleteQuote( const std::string quoteID );
+    static void deleteQuote( const unsigned long quoteID );
 
     /**
      * Get all public makiert quotes of a keyword.
@@ -63,14 +63,14 @@ public:
      * @arg userID Id of a user.
      * @return A json document.
      */
-    static std::string getJsonExport( const std::string userID );
+    static std::string getJsonExport( const unsigned long userID );
 
     /**
      * Get all quotes of user own quote to.
      * @arg userID Id of a user.
      * @return A vector of type Quote.
      */
-    static std::vector<Quote> getAllQuoteOfUser( const std::string userID );
+    static std::vector<Quote> getAllQuoteOfUser( const unsigned long userID );
 
     /**
      * Get all quotes of a keyword. If user login he get here own quote to.
@@ -79,22 +79,22 @@ public:
      * @return A vector of type Quote with quote of a public keyword and own.
      */
     static std::vector<Quote> getAllQuoteOfKeyword(
-        const std::string keyword,
-        const std::string userID );
+        const unsigned long keywordID,
+        const unsigned long userID );
 
     /**
      * Get a storaged quotes with a specific id.
      * @arg id the id of quote.
      * @return type of Quote with data from the database.
      */
-    static Quote getQuoteWithID( const std::string id );
+    static Quote getQuoteWithID( const unsigned long id );
 
     /**
      * Make a JSON-Import of user quotes.
      * @arg jsonText test in json fomat with user verses/quotes.
      * @arg owner_id owner of imported data.
      */
-    static void jsonImport( const std::string jsonText, std::string owner_id );
+    static void jsonImport( const std::string jsonText, unsigned long owner_id );
 
 private:
     /**

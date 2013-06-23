@@ -78,7 +78,7 @@ public:
     /**
      * Get id of edition.
      **/
-    const std::string getEditionID() const
+    const unsigned long getEditionID() const
     {
         return this->m_editionID;
     }
@@ -86,7 +86,7 @@ public:
     /**
      * Get id of this quote.
      **/
-    std::string getID( ) {
+    unsigned long  getID( ) {
         return this->m_ID;
     }
 
@@ -111,7 +111,7 @@ public:
     /**
      * get id of the owner.
      **/
-    std::string getOwnerID()
+    unsigned long  getOwnerID()
     {
         return this->m_ownerID;
     }
@@ -203,7 +203,7 @@ public:
     /**
      * Set id of edition.
      **/
-    void setEditionID( std::string id )
+    void setEditionID( unsigned long id )
     {
         this->m_editionID = id;
     }
@@ -211,7 +211,7 @@ public:
     /**
      * Set id of this quote.
      **/
-    void setID( string id ) {
+    void setID( unsigned long id ) {
         this->m_ID= id;
     }
 
@@ -248,7 +248,7 @@ public:
     /**
      * Set id of the owner.
      **/
-    void setOwnerID( std::string id )
+    void setOwnerID( unsigned long id )
     {
         this->m_ownerID = id;
     }
@@ -332,12 +332,12 @@ private:
     /**
      * The edition id.
      **/
-    std::string m_editionID;
+    unsigned long  m_editionID;
 
     /**
      * The id of this quote.
      **/
-    std::string m_ID;
+    unsigned long m_ID;
 
     /**
      * quote keywords. Separated by commas.
@@ -349,7 +349,7 @@ private:
      * Id of the owner of thes quote.
      * Example: "27"
      **/
-    std::string m_ownerID;
+    unsigned long m_ownerID;
 
     /**
      * If this value "true" then it's not visible for other user.
@@ -395,7 +395,7 @@ private:
      * Buffer for edition data. Is use only by JSON-deserializeing.
      */
     Edition tmpEditionData;
-    
+
 };
 
 

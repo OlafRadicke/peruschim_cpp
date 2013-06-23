@@ -19,6 +19,7 @@
 */
 
 #include "EditionManager.h"
+#include "OString.h"
 
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -26,7 +27,7 @@
 
 /* D ----------------------------------------------------------------------- */
 
-void EditionManager::deleteEditionByID ( const string id ) {
+void EditionManager::deleteEditionByID ( const unsigned long id ) {
     Config config;
     string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn = tntdb::connect(conn_para);
@@ -39,7 +40,7 @@ void EditionManager::deleteEditionByID ( const string id ) {
 /* G ----------------------------------------------------------------------- */
 
 
-std::vector<Edition> EditionManager::getAllEditions ( const string user_id ){
+std::vector<Edition> EditionManager::getAllEditions ( const unsigned long user_id ){
     DEBUG "user_id: " << user_id  << std::endl;
     std::vector<Edition> editionList;
     Config config;
@@ -63,7 +64,7 @@ std::vector<Edition> EditionManager::getAllEditions ( const string user_id ){
         tntdb::Row row = *it;
         Edition edition;
 
-        edition.setID( row[0].getString () );
+        edition.setID( row[0].getInt() );
         edition.setName( row[1].getString () );
         edition.setPublisherName( row[2].getString () );
         edition.setReleaseNumber( row[3].getString () );
@@ -79,7 +80,7 @@ std::vector<Edition> EditionManager::getAllEditions ( const string user_id ){
 }
 
 
-Edition EditionManager::getEditionByID ( const string id ) {
+Edition EditionManager::getEditionByID ( const unsigned long id ) {
     Edition edition;
     Config config;
     string conn_para = config.get( "DB-DRIVER" );
@@ -103,8 +104,8 @@ Edition EditionManager::getEditionByID ( const string id ) {
         tntdb::Row row = *it;
         Edition edition;
 
-        edition.setID( row[0].getString () );
-        edition.setOwnerID( row[1].getString () );
+        edition.setID( row[0].getInt() );
+        edition.setOwnerID( row[1].getInt() );
         edition.setName( row[2].getString () );
         edition.setPublisherName( row[3].getString () );
         edition.setReleaseNumber( row[4].getString () );
@@ -113,14 +114,14 @@ Edition EditionManager::getEditionByID ( const string id ) {
 
         return edition;
     }
-    string errorinfo = "Edition with id " + id + " no found!";
+    string errorinfo = "Edition with id " + OString::unsignedLongToStr( id ) + " no found!";
     throw errorinfo;
 
 }
 
 /* I ----------------------------------------------------------------------- */
 
-int EditionManager::isEditionInUse ( const string id ){
+int EditionManager::isEditionInUse ( const unsigned long id ){
     Config config;
     string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn = tntdb::connect(conn_para);

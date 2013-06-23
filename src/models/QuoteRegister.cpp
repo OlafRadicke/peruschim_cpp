@@ -30,7 +30,7 @@
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
-void QuoteRegister::deleteAllQuoteOfUser( const std::string userID ){
+void QuoteRegister::deleteAllQuoteOfUser( const unsigned long userID ){
     DEBUG "deleteAllQuoteOfUser: " << userID << std::endl;
     Config config;
 
@@ -46,7 +46,7 @@ void QuoteRegister::deleteAllQuoteOfUser( const std::string userID ){
     trans.commit();
 }
 
-void QuoteRegister::deleteQuote( const std::string quoteID ) {
+void QuoteRegister::deleteQuote( const unsigned long quoteID ) {
     DEBUG "deleteQuote: " << quoteID << std::endl;
     Config config;
 
@@ -76,11 +76,11 @@ std::vector<Quote> QuoteRegister::getQuotes ( tntdb::Statement st ){
         dataQuote.setBookTitle( row[0].getString() );
         dataQuote.setChapterBegin( row[1].getInt() );
         dataQuote.setChapterEnd( row[2].getInt() );
-        dataQuote.setEditionID( row[3].getString() );
-        dataQuote.setID( row[4].getString() );
+        dataQuote.setEditionID( row[3].getInt() );
+        dataQuote.setID( row[4].getInt() );
         dataQuote.setIsPrivateData( row[5].getBool() );
         dataQuote.setNote( row[6].getString() );
-        dataQuote.setOwnerID( row[7].getString() );
+        dataQuote.setOwnerID( row[7].getInt() );
         dataQuote.setQuoteText( row[8].getString() );
         dataQuote.setSentenceBegin ( row[9].getInt() );
         dataQuote.setSentenceEnd( row[10].getInt() );
@@ -92,7 +92,7 @@ std::vector<Quote> QuoteRegister::getQuotes ( tntdb::Statement st ){
 
 }
 
-Quote QuoteRegister::getQuoteWithID( const std::string id ) {
+Quote QuoteRegister::getQuoteWithID( const unsigned long id ) {
     DEBUG std::endl;
     vector< Quote > quoteList;
     Config config;
@@ -188,11 +188,11 @@ std::vector<Quote> QuoteRegister::getAllPubQuoteOfKeyword( const std::string key
         dataQuote.setBookTitle( row[0].getString() );
         dataQuote.setChapterBegin( row[1].getInt() );
         dataQuote.setChapterEnd( row[2].getInt() );
-        dataQuote.setEditionID( row[3].getString() );
-        dataQuote.setID( row[4].getString() );
+        dataQuote.setEditionID( row[3].getInt() );
+        dataQuote.setID( row[4].getInt() );
         dataQuote.setIsPrivateData( row[5].getBool() );
         dataQuote.setNote( row[6].getString() );
-        dataQuote.setOwnerID( row[7].getString() );
+        dataQuote.setOwnerID( row[7].getInt() );
         dataQuote.setQuoteText( row[8].getString() );
         dataQuote.setSentenceBegin ( row[9].getInt() );
         dataQuote.setSentenceEnd( row[10].getInt() );
@@ -352,7 +352,7 @@ std::string QuoteRegister::getJsonExport( const std::string userID ) {
 }
 
 
-std::vector<Quote> QuoteRegister::getAllQuoteOfUser( const std::string userID ) {
+std::vector<Quote> QuoteRegister::getAllQuoteOfUser( const unsigned long userID ) {
     DEBUG "userID: " << userID << std::endl;
     vector< Quote > quoteList;
     Config config;
@@ -385,7 +385,7 @@ std::vector<Quote> QuoteRegister::getAllQuoteOfUser( const std::string userID ) 
 
 std::vector<Quote> QuoteRegister::getAllQuoteOfKeyword(
         const std::string keyword,
-        const std::string userID ){
+        const unsigned long userID ){
 
     DEBUG "keyword: " << keyword <<  std::endl;
     DEBUG "userID: " << userID << std::endl;
@@ -425,7 +425,7 @@ std::vector<Quote> QuoteRegister::getAllQuoteOfKeyword(
     return getQuotes ( st );
 }
 
-void QuoteRegister::jsonImport( const std::string jsonText, std::string owner_id ) {
+void QuoteRegister::jsonImport( const std::string jsonText, unsigned long owner_id ) {
     try
     {
         // define a empty config object

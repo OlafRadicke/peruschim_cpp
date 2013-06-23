@@ -32,7 +32,7 @@
         tmpEditionData()
     {
         this->m_isPrivateData = false;
-        this->m_ownerID = "0";
+        this->m_ownerID = 0;
         this->m_bookChapterBegin = 0;
         this->m_bookSentenceBegin = 0;
         this->m_bookChapterEnd = 0;
@@ -213,7 +213,7 @@ const std::string Quote::getBibleserverComURL() {
 std::vector<std::string> Quote::getKeywords() {
     Config config;
 
-    if ( this->m_quoteKeywords.size() < 1 && this->m_ID != "") {
+    if ( this->m_quoteKeywords.size() < 1 && this->m_ID > 0 ) {
         string conn_para = config.get( "DB-DRIVER" );
         tntdb::Connection conn;
         tntdb::Result result;
@@ -240,7 +240,7 @@ std::string Quote::getKeywordsAsString(){
     Config config;
     std::string keywordsAsString = "";
 
-    if ( this->m_quoteKeywords.size() < 1 && this->m_ID != "") {
+    if ( this->m_quoteKeywords.size() < 1 && this->m_ID > 0 ) {
         string conn_para = config.get( "DB-DRIVER" );
         tntdb::Connection conn;
         tntdb::Result result;
@@ -283,11 +283,11 @@ void Quote::saveAsNew() {
 //     Config config;
 //     vector<string>   list_1d;
 //     std:: string isPrivateData = "false";
-// 
+//
 //     string conn_para = config.get( "DB-DRIVER" );
 //     tntdb::Connection conn;
 //     tntdb::Result result;
-// 
+//
 //     conn = tntdb::connect( conn_para );
 //     DEBUG std::endl;
 //     result = conn.select( "SELECT nextval('quote_id_seq'::regclass);" );
@@ -297,12 +297,12 @@ void Quote::saveAsNew() {
 //         tntdb::Row row = *it;
 //         row[0].get( this->m_ID );
 //     }
-// 
+//
 //     if ( m_isPrivateData ) {
 //         isPrivateData = "true";
 //     }
 //     DEBUG std::endl;
-// 
+//
 //     sqlcommand =   "START TRANSACTION; \n\
 //                     INSERT INTO quote \n\
 //                     ( \n\
@@ -332,7 +332,7 @@ void Quote::saveAsNew() {
 //                         " + DatabaseProxy::replace( this->m_editionID ) + ", \n\
 //                         '" + isPrivateData + "' \n\
 //                     ); \n";
-// 
+//
 //     for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) {
 //         sqlcommand += "INSERT INTO quote_keyword \n\
 //                       ( \n\
@@ -343,9 +343,9 @@ void Quote::saveAsNew() {
 //                         '" + this->m_quoteKeywords[i] + "' \n\
 //                         );\n";
 //     }
-// 
+//
 //     sqlcommand += "COMMIT;";
-// 
+//
 //     try {
 //         DEBUG "sqlcommand: " << sqlcommand << std::endl;
 //         conn.execute( sqlcommand );
@@ -366,7 +366,7 @@ void Quote::saveAsNew() {
     tntdb::Connection conn = tntdb::connect( conn_para );
     DEBUG std::endl;
     tntdb::Transaction trans(conn);
-    conn.prepare( 
+    conn.prepare(
         "INSERT INTO quote \
         ( \
             series, \
@@ -392,7 +392,7 @@ void Quote::saveAsNew() {
             :ownerID, \
             :editionID, \
             :isPrivateData \
-        )"    
+        )"
     )
     .set( "bookSeries", this->m_bookSeries )
     .set( "bookTitle", this->m_bookTitle )
@@ -405,13 +405,13 @@ void Quote::saveAsNew() {
     .set( "ownerID", this->m_ownerID )
     .set( "editionID", this->m_editionID )
     .set( "isPrivateData", isPrivateData ).execute();
-    
+
     DEBUG std::endl;
     this->m_ID = conn.lastInsertId("quote_id_seq");
     DEBUG std::endl;
 
-    for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) {    
-        conn.prepare( 
+    for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) {
+        conn.prepare(
             "INSERT INTO quote_keyword \
                     ( \
                         quote_id, \
@@ -431,7 +431,7 @@ void Quote::saveAsNew() {
     } catch ( tntdb::Error sqlerr) {
         DEBUG "Irgend ein Fehler...." << std::endl;
     }
-    
+
 }
 
 void Quote::saveUpdate(){
@@ -440,19 +440,19 @@ void Quote::saveUpdate(){
 //     Config config;
 //     vector<string>   list_1d;
 //     std:: string isPrivateData = "false";
-// 
+//
 //     string conn_para = config.get( "DB-DRIVER" );
 //     tntdb::Connection conn;
 //     tntdb::Result result;
-// 
+//
 //     conn = tntdb::connect( conn_para );
 //     DEBUG std::endl;
-// 
+//
 //     if ( m_isPrivateData ) {
 //         isPrivateData = "true";
 //     }
 //     DEBUG std::endl;
-// 
+//
 //     sqlcommand =   "START TRANSACTION; \n\
 //                     UPDATE quote SET \n\
 //                         series = '" + DatabaseProxy::replace( this->m_bookSeries ) + "', \n\
@@ -467,9 +467,9 @@ void Quote::saveUpdate(){
 //                         edition_id = " + DatabaseProxy::replace( this->m_editionID ) + ", \n\
 //                         privatedata = '" + isPrivateData + "' \n\
 //                     WHERE id = " + this->m_ID + "; \n";
-// 
+//
 //     sqlcommand += "\n DELETE FROM quote_keyword WHERE quote_id = " + this->m_ID + "; \n";
-// 
+//
 //     for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) {
 //         sqlcommand += "INSERT INTO quote_keyword \n\
 //                       ( \n\
@@ -480,9 +480,9 @@ void Quote::saveUpdate(){
 //                         '" + this->m_quoteKeywords[i] + "' \n\
 //                         );\n";
 //     }
-// 
+//
 //     sqlcommand += "COMMIT;";
-// 
+//
 //     try {
 //         DEBUG "sqlcommand: " << sqlcommand << std::endl;
 //         conn.execute( sqlcommand );
@@ -490,7 +490,7 @@ void Quote::saveUpdate(){
 //     } catch( char * str ) {
 //         ERROR  "Exception raised: " << str << '\n';
 //     }
-*/    
+*/
 
 ///////////////////////////////////////
     DEBUG std::endl;
@@ -502,7 +502,7 @@ void Quote::saveUpdate(){
     string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn = tntdb::connect( conn_para );
     tntdb::Transaction trans(conn);
-    conn.prepare( 
+    conn.prepare(
         "UPDATE quote SET \
             series = :bookSeries, \
             title = :bookTitle, \
@@ -515,7 +515,7 @@ void Quote::saveUpdate(){
             owner_id = :ownerID, \
             edition_id = :editionID, \
             privatedata = :isPrivateData \
-        WHERE id = " + this->m_ID + ""
+        WHERE id = :id"
     )
     .set( "bookSeries", this->m_bookSeries )
     .set( "bookTitle", this->m_bookTitle )
@@ -527,10 +527,11 @@ void Quote::saveUpdate(){
     .set( "note", this->m_note )
     .set( "ownerID", this->m_ownerID )
     .set( "editionID", this->m_editionID )
-    .set( "isPrivateData", isPrivateData ).execute();
+    .set( "isPrivateData", isPrivateData )
+    .set( "id", this->m_ID ).execute();
 
-    for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) {    
-        conn.prepare( 
+    for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) {
+        conn.prepare(
             "INSERT INTO quote_keyword \
                     ( \
                         quote_id, \
