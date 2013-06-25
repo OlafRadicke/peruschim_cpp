@@ -144,7 +144,7 @@ public:
      * @para user_rolls list of rolls.
      */
     void static reSetUserRolls(
-        const std::string user_id,
+        const unsigned long user_id,
         const std::vector<std::string> user_rolls
     );
 

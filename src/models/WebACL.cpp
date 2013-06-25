@@ -222,7 +222,7 @@ AccountData WebACL::getAccountsWithID ( const unsigned long id ){
 }
 
 std::vector<AccountData> WebACL::getAllAccounts ( void ){
-
+/*
     DatabaseProxy database_proxy;
     vector< vector<string> > sqlResult;
     vector<AccountData> accounts;
@@ -264,10 +264,50 @@ std::vector<AccountData> WebACL::getAllAccounts ( void ){
         accounts.push_back ( adata );
     }
     return accounts;
-    
+*/
 /////////////////////////////////////////////////////
-    
-    
+    DEBUG  std::endl;
+    std::vector<AccountData> accounts;
+//     std::vector<Edition> editionList;
+    Config config;
+    string conn_para = config.get( "DB-DRIVER" );
+    tntdb::Connection conn = tntdb::connect(conn_para);
+
+    tntdb::Statement st = conn.prepare(
+            "SELECT \
+                id, \
+                login_name, \
+                real_name, \
+                password_hash, \
+                password_salt, \
+                email, \
+                account_disable  \
+            FROM account \
+            ORDER BY login_name"
+    );
+    st.execute();
+
+    for (tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+//         Edition edition;
+        AccountData accountData;
+
+        accountData.setID( row[0].getInt() );
+        accountData.setLogin_name( row[1].getString () );
+        accountData.setReal_name( row[2].getString () );
+        accountData.setPassword_hash( row[3].getString () );
+        accountData.setPassword_salt( row[4].getString () );
+        accountData.setEmail( row[5].getString () );
+        accountData.setAccount_disable( row[5].getBool () );
+
+        accounts.push_back ( accountData );
+    }
+
+    DEBUG "accounts.size(): " <<  accounts.size() << std::endl;
+    return accounts;
+
 }
 
 string WebACL::genRandomSalt ( const int len) {
