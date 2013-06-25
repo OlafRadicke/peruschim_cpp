@@ -19,7 +19,6 @@
 */
 
 #include "EditionManager.h"
-#include "OString.h"
 
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -114,7 +113,7 @@ Edition EditionManager::getEditionByID ( const unsigned long id ) {
 
         return edition;
     }
-    string errorinfo = "Edition with id " + OString::unsignedLongToStr( id ) + " no found!";
+    string errorinfo = "Edition with id " + cxxtools::convert<std::string>( id ) + " no found!";
     throw errorinfo;
 
 }

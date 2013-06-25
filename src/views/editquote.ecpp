@@ -62,7 +62,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <p>Edition:
                     <select name="edition_id" size="1">
 %     for ( unsigned int i=0; i<editionList.size(); i++) {
-%         if ( quoteData.getEditionID() == editionList[i].getName() ) {
+%         if ( quoteData.getEditionID() == editionList[i].getID() ) {
                         <option value="<$  editionList[i].getID() $>" selected>
                             <$ editionList[i].getName() $>
                         </option>

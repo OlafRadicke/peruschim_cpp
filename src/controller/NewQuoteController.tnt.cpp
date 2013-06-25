@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <%args>
     // define the query parameters
-    std::string edition_id = "";
+    unsigned long edition_id = 0;
     std::string book_title = "";
     int chapter_begin = 0;
     int sentence_begin = 0;

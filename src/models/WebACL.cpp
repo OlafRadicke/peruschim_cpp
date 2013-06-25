@@ -222,53 +222,9 @@ AccountData WebACL::getAccountsWithID ( const unsigned long id ){
 }
 
 std::vector<AccountData> WebACL::getAllAccounts ( void ){
-/*
-    DatabaseProxy database_proxy;
-    vector< vector<string> > sqlResult;
-    vector<AccountData> accounts;
 
-    DEBUG std::endl;
-    sqlResult = database_proxy.sqlGet
-    (
-            "SELECT \
-                id, \
-                login_name, \
-                real_name, \
-                password_hash, \
-                password_salt, \
-                email, \
-                account_disable  \
-            FROM account \
-            ORDER BY login_name;"
-    );
-
-    for ( unsigned int i=0; i<sqlResult.size(); i++) {
-        DEBUG "push_back (" <<  i << "): " << sqlResult[i][0] << std::endl;
-        AccountData adata;
-
-        adata.setID ( sqlResult[i][0] );
-        adata.setLogin_name ( sqlResult[i][1] );
-        adata.setReal_name ( sqlResult[i][2] );
-        adata.setPassword_hash ( sqlResult[i][3] );
-        adata.setPassword_salt ( sqlResult[i][4] );
-        adata.setEmail ( sqlResult[i][5] );
-        DEBUG "account_disable (" <<  i << "): " << sqlResult[i][6] << std::endl;
-        if ( sqlResult[i][6] == "true" ) {
-            DEBUG "true" <<  std::endl;
-            adata.setAccount_disable ( true );
-
-        } else {
-            DEBUG "false" <<  std::endl;
-            adata.setAccount_disable ( false );
-        }
-        accounts.push_back ( adata );
-    }
-    return accounts;
-*/
-/////////////////////////////////////////////////////
     DEBUG  std::endl;
     std::vector<AccountData> accounts;
-//     std::vector<Edition> editionList;
     Config config;
     string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn = tntdb::connect(conn_para);
@@ -435,7 +391,7 @@ void WebACL::setPassword (  std::string user_name, std::string new_password ) {
 }
 
 void WebACL::reSetUserRolls(
-    const std::string user_id,
+    const unsigned long  user_id,
     const std::vector<std::string> user_rolls
 ){
 

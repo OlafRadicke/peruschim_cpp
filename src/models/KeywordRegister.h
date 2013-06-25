@@ -71,7 +71,7 @@ public:
     * keywords.
     * @arg owner_id login id.
     **/
-    static vector<KeywordCount> getAllKeywordTitleAndCound( const string owner_id );
+    static vector<KeywordCount> getAllKeywordTitleAndCound( const unsigned long owner_id );
 
     /**
     * Get all used keywords with cound of public quotes.
@@ -83,7 +83,7 @@ public:
     * keywords.
     * @arg owner_id login id.
     **/
-    static vector<KeywordCount> getOwnKeywordTitleAndCound( const string owner_id );
+    static vector<KeywordCount> getOwnKeywordTitleAndCound( const unsigned long owner_id );
 
 private:
 

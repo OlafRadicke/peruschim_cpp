@@ -37,9 +37,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     bool is_inactive;
     std::string button_update_account;
 
-    unsigned long edit_account_id;
-    unsigned long delete_account_id;
-    unsigned long affirmation_delete_account_id;
+    unsigned long edit_account_id = 0;
+    unsigned long delete_account_id = 0;
+    unsigned long affirmation_delete_account_id = 0;
 </%args>
 
 <%session scope="global">
@@ -48,7 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <%session>
     std::string feedback;
-    unsigned long session_account_id;
+    unsigned long session_account_id = 0;
     std::string affirmation;
 </%session>
 

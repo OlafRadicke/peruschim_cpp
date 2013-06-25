@@ -50,7 +50,7 @@ vector<string> KeywordRegister::getAllKeywordTitles( void ){
 
 
 
-vector<KeywordCount> KeywordRegister::getAllKeywordTitleAndCound( const string owner_id ){
+vector<KeywordCount> KeywordRegister::getAllKeywordTitleAndCound( const unsigned long owner_id ){
     DEBUG std::endl;
     vector< KeywordCount > keywordList;
     Config config;
@@ -121,7 +121,7 @@ vector<KeywordCount> KeywordRegister::getAllPubKeywordTitleAndCound( void ) {
 }
 
 
-vector<KeywordCount> KeywordRegister::getOwnKeywordTitleAndCound( const string owner_id ){
+vector<KeywordCount> KeywordRegister::getOwnKeywordTitleAndCound( const unsigned long owner_id ){
     DEBUG "owner_id" <<  owner_id << std::endl;
 
     vector< KeywordCount > keywordList;
