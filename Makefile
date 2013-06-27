@@ -16,6 +16,7 @@ PROG_NAME = ./peruschim_cpp
 
 OBJECTS = \
 ./src/peruschim_cpp.o \
+./src/controller/EditAccountController.o \
 ./src/controller/EditOwnVersesController.o \
 ./src/models/AccountData.o \
 ./src/models/Config.o \
@@ -32,7 +33,7 @@ OBJECTS = \
 ./src/resources/favicon.o \
 ./src/resources/style.o \
 ./src/views/access_denied.o \
-./src/views/edit_account.o \
+./src/views/EditAccountView.o \
 ./src/views/edit_editions.o \
 ./src/views/EditOwnVersesView.o \
 ./src/views/editquote.o \

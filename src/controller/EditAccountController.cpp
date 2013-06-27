@@ -1,65 +1,80 @@
-<#
-Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+/**
+* @author Olaf Radicke <briefkasten@olaf-rdicke.de>
+* @date 2013
+* @copyright
+* Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or later
+* version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or later
-version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
+#include "controller/EditAccountController.h"
 
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#>
+#include "models/WebACL.h"
+#include "models/UserSession.h"
+#include "models/Quote.h"
+#include "models/QuoteRegister.h"
+#include "models/OString.h"
 
 
-<%pre>
-    #include "models/WebACL.h"
-    #include "models/UserSession.h"
 
-    # define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-    # define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-</%pre>
+# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
-<%config>
-</%config>
 
-<%args>
-    std::string login_name;
-    std::string name;
-    std::string mail;
-    std::string password_a;
-    std::string password_b;
-    std::string userrolls[];
-    bool is_inactive;
-    std::string button_update_account;
+static tnt::ComponentFactoryImpl<EditAccountController> factory("EditAccountController");
 
-    unsigned long edit_account_id = 0;
-    unsigned long delete_account_id = 0;
-    unsigned long affirmation_delete_account_id = 0;
-</%args>
+unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
+{
 
-<%session scope="global">
-    UserSession userSession;
-</%session>
+    // Global variables
+    TNT_SESSION_GLOBAL_VAR( UserSession, userSession, ());
+    TNT_SESSION_GLOBAL_VAR( std::string, feedback, ());
+    TNT_SESSION_GLOBAL_VAR( unsigned long, session_account_id, ());
+    TNT_SESSION_GLOBAL_VAR( std::string, affirmation, ());
+    std::vector<AccountData> accountList = WebACL::getAllAccounts();
 
-<%session>
-    std::string feedback;
-    unsigned long session_account_id = 0;
-    std::string affirmation;
-</%session>
+    // URL arguments
+    std::string login_name =
+        qparam.arg<std::string>("login_name");
+    std::string name =
+        qparam.arg<std::string>("name");
+    std::string mail =
+        qparam.arg<std::string>("mail");
+    std::string password_a =
+        qparam.arg<std::string>("password_a");
+    std::string password_b =
+        qparam.arg<std::string>("password_b");
+    std::vector<std::string>  userrolls =
+        qparam.args<std::string>("userrolls");
+    bool is_inactive =
+        qparam.arg<bool>("is_inactive");
+    std::string button_update_account =
+        qparam.arg<std::string>("button_update_account");
+    unsigned long edit_account_id =
+        qparam.arg<unsigned long>("edit_account_id");
+    unsigned long delete_account_id =
+        qparam.arg<unsigned long>("delete_account_id");
+    unsigned long affirmation_delete_account_id =
+        qparam.arg<unsigned long>("affirmation_delete_account_id");
 
-<%cpp>
 
     // ACL Check
     if ( userSession.isInRole ( "admin" ) == false ) {
         return reply.redirect ( "/access_denied" );
     };
 
-    std::vector<AccountData> accountList = WebACL::getAllAccounts();
     AccountData accountData;
     std::vector<std::string> userRolls;
     std::vector<std::string> allRolls;
@@ -141,8 +156,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             + " wurde gelöscht!";
         accountList = WebACL::getAllAccounts();
     }
-
-</%cpp>
-
-
-
+    return DECLINED;
+}
