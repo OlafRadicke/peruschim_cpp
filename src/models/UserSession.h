@@ -49,7 +49,7 @@ public:
      * @param roll account roll.
      **/
     void addRoll ( std::string roll ) {
-        m_userrolls.push_back ( roll );
+        m_userroles.push_back ( roll );
     };
 
     /**
@@ -61,7 +61,7 @@ public:
     /**
      * Clean the list of rolls.
      **/
-    void cleanRoll ( ) { m_userrolls.clear(); } ;
+    void cleanRoll ( ) { m_userroles.clear(); } ;
 
     /**
      * Session logout.
@@ -118,7 +118,7 @@ private:
     /**
      * Rolls of user.
      **/
-    std::vector < std::string > m_userrolls;
+    std::vector < std::string > m_userroles;
 
 
     /**

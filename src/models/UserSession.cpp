@@ -29,7 +29,7 @@ void UserSession::addRoll ( std::vector<std::string> rolls ) {
     DEBUG "addRoll" << std::endl;
     for ( unsigned int i=0; i<rolls.size(); i++) {
         DEBUG "Add roll: " << rolls[i] << std::endl;
-        m_userrolls.push_back ( rolls[i] );
+        m_userroles.push_back ( rolls[i] );
     }
 }
 
@@ -64,14 +64,14 @@ unsigned long UserSession::getUserID ( ) {
 
 void UserSession::lockout( ) {
     DEBUG "logout..." << endl;
-    this->m_userrolls.clear();
+    this->m_userroles.clear();
     this->m_username = "";
     this->m_userID = 0;
 }
 
 bool UserSession::isInRole ( std::string siteroll ) {
-    for ( unsigned int i=0; i<m_userrolls.size(); i++) {
-        if ( m_userrolls[i] == siteroll ) {
+    for ( unsigned int i=0; i<m_userroles.size(); i++) {
+        if ( m_userroles[i] == siteroll ) {
             return true;
         }
     }
@@ -79,11 +79,11 @@ bool UserSession::isInRole ( std::string siteroll ) {
 }
 
 bool UserSession::isInRole ( std::vector<std::string> siterolls ) {
-    DEBUG "m_userrolls.size(): " << m_userrolls.size() << std::endl;
+    DEBUG "m_userroles.size(): " << m_userroles.size() << std::endl;
 
-    for ( unsigned int i=0; i<m_userrolls.size(); i++) {
+    for ( unsigned int i=0; i<m_userroles.size(); i++) {
         for ( unsigned int i2=0; i2<siterolls.size(); i2++) {
-            if ( m_userrolls[i] == siterolls[i2] ) {
+            if ( m_userroles[i] == siterolls[i2] ) {
                 DEBUG "true" << std::endl;
                 return true;
             }

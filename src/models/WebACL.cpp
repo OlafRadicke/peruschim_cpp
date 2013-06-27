@@ -349,11 +349,11 @@ bool WebACL::isUserExist ( std::string user_name ){
 }
 
 bool WebACL::isUserInRole ( const std::string login_name, const std::string roll ) {
-    std::vector<std::string> userrolls = WebACL::getRoll( login_name );
-    DEBUG "m_userrolls.size(): " << userrolls.size() << std::endl;
+    std::vector<std::string> userroles = WebACL::getRoll( login_name );
+    DEBUG "m_userroles.size(): " << userroles.size() << std::endl;
 
-    for ( unsigned int i=0; i< userrolls.size(); i++) {
-        if ( userrolls[i] == roll ) {
+    for ( unsigned int i=0; i< userroles.size(); i++) {
+        if ( userroles[i] == roll ) {
             return true;
         }
     }

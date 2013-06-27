@@ -39,35 +39,39 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
 {
 
     // Global variables
-    TNT_SESSION_GLOBAL_VAR( UserSession, userSession, ());
-    TNT_SESSION_GLOBAL_VAR( std::string, feedback, ());
-    TNT_SESSION_GLOBAL_VAR( unsigned long, session_account_id, ());
-    TNT_SESSION_GLOBAL_VAR( std::string, affirmation, ());
-    std::vector<AccountData> accountList = WebACL::getAllAccounts();
+    TNT_SESSION_GLOBAL_VAR( UserSession,              userSession, () );
+    TNT_SESSION_GLOBAL_VAR( std::string,              g_feedback, () );
+    TNT_SESSION_GLOBAL_VAR( unsigned long,            g_session_account_id, () );
+    TNT_SESSION_GLOBAL_VAR( std::string,              g_affirmation, () );
+    TNT_SESSION_GLOBAL_VAR( std::vector<AccountData>, g_accountList, () );
+    TNT_SESSION_GLOBAL_VAR( AccountData,              g_accountData, () );
+    TNT_SESSION_GLOBAL_VAR( std::vector<std::string>, g_userRolls, () );
+    TNT_SESSION_GLOBAL_VAR( std::vector<std::string>, g_allRolls, () );
+
 
     // URL arguments
-    std::string login_name =
-        qparam.arg<std::string>("login_name");
-    std::string name =
-        qparam.arg<std::string>("name");
-    std::string mail =
-        qparam.arg<std::string>("mail");
-    std::string password_a =
-        qparam.arg<std::string>("password_a");
-    std::string password_b =
-        qparam.arg<std::string>("password_b");
-    std::vector<std::string>  userrolls =
-        qparam.args<std::string>("userrolls");
-    bool is_inactive =
-        qparam.arg<bool>("is_inactive");
-    std::string button_update_account =
-        qparam.arg<std::string>("button_update_account");
-    unsigned long edit_account_id =
-        qparam.arg<unsigned long>("edit_account_id");
-    unsigned long delete_account_id =
-        qparam.arg<unsigned long>("delete_account_id");
-    unsigned long affirmation_delete_account_id =
-        qparam.arg<unsigned long>("affirmation_delete_account_id");
+    std::string arg_login_name =
+        qparam.arg<std::string>("arg_login_name");
+    std::string arg_name =
+        qparam.arg<std::string>("arg_name");
+    std::string arg_mail =
+        qparam.arg<std::string>("arg_mail");
+    std::string arg_password_a =
+        qparam.arg<std::string>("arg_password_a");
+    std::string arg_password_b =
+        qparam.arg<std::string>("arg_password_b");
+    std::vector<std::string>  args_userroles =
+        qparam.args<std::string>("args_userroles");
+    bool arg_is_inactive =
+        qparam.arg<bool>("arg_is_inactive");
+    std::string arg_button_update_account =
+        qparam.arg<std::string>("arg_button_update_account");
+    unsigned long arg_edit_account_id =
+        qparam.arg<unsigned long>("arg_edit_account_id");
+    unsigned long arg_delete_account_id =
+        qparam.arg<unsigned long>("arg_delete_account_id");
+    unsigned long arg_affirmation_delete_account_id =
+        qparam.arg<unsigned long>("arg_affirmation_delete_account_id");
 
 
     // ACL Check
@@ -75,86 +79,89 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
         return reply.redirect ( "/access_denied" );
     };
 
-    AccountData accountData;
-    std::vector<std::string> userRolls;
-    std::vector<std::string> allRolls;
-
+    g_accountList = WebACL::getAllAccounts();
+    DEBUG "g_accountList.size(): " << g_accountList.size() << endl;
 
     // if a account selected for editing?
-    DEBUG "edit_account_id: " << edit_account_id << endl;
-    if ( edit_account_id > 0 ) {
-        affirmation = "";
-        feedback = "";
-        accountData =  WebACL::getAccountsWithID ( edit_account_id );
-        std::vector<std::string> userRolls = WebACL::getRoll ( accountData.getLogin_name() );
-        allRolls = WebACL::getAllRolls();
-        session_account_id = edit_account_id;
-        DEBUG "accountData.getAccount_disable(): " << accountData.getAccount_disable() << endl;
+    DEBUG "arg_edit_account_id: " << arg_edit_account_id << endl;
+    if ( arg_edit_account_id > 0 ) {
+        g_affirmation = "";
+        g_feedback = "";
+        g_accountData =  WebACL::getAccountsWithID ( arg_edit_account_id );
+        DEBUG "g_accountData.getLogin_name(): " <<       
+            g_accountData.getLogin_name() << endl;
+        g_userRolls = WebACL::getRoll ( g_accountData.getLogin_name() );
+        g_allRolls = WebACL::getAllRolls();
+        g_session_account_id = arg_edit_account_id;
+        DEBUG "g_accountData.getAccount_disable(): " <<       
+            g_accountData.getAccount_disable() << endl;
 
     }
 
     // is button account data update pushed?
-    if ( button_update_account == "Speichern" ) {
-        affirmation = "";
-        feedback = "";
+    if ( arg_button_update_account == "Speichern" ) {
+        g_affirmation = "";
+        g_feedback = "";
         DEBUG "Speichern" << endl;
-        DEBUG "session_account_id: " << session_account_id << endl;
-        accountData.setID( session_account_id );
-        DEBUG "login_name: " << login_name << endl;
-        accountData.setLogin_name( login_name );
-        DEBUG "name: " << name << endl;
-        accountData.setReal_name( name );
-        DEBUG "mail: " << mail << endl;
-        accountData.setEmail( mail );
-        DEBUG "is_inactive: " << is_inactive << endl;
-        accountData.setAccount_disable( is_inactive );
+        DEBUG "g_session_account_id: " << g_session_account_id << endl;
+        g_accountData.setID( g_session_account_id );
+        DEBUG "arg_login_name: " << arg_login_name << endl;
+        g_accountData.setLogin_name( arg_login_name );
+        DEBUG "arg_name: " << arg_name << endl;
+        g_accountData.setReal_name( arg_name );
+        DEBUG "arg_mail: " << arg_mail << endl;
+        g_accountData.setEmail( arg_mail );
+        DEBUG "arg_is_inactive: " << arg_is_inactive << endl;
+        g_accountData.setAccount_disable( arg_is_inactive );
 
-        DEBUG "userrolls.size(): " << userrolls.size() << endl;
-        WebACL::reSetUserRolls( session_account_id, userrolls);
-        accountData.saveUpdate();
+        DEBUG "args_userroles.size(): " << args_userroles.size() << endl;
+        WebACL::reSetUserRolls( g_session_account_id, args_userroles);
+        g_accountData.saveUpdate();
 
         // check if new password set.
-        if (password_a != "" ) {
-            DEBUG "password_a" << password_a << endl;
+        if (arg_password_a != "" ) {
+            DEBUG "arg_password_a" << arg_password_a << endl;
             // check equal of new password.
-            if ( password_a != password_b ) {
-                feedback = "Das Passwort ist nicht gleich!";
+            if ( arg_password_a != arg_password_b ) {
+                g_feedback = "Das Passwort ist nicht gleich!";
             } else {
                 // check is password empty.
-                accountData.setNewPassword( password_a );
-                session_account_id = 0;
-                feedback = "Die Daten wurden gespeichert und das Passwort neu gesetzt!";
+                g_accountData.setNewPassword( arg_password_a );
+                g_session_account_id = 0;
+                g_feedback = "Die Daten wurden gespeichert und das Passwort neu gesetzt!";
             };
         } else {
-            session_account_id = 0;
-            feedback = "Die Daten wurden gespeichert!";
+            g_session_account_id = 0;
+            g_feedback = "Die Daten wurden gespeichert!";
         };
-        accountList = WebACL::getAllAccounts();
+        g_accountList = WebACL::getAllAccounts();
     }
 
     // is button delete account pushed?
-    if ( delete_account_id > 0 ) {
-        affirmation = "";
-        feedback = "";
-        session_account_id = delete_account_id;
-        affirmation = "Account mit ID " + \
-            cxxtools::convert<std::string>( session_account_id ) \
-            + " und allen zugehörigen Daten wirklich löschen?";
+    if ( arg_delete_account_id > 0 ) {
+        g_affirmation = "";
+        g_feedback = "";
+        g_session_account_id = arg_delete_account_id;        
+        g_accountData =  WebACL::getAccountsWithID ( g_session_account_id );
+        DEBUG "g_accountData.getLogin_name(): " <<       
+            g_accountData.getLogin_name() << endl;
+        g_affirmation = "Account \""+ g_accountData.getLogin_name() +" (ID " + \
+            cxxtools::convert<std::string>( g_session_account_id ) \
+            + ")\" und allen zugehörigen Daten wirklich löschen?";
 
     }
 
     // if delete affirmation clicked.
-    if ( affirmation_delete_account_id > 0 ) {
-        affirmation = "";
-        feedback = "";
-        DEBUG "will löschen: " << affirmation_delete_account_id << endl;
-        AccountData accountData;
-        accountData.setID( affirmation_delete_account_id );
-        accountData.deleteAllData();
-        feedback = "Der Account mit der Id " + \
-            cxxtools::convert<std::string>( affirmation_delete_account_id ) \
+    if ( arg_affirmation_delete_account_id > 0 ) {
+        g_affirmation = "";
+        g_feedback = "";
+        DEBUG "will löschen: " << arg_affirmation_delete_account_id << endl;
+        g_accountData.setID( arg_affirmation_delete_account_id );
+        g_accountData.deleteAllData();
+        g_feedback = "Der Account mit der Id " + \
+            cxxtools::convert<std::string>( arg_affirmation_delete_account_id ) \
             + " wurde gelöscht!";
-        accountList = WebACL::getAllAccounts();
+        g_accountList = WebACL::getAllAccounts();
     }
     return DECLINED;
 }
