@@ -66,8 +66,8 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
             return false;
         }
     } else {
-//        Logger::Logger ( "User not foaunt in data base?", Logger::LOG_LEVEL_WARN );
-        ERROR "User not foaunt in data base?" << std::endl;
+//        Logger::Logger ( "User not found in data base?", Logger::LOG_LEVEL_WARN );
+        ERROR "User not found in data base?" << std::endl;
         return false;
     }
 
@@ -91,8 +91,8 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
             return false;
         }
     } else {
-//        Logger::Logger ( "User not foaunt in data base?", Logger::LOG_LEVEL_WARN );
-        ERROR "User not foaunt in data base?" << std::endl;
+//        Logger::Logger ( "User not found in data base?", Logger::LOG_LEVEL_WARN );
+        ERROR "User not found in data base?" << std::endl;
         return false;
     }
 
@@ -180,7 +180,7 @@ void WebACL::createAccount (
 AccountData WebACL::getAccountsWithID ( const std::string id ){
     Config config;
     string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn = tntdb::connect(conn_para);
+    tntdb::Connection conn = tntdb::connectCached(conn_para);
 
     tntdb::Statement st = conn.prepare( "SELECT \
                 login_name, \
@@ -398,7 +398,7 @@ void WebACL::reSetUserRolls(
     DEBUG "reSetUserRolls" << std::endl;
     Config config;
     string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn = tntdb::connect(conn_para);
+    tntdb::Connection conn = tntdb::connectCached(conn_para);
 
     tntdb::Statement st = conn.prepare( "DELETE FROM account_acl_roll \
                 WHERE account_id = :v1;");
