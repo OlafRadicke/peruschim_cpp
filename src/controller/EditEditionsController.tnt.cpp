@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </%config>
 
 <%args>
-    unsigned long edit_edition_id;
+    unsigned long edit_edition_id = 0;
     std::string modified_title;
     std::string modified_publishername;
     std::string modified_releasenumber;
@@ -38,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     std::string modified_releaseplace;
 
     std::string save_modified;
-    unsigned long  delete_edition_id;
+    unsigned long  delete_edition_id = 0;
     std::string new_edition_title;
     std::string new_edition;
 </%args>
@@ -52,6 +52,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </%session>
 
 <%cpp>
+    DEBUG std::endl;
     std::vector<Edition> editionList;
     std::string feedback = "";
     Edition editionData;
@@ -61,6 +62,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     if ( userSession.isInRole ( "user" ) == false ) {
         return reply.redirect ( "/access_denied" );
     };
+    DEBUG std::endl;
 
     // edit action
     if ( edit_edition_id > 0 ) {
@@ -68,6 +70,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         editionData = EditionManager::getEditionByID( edit_edition_id ) ;
         session_edition_id = edit_edition_id;
     }
+    DEBUG std::endl;
 
     // save modifications action
     if ( save_modified != "" ) {

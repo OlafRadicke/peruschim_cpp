@@ -28,8 +28,7 @@
 
 void EditionManager::deleteEditionByID ( const unsigned long id ) {
     Config config;
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn = tntdb::connect(conn_para);
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
 
     tntdb::Statement st = conn.prepare( "DELETE FROM edition \
                     WHERE id= :v1 ;");
@@ -43,9 +42,8 @@ std::vector<Edition> EditionManager::getAllEditions ( const unsigned long user_i
     DEBUG "user_id: " << user_id  << std::endl;
     std::vector<Edition> editionList;
     Config config;
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn = tntdb::connect(conn_para);
-
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    
     tntdb::Statement st = conn.prepare( "SELECT \
                         id, \
                         name, \
@@ -82,8 +80,7 @@ std::vector<Edition> EditionManager::getAllEditions ( const unsigned long user_i
 Edition EditionManager::getEditionByID ( const unsigned long id ) {
     Edition edition;
     Config config;
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn = tntdb::connect(conn_para);
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
 
     tntdb::Statement st = conn.prepare( "SELECT \
                         id, \
@@ -94,7 +91,7 @@ Edition EditionManager::getEditionByID ( const unsigned long id ) {
                         releaseplace, \
                         releasedate \
                     FROM edition \
-                    WHERE id= :v1 ;");
+                    WHERE id= :v1 ");
     st.set( "v1", id ).execute();
 
     for (tntdb::Statement::const_iterator it = st.begin();
@@ -122,8 +119,7 @@ Edition EditionManager::getEditionByID ( const unsigned long id ) {
 
 int EditionManager::isEditionInUse ( const unsigned long id ){
     Config config;
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn = tntdb::connect(conn_para);
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
 
     tntdb::Statement st = conn.prepare( " SELECT COUNT(edition_id) \
          FROM quote \

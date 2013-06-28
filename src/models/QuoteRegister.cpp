@@ -35,8 +35,7 @@ void QuoteRegister::deleteAllQuoteOfUser( const unsigned long userID ){
     DEBUG "deleteAllQuoteOfUser: " << userID << std::endl;
     Config config;
 
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn = tntdb::connect( conn_para );
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
     tntdb::Transaction trans(conn);
     conn.prepare( "DELETE FROM  quote_keyword \n\
         WHERE quote_id IN ( SELECT id FROM quote WHERE owner_id= :v1 )")
@@ -51,8 +50,7 @@ void QuoteRegister::deleteQuote( const unsigned long quoteID ) {
     DEBUG "deleteQuote: " << quoteID << std::endl;
     Config config;
 
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn = tntdb::connect( conn_para );
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
     tntdb::Transaction trans(conn);
     conn.prepare( "DELETE FROM  quote_keyword \n\
         WHERE quote_id = :quoteid ")
@@ -97,28 +95,8 @@ Quote QuoteRegister::getQuoteWithID( const unsigned long id ) {
     DEBUG std::endl;
     vector< Quote > quoteList;
     Config config;
-
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn;
-//     tntdb::Result result;
-
     DEBUG std::endl;
-    DEBUG "SQL: " << "SELECT \
-        title, \
-        chapter_begin, \
-        chapter_end, \
-        edition_id, \
-        id, \
-        privatedata, \
-        note, \
-        owner_id, \
-        quote_text, \
-        sentence_begin, \
-        sentence_end, \
-        series \
-    FROM quote \
-    WHERE id= " <<  id << endl;
-    conn = tntdb::connect(conn_para);
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
     tntdb::Statement st = conn.prepare( "SELECT \
         title, \
         chapter_begin, \
@@ -153,11 +131,7 @@ std::vector<Quote> QuoteRegister::getAllPubQuoteOfKeyword( const std::string key
     DEBUG std::endl;
     vector< Quote > quoteList;
     Config config;
-
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn;
-
-    conn = tntdb::connect(conn_para);
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
     tntdb::Statement st = conn.prepare( "SELECT \
         title, \
         chapter_begin, \
@@ -360,10 +334,7 @@ std::vector<Quote> QuoteRegister::getAllQuoteOfUser( const unsigned long userID 
     vector< Quote > quoteList;
     Config config;
 
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn;
-
-    conn = tntdb::connect(conn_para);
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
     tntdb::Statement st = conn.prepare( "SELECT \
         title, \
         chapter_begin, \
@@ -394,12 +365,8 @@ std::vector<Quote> QuoteRegister::getAllQuoteOfKeyword(
     DEBUG "userID: " << userID << std::endl;
     vector< Quote > quoteList;
     Config config;
-
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn;
-//     tntdb::Result result;
-
-    conn = tntdb::connect(conn_para);
+    
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
     tntdb::Statement st = conn.prepare( "SELECT \
         title, \
         chapter_begin, \

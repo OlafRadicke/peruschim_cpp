@@ -30,12 +30,9 @@ vector<string> KeywordRegister::getAllKeywordTitles( void ){
     DEBUG std::endl;
     vector<string> keywordList;
     Config config;
-
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn;
     tntdb::Result result;
 
-    conn = tntdb::connect(conn_para);
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
     result = conn.select( "SELECT DISTINCT title title FROM quote_keyword ORDER BY title" );
     for (tntdb::Result::const_iterator it = result.begin();
         it != result.end(); ++it
@@ -54,12 +51,9 @@ vector<KeywordCount> KeywordRegister::getAllKeywordTitleAndCound( const unsigned
     DEBUG std::endl;
     vector< KeywordCount > keywordList;
     Config config;
-
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn;
     tntdb::Result result;
 
-    conn = tntdb::connect(conn_para);
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
 
     tntdb::Statement st = conn.prepare( "SELECT title, \
                                 COUNT(title) As Anzahl \
@@ -92,12 +86,9 @@ vector<KeywordCount> KeywordRegister::getAllPubKeywordTitleAndCound( void ) {
     DEBUG std::endl;
     vector< KeywordCount > keywordList;
     Config config;
-
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn;
     tntdb::Result result;
 
-    conn = tntdb::connect(conn_para);
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
     result = conn.select(  "SELECT title, \
                                 COUNT(title) As Anzahl \
                             FROM quote_keyword \
@@ -126,12 +117,9 @@ vector<KeywordCount> KeywordRegister::getOwnKeywordTitleAndCound( const unsigned
 
     vector< KeywordCount > keywordList;
     Config config;
-
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn;
     tntdb::Result result;
 
-    conn = tntdb::connect(conn_para);
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
 
     tntdb::Statement st = conn.prepare( "SELECT title, \
                                 COUNT(title) As Anzahl \

@@ -214,11 +214,9 @@ std::vector<std::string> Quote::getKeywords() {
     Config config;
 
     if ( this->m_quoteKeywords.size() < 1 && this->m_ID > 0 ) {
-        string conn_para = config.get( "DB-DRIVER" );
-        tntdb::Connection conn;
         tntdb::Result result;
 
-        conn = tntdb::connect( conn_para );
+        tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
         tntdb::Statement st = conn.prepare( "SELECT title \
             FROM quote_keyword \
             WHERE quote_id = :v1 \
@@ -241,12 +239,10 @@ std::string Quote::getKeywordsAsString(){
     std::string keywordsAsString = "";
 
     if ( this->m_quoteKeywords.size() < 1 && this->m_ID > 0 ) {
-        string conn_para = config.get( "DB-DRIVER" );
-        tntdb::Connection conn;
         tntdb::Result result;
         std::string seperator = "";
 
-        conn = tntdb::connect( conn_para );
+        tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
         DEBUG std::endl;
         tntdb::Statement st = conn.prepare( "SELECT title \
             FROM quote_keyword \
@@ -286,8 +282,7 @@ void Quote::saveAsNew() {
         isPrivateData = "true";
     }
     try {
-        string conn_para = config.get( "DB-DRIVER" );
-        tntdb::Connection conn = tntdb::connect( conn_para );
+        tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
         DEBUG std::endl;
         tntdb::Transaction trans(conn);
         conn.prepare(
@@ -365,8 +360,8 @@ void Quote::saveUpdate(){
         isPrivateData = "true";
     }
     try {
-        string conn_para = config.get( "DB-DRIVER" );
-        tntdb::Connection conn = tntdb::connect( conn_para );
+
+        tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
         tntdb::Transaction trans(conn);
         conn.prepare(
             "UPDATE quote SET \

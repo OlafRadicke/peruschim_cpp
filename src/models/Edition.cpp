@@ -29,36 +29,30 @@ void Edition::saveAsNew(){
 
     Config config;
 
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn;
-    try {
-        conn = tntdb::connect( conn_para );
-        tntdb::Statement st = conn.prepare( 
-            "INSERT INTO edition  ( \
-                    owner_id,       \
-                    name,           \
-                    publishername,  \
-                    releasenumber,  \
-                    releasedate,    \
-                    releaseplace    \
-                ) VALUES (          \
-                    :owner_id,      \
-                    :name,          \
-                    '',             \
-                    '',             \
-                    '',             \
-                    ''              \
-                ) "
-                                        );
-        
-        st.set("owner_id", this->m_ownerID )
-        .set("name", this->m_name ).execute();
-        
-        this->m_ID = conn.lastInsertId("edition_id_seq");
-    } catch( const tntdb::Error& e ) {
-        ERROR  "Exception raised: " << e.what() << '\n';
-    }        
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    tntdb::Statement st = conn.prepare( 
+        "INSERT INTO edition  ( \
+                owner_id,       \
+                name,           \
+                publishername,  \
+                releasenumber,  \
+                releasedate,    \
+                releaseplace    \
+            ) VALUES (          \
+                :owner_id,      \
+                :name,          \
+                '',             \
+                '',             \
+                '',             \
+                ''              \
+            ) "
+                                    );
     
+    st.set("owner_id", this->m_ownerID )
+    .set("name", this->m_name ).execute();
+    
+    this->m_ID = conn.lastInsertId("edition_id_seq");
+
 }
 
 unsigned long  Edition::saveAsNewIfNotExist(){
@@ -69,14 +63,12 @@ unsigned long  Edition::saveAsNewIfNotExist(){
     vector<string>   list_1d;
     std:: string isPrivateData = "false";
 
-    string conn_para = config.get( "DB-DRIVER" );
-
-    tntdb::Connection conn = tntdb::connect( conn_para );
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
     DEBUG std::endl;
 
     tntdb::Statement st = conn.prepare( "SELECT id FROM edition \n\
                     WHERE owner_id = :v1  \n\
-                    AND name = :v2; " );
+                    AND name = :v2 " );
     st.set("v1", this->m_ownerID )
     .set("v2", this->m_name ).execute();
 
@@ -97,35 +89,27 @@ unsigned long  Edition::saveAsNewIfNotExist(){
 
 void Edition::saveUpdate(){
     DEBUG std::endl;
-
     Config config;
 
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn;
-    try {
-        conn = tntdb::connect( conn_para );
-        tntdb::Statement st = conn.prepare( 
-            "UPDATE edition SET \n\
-                    owner_id = :ownerID, \n\
-                    name = :name, \
-                    publishername = :publisherName, \
-                    releasenumber = :releaseNumber, \
-                    releasedate = :releaseDate, \
-                    releaseplace = :releasePlace \
-                WHERE id = :id"
-        );
-        
-        st.set("ownerID", this->m_ownerID )
-        .set("name", this->m_name )
-        .set("publisherName", this->m_publisherName )
-        .set("releaseNumber", this->m_releaseNumber )
-        .set("releaseDate", this->m_releaseDate )
-        .set("releasePlace", this->m_releasePlace )
-        .set("id", this->m_ID ).execute();
-        
-    } catch( const tntdb::Error& e ) {
-        ERROR  "Exception raised: " << e.what() << '\n';
-    }     
-
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    tntdb::Statement st = conn.prepare( 
+        "UPDATE edition SET \n\
+                owner_id = :ownerID, \n\
+                name = :name, \
+                publishername = :publisherName, \
+                releasenumber = :releaseNumber, \
+                releasedate = :releaseDate, \
+                releaseplace = :releasePlace \
+            WHERE id = :id"
+    );
+    
+    st.set("ownerID", this->m_ownerID )
+    .set("name", this->m_name )
+    .set("publisherName", this->m_publisherName )
+    .set("releaseNumber", this->m_releaseNumber )
+    .set("releaseDate", this->m_releaseDate )
+    .set("releasePlace", this->m_releasePlace )
+    .set("id", this->m_ID ).execute();
+    
     
 }

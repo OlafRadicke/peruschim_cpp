@@ -178,9 +178,8 @@ void WebACL::createAccount (
 /* G ----------------------------------------------------------------------- */
 
 AccountData WebACL::getAccountsWithID ( const unsigned long id ){
-    Config config;
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn = tntdb::connect(conn_para);
+    Config config;    
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
 
     tntdb::Statement st = conn.prepare( "SELECT \
                 login_name, \
@@ -226,8 +225,7 @@ std::vector<AccountData> WebACL::getAllAccounts ( void ){
     DEBUG  std::endl;
     std::vector<AccountData> accounts;
     Config config;
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn = tntdb::connect(conn_para);
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
 
     tntdb::Statement st = conn.prepare(
             "SELECT \
@@ -397,8 +395,7 @@ void WebACL::reSetUserRolls(
 
     DEBUG "reSetUserRolls" << std::endl;
     Config config;
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn = tntdb::connect(conn_para);
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
 
     tntdb::Statement st = conn.prepare( "DELETE FROM account_acl_roll \
                 WHERE account_id = :v1;");

@@ -34,21 +34,7 @@ UserSession userSession;
 </%session>
 
 <%cpp>
-
-DEBUG "Salz: " << WebACL::genRandomSalt ( 8 )  << endl;
-DEBUG "home" << endl;
-DEBUG "rand()"  << rand() << endl;
-DEBUG "rand()"  << rand() << endl;
 srand (time(NULL));
-DEBUG "rand()"  << rand() << endl;
-DEBUG "rand()"  << rand() << endl;
-srand (time(NULL));
-DEBUG "rand()"  << rand() << endl;
-DEBUG "rand()"  << rand() << endl;
-DEBUG "Salz: " << WebACL::genRandomSalt ( 8 )  << endl;
-
-
-
 </%cpp>
 
 

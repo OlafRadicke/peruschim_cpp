@@ -40,10 +40,8 @@ unsigned long UserSession::getUserID ( ) {
         DEBUG std::endl;
         return this->m_userID;
     } else {
-        string conn_para = config.get( "DB-DRIVER" );
-        tntdb::Connection conn;
 
-        conn = tntdb::connect(conn_para);
+        tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
         tntdb::Statement st = conn.prepare( 
             "SELECT \
                 id \
