@@ -23,12 +23,6 @@
 
 #include <vector>
 #include <string>
-#include <iostream>
-
-#include <tntdb/connection.h>
-#include <tntdb/connect.h>
-#include <tntdb/result.h>
-#include <tntdb/statement.h>
 
 #include "AccountData.h"
 

@@ -19,8 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #include "models/WebACL.h"
     #include "models/UserSession.h"
 
-    # define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-    # define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+    # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+    # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 </%pre>
 
 <%config>
@@ -35,17 +35,17 @@ UserSession userSession;
 
 <%cpp>
 
-DEBUG "Salz: " << WebACL::genRandomSalt ( 8 )  << endl;
-DEBUG "home" << endl;
-DEBUG "rand()"  << rand() << endl;
-DEBUG "rand()"  << rand() << endl;
+DEBUG "Salz: " << WebACL::genRandomSalt ( 8 )  << std::endl;
+DEBUG "home" << std::endl;
+DEBUG "rand()"  << rand() << std::endl;
+DEBUG "rand()"  << rand() << std::endl;
 srand (time(NULL));
-DEBUG "rand()"  << rand() << endl;
-DEBUG "rand()"  << rand() << endl;
+DEBUG "rand()"  << rand() << std::endl;
+DEBUG "rand()"  << rand() << std::endl;
 srand (time(NULL));
-DEBUG "rand()"  << rand() << endl;
-DEBUG "rand()"  << rand() << endl;
-DEBUG "Salz: " << WebACL::genRandomSalt ( 8 )  << endl;
+DEBUG "rand()"  << rand() << std::endl;
+DEBUG "rand()"  << rand() << std::endl;
+DEBUG "Salz: " << WebACL::genRandomSalt ( 8 )  << std::endl;
 
 
 

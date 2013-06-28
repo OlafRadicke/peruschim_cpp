@@ -22,15 +22,6 @@
 #define ACCOUNTDATA_H
 
 #include <string>
-#include <iostream>
-
-#include <cxxtools/md5.h>
-
-#include <tntdb/connection.h>
-#include <tntdb/connect.h>
-#include <tntdb/statement.h>
-#include <tntdb/transaction.h>
-
 #include "Config.h"
 
 
@@ -108,7 +99,7 @@ private:
      * @para len length of sting.
      * @return a random string
      */
-    std::string static genRandomSalt( const int len ) ;
+    std::string static genRandomSalt( int len ) ;
 
 };
 

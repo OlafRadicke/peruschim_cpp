@@ -18,8 +18,12 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-# include <tntdb/error.h>
-# include "Edition.h"
+#include "Edition.h"
+#include <tntdb/error.h>
+#include <tntdb/connection.h>
+#include <tntdb/connect.h>
+#include <tntdb/statement.h>
+#include <iostream>
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -29,7 +33,7 @@ void Edition::saveAsNew(){
 
     Config config;
 
-    string conn_para = config.get( "DB-DRIVER" );
+    std::string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn;
     try {
         conn = tntdb::connect( conn_para );
@@ -66,10 +70,9 @@ unsigned long  Edition::saveAsNewIfNotExist(){
     bool editionFound = false;
     std::string sqlcommand = "";
     Config config;
-    vector<string>   list_1d;
-    std:: string isPrivateData = "false";
+    std::vector<std::string>   list_1d;
 
-    string conn_para = config.get( "DB-DRIVER" );
+    std::string conn_para = config.get( "DB-DRIVER" );
 
     tntdb::Connection conn = tntdb::connect( conn_para );
     DEBUG std::endl;
@@ -100,7 +103,7 @@ void Edition::saveUpdate(){
 
     Config config;
 
-    string conn_para = config.get( "DB-DRIVER" );
+    std::string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn;
     try {
         conn = tntdb::connect( conn_para );

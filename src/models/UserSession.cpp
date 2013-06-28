@@ -18,8 +18,10 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <tntdb/statement.h>
 #include "UserSession.h"
+#include <tntdb/statement.h>
+#include <tntdb/connection.h>
+#include <tntdb/connect.h>
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -40,7 +42,7 @@ unsigned long UserSession::getUserID ( ) {
         DEBUG std::endl;
         return this->m_userID;
     } else {
-        string conn_para = config.get( "DB-DRIVER" );
+        std::string conn_para = config.get( "DB-DRIVER" );
         tntdb::Connection conn;
 
         conn = tntdb::connect(conn_para);
@@ -63,7 +65,7 @@ unsigned long UserSession::getUserID ( ) {
 }
 
 void UserSession::lockout( ) {
-    DEBUG "logout..." << endl;
+    DEBUG "logout..." << std::endl;
     this->m_userroles.clear();
     this->m_username = "";
     this->m_userID = 0;

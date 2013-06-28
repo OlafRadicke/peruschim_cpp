@@ -22,8 +22,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #include "models/QuoteRegister.h"
     #include "models/Quote.h"
 
-    # define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-    # define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+    # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+    # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 </%pre>
 
 <%args>
