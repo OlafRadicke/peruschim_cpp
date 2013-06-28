@@ -30,12 +30,9 @@ vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
     Config config;
     vector< vector<string> >  list_2d;
     unsigned int     col_count;
-
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn;
     tntdb::Result result;
 
-    conn = tntdb::connect(conn_para);
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
     DEBUG "SQLCODE: " << sqlcommand << endl;
     result = conn.select( sqlcommand );
     for (tntdb::Result::const_iterator it = result.begin();
@@ -59,12 +56,9 @@ string DatabaseProxy::sqlGetSingle ( string sqlcommand )
 {
     Config config;
     unsigned int     col_count;
-
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn;
     tntdb::Result result;
 
-    conn = tntdb::connect( conn_para );
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
     result = conn.select( sqlcommand );
     for (tntdb::Result::const_iterator it = result.begin();
         it != result.end(); ++it
@@ -85,12 +79,9 @@ void DatabaseProxy::sqlSet ( string sqlcommand )
 {
     Config config;
     DEBUG "sqlcommand: " << sqlcommand << endl;
-
-    string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn;
     tntdb::Result result;
 
-    conn = tntdb::connect( conn_para );
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
     conn.execute( sqlcommand );
 
 }

@@ -26,6 +26,24 @@
 # define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
+/*
+std::string myString = "foo:bar:baz";
+std::vector<std::string> tokens;
+cxxtools::split(':', myString, std::back_inserter(tokens));// split string
+
+std::string newString = cxxtools::join(tokens.begin(), tokens.end(),
+',');  // get it as a comma separated list or ...
+
+cxxtools::join(tokens.begin(), tokens.end(), '\n', std::cout);  // print
+it to stdout a word per line
+
+std::string number = cxxtools::convert<std::string>(5+6); // convert
+number to string
+unsigned unum = cxxtools::convert<unsigned>("4711"); // convert string
+to number
+
+
+*/
 
 std::string OString::IntToStr( const int number )
 {

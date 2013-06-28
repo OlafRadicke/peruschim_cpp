@@ -25,6 +25,10 @@
 #include <cxxtools/md5.h>
 #include <cxxtools/log.h>
 
+#include <tntdb/connection.h>
+#include <tntdb/connect.h>
+#include <tntdb/result.h>
+
 #include "DatabaseProxy.h"
 #include "WebACL.h"
 
@@ -38,63 +42,48 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
     std::string password_hash_a = "";
     std::string password_hash_b = "";
     std::string password_salt = "";
-    std::string masqu_name = "";
-    vector< vector<string> > sqlResult;
-    DatabaseProxy database_proxy;
+    Config config;
 
     DEBUG std::endl;
-    masqu_name = DatabaseProxy::replace( user_name, "'", "\\'" );
 
     // password salt request.
-    try {
-        DEBUG std::endl;
-        sqlResult = database_proxy.sqlGet ( "SELECT password_salt \
-             FROM account \
-             WHERE login_name = '" + masqu_name + "' \
-             AND account_disable IS NOT TRUE ;");
-    } catch ( char * errstr ) {
-        ERROR "Exception raised: " << errstr << '\n';
-    }
-    if ( sqlResult.size() > 0 ) {
-        DEBUG std::endl;
-        if ( sqlResult[0].size() > 0 ) {
-            DEBUG std::endl;
-            password_salt = sqlResult[0][0];
-            DEBUG "password_sal: " << password_salt << std::endl;
-        } else {
-            DEBUG "The sql result has not column." << std::endl;
-            return false;
-        }
-    } else {
-//        Logger::Logger ( "User not foaunt in data base?", Logger::LOG_LEVEL_WARN );
-        ERROR "User not foaunt in data base?" << std::endl;
-        return false;
-    }
+    
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    tntdb::Statement st = conn.prepare( 
+        "SELECT password_salt \
+        FROM account \
+        WHERE login_name = :login_name \
+        AND account_disable IS NOT TRUE"
+    );
+    st.set("login_name", user_name ).execute();
+
+    for ( tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); ++it ) {
+        tntdb::Row row = *it;
+        password_salt = row[0].getString();
+        DEBUG "password_salt: " <<  password_salt << std::endl;
+    }    
 
     password_hash_a = cxxtools::md5 ( password + password_salt );
     DEBUG "password_hash_a: " << password_hash_a << std::endl;
 
-    DEBUG std::endl;
-    try {
-        DEBUG std::endl;
-        sqlResult = database_proxy.sqlGet ( "SELECT password_hash FROM account WHERE login_name = '" + masqu_name + "';");
-    } catch ( char * errstr ) {
-        ERROR "Exception raised: " << errstr << '\n';
-    }
-    if ( sqlResult.size() > 0 ) {
-        DEBUG std::endl;
-        if ( sqlResult[0].size() > 0 ) {
-            DEBUG std::endl;
-            password_hash_b = sqlResult[0][0];
-        } else {
-            DEBUG "The sql result has not column." << std::endl;
-            return false;
-        }
-    } else {
-//        Logger::Logger ( "User not foaunt in data base?", Logger::LOG_LEVEL_WARN );
-        ERROR "User not foaunt in data base?" << std::endl;
-        return false;
-    }
+    st = conn.prepare( 
+            "SELECT password_hash \
+            FROM account \
+            WHERE login_name = :user_name"
+    );
+    st.set("user_name", user_name ).execute();
+
+    DEBUG  std::endl;
+    for ( tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); 
+        ++it
+    ) {
+        DEBUG  std::endl;
+        tntdb::Row row = *it;
+        password_hash_b = row[0].getString();
+        DEBUG "password_hash_b: " <<  password_hash_b << std::endl;
+    }        
 
     // is equal ?
     if ( password_hash_b == password_hash_a ) {
@@ -134,42 +123,69 @@ void WebACL::createAccount (
     DEBUG "start..." << std::endl;
     std::string password_hash = "";
     std::string password_salt = "";
-    std::string masqu_name = "";
-    vector< vector<string> > sqlResult;
-    DatabaseProxy database_proxy;
+    unsigned long user_id = 0;
+    Config config;
 
     password_salt = WebACL::genRandomSalt ( 16 );
     password_hash = cxxtools::md5 ( new_password + password_salt );
-    masqu_name = DatabaseProxy::replace( user_name );
 
-    database_proxy.sqlSet( \
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    tntdb::Statement st = conn.prepare( 
         "INSERT INTO account \
-        ( login_name, real_name, password_hash, password_salt, email, account_disable )\
+        (   login_name, \
+            real_name, \
+            password_hash, \
+            password_salt, \
+            email, \
+            account_disable )\
         VALUES \
-        ( '" + DatabaseProxy::replace( user_name ) + "',  \
-            '" + DatabaseProxy::replace( real_name ) + "',  \
-            '" + DatabaseProxy::replace( password_hash ) + "',  \
-            '" + DatabaseProxy::replace( password_salt ) + "',  \
-            '" + DatabaseProxy::replace( email ) + "',  \
+        (   :user_name,  \
+            :real_name,  \
+            :password_hash,  \
+            :password_salt,  \
+            :email,  \
             'FALSE'  \
         );"
     );
+    st.set("user_name", user_name )
+    .set("real_name", real_name )
+    .set("password_hash", password_hash )
+    .set("password_salt", password_salt )
+    .set("email", email ).execute();
+   
 
     if ( roll != "" ) {
-        std::string sqlcommand =    "SELECT \n\
-                            id \n\
-                        FROM account \n\
-                        WHERE login_name='" + DatabaseProxy::replace( user_name ) + "';";
-        string user_id = database_proxy.sqlGetSingle ( sqlcommand );
-        database_proxy.sqlSet( \
+        conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+        st = conn.prepare( 
+                "SELECT \
+                    id \
+                FROM account \
+                WHERE login_name = :user_name"
+        );
+        st.set( "user_name", user_name ).execute();
+        DEBUG  std::endl;
+        for ( tntdb::Statement::const_iterator it = st.begin();
+            it != st.end(); 
+            ++it
+        ) {
+            DEBUG  std::endl;
+            tntdb::Row row = *it;
+            user_id = row[0].getInt();
+            DEBUG "string user_id: " <<  user_id << std::endl;
+        }      
+       
+        conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+        st = conn.prepare( 
             "INSERT INTO account_acl_roll \
                 ( account_id, acl_roll_id )\
             VALUES \
-                ( " + user_id + ",  \
+                ( :user_id,  \
                     ( SELECT id FROM acl_roll \
-                      WHERE name = '" + DatabaseProxy::replace( roll ) + "' ) \
-                );"
-         );
+                      WHERE name = :roll ) \
+                )"
+        );
+        st.set( "user_id", user_id )
+        .set( "roll", roll ).execute();       
 
     }
 
