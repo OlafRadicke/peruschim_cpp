@@ -18,111 +18,145 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <stdio.h>
-#include <string>
-#include <iostream>
+#include "Config.h"
+#include <cxxtools/smartptr.h>
+#include <cxxtools/serializationinfo.h>
+#include <cxxtools/propertiesdeserializer.h>
+#include <cxxtools/mutex.h>
+#include <cxxtools/fileinfo.h>
+#include <cxxtools/log.h>
 #include <fstream>
 
-#include "Config.h"
+////////////////////////////////////////////////////////////////////////
+// ConfigImpl
+//
+class ConfigImpl : public cxxtools::RefCounted
+{
+    friend void operator>>= (const cxxtools::SerializationInfo& si, ConfigImpl& config);
 
-# define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+public:
+    explicit ConfigImpl(const std::string& fname);
 
-using namespace std;
+    const std::string& appIp() const
+    { return m_appIp; }
 
-list <string> Config::m_configStrings;
-string Config::m_confFilePath = "";
+    unsigned short     appPort() const
+    { return m_appPort; }
 
-Config::Config () {
-//     Config config;
+    const std::string& dbDriver() const
+    { return m_dbDriver; }
 
-    // checked is user config exist
-    string homedir_conf =  "./peruschim_cpp.conf" ;
-    ifstream fin ( homedir_conf.c_str() );
-    if (fin)  // if yes than use...
+    unsigned           sessionTimeout() const
+    { return m_sessionTimeout; }
+
+    const std::string& smtpServer() const
+    { return m_smtpServer; }
+
+    const std::string& mailFromAddress() const
+    { return m_mailFromAddress; }
+
+    std::string get(const std::string& var) const
     {
-        setConfFile ( homedir_conf );
-    } else { // if not, use globale conf
-        setConfFile ( "/etc/peruschim_cpp.conf" );
+        std::string value;
+        m_si.getMember(var) >>= value;
+        return value;
     }
-    fin.close();
-    readConfigFile ();
 
+private:
+    cxxtools::SerializationInfo m_si;
+
+    std::string m_appIp;
+    unsigned short m_appPort;
+    std::string m_dbDriver;
+    unsigned m_sessionTimeout;
+    std::string m_smtpServer;
+    std::string m_mailFromAddress;
+};
+
+void operator>>= (const cxxtools::SerializationInfo& si, ConfigImpl& config)
+{
+    si.getMember("APP-IP")             >>= config.m_appIp;
+    si.getMember("APP-PORT")           >>= config.m_appPort;
+    si.getMember("DB-DRIVER")          >>= config.m_dbDriver;
+    si.getMember("SESSION-RUNTIME")    >>= config.m_sessionTimeout;
+    si.getMember("SMTP-SERVER")        >>= config.m_smtpServer;
+    si.getMember("MAIL-FROM-ADDRESS")  >>= config.m_mailFromAddress;
+    config.m_si = si;
 }
 
-string Config::get( string key ) {
-    size_t found;
-    list<string>::iterator i;
-    key = key + "=";
-//     DEBUG "key: " << key << endl;
-//     DEBUG "values: " << m_configStrings.size() << endl;
-    for( i=m_configStrings.begin(); i != m_configStrings.end(); ++i) {
-//         DEBUG "round: " << *i << endl;
-        found = (*i).find ( key );
-        if (found!=string::npos) {
-//             DEBUG "found at: " << int(found) << endl;
-            if ( int(found) > 0 ) {
-                continue;
-            } else {
-                return (*i).substr ( key.size(), ((*i).size() - key.size()) );
-            }
-        } else {
-//             DEBUG "...no found" << endl;
+ConfigImpl::ConfigImpl(const std::string& fname)
+{
+    std::ifstream in(fname.c_str());
+    cxxtools::PropertiesDeserializer deserializer(in);
+    deserializer.deserialize(*this);
+
+    log_init(*deserializer.si());
+}
+
+namespace
+{
+    cxxtools::SmartPtr<ConfigImpl> theImpl = 0;
+    cxxtools::Mutex mutex;
+}
+
+////////////////////////////////////////////////////////////////////////
+// Config
+//
+const std::string& Config::appIp() const
+{
+    return impl->appIp();
+}
+
+unsigned short Config::appPort() const
+{
+    return impl->appPort();
+}
+
+const std::string& Config::dbDriver() const
+{
+    return impl->dbDriver();
+}
+
+unsigned Config::sessionTimeout() const
+{
+    return impl->sessionTimeout();
+}
+
+const std::string& Config::smtpServer() const
+{
+    return impl->smtpServer();
+}
+
+const std::string& Config::mailFromAddress() const
+{
+    return impl->mailFromAddress();
+}
+
+std::string Config::get(const std::string& var) const
+{
+    return impl->get(var);
+}
+
+Config::Config ()
+    : impl(0)
+{
+    cxxtools::MutexLock lock(mutex);
+    if (theImpl == 0)
+    {
+        std::string fname;
+
+        if (cxxtools::FileInfo::exists("peruschim_cpp.conf"))
+        {
+            fname = "peruschim_cpp.conf";
         }
-    }
-    return "";
-}
-
-list<string> Config::getList( string key ) {
-    list<string> resultList;
-    size_t found;
-    list<string>::iterator i;
-    key = key + "=";
-//     DEBUG "key: " << key << endl;
-//     DEBUG "values: " << m_configStrings.size() << endl;
-    for( i=m_configStrings.begin(); i != m_configStrings.end(); ++i) {
-//         DEBUG "round: " << *i << endl;
-        found = (*i).find ( key );
-        if (found!=string::npos) {
-//             DEBUG "found at: " << int(found) << endl;
-            if ( int(found) > 0 ) {
-                continue;
-            } else {
-                resultList.push_back ( (*i).substr ( key.size(), ((*i).size() - key.size()) ) );
-            }
-        } else {
-//             DEBUG "...no found" << endl;
+        else
+        {
+            fname = "/etc/peruschim_cpp.conf";
         }
+
+        theImpl = new ConfigImpl(fname);
     }
-    return resultList;
+
+    impl = theImpl.getPointer();
 }
 
-string Config::getConfFile ( ){
-    return m_confFilePath ;
-}
-
-
-void Config::readConfigFile ( ){
-    string completString = "";
-    string line = "";
-//     DEBUG "open: " << Config::m_confFilePath << endl;
-    // open fiele to read....
-    ifstream config_file ( Config::m_confFilePath.c_str ()  );
-    if ( config_file.is_open () ) {
-        while ( config_file.good () ) {
-            getline ( config_file, line );
-//             DEBUG line << endl;
-            m_configStrings.push_back ( line );
-        }
-    }else{
-        cerr << "[201111062048] couldn't open \"" << m_confFilePath \
-            << "\" for reading\n" << endl;
-        throw;
-    }
-    config_file.close ();
-}
-
-
-void Config::setConfFile ( string path ) {
-    m_confFilePath = path;
-}

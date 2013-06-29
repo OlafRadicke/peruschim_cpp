@@ -14,5 +14,5 @@
 </%session>
 
 <%cpp>
-    userSession.lockout();
+    userSession.logout();
 </%cpp>

@@ -3,13 +3,12 @@
 TNTNET=tntnet
 TNTMAKEFILE = ./tntnet-make/Makefile
 
-CPPFLAGS = -Wall -Werror -pedantic  -Wno-long-long
-CPPFLAGS += -fPIC -O2
+CPPFLAGS = -Wall -Werror -pedantic -Wno-long-long
+CPPFLAGS += -O2 -I ./src
 LIBS =  -ltntnet -lcxxtools -ltntdb
-LIBS += -I ./src
 
 
-CC = g++
+CXX = g++
 DIST = ./bin
 PROG_NAME = ./peruschim_cpp
 
@@ -74,14 +73,14 @@ dist: convecpp $(PROG_NAME)
 	cp ./LICENSE.txt $(DIST)
 
 $(PROG_NAME):  $(OBJECTS)
-	LANG=C LC_ALL=C  $(CC) $(CPPFLAGS)  $(LIBS) -o $(PROG_NAME) $(OBJECTS)
+	$(CXX) $(CPPFLAGS)  $(LIBS) -o $(PROG_NAME) $(OBJECTS)
 
 testtest:
-	LANG=C LC_ALL=C  echo $(LIBS)
+	echo $(LIBS)
 
 %.o: %.cpp
-	LANG=C LC_ALL=C  echo $(LIBS)
-	LANG=C LC_ALL=C  $(CC) $(CPPFLAGS) $(LIBS) -I usr -o ./$@  -c ./$<
+	echo $(LIBS)
+	$(CXX) $(CPPFLAGS) -I usr -o ./$@  -c ./$<
 
 
 convecpp:

@@ -18,9 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <%pre>
     #include "../models/WebACL.h"
     #include "../models/UserSession.h"
-
-    # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-    # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 </%pre>
 
 <%args>
@@ -33,15 +30,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </%session>
 
 <%cpp>
-    DEBUG std::endl;
-    DEBUG std::endl;
-    if ( WebACL::authUser ( name, password ) == true ) {
-        DEBUG std::endl;
+    log_debug("authUser(" << name << ", ***)");
+    if ( WebACL::authUser ( name, password ) )
+    {
         userSession.setUserName ( name );
         userSession.addRoll (  WebACL::getRoll ( name ) );
         return reply.redirect ( "/home" );
-    } else {
-        DEBUG std::endl;
-        // pass
+    }
+    else
+    {
+        log_debug("fail");
     };
 </%cpp>

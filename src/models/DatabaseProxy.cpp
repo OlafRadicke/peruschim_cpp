@@ -23,12 +23,9 @@
 #include <tntdb/connection.h>
 #include <tntdb/connect.h>
 #include <tntdb/result.h>
-#include <iostream>
+#include <cxxtools/log.h>
 
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-
-
+log_define("models.DatabaseProxy")
 
 std::vector< std::vector<std::string> > DatabaseProxy::sqlGet ( std::string sqlcommand )
 {
@@ -40,8 +37,8 @@ std::vector< std::vector<std::string> > DatabaseProxy::sqlGet ( std::string sqlc
     tntdb::Connection conn;
     tntdb::Result result;
 
-    conn = tntdb::connect(conn_para);
-    DEBUG "SQLCODE: " << sqlcommand << std::endl;
+    conn = tntdb::connectCached(conn_para);
+    log_debug("SQLCODE: " << sqlcommand);
     result = conn.select( sqlcommand );
     for (tntdb::Result::const_iterator it = result.begin();
         it != result.end(); ++it
@@ -69,7 +66,7 @@ std::string DatabaseProxy::sqlGetSingle ( std::string sqlcommand )
     tntdb::Connection conn;
     tntdb::Result result;
 
-    conn = tntdb::connect( conn_para );
+    conn = tntdb::connectCached( conn_para );
     result = conn.select( sqlcommand );
     for (tntdb::Result::const_iterator it = result.begin();
         it != result.end(); ++it
@@ -79,7 +76,7 @@ std::string DatabaseProxy::sqlGetSingle ( std::string sqlcommand )
 
             std::string value;
             row[col_count].get(value);
-            DEBUG "value=" << value << std::endl;
+            log_debug("value=" << value);
             return value;
         }
     }
@@ -89,13 +86,13 @@ std::string DatabaseProxy::sqlGetSingle ( std::string sqlcommand )
 void DatabaseProxy::sqlSet ( std::string sqlcommand )
 {
     Config config;
-    DEBUG "sqlcommand: " << sqlcommand << std::endl;
+    log_debug("sqlcommand: " << sqlcommand);
 
     std::string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn;
     tntdb::Result result;
 
-    conn = tntdb::connect( conn_para );
+    conn = tntdb::connectCached( conn_para );
     conn.execute( sqlcommand );
 
 }
