@@ -24,11 +24,6 @@
 #include <string>
 #include <vector>
 
-#include <tntdb/connection.h>
-#include <tntdb/connect.h>
-#include <tntdb/result.h>
-#include <tntdb/statement.h>
-
 using namespace std;
 
 /**

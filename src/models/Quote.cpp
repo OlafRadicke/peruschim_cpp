@@ -19,9 +19,12 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <tntdb/transaction.h>
-#include <tntdb/error.h>
 #include "Quote.h"
+#include <tntdb/transaction.h>
+#include <tntdb/connect.h>
+#include <tntdb/result.h>
+#include <tntdb/statement.h>
+#include <tntdb/error.h>
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -214,8 +217,8 @@ std::vector<std::string> Quote::getKeywords() {
     Config config;
 
     if ( this->m_quoteKeywords.size() < 1 && this->m_ID > 0 ) {
-        tntdb::Result result;
 
+        tntdb::Result result;
         tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
         tntdb::Statement st = conn.prepare( "SELECT title \
             FROM quote_keyword \
@@ -277,12 +280,10 @@ void Quote::saveAsNew() {
 
     DEBUG std::endl;
     Config config;
-    std:: string isPrivateData = "false";
-    if ( m_isPrivateData ) {
-        isPrivateData = "true";
-    }
     try {
-        tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+        tntdb::Connection conn = 
+            tntdb::connectCached( config.get( "DB-DRIVER" ) );
+
         DEBUG std::endl;
         tntdb::Transaction trans(conn);
         conn.prepare(
@@ -323,7 +324,7 @@ void Quote::saveAsNew() {
         .set( "note", this->m_note )
         .set( "ownerID", this->m_ownerID )
         .set( "editionID", this->m_editionID )
-        .set( "isPrivateData", isPrivateData ).execute();
+        .set( "isPrivateData", m_isPrivateData ).execute();
 
         DEBUG std::endl;
         this->m_ID = conn.lastInsertId("quote_id_seq");
@@ -355,13 +356,10 @@ void Quote::saveUpdate(){
 
     DEBUG std::endl;
     Config config;
-    std:: string isPrivateData = "false";
-    if ( m_isPrivateData ) {
-        isPrivateData = "true";
-    }
     try {
+        tntdb::Connection conn = 
+            tntdb::connectCached( config.get( "DB-DRIVER" ) );
 
-        tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
         tntdb::Transaction trans(conn);
         conn.prepare(
             "UPDATE quote SET \
@@ -388,7 +386,7 @@ void Quote::saveUpdate(){
         .set( "note", this->m_note )
         .set( "ownerID", this->m_ownerID )
         .set( "editionID", this->m_editionID )
-        .set( "isPrivateData", isPrivateData )
+        .set( "isPrivateData", m_isPrivateData )
         .set( "id", this->m_ID ).execute();
 
         for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) {
@@ -427,7 +425,7 @@ void Quote::setKeywords( std::string keywords ) {
     DEBUG std::endl;
     while(found!=std::string::npos){
         DEBUG "found: " << found << std::endl;
-        string keyword = keywords.substr(0,found);
+        std::string keyword = keywords.substr(0,found);
         m_quoteKeywords.push_back( keyword );
         DEBUG "keyword: " << keyword << std::endl;
         keywordsize = keyword.size();
@@ -454,7 +452,7 @@ void Quote::setKeywords( std::string keywords ) {
 }
 
 
-string Quote::lowercase ( string keywords ) {
+std::string Quote::lowercase ( std::string keywords ) {
     keywords = strReplace ( "A", "a", keywords);
     keywords = strReplace ( "B", "b", keywords);
     keywords = strReplace ( "C", "c", keywords);
@@ -487,7 +485,7 @@ string Quote::lowercase ( string keywords ) {
     return keywords;
 }
 
-string Quote::strReplace (string rep, string with, string in) {
+std::string Quote::strReplace (std::string rep, std::string with, std::string in) {
   int pos;
   while (true) {
     pos = in.find(rep);

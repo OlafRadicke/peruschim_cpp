@@ -21,13 +21,8 @@
 #ifndef USERSESSION_H
 #define USERSESSION_H
 
-#include <iostream>
 #include <vector>
 #include <string>
-
-#include <tntdb/connection.h>
-#include <tntdb/connect.h>
-#include <tntdb/result.h>
 
 #include "Config.h"
 #include "DatabaseProxy.h"

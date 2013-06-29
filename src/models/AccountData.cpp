@@ -20,6 +20,11 @@
 
 
 #include "AccountData.h"
+#include <tntdb/connection.h>
+#include <tntdb/connect.h>
+#include <tntdb/transaction.h>
+#include <stdlib.h>
+#include <cxxtools/md5.h>
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -34,7 +39,7 @@ void AccountData::deleteAllData() {
     std::string sqlcommand = "";
     Config config;
 
-    string conn_para = config.get( "DB-DRIVER" );
+    std::string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn = tntdb::connect( conn_para );
     tntdb::Transaction trans(conn);
 
@@ -59,17 +64,17 @@ void AccountData::deleteAllData() {
 
 // G --------------------------------------------------------------------------
 
-string AccountData::genRandomSalt ( const int len) {
+std::string AccountData::genRandomSalt ( int len) {
     /* initialize random seed: */
     srand (time(NULL));
-    string randomString = "";
+    std::string randomString = "";
     static const char alphanum[] =
         "0123456789"
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz";
     for (int i = 0; i < len; ++i) {
         int randNo = rand() % (sizeof(alphanum) - 1) ;
-        DEBUG "randNo: " << randNo << endl;
+        DEBUG "randNo: " << randNo << std::endl;
         randomString.push_back ( alphanum[randNo] );
     }
     return randomString;
@@ -84,7 +89,7 @@ void AccountData::saveUpdate(){
     std::string sqlcommand = "";
     Config config;
 
-    string conn_para = config.get( "DB-DRIVER" );
+    std::string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn = tntdb::connect( conn_para );
     tntdb::Statement st = conn.prepare( "UPDATE account SET \n\
         login_name=:v1 ,  \n\
@@ -109,13 +114,12 @@ void AccountData::setNewPassword ( std::string newpassword ) {
     std::string password_salt;
     std::string password_hash;
     Config config;
-    vector<string>   list_1d;
-    std:: string isPrivateData = "false";
+    std::vector<std::string>   list_1d;
 
     password_salt = AccountData::genRandomSalt ( 16 );
     password_hash = cxxtools::md5 ( newpassword + password_salt );
 
-    string conn_para = config.get( "DB-DRIVER" );
+    std::string conn_para = config.get( "DB-DRIVER" );
     tntdb::Connection conn = tntdb::connect( conn_para );
     DEBUG std::endl;
     tntdb::Statement st = conn.prepare( "UPDATE account SET \n\

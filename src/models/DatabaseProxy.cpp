@@ -19,31 +19,37 @@
 */
 
 #include "DatabaseProxy.h"
+#include "Config.h"
+#include <tntdb/connection.h>
+#include <tntdb/connect.h>
+#include <tntdb/result.h>
+#include <iostream>
 
-# define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 
 
-vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
+std::vector< std::vector<std::string> > DatabaseProxy::sqlGet ( std::string sqlcommand )
 {
     Config config;
-    vector< vector<string> >  list_2d;
+    std::vector< std::vector<std::string> >  list_2d;
     unsigned int     col_count;
     tntdb::Result result;
 
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
-    DEBUG "SQLCODE: " << sqlcommand << endl;
+    tntdb::Connection conn = 
+        tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    DEBUG "SQLCODE: " << sqlcommand << std::endl;
     result = conn.select( sqlcommand );
     for (tntdb::Result::const_iterator it = result.begin();
         it != result.end(); ++it
     ) {
-        vector<string>  list_1d;
+        std::vector<std::string>  list_1d;
         tntdb::Row row = *it;
         for ( col_count = 0; col_count != row.size(); col_count++ ) {
             std::string value;
             row[col_count].get(value);
-            string copy_value = value;
+            std::string copy_value = value;
             list_1d.push_back( copy_value );
         }
         list_2d.push_back( list_1d );
@@ -52,7 +58,7 @@ vector< vector<string> > DatabaseProxy::sqlGet ( string sqlcommand )
     return list_2d;
 }
 
-string DatabaseProxy::sqlGetSingle ( string sqlcommand )
+std::string DatabaseProxy::sqlGetSingle ( std::string sqlcommand )
 {
     Config config;
     unsigned int     col_count;
@@ -68,17 +74,17 @@ string DatabaseProxy::sqlGetSingle ( string sqlcommand )
 
             std::string value;
             row[col_count].get(value);
-            DEBUG "value=" << value << endl;
+            DEBUG "value=" << value << std::endl;
             return value;
         }
     }
     return "";
 }
 
-void DatabaseProxy::sqlSet ( string sqlcommand )
+void DatabaseProxy::sqlSet ( std::string sqlcommand )
 {
     Config config;
-    DEBUG "sqlcommand: " << sqlcommand << endl;
+    DEBUG "sqlcommand: " << sqlcommand << std::endl;
     tntdb::Result result;
 
     tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );

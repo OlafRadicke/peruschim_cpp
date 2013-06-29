@@ -26,6 +26,7 @@
 #include "models/Quote.h"
 #include "models/QuoteRegister.h"
 #include "models/OString.h"
+#include <iostream>
 
 
 
@@ -80,21 +81,21 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
     };
 
     g_accountList = WebACL::getAllAccounts();
-    DEBUG "g_accountList.size(): " << g_accountList.size() << endl;
+    DEBUG "g_accountList.size(): " << g_accountList.size() << std::endl;
 
     // if a account selected for editing?
-    DEBUG "arg_edit_account_id: " << arg_edit_account_id << endl;
+    DEBUG "arg_edit_account_id: " << arg_edit_account_id << std::endl;
     if ( arg_edit_account_id > 0 ) {
         g_affirmation = "";
         g_feedback = "";
         g_accountData =  WebACL::getAccountsWithID ( arg_edit_account_id );
         DEBUG "g_accountData.getLogin_name(): " <<       
-            g_accountData.getLogin_name() << endl;
+            g_accountData.getLogin_name() << std::endl;
         g_userRolls = WebACL::getRoll ( g_accountData.getLogin_name() );
         g_allRolls = WebACL::getAllRolls();
         g_session_account_id = arg_edit_account_id;
         DEBUG "g_accountData.getAccount_disable(): " <<       
-            g_accountData.getAccount_disable() << endl;
+            g_accountData.getAccount_disable() << std::endl;
 
     }
 
@@ -102,25 +103,25 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
     if ( arg_button_update_account == "Speichern" ) {
         g_affirmation = "";
         g_feedback = "";
-        DEBUG "Speichern" << endl;
-        DEBUG "g_session_account_id: " << g_session_account_id << endl;
+        DEBUG "Speichern" << std::endl;
+        DEBUG "g_session_account_id: " << g_session_account_id << std::endl;
         g_accountData.setID( g_session_account_id );
-        DEBUG "arg_login_name: " << arg_login_name << endl;
+        DEBUG "arg_login_name: " << arg_login_name << std::endl;
         g_accountData.setLogin_name( arg_login_name );
-        DEBUG "arg_name: " << arg_name << endl;
+        DEBUG "arg_name: " << arg_name << std::endl;
         g_accountData.setReal_name( arg_name );
-        DEBUG "arg_mail: " << arg_mail << endl;
+        DEBUG "arg_mail: " << arg_mail << std::endl;
         g_accountData.setEmail( arg_mail );
-        DEBUG "arg_is_inactive: " << arg_is_inactive << endl;
+        DEBUG "arg_is_inactive: " << arg_is_inactive << std::endl;
         g_accountData.setAccount_disable( arg_is_inactive );
 
-        DEBUG "args_userroles.size(): " << args_userroles.size() << endl;
+        DEBUG "args_userroles.size(): " << args_userroles.size() << std::endl;
         WebACL::reSetUserRolls( g_session_account_id, args_userroles);
         g_accountData.saveUpdate();
 
         // check if new password set.
         if (arg_password_a != "" ) {
-            DEBUG "arg_password_a" << arg_password_a << endl;
+            DEBUG "arg_password_a" << arg_password_a << std::endl;
             // check equal of new password.
             if ( arg_password_a != arg_password_b ) {
                 g_feedback = "Das Passwort ist nicht gleich!";
@@ -144,7 +145,7 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
         g_session_account_id = arg_delete_account_id;        
         g_accountData =  WebACL::getAccountsWithID ( g_session_account_id );
         DEBUG "g_accountData.getLogin_name(): " <<       
-            g_accountData.getLogin_name() << endl;
+            g_accountData.getLogin_name() << std::endl;
         g_affirmation = "Account \""+ g_accountData.getLogin_name() +" (ID " + \
             cxxtools::convert<std::string>( g_session_account_id ) \
             + ")\" und allen zugehörigen Daten wirklich löschen?";
@@ -155,7 +156,7 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
     if ( arg_affirmation_delete_account_id > 0 ) {
         g_affirmation = "";
         g_feedback = "";
-        DEBUG "will löschen: " << arg_affirmation_delete_account_id << endl;
+        DEBUG "will löschen: " << arg_affirmation_delete_account_id << std::endl;
         g_accountData.setID( arg_affirmation_delete_account_id );
         g_accountData.deleteAllData();
         g_feedback = "Der Account mit der Id " + \

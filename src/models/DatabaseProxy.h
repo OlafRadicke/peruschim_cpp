@@ -23,19 +23,12 @@
 
 #include <vector>
 #include <string>
-#include <iostream>
-
-#include <tntdb/connection.h>
-#include <tntdb/connect.h>
-#include <tntdb/result.h>
-
-#include "Config.h"
 
 class DatabaseProxy {
 
 public:
 
-    string m_dbbackent;
+    std::string m_dbbackent;
 
      /**
      * Convert int to string.
@@ -47,21 +40,21 @@ public:
      * Do a SQL command without result.
      * @param sqlcommand a sql command.
      **/
-    void sqlSet( string sqlcommand );
+    void sqlSet( std::string sqlcommand );
 
      /**
      * get back a SQL result as 3d vector.
      * @param sqlcommand a sql command.
      * @return If nothing found, it is get back a empty string.
      **/
-    vector< vector<string> >  sqlGet( string sqlcommand );
+    std::vector< std::vector<std::string> >  sqlGet( std::string sqlcommand );
 
     /**
      * get back the first fund of result.
      * @param sqlcommand a sql command.
      * @return If nothing found, it is get back a empty string.
      **/
-    string  sqlGetSingle ( string sqlcommand );
+    std::string  sqlGetSingle ( std::string sqlcommand );
 
     /**
      * Replace a char with a string.

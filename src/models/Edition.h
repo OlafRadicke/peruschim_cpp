@@ -23,7 +23,6 @@
 
 #include <string>
 #include <vector>
-#include <tntdb/statement.h>
 #include "Config.h"
 #include "DatabaseProxy.h"
 

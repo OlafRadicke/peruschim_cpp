@@ -24,11 +24,6 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <sstream>
-
-#include <tntdb/statement.h>
-#include <cxxtools/jsonserializer.h>
-#include <cxxtools/serializationinfo.h>
 
 #include "DatabaseProxy.h"
 #include "Edition.h"
@@ -44,7 +39,7 @@ public:
      **/
     Quote();
 
-    vector<std::string> allBibleBooks;
+    std::vector<std::string> allBibleBooks;
 
     /**
      * Try to build the Bibleserver.com url.
@@ -377,19 +372,19 @@ private:
      * @param rep original string
      * @return string with replacements
      **/
-    string strReplace (string rep, string with, string in);
+    std::string strReplace (std::string rep, std::string with, std::string in);
 
     /**
      * Return a copy of the string with all the cased characters converted to
      * lowercase.
      **/
-    string lowercase ( string keywords );
+    std::string lowercase ( std::string keywords );
 
 
     /**
      * Mapping bible books name of bibleserver.com
      */
-    map<string, string> BibleserverComNames;
+    std::map<std::string, std::string> BibleserverComNames;
 
     /**
      * Buffer for edition data. Is use only by JSON-deserializeing.

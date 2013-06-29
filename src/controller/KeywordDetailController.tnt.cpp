@@ -27,7 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 <%args>
-string keyword = "";
+keyword;
 </%args>
 
 <%session scope="global">
@@ -35,7 +35,7 @@ string keyword = "";
 </%session>
 
 <%cpp>
-    DEBUG "keyword: " << keyword << endl;
+    DEBUG "keyword: " << keyword << std::endl;
     bool isLogin = false;
     std::vector<Quote> quoteList;
     // ACL Check

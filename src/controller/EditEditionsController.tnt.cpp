@@ -90,7 +90,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     // deleting action
     if ( delete_edition_id > 0 ) {
-        DEBUG "delete_edition_id: " << delete_edition_id << endl;
+        DEBUG "delete_edition_id: " << delete_edition_id << std::endl;
         int useCount = EditionManager::isEditionInUse( delete_edition_id );
         if ( useCount > 0 ) {
             feedback = "Die Ausgabe wird noch von anderen Einträgen verwendet \
@@ -103,7 +103,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     // create new edition action
     if ( new_edition == "pushed" ) {
-        DEBUG "new_edition: " << new_edition << endl;
+        DEBUG "new_edition: " << new_edition << std::endl;
 
         editionData.setName( new_edition_title );
         editionData.setOwnerID( userSession.getUserID() );

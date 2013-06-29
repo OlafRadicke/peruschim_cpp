@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #include "models/Edition.h"
     #include "models/Quote.h"
     #include "models/QuoteRegister.h"
+    #include <iostream>
 
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -71,8 +72,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
 
     std::string userName  = userSession.getUserName();
-    DEBUG "quote_id: " << quote_id << endl;
-    DEBUG "session_quote_id: " << session_quote_id << endl;
+    DEBUG "quote_id: " << quote_id << std::endl;
+    DEBUG "session_quote_id: " << session_quote_id << std::endl;
 
     editionList =  EditionManager::getAllEditions( userSession.getUserID() );
 

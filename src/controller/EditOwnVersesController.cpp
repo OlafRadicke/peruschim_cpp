@@ -2,6 +2,7 @@
 #include "models/Quote.h"
 #include "models/QuoteRegister.h"
 #include "models/OString.h"
+#include <iostream>
 
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -55,7 +56,7 @@ unsigned EditOwnVerses::operator() (tnt::HttpRequest& request, tnt::HttpReply& r
     if ( affirmation_delete_verse_id > 0 ) {
         affirmation_question = "";
         feedback = "";
-        DEBUG "will löschen: " << affirmation_delete_verse_id << endl;
+        DEBUG "will löschen: " << affirmation_delete_verse_id << std::endl;
         QuoteRegister::deleteQuote( 
             cxxtools::convert<unsigned long>( affirmation_delete_verse_id )        
         );

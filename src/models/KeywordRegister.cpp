@@ -21,6 +21,11 @@
 #include "KeywordRegister.h"
 #include "Config.h"
 
+#include <tntdb/connection.h>
+#include <tntdb/connect.h>
+#include <tntdb/result.h>
+#include <tntdb/statement.h>
+
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 

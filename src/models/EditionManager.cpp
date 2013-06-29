@@ -19,6 +19,8 @@
 */
 
 #include "EditionManager.h"
+#include <tntdb/connect.h>
+#include <tntdb/statement.h>
 
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -28,8 +30,8 @@
 
 void EditionManager::deleteEditionByID ( const unsigned long id ) {
     Config config;
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
-
+    tntdb::Connection conn = 
+        tntdb::connectCached( config.get( "DB-DRIVER" ) );
     tntdb::Statement st = conn.prepare( "DELETE FROM edition \
                     WHERE id= :v1 ;");
     st.set( "v1", id ).execute();
@@ -42,8 +44,9 @@ std::vector<Edition> EditionManager::getAllEditions ( const unsigned long user_i
     DEBUG "user_id: " << user_id  << std::endl;
     std::vector<Edition> editionList;
     Config config;
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
-    
+
+    tntdb::Connection conn = 
+        tntdb::connectCached( config.get( "DB-DRIVER" ) );
     tntdb::Statement st = conn.prepare( "SELECT \
                         id, \
                         name, \
@@ -80,8 +83,8 @@ std::vector<Edition> EditionManager::getAllEditions ( const unsigned long user_i
 Edition EditionManager::getEditionByID ( const unsigned long id ) {
     Edition edition;
     Config config;
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
-
+    tntdb::Connection conn = 
+        tntdb::connectCached( config.get( "DB-DRIVER" ) );
     tntdb::Statement st = conn.prepare( "SELECT \
                         id, \
                         owner_id, \
@@ -110,7 +113,7 @@ Edition EditionManager::getEditionByID ( const unsigned long id ) {
 
         return edition;
     }
-    string errorinfo = "Edition with id " + cxxtools::convert<std::string>( id ) + " no found!";
+    std::string errorinfo = "Edition with id " + cxxtools::convert<std::string>( id ) + " no found!";
     throw errorinfo;
 
 }
@@ -119,8 +122,8 @@ Edition EditionManager::getEditionByID ( const unsigned long id ) {
 
 int EditionManager::isEditionInUse ( const unsigned long id ){
     Config config;
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
-
+    tntdb::Connection conn = 
+        tntdb::connectCached( config.get( "DB-DRIVER" ) );
     tntdb::Statement st = conn.prepare( " SELECT COUNT(edition_id) \
          FROM quote \
          WHERE edition_id = :v1 ;");

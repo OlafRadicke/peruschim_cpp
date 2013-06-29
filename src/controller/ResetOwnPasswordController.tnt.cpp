@@ -19,8 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #include "models/WebACL.h"
     #include "models/UserSession.h"
 
-    # define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-    # define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+    # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+    # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 </%pre>
 
 <%config>
@@ -51,7 +51,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         // check if new password set.
         if (password_a != "" ) {
-            DEBUG "password_a" << password_a << endl;
+            DEBUG "password_a" << password_a << std::endl;
             // check equal of new password.
             if ( password_a != password_b ) {
                 feedback = "Das Passwort ist nicht gleich!";

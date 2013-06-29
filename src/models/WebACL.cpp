@@ -17,23 +17,32 @@
 * You should have received a copy of the GNU Affero General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+/*
+#include "WebACL.h"
+#include "DatabaseProxy.h"
+#include <string>
+#include <iostream>
+
+#include <tntdb/connect.h>
+#include <tntdb/statement.h>
+#include <cxxtools/md5.h>
+*/
 
 #include <string>
-#include <list>
 #include <iostream>
 
 #include <cxxtools/md5.h>
-#include <cxxtools/log.h>
-
 #include <tntdb/connection.h>
 #include <tntdb/connect.h>
-#include <tntdb/result.h>
+// #include <tntdb/result.h>
+#include <tntdb/statement.h>
 
 #include "DatabaseProxy.h"
 #include "WebACL.h"
 
-# define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+
+# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 /* A ----------------------------------------------------------------------- */
 
 
@@ -42,7 +51,9 @@ bool WebACL::authUser ( std::string user_name, std::string password ) {
     std::string password_hash_a = "";
     std::string password_hash_b = "";
     std::string password_salt = "";
+
     Config config;
+
 
     DEBUG std::endl;
 
@@ -126,6 +137,7 @@ void WebACL::createAccount (
     unsigned long user_id = 0;
     Config config;
 
+
     password_salt = WebACL::genRandomSalt ( 16 );
     password_hash = cxxtools::md5 ( new_password + password_salt );
 
@@ -176,6 +188,7 @@ void WebACL::createAccount (
        
         conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
         st = conn.prepare( 
+
             "INSERT INTO account_acl_roll \
                 ( account_id, acl_roll_id )\
             VALUES \
@@ -194,8 +207,10 @@ void WebACL::createAccount (
 /* G ----------------------------------------------------------------------- */
 
 AccountData WebACL::getAccountsWithID ( const unsigned long id ){
+
     Config config;    
     tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+
 
     tntdb::Statement st = conn.prepare( "SELECT \
                 login_name, \
@@ -241,8 +256,8 @@ std::vector<AccountData> WebACL::getAllAccounts ( void ){
     DEBUG  std::endl;
     std::vector<AccountData> accounts;
     Config config;
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
 
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
     tntdb::Statement st = conn.prepare(
             "SELECT \
                 id, \
@@ -280,17 +295,17 @@ std::vector<AccountData> WebACL::getAllAccounts ( void ){
 
 }
 
-string WebACL::genRandomSalt ( const int len) {
+std::string WebACL::genRandomSalt ( const int len) {
     /* initialize random seed: */
     srand (time(NULL));
-    string randomString = "";
+    std::string randomString = "";
     static const char alphanum[] =
         "0123456789"
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz";
     for (int i = 0; i < len; ++i) {
         int randNo = rand() % (sizeof(alphanum) - 1) ;
-        DEBUG "randNo: " << randNo << endl;
+        DEBUG "randNo: " << randNo << std::endl;
         randomString.push_back ( alphanum[randNo] );
     }
     return randomString;
@@ -300,8 +315,8 @@ string WebACL::genRandomSalt ( const int len) {
 
 std::vector<std::string> WebACL::getAllRolls ( ){
     DatabaseProxy database_proxy;
-    vector< vector<string> > sqlResult;
-    vector<std::string> rolls;
+    std::vector< std::vector<std::string> > sqlResult;
+    std::vector<std::string> rolls;
 
     DEBUG std::endl;
     sqlResult = database_proxy.sqlGet
@@ -319,8 +334,8 @@ std::vector<std::string> WebACL::getAllRolls ( ){
 
 std::vector<std::string> WebACL::getRoll ( std::string user_name ){
     DatabaseProxy database_proxy;
-    vector< vector<string> > sqlResult;
-    vector<std::string> rolls;
+    std::vector< std::vector<std::string> > sqlResult;
+    std::vector<std::string> rolls;
 
     DEBUG std::endl;
     sqlResult = database_proxy.sqlGet
@@ -346,7 +361,7 @@ std::vector<std::string> WebACL::getRoll ( std::string user_name ){
 
 bool WebACL::isUserExist ( std::string user_name ){
     DEBUG "start..." << std::endl;
-    vector< vector<string> > sqlResult;
+    std::vector< std::vector<std::string> > sqlResult;
     DatabaseProxy database_proxy;
     DEBUG std::endl;
     try {
@@ -354,7 +369,7 @@ bool WebACL::isUserExist ( std::string user_name ){
         sqlResult = database_proxy.sqlGet( "SELECT * FROM account \
             WHERE login_name = '" + DatabaseProxy::replace( user_name ) + "';");
     } catch ( ... ) {
-        ERROR "Exception raised with: database_proxy.sqlSet ()" << endl;
+        ERROR "Exception raised with: database_proxy.sqlSet ()" << std::endl;
         return false;
     }
     if ( sqlResult.size() > 0 ) {
@@ -384,7 +399,7 @@ void WebACL::setPassword (  std::string user_name, std::string new_password ) {
     std::string password_hash = "";
     std::string password_salt = "";
     std::string masqu_name = "";
-    vector< vector<string> > sqlResult;
+    std::vector< std::vector<std::string> > sqlResult;
     DatabaseProxy database_proxy;
 
     password_salt = genRandomSalt ( 16 );
@@ -401,7 +416,7 @@ void WebACL::setPassword (  std::string user_name, std::string new_password ) {
             SET password_salt = '" + password_salt + "',\
             WHERE login_name = '" + user_name + "';");
     } catch ( ... ) {
-        ERROR "Exception raised with: database_proxy.sqlSet ()" << endl;
+        ERROR "Exception raised with: database_proxy.sqlSet ()" << std::endl;
     }
 
 }
@@ -414,7 +429,6 @@ void WebACL::reSetUserRolls(
     DEBUG "reSetUserRolls" << std::endl;
     Config config;
     tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
-
     tntdb::Statement st = conn.prepare( "DELETE FROM account_acl_roll \
                 WHERE account_id = :v1;");
     st.set( "v1", user_id ).execute();

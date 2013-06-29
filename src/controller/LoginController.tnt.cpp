@@ -33,15 +33,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </%session>
 
 <%cpp>
-    DEBUG endl;
-    DEBUG endl;
+    DEBUG std::endl;
+    DEBUG std::endl;
     if ( WebACL::authUser ( name, password ) == true ) {
-        DEBUG endl;
+        DEBUG std::endl;
         userSession.setUserName ( name );
         userSession.addRoll (  WebACL::getRoll ( name ) );
         return reply.redirect ( "/home" );
     } else {
-        DEBUG endl;
+        DEBUG std::endl;
         // pass
     };
 </%cpp>

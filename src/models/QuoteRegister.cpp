@@ -19,8 +19,11 @@
 */
 
 #include <cxxtools/jsondeserializer.h>
+#include <cxxtools/jsonserializer.h>
 #include <cxxtools/serializationinfo.h>
 #include <tntdb/transaction.h>
+#include <tntdb/connect.h>
+#include <tntdb/connection.h>
 
 #include "Config.h"
 #include "OString.h"
@@ -63,7 +66,7 @@ void QuoteRegister::deleteQuote( const unsigned long quoteID ) {
 
 std::vector<Quote> QuoteRegister::getQuotes ( tntdb::Statement st ){
     DEBUG std::endl;
-    vector< Quote > quoteList;
+    std::vector< Quote > quoteList;
 
     for (tntdb::Statement::const_iterator it = st.begin();
         it != st.end(); ++it
@@ -93,7 +96,7 @@ std::vector<Quote> QuoteRegister::getQuotes ( tntdb::Statement st ){
 
 Quote QuoteRegister::getQuoteWithID( const unsigned long id ) {
     DEBUG std::endl;
-    vector< Quote > quoteList;
+    std::vector< Quote > quoteList;
     Config config;
     DEBUG std::endl;
     tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
@@ -121,7 +124,8 @@ Quote QuoteRegister::getQuoteWithID( const unsigned long id ) {
         DEBUG std::endl;
         return quoteList[0];
     } else {
-        std::string errorinfo = "quote " + cxxtools::convert<std::string>( id ) + " is not exist!";
+        std::string errorinfo = "quote " + cxxtools::convert<std::string>( id ) + " does not exist!";
+        // TODO never throw an std::string!!!
         throw errorinfo;
     }
 
@@ -129,8 +133,9 @@ Quote QuoteRegister::getQuoteWithID( const unsigned long id ) {
 
 std::vector<Quote> QuoteRegister::getAllPubQuoteOfKeyword( const std::string keyword ) {
     DEBUG std::endl;
-    vector< Quote > quoteList;
+    std::vector< Quote > quoteList;
     Config config;
+
     tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
     tntdb::Statement st = conn.prepare( "SELECT \
         title, \
@@ -331,7 +336,7 @@ std::string QuoteRegister::getJsonExport( const unsigned long userID ) {
 
 std::vector<Quote> QuoteRegister::getAllQuoteOfUser( const unsigned long userID ) {
     DEBUG "userID: " << userID << std::endl;
-    vector< Quote > quoteList;
+    std::vector< Quote > quoteList;
     Config config;
 
     tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
@@ -363,7 +368,7 @@ std::vector<Quote> QuoteRegister::getAllQuoteOfKeyword(
 
     DEBUG "keyword: " << keyword <<  std::endl;
     DEBUG "userID: " << userID << std::endl;
-    vector< Quote > quoteList;
+    std::vector< Quote > quoteList;
     Config config;
     
     tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );

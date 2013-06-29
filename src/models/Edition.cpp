@@ -18,8 +18,12 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-# include <tntdb/error.h>
-# include "Edition.h"
+#include "Edition.h"
+#include <tntdb/error.h>
+#include <tntdb/connection.h>
+#include <tntdb/connect.h>
+#include <tntdb/statement.h>
+#include <iostream>
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -28,8 +32,8 @@ void Edition::saveAsNew(){
     DEBUG std::endl;
 
     Config config;
-
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    tntdb::Connection conn = 
+        tntdb::connectCached( config.get( "DB-DRIVER" ) );
     tntdb::Statement st = conn.prepare( 
         "INSERT INTO edition  ( \
                 owner_id,       \
@@ -47,6 +51,7 @@ void Edition::saveAsNew(){
                 ''              \
             ) "
                                     );
+
     
     st.set("owner_id", this->m_ownerID )
     .set("name", this->m_name ).execute();
@@ -60,12 +65,10 @@ unsigned long  Edition::saveAsNewIfNotExist(){
     bool editionFound = false;
     std::string sqlcommand = "";
     Config config;
-    vector<string>   list_1d;
-    std:: string isPrivateData = "false";
+    std::vector<std::string>   list_1d;
 
     tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
     DEBUG std::endl;
-
     tntdb::Statement st = conn.prepare( "SELECT id FROM edition \n\
                     WHERE owner_id = :v1  \n\
                     AND name = :v2 " );
@@ -110,6 +113,4 @@ void Edition::saveUpdate(){
     .set("releaseDate", this->m_releaseDate )
     .set("releasePlace", this->m_releasePlace )
     .set("id", this->m_ID ).execute();
-    
-    
 }

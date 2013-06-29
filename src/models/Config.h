@@ -21,12 +21,9 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <fstream>
-#include <iostream>
 #include <list>
 #include <string>
 
-using namespace std;
 /**
 * @class Config This class read a configuration file.
 * The form of date in the configuration file is:
@@ -42,13 +39,13 @@ public:
      * get a value of configuration.
      * @arg key is the key of value
      */
-    string get( string key );
+    std::string get( std::string key );
 
     /**
      * get back a list of configuration values.
      * @arg key is the key of value
      */
-    list<string> getList( string key );
+    std::list<std::string> getList( std::string key );
 
     /** read the config file */
     void readConfigFile ();
@@ -58,15 +55,15 @@ public:
      * set path of config file
      * @arg path the path value
      */
-    void setConfFile ( string path );
+    void setConfFile ( std::string path );
 
     /** Get back the used config file
      */
-    string getConfFile ( );
+    std::string getConfFile ( );
 
 private:
-    static list <string> m_configStrings;
-    static string m_confFilePath;
+    static std::list <std::string> m_configStrings;
+    static std::string m_confFilePath;
 };
 
 #endif
