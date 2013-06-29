@@ -296,6 +296,8 @@ string WebACL::genRandomSalt ( const int len) {
     return randomString;
 }
 
+// bis hier
+
 std::vector<std::string> WebACL::getAllRolls ( ){
     DatabaseProxy database_proxy;
     vector< vector<string> > sqlResult;

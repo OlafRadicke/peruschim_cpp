@@ -8,10 +8,17 @@ log_define("PERUSCHIM")
 
 int main ( int argc, char* argv[] )
 {
+    log_init();
+//     log_fatal_enabled();
+//     log_error_enabled();
+//     log_warn_enabled();
+//     log_info_enabled();
+//     log_debug_enabled();
+//     log_trace_enabled();
+    
     Config config;
     int port =  atoi(config.get( "APP-PORT" ).c_str());
     std::string ip_addr =  config.get( "APP-IP" );
-    log_init("PERUSCHIM.properties");
 
     try
     {
@@ -34,6 +41,12 @@ int main ( int argc, char* argv[] )
         app.mapUrl( "^/(.*)$", "$1" );
         std::cout << "peruschim cpp is started and run on http://" <<  ip_addr \
             << ":" <<  port << "/" << std::endl;
+        log_info("starting PERUSCHIM");
+        log_info(
+            "peruschim cpp is started and run on http://" <<  ip_addr \
+            << ":" <<  port << "/"
+        );
+        log_debug("starting PERUSCHIM");
         log_info("starting PERUSCHIM");
         app.run();
     } catch ( const std::exception& e )
