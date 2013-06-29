@@ -19,7 +19,6 @@
 */
 
 #include "Config.h"
-#include <cxxtools/smartptr.h>
 #include <cxxtools/serializationinfo.h>
 #include <cxxtools/propertiesdeserializer.h>
 #include <cxxtools/mutex.h>
@@ -30,12 +29,15 @@
 ////////////////////////////////////////////////////////////////////////
 // ConfigImpl
 //
-class ConfigImpl : public cxxtools::RefCounted
+class ConfigImpl
 {
     friend void operator>>= (const cxxtools::SerializationInfo& si, ConfigImpl& config);
 
 public:
-    explicit ConfigImpl(const std::string& fname);
+    ConfigImpl()
+    { }
+
+    void read(const std::string& fname);
 
     const std::string& appIp() const
     { return m_appIp; }
@@ -84,7 +86,7 @@ void operator>>= (const cxxtools::SerializationInfo& si, ConfigImpl& config)
     config.m_si = si;
 }
 
-ConfigImpl::ConfigImpl(const std::string& fname)
+void ConfigImpl::read(const std::string& fname)
 {
     std::ifstream in(fname.c_str());
     cxxtools::PropertiesDeserializer deserializer(in);
@@ -95,7 +97,8 @@ ConfigImpl::ConfigImpl(const std::string& fname)
 
 namespace
 {
-    cxxtools::SmartPtr<ConfigImpl> theImpl = 0;
+    bool configRead = false;
+    ConfigImpl theImpl;
     cxxtools::Mutex mutex;
 }
 
@@ -141,7 +144,7 @@ Config::Config ()
     : impl(0)
 {
     cxxtools::MutexLock lock(mutex);
-    if (theImpl == 0)
+    if (!configRead)
     {
         std::string fname;
 
@@ -154,9 +157,10 @@ Config::Config ()
             fname = "/etc/peruschim_cpp.conf";
         }
 
-        theImpl = new ConfigImpl(fname);
+        theImpl.read(fname);
+        configRead = true;
     }
 
-    impl = theImpl.getPointer();
+    impl = &theImpl;
 }
 
