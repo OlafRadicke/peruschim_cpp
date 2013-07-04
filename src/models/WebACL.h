@@ -37,19 +37,14 @@ public:
      * @para password password of user.
      * @return "true" if okay, else "false".
      **/
-    bool static authUser ( std::string user_name, std::string password );
-
-    /**
-     * Open connatct with database.
-     * */
-    void connectDataBase ();
+    static bool authUser ( const std::string& user_name, const std::string& password );
 
     /**
      * Create new account.
      * @para user_name name of user account.
      * @para password password of user.
      **/
-    void static createAccount (
+    static void createAccount (
             std::string user_name,
             std::string new_password
     );
@@ -62,7 +57,7 @@ public:
      * @para email email of user.
      * @para roll roll of user.
      **/
-    void static createAccount (
+    static void createAccount (
             std::string user_name,
             std::string new_password,
             std::string real_name = "",
@@ -75,13 +70,13 @@ public:
      * @arg id id from a account.
      * @return account data.
      **/
-    static AccountData getAccountsWithID ( const unsigned long id );
+    static AccountData getAccountsWithID ( unsigned long id );
 
     /**
      * Get back all account data.
      * @return list of all account datas.
      **/
-    static std::vector<AccountData> getAllAccounts ( void );
+    static std::vector<AccountData> getAllAccounts ( );
 
     /**
      * Get back all exist roles.
@@ -94,7 +89,7 @@ public:
      * @para user_name name of the user.
      * @return list of user roles
      **/
-    static std::vector<std::string> getRoll( std::string user_name );
+    static std::vector<std::string> getRoll( const std::string& user_name );
 
     /**
      * Check is user in database exist.

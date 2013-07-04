@@ -17,103 +17,76 @@
 * You should have received a copy of the GNU Affero General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-/*
+
 #include "WebACL.h"
 #include "DatabaseProxy.h"
 #include <string>
-#include <iostream>
 
 #include <tntdb/connect.h>
 #include <tntdb/statement.h>
+#include <tntdb/error.h>
 #include <cxxtools/md5.h>
-*/
+#include <cxxtools/log.h>
 
-#include <string>
-#include <iostream>
-
-#include <cxxtools/md5.h>
-#include <tntdb/connection.h>
-#include <tntdb/connect.h>
-// #include <tntdb/result.h>
-#include <tntdb/statement.h>
-
-#include "DatabaseProxy.h"
-#include "WebACL.h"
-
-
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 /* A ----------------------------------------------------------------------- */
 
+log_define("models.WebACL")
 
-bool WebACL::authUser ( std::string user_name, std::string password ) {
-    DEBUG "start..." << std::endl;
-    std::string password_hash_a = "";
-    std::string password_hash_b = "";
-    std::string password_salt = "";
+
+
+
+bool WebACL::authUser ( const std::string& user_name, const std::string& password )
+{
+    log_debug("start...");
+    std::string password_hash_a;
+    std::string password_hash_b;
+    std::string password_salt;
 
     Config config;
-
-
-    DEBUG std::endl;
+    tntdb::Connection conn = tntdb::connectCached(config.dbDriver());
 
     // password salt request.
-    
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
-    tntdb::Statement st = conn.prepare( 
-        "SELECT password_salt \
-        FROM account \
-        WHERE login_name = :login_name \
-        AND account_disable IS NOT TRUE"
-    );
-    st.set("login_name", user_name ).execute();
+    try
+    {
+        tntdb::Statement sel = conn.prepare(
+            "SELECT password_salt, password_hash \
+               FROM account \
+              WHERE login_name = :login_name \
+                AND NOT account_disable");
 
-    for ( tntdb::Statement::const_iterator it = st.begin();
-        it != st.end(); ++it ) {
-        tntdb::Row row = *it;
-        password_salt = row[0].getString();
-        DEBUG "password_salt: " <<  password_salt << std::endl;
-    }    
+        tntdb::Row row = sel.set("login_name", user_name).selectRow();
+
+        row[0].get(password_salt);
+        row[1].get(password_hash_b);
+
+        log_debug( "password_salt: " << password_salt << " password_hash_b: " << password_hash_b);
+    }
+    catch ( const tntdb::NotFound& )
+    {
+        log_error("User not found in data base?");
+        return false;
+    }
 
     password_hash_a = cxxtools::md5 ( password + password_salt );
-    DEBUG "password_hash_a: " << password_hash_a << std::endl;
-
-    st = conn.prepare( 
-            "SELECT password_hash \
-            FROM account \
-            WHERE login_name = :user_name"
-    );
-    st.set("user_name", user_name ).execute();
-
-    DEBUG  std::endl;
-    for ( tntdb::Statement::const_iterator it = st.begin();
-        it != st.end(); 
-        ++it
-    ) {
-        DEBUG  std::endl;
-        tntdb::Row row = *it;
-        password_hash_b = row[0].getString();
-        DEBUG "password_hash_b: " <<  password_hash_b << std::endl;
-    }        
+    log_debug("password_hash_a: " << password_hash_a);
 
     // is equal ?
-    if ( password_hash_b == password_hash_a ) {
-        DEBUG "Passwor ist rihtig" << std::endl;
+    if ( password_hash_b == password_hash_a )
+    {
+        log_debug("Passwort ist richtig");
         return true;
-    } else {
-        DEBUG "Passwor ist falsch" << std::endl;
-        DEBUG "password_hash_b: " << password_hash_b << std::endl;
-        DEBUG "password_hash_a: " << password_hash_a << std::endl;
+    }
+    else
+    {
+        log_debug("Passwort ist falsch");
+        log_debug("password_hash_b: " << password_hash_b);
+        log_debug("password_hash_a: " << password_hash_a);
         return false;
     }
 }
 
 
 /* C ----------------------------------------------------------------------- */
-
-void WebACL::connectDataBase (){
-
-}
 
 void WebACL::createAccount (
         std::string user_name,
@@ -131,7 +104,7 @@ void WebACL::createAccount (
         std::string roll
 ) {
 
-    DEBUG "start..." << std::endl;
+    log_debug("start...");
     std::string password_hash = "";
     std::string password_salt = "";
     unsigned long user_id = 0;
@@ -142,7 +115,7 @@ void WebACL::createAccount (
     password_hash = cxxtools::md5 ( new_password + password_salt );
 
     tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
-    tntdb::Statement st = conn.prepare( 
+    tntdb::Statement st = conn.prepare(
         "INSERT INTO account \
         (   login_name, \
             real_name, \
@@ -164,30 +137,27 @@ void WebACL::createAccount (
     .set("password_hash", password_hash )
     .set("password_salt", password_salt )
     .set("email", email ).execute();
-   
+
 
     if ( roll != "" ) {
         conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
-        st = conn.prepare( 
+        st = conn.prepare(
                 "SELECT \
                     id \
                 FROM account \
                 WHERE login_name = :user_name"
         );
         st.set( "user_name", user_name ).execute();
-        DEBUG  std::endl;
         for ( tntdb::Statement::const_iterator it = st.begin();
-            it != st.end(); 
+            it != st.end();
             ++it
         ) {
-            DEBUG  std::endl;
             tntdb::Row row = *it;
             user_id = row[0].getInt();
-            DEBUG "string user_id: " <<  user_id << std::endl;
-        }      
-       
+        }
+
         conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
-        st = conn.prepare( 
+        st = conn.prepare(
 
             "INSERT INTO account_acl_roll \
                 ( account_id, acl_roll_id )\
@@ -198,7 +168,7 @@ void WebACL::createAccount (
                 )"
         );
         st.set( "user_id", user_id )
-        .set( "roll", roll ).execute();       
+        .set( "roll", roll ).execute();
 
     }
 
@@ -206,11 +176,10 @@ void WebACL::createAccount (
 
 /* G ----------------------------------------------------------------------- */
 
-AccountData WebACL::getAccountsWithID ( const unsigned long id ){
 
-    Config config;    
+AccountData WebACL::getAccountsWithID ( unsigned long id ){
+    Config config;
     tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
-
 
     tntdb::Statement st = conn.prepare( "SELECT \
                 login_name, \
@@ -235,14 +204,14 @@ AccountData WebACL::getAccountsWithID ( const unsigned long id ){
         adata.setPassword_hash ( row[2].getString() );
         adata.setPassword_salt ( row[3].getString() );
         adata.setEmail ( row[4].getString() );
-        DEBUG "account_disable: "  << row[5].getBool() << std::endl;
+        log_debug("account_disable: "  << row[5].getBool());
 //         if ( row[5].getString() == "t" ) {
         if ( row[5].getBool() ) {
-            DEBUG "true" <<  std::endl;
+            log_debug("true");
             adata.setAccount_disable ( true );
 
         } else {
-            DEBUG "false" <<  std::endl;
+            log_debug("false");
             adata.setAccount_disable ( false );
         }
         return adata;
@@ -251,9 +220,8 @@ AccountData WebACL::getAccountsWithID ( const unsigned long id ){
     throw errorinfo;
 }
 
-std::vector<AccountData> WebACL::getAllAccounts ( void ){
+std::vector<AccountData> WebACL::getAllAccounts (){
 
-    DEBUG  std::endl;
     std::vector<AccountData> accounts;
     Config config;
 
@@ -290,7 +258,7 @@ std::vector<AccountData> WebACL::getAllAccounts ( void ){
         accounts.push_back ( accountData );
     }
 
-    DEBUG "accounts.size(): " <<  accounts.size() << std::endl;
+    log_debug("accounts.size(): " <<  accounts.size());
     return accounts;
 
 }
@@ -305,7 +273,7 @@ std::string WebACL::genRandomSalt ( const int len) {
         "abcdefghijklmnopqrstuvwxyz";
     for (int i = 0; i < len; ++i) {
         int randNo = rand() % (sizeof(alphanum) - 1) ;
-        DEBUG "randNo: " << randNo << std::endl;
+        log_debug("randNo: " << randNo);
         randomString.push_back ( alphanum[randNo] );
     }
     return randomString;
@@ -318,26 +286,24 @@ std::vector<std::string> WebACL::getAllRolls ( ){
     std::vector< std::vector<std::string> > sqlResult;
     std::vector<std::string> rolls;
 
-    DEBUG std::endl;
     sqlResult = database_proxy.sqlGet
     (
             "SELECT DISTINCT name FROM acl_roll ORDER BY name;"
     );
 
     for ( unsigned int i=0; i<sqlResult.size(); i++) {
-        DEBUG "push_back (" <<  i << "): " << sqlResult[i][0] << std::endl;
+        log_debug("push_back (" <<  i << "): " << sqlResult[i][0]);
         rolls.push_back ( sqlResult[i][0] );
     }
     return rolls;
 }
 
 
-std::vector<std::string> WebACL::getRoll ( std::string user_name ){
+std::vector<std::string> WebACL::getRoll ( const std::string& user_name ){
     DatabaseProxy database_proxy;
     std::vector< std::vector<std::string> > sqlResult;
     std::vector<std::string> rolls;
 
-    DEBUG std::endl;
     sqlResult = database_proxy.sqlGet
     (
             "SELECT acl_roll.name \
@@ -349,7 +315,7 @@ std::vector<std::string> WebACL::getRoll ( std::string user_name ){
     );
 
     for ( unsigned int i=0; i<sqlResult.size(); i++) {
-        DEBUG "push_back (" <<  i << "): " << sqlResult[i][0] << std::endl;
+        log_debug("push_back (" <<  i << "): " << sqlResult[i][0]);
         rolls.push_back ( sqlResult[i][0] );
     }
 
@@ -360,16 +326,14 @@ std::vector<std::string> WebACL::getRoll ( std::string user_name ){
 /* I ----------------------------------------------------------------------- */
 
 bool WebACL::isUserExist ( std::string user_name ){
-    DEBUG "start..." << std::endl;
+    log_debug("start...");
     std::vector< std::vector<std::string> > sqlResult;
     DatabaseProxy database_proxy;
-    DEBUG std::endl;
     try {
-        DEBUG std::endl;
         sqlResult = database_proxy.sqlGet( "SELECT * FROM account \
             WHERE login_name = '" + DatabaseProxy::replace( user_name ) + "';");
     } catch ( ... ) {
-        ERROR "Exception raised with: database_proxy.sqlSet ()" << std::endl;
+        log_error("Exception raised with: database_proxy.sqlSet ()");
         return false;
     }
     if ( sqlResult.size() > 0 ) {
@@ -381,7 +345,7 @@ bool WebACL::isUserExist ( std::string user_name ){
 
 bool WebACL::isUserInRole ( const std::string login_name, const std::string roll ) {
     std::vector<std::string> userroles = WebACL::getRoll( login_name );
-    DEBUG "m_userroles.size(): " << userroles.size() << std::endl;
+    log_debug("m_userroles.size(): " << userroles.size());
 
     for ( unsigned int i=0; i< userroles.size(); i++) {
         if ( userroles[i] == roll ) {
@@ -403,20 +367,17 @@ void WebACL::setPassword (  std::string user_name, std::string new_password ) {
     DatabaseProxy database_proxy;
 
     password_salt = genRandomSalt ( 16 );
-    DEBUG "password_salt: " << password_salt << std::endl;
+    log_debug("password_salt: " << password_salt);
     password_hash = cxxtools::md5 ( new_password + password_salt );
-    DEBUG "password_hash: " <<  password_hash <<  std::endl;
+    log_debug("password_hash: " <<  password_hash);
 
-    DEBUG std::endl;
-    DEBUG std::endl;
     try {
-        DEBUG std::endl;
         database_proxy.sqlSet( "UPDATE account \
             SET password_hash = '" + password_hash + "',\
             SET password_salt = '" + password_salt + "',\
             WHERE login_name = '" + user_name + "';");
     } catch ( ... ) {
-        ERROR "Exception raised with: database_proxy.sqlSet ()" << std::endl;
+        log_error("Exception raised with: database_proxy.sqlSet ()");
     }
 
 }
@@ -426,7 +387,7 @@ void WebACL::reSetUserRolls(
     const std::vector<std::string> user_rolls
 ){
 
-    DEBUG "reSetUserRolls" << std::endl;
+    log_debug("reSetUserRolls");
     Config config;
     tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
     tntdb::Statement st = conn.prepare( "DELETE FROM account_acl_roll \
@@ -434,7 +395,7 @@ void WebACL::reSetUserRolls(
     st.set( "v1", user_id ).execute();
 
     for ( unsigned int i_roll = 0; i_roll < user_rolls.size(); i_roll++ ) {
-        DEBUG "user_rolls[i_roll]: " << user_rolls[i_roll] << std::endl;
+        log_debug("user_rolls[i_roll]: " << user_rolls[i_roll]);
         tntdb::Statement st = conn.prepare( "INSERT INTO account_acl_roll  \
                     ( account_id, acl_roll_id ) \n \
                     VALUES \n \

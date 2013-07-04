@@ -23,12 +23,9 @@
 #include <tntdb/connection.h>
 #include <tntdb/connect.h>
 #include <tntdb/result.h>
-#include <iostream>
+#include <cxxtools/log.h>
 
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-
-
+log_define("models.DatabaseProxy")
 
 std::vector< std::vector<std::string> > DatabaseProxy::sqlGet ( std::string sqlcommand )
 {
@@ -37,9 +34,9 @@ std::vector< std::vector<std::string> > DatabaseProxy::sqlGet ( std::string sqlc
     unsigned int     col_count;
     tntdb::Result result;
 
-    tntdb::Connection conn = 
+    tntdb::Connection conn =
         tntdb::connectCached( config.get( "DB-DRIVER" ) );
-    DEBUG "SQLCODE: " << sqlcommand << std::endl;
+
     result = conn.select( sqlcommand );
     for (tntdb::Result::const_iterator it = result.begin();
         it != result.end(); ++it
@@ -74,7 +71,7 @@ std::string DatabaseProxy::sqlGetSingle ( std::string sqlcommand )
 
             std::string value;
             row[col_count].get(value);
-            DEBUG "value=" << value << std::endl;
+            log_debug("value=" << value);
             return value;
         }
     }
@@ -84,12 +81,9 @@ std::string DatabaseProxy::sqlGetSingle ( std::string sqlcommand )
 void DatabaseProxy::sqlSet ( std::string sqlcommand )
 {
     Config config;
-    DEBUG "sqlcommand: " << sqlcommand << std::endl;
-    tntdb::Result result;
-
     tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    log_debug("sqlcommand: " << sqlcommand);
     conn.execute( sqlcommand );
-
 }
 
 

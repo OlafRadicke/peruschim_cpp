@@ -29,10 +29,10 @@ unsigned EditOwnVerses::operator() (tnt::HttpRequest& request, tnt::HttpReply& r
     DEBUG "userSession.getUserName(): " << userSession.getUserName() << std::endl;
     // ACL Check
     if ( userSession.isInRole ( "user" ) == false ) {
-        DEBUG "Nicht eingelogt" << std::endl;
+        DEBUG "Nicht eingeloggt" << std::endl;
         return reply.redirect ( "/access_denied" );
     }
-    DEBUG "Eingelogt" << std::endl;
+    DEBUG "Eingeloggt" << std::endl;
 //     quoteList = QuoteRegister::getAllQuoteOfUser( userSession.getUserID() );
 
     // is button delete pushed?
@@ -40,9 +40,7 @@ unsigned EditOwnVerses::operator() (tnt::HttpRequest& request, tnt::HttpReply& r
         affirmation_question = "";
         feedback = "";
         session_verse_id = delete_verse_id;
-        Quote quoteInfo = QuoteRegister::getQuoteWithID( 
-            cxxtools::convert<unsigned long>( session_verse_id ) 
-        );
+        Quote quoteInfo = QuoteRegister::getQuoteWithID( session_verse_id ) ;
         affirmation_question = 
             "Bibelvers mit "+ quoteInfo.getBookTitle() + " " + \
             cxxtools::convert<std::string>( quoteInfo.getChapterBegin() ) + \

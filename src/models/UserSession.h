@@ -37,7 +37,7 @@ class UserSession {
 public:
 
 
-    UserSession () : m_username( "" ), m_userID( 0 ) {};
+    UserSession () : m_username( "" ), m_userID( 0 ) {}
 
      /**
      * Add a roll.
@@ -45,7 +45,7 @@ public:
      **/
     void addRoll ( std::string roll ) {
         m_userroles.push_back ( roll );
-    };
+    }
 
     /**
      * Add a list of rolls.
@@ -56,19 +56,19 @@ public:
     /**
      * Clean the list of rolls.
      **/
-    void cleanRoll ( ) { m_userroles.clear(); } ;
+    void cleanRoll ( ) { m_userroles.clear(); }
 
     /**
      * Session logout.
      **/
-    void lockout( ) ;
+    void logout( );
 
     /**
      * Check is user in this site rolle.
      * @param siteroll the roll of this site which are allowed is.
      * @return true or false.
      **/
-    bool isInRole ( std::string siteroll ) ;
+    bool isInRole ( std::string siteroll );
 
     /**
      * Check is user in this site rolle.
@@ -79,7 +79,7 @@ public:
 
     void setUserName ( std::string username ) {
         m_username = username;
-    };
+    }
 
     /**
      * Get back the mode of item view.
@@ -92,7 +92,7 @@ public:
      * Get back the user login name.
      * @return login name.
      **/
-    std::string getUserName() { return m_username; };
+    std::string getUserName() { return m_username; }
 
 
     /**

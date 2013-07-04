@@ -62,7 +62,7 @@ unsigned long UserSession::getUserID ( ) {
     return this->m_userID;
 }
 
-void UserSession::lockout( ) {
+void UserSession::logout( ) {
     DEBUG "logout..." << std::endl;
     this->m_userroles.clear();
     this->m_username = "";

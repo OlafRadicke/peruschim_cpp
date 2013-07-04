@@ -39,8 +39,7 @@ void AccountData::deleteAllData() {
     std::string sqlcommand = "";
     Config config;
 
-    std::string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn = tntdb::connect( conn_para );
+    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
     tntdb::Transaction trans(conn);
 
     conn.prepare( "DELETE FROM  account_acl_roll \n\
@@ -89,8 +88,7 @@ void AccountData::saveUpdate(){
     std::string sqlcommand = "";
     Config config;
 
-    std::string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn = tntdb::connect( conn_para );
+    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
     tntdb::Statement st = conn.prepare( "UPDATE account SET \n\
         login_name=:v1 ,  \n\
         real_name=:v2,  \n\
@@ -119,8 +117,7 @@ void AccountData::setNewPassword ( std::string newpassword ) {
     password_salt = AccountData::genRandomSalt ( 16 );
     password_hash = cxxtools::md5 ( newpassword + password_salt );
 
-    std::string conn_para = config.get( "DB-DRIVER" );
-    tntdb::Connection conn = tntdb::connect( conn_para );
+    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
     DEBUG std::endl;
     tntdb::Statement st = conn.prepare( "UPDATE account SET \n\
         password_hash=:v1,  \n\

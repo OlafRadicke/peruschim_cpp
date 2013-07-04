@@ -21,7 +21,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <list>
 #include <string>
 
 /**
@@ -29,41 +28,25 @@
 * The form of date in the configuration file is:
 * key = value
 */
+
+class ConfigImpl;
+
 class Config {
 
 public:
     Config();
-    ~Config(){};
 
-    /**
-     * get a value of configuration.
-     * @arg key is the key of value
-     */
-    std::string get( std::string key );
+    const std::string& appIp() const;
+    unsigned short     appPort() const;
+    const std::string& dbDriver() const;
+    unsigned           sessionTimeout() const;
+    const std::string& smtpServer() const;
+    const std::string& mailFromAddress() const;
 
-    /**
-     * get back a list of configuration values.
-     * @arg key is the key of value
-     */
-    std::list<std::string> getList( std::string key );
-
-    /** read the config file */
-    void readConfigFile ();
-
-
-    /**
-     * set path of config file
-     * @arg path the path value
-     */
-    void setConfFile ( std::string path );
-
-    /** Get back the used config file
-     */
-    std::string getConfFile ( );
+    std::string get(const std::string& var) const;
 
 private:
-    static std::list <std::string> m_configStrings;
-    static std::string m_confFilePath;
+    ConfigImpl* impl;
 };
 
 #endif
