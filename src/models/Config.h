@@ -21,8 +21,9 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include "ConfigImpl.h"
 #include <string>
+
+class ConfigImpl;
 
 /**
 * @class Config This class read a configuration file.

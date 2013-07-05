@@ -23,7 +23,6 @@
 
 #include <string>
 #include <cxxtools/serializationinfo.h>
-#include <cxxtools/propertiesdeserializer.h>
 // #include <cxxtools/mutex.h>
 // #include <cxxtools/fileinfo.h>
 // #include <cxxtools/log.h>

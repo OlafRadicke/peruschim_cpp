@@ -19,6 +19,7 @@
 */
 
 #include "Config.h"
+#include "ConfigImpl.h"
 #include <cxxtools/serializationinfo.h>
 #include <cxxtools/propertiesdeserializer.h>
 #include <cxxtools/mutex.h>
