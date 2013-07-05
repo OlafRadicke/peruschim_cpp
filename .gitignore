@@ -1,5 +1,3 @@
+*~
 *.o
 src/views/*.cpp
-bin/*
-src/resources/favicon.cpp
-src/resources/style.cpp

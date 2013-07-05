@@ -26,74 +26,7 @@
 #include <cxxtools/log.h>
 #include <fstream>
 
-////////////////////////////////////////////////////////////////////////
-// ConfigImpl
-//
-class ConfigImpl
-{
-    friend void operator>>= (const cxxtools::SerializationInfo& si, ConfigImpl& config);
 
-public:
-    ConfigImpl()
-    { }
-
-    void read(const std::string& fname);
-
-    const std::string& appIp() const
-    { return m_appIp; }
-
-    unsigned short     appPort() const
-    { return m_appPort; }
-
-    const std::string& dbDriver() const
-    { return m_dbDriver; }
-
-    unsigned           sessionTimeout() const
-    { return m_sessionTimeout; }
-
-    const std::string& smtpServer() const
-    { return m_smtpServer; }
-
-    const std::string& mailFromAddress() const
-    { return m_mailFromAddress; }
-
-    std::string get(const std::string& var) const
-    {
-        std::string value;
-        m_si.getMember(var) >>= value;
-        return value;
-    }
-
-private:
-    cxxtools::SerializationInfo m_si;
-
-    std::string m_appIp;
-    unsigned short m_appPort;
-    std::string m_dbDriver;
-    unsigned m_sessionTimeout;
-    std::string m_smtpServer;
-    std::string m_mailFromAddress;
-};
-
-void operator>>= (const cxxtools::SerializationInfo& si, ConfigImpl& config)
-{
-    si.getMember("APP-IP")             >>= config.m_appIp;
-    si.getMember("APP-PORT")           >>= config.m_appPort;
-    si.getMember("DB-DRIVER")          >>= config.m_dbDriver;
-    si.getMember("SESSION-RUNTIME")    >>= config.m_sessionTimeout;
-    si.getMember("SMTP-SERVER")        >>= config.m_smtpServer;
-    si.getMember("MAIL-FROM-ADDRESS")  >>= config.m_mailFromAddress;
-    config.m_si = si;
-}
-
-void ConfigImpl::read(const std::string& fname)
-{
-    std::ifstream in(fname.c_str());
-    cxxtools::PropertiesDeserializer deserializer(in);
-    deserializer.deserialize(*this);
-
-    log_init(*deserializer.si());
-}
 
 namespace
 {
@@ -102,9 +35,6 @@ namespace
     cxxtools::Mutex mutex;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Config
-//
 const std::string& Config::appIp() const
 {
     return impl->appIp();
@@ -146,19 +76,24 @@ Config::Config ()
     cxxtools::MutexLock lock(mutex);
     if (!configRead)
     {
-        std::string fname;
+        try {
+            std::string fname;
 
-        if (cxxtools::FileInfo::exists("peruschim_cpp.conf"))
-        {
-            fname = "peruschim_cpp.conf";
-        }
-        else
-        {
-            fname = "/etc/peruschim_cpp.conf";
-        }
+            if (cxxtools::FileInfo::exists("peruschim_cpp.conf"))
+            {
+                fname = "peruschim_cpp.conf";
+            }
+            else
+            {
+                fname = "/etc/peruschim_cpp.conf";
+            }
 
-        theImpl.read(fname);
-        configRead = true;
+            theImpl.read(fname);
+            configRead = true;
+        } catch (...)
+        {
+//             theImpl.generatingConfigExample( "peruschim_cpp.conf" );
+        }
     }
 
     impl = &theImpl;

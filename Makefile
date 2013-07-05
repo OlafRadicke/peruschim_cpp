@@ -19,6 +19,7 @@ OBJECTS = \
 ./src/controller/EditOwnVersesController.o \
 ./src/models/AccountData.o \
 ./src/models/Config.o \
+./src/models/ConfigImpl.o \
 ./src/models/DatabaseProxy.o \
 ./src/models/Edition.o \
 ./src/models/EditionManager.o \
