@@ -35,27 +35,27 @@ public:
      * Delete a edition data with a specifed id.
      * @arg id a edition.
      **/
-    static void deleteEditionByID ( const unsigned long id );
+    static void deleteEditionByID ( unsigned long id );
 
     /**
      * Get back all editions data of a user.
      * @arg user_id usr id
      * @return list of all edition datas.
      **/
-    static std::vector<Edition> getAllEditions ( const unsigned long user_id );
+    static std::vector<Edition> getAllEditions ( unsigned long user_id );
 
     /**
      * Get back a edition data with a specifed id.
      * @arg id a edition.
      **/
-    static Edition getEditionByID ( const unsigned long id );
+    static Edition getEditionByID ( unsigned long id );
 
     /**
      * Cecked if this edition in use of any quote.
      * @arg id a edition.
      * @return get back a number of quote that this edition us.
      **/
-    static int isEditionInUse ( const unsigned long id );
+    static bool isEditionInUse ( unsigned long id );
 
 private:
 

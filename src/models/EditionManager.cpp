@@ -21,6 +21,8 @@
 #include "EditionManager.h"
 #include <tntdb/connect.h>
 #include <tntdb/statement.h>
+#include <tntdb/error.h>
+#include <tntdb/row.h>
 
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -28,7 +30,7 @@
 
 /* D ----------------------------------------------------------------------- */
 
-void EditionManager::deleteEditionByID ( const unsigned long id ) {
+void EditionManager::deleteEditionByID ( unsigned long id ) {
     Config config;
     tntdb::Connection conn = 
         tntdb::connectCached( config.get( "DB-DRIVER" ) );
@@ -40,7 +42,7 @@ void EditionManager::deleteEditionByID ( const unsigned long id ) {
 /* G ----------------------------------------------------------------------- */
 
 
-std::vector<Edition> EditionManager::getAllEditions ( const unsigned long user_id ){
+std::vector<Edition> EditionManager::getAllEditions ( unsigned long user_id ){
     DEBUG "user_id: " << user_id  << std::endl;
     std::vector<Edition> editionList;
     Config config;
@@ -80,11 +82,11 @@ std::vector<Edition> EditionManager::getAllEditions ( const unsigned long user_i
 }
 
 
-Edition EditionManager::getEditionByID ( const unsigned long id ) {
-    Edition edition;
+Edition EditionManager::getEditionByID ( unsigned long id ) {
+
     Config config;
-    tntdb::Connection conn = 
-        tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+
     tntdb::Statement st = conn.prepare( "SELECT \
                         id, \
                         owner_id, \
@@ -95,13 +97,14 @@ Edition EditionManager::getEditionByID ( const unsigned long id ) {
                         releasedate \
                     FROM edition \
                     WHERE id= :v1 ");
-    st.set( "v1", id ).execute();
+    Edition edition;
+    try
+    {
+        // Um eine einzelne Zeile zu lesen, verwenden wir tntdb::Statement::selectRow().
+        // Sie wirft eine Exception vom Typ tntdb::Notfound, wenn keine Zeile gefunden wurde.
 
-    for (tntdb::Statement::const_iterator it = st.begin();
-        it != st.end(); ++it
-    ) {
-        tntdb::Row row = *it;
-        Edition edition;
+        tntdb::Row row = st.set( "v1", id )
+                           .selectRow();
 
         edition.setID( row[0].getInt() );
         edition.setOwnerID( row[1].getInt() );
@@ -111,32 +114,36 @@ Edition EditionManager::getEditionByID ( const unsigned long id ) {
         edition.setReleasePlace( row[5].getString () );
         edition.setReleaseDate( row[6].getString () );
 
-        return edition;
     }
-    std::string errorinfo = "Edition with id " + cxxtools::convert<std::string>( id ) + " no found!";
-    throw errorinfo;
+    catch (const tntdb::NotFound&)
+    {
+        std::string errorinfo = "Edition with id " + cxxtools::convert<std::string>( id ) + " no found!";
+        throw std::runtime_error(errorinfo);
+    }
 
+    return edition;
 }
 
 /* I ----------------------------------------------------------------------- */
 
-int EditionManager::isEditionInUse ( const unsigned long id ){
+bool EditionManager::isEditionInUse ( unsigned long id ){
+
     Config config;
+
     tntdb::Connection conn = 
         tntdb::connectCached( config.get( "DB-DRIVER" ) );
+
     tntdb::Statement st = conn.prepare( " SELECT COUNT(edition_id) \
          FROM quote \
          WHERE edition_id = :v1 ;");
-    st.set( "v1", id ).execute();
 
-    for (tntdb::Statement::const_iterator it = st.begin();
-        it != st.end(); ++it
-    ) {
-        tntdb::Row row = *it;
-        Edition edition;
+    // Wenn wir nur einen einzelnen Wert lesen wollen, dann verwenden wir tntdb::Statement::selectValue().
 
-        return row[0].getInt();
-    }
-    return 0;
+    tntdb::Value v = st.set( "v1", id )
+                       .selectValue();
+
+    unsigned count = 0;
+    v.get(count);
+    return count > 0;
 
 }
