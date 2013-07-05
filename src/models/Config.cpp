@@ -77,24 +77,19 @@ Config::Config ()
     cxxtools::MutexLock lock(mutex);
     if (!configRead)
     {
-        try {
-            std::string fname;
+        std::string fname;
 
-            if (cxxtools::FileInfo::exists("peruschim_cpp.conf"))
-            {
-                fname = "peruschim_cpp.conf";
-            }
-            else
-            {
-                fname = "/etc/peruschim_cpp.conf";
-            }
-
-            theImpl.read(fname);
-            configRead = true;
-        } catch (...)
+        if (cxxtools::FileInfo::exists("peruschim_cpp.conf"))
         {
-//             theImpl.generatingConfigExample( "peruschim_cpp.conf" );
+            fname = "peruschim_cpp.conf";
         }
+        else
+        {
+            fname = "/etc/peruschim_cpp.conf";
+        }
+
+        theImpl.read(fname);
+        configRead = true;
     }
 
     impl = &theImpl;
