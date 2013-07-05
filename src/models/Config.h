@@ -21,6 +21,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include "ConfigImpl.h"
 #include <string>
 
 /**
@@ -28,9 +29,6 @@
 * The form of date in the configuration file is:
 * key = value
 */
-
-class ConfigImpl;
-
 class Config {
 
 public:
