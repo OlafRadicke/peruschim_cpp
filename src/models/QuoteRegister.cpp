@@ -230,6 +230,7 @@ void operator>>= ( const cxxtools::SerializationInfo& si, Edition& edition )
 */
 void operator<<= ( cxxtools::SerializationInfo& si, const Quote& quote )
 {
+    EditionManager editionManager;
     si.addMember("book-title") <<= quote.getBookTitle();
     si.addMember("chapter-begin") <<= quote.getChapterBegin();
     si.addMember("chapter-end") <<= quote.getChapterEnd();
@@ -239,7 +240,7 @@ void operator<<= ( cxxtools::SerializationInfo& si, const Quote& quote )
     si.addMember("sentence-begin") <<= quote.getSentenceBegin();
     si.addMember("sentence-end") <<= quote.getSentenceEnd();
     si.addMember("private-data") <<= quote.isPrivateData();
-    si.addMember("edition") <<= EditionManager::getEditionByID( quote.getEditionID() );
+    si.addMember("edition") <<= editionManager.getEditionByID( quote.getEditionID() );
 }
 
 /**
@@ -415,6 +416,7 @@ void QuoteRegister::jsonImport( const std::string jsonText,
         DEBUG "quoteContainer.allUserQuotes.size(): "
             << quoteContainer.allUserQuotes.size() <<  std::endl;
 
+        EditionManager editionManager;
 
         for (unsigned n = 0; n < quoteContainer.allUserQuotes.size(); ++n) {
             DEBUG "n: " << n << std::endl;
@@ -422,7 +424,7 @@ void QuoteRegister::jsonImport( const std::string jsonText,
             Edition edition = quoteContainer.allUserQuotes[n].getTmpEditionData( );
             edition.setOwnerID( owner_id );
             quoteContainer.allUserQuotes[n]
-                .setEditionID( edition.saveAsNewIfNotExist() );
+                .setEditionID( editionManager.saveAsNewIfNotExist(edition) );
             quoteContainer.allUserQuotes[n].saveAsNew();
         }
     }

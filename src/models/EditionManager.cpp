@@ -19,37 +19,44 @@
 */
 
 #include "EditionManager.h"
+#include "Config.h"
 #include <tntdb/connect.h>
 #include <tntdb/statement.h>
 #include <tntdb/error.h>
 #include <tntdb/row.h>
+#include <cxxtools/log.h>
+
+log_define("EditionManager")
 
 
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+EditionManager::EditionManager()
+    : m_conn(tntdb::connectCached( Config().get( "DB-DRIVER" ) ))
+{ }
+
+EditionManager::EditionManager(tntdb::Connection& conn)
+    : m_conn(conn)
+{ }
 
 /* D ----------------------------------------------------------------------- */
 
 void EditionManager::deleteEditionByID ( unsigned long id ) {
-    Config config;
-    tntdb::Connection conn = 
-        tntdb::connectCached( config.get( "DB-DRIVER" ) );
-    tntdb::Statement st = conn.prepare( "DELETE FROM edition \
+
+    tntdb::Statement st = m_conn.prepare( "DELETE FROM edition \
                     WHERE id= :v1 ;");
-    st.set( "v1", id ).execute();
+
+    st.set( "v1", id )
+      .execute();
 }
 
 /* G ----------------------------------------------------------------------- */
 
 
 std::vector<Edition> EditionManager::getAllEditions ( unsigned long user_id ){
-    DEBUG "user_id: " << user_id  << std::endl;
-    std::vector<Edition> editionList;
-    Config config;
+    log_debug("user_id: " << user_id);
 
-    tntdb::Connection conn = 
-        tntdb::connectCached( config.get( "DB-DRIVER" ) );
-    tntdb::Statement st = conn.prepare( "SELECT \
+    std::vector<Edition> editionList;
+
+    tntdb::Statement st = m_conn.prepare( "SELECT \
                         id, \
                         name, \
                         publishername, \
@@ -77,17 +84,14 @@ std::vector<Edition> EditionManager::getAllEditions ( unsigned long user_id ){
         editionList.push_back ( edition );
     }
 
-    DEBUG "editionList.size(): " <<  editionList.size() << std::endl;
+    log_debug("editionList.size(): " <<  editionList.size());
     return editionList;
 }
 
 
 Edition EditionManager::getEditionByID ( unsigned long id ) {
 
-    Config config;
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
-
-    tntdb::Statement st = conn.prepare( "SELECT \
+    tntdb::Statement st = m_conn.prepare( "SELECT \
                         id, \
                         owner_id, \
                         name, \
@@ -128,12 +132,7 @@ Edition EditionManager::getEditionByID ( unsigned long id ) {
 
 bool EditionManager::isEditionInUse ( unsigned long id ){
 
-    Config config;
-
-    tntdb::Connection conn = 
-        tntdb::connectCached( config.get( "DB-DRIVER" ) );
-
-    tntdb::Statement st = conn.prepare( " SELECT COUNT(edition_id) \
+    tntdb::Statement st = m_conn.prepare( " SELECT COUNT(edition_id) \
          FROM quote \
          WHERE edition_id = :v1 ;");
 
@@ -146,4 +145,75 @@ bool EditionManager::isEditionInUse ( unsigned long id ){
     v.get(count);
     return count > 0;
 
+}
+
+void EditionManager::saveAsNew( Edition& edition )
+{
+    tntdb::Statement st = m_conn.prepare( 
+        "INSERT INTO edition  ( \
+                owner_id,       \
+                name,           \
+                publishername,  \
+                releasenumber,  \
+                releasedate,    \
+                releaseplace    \
+            ) VALUES (          \
+                :owner_id,      \
+                :name,          \
+                '',             \
+                '',             \
+                '',             \
+                ''              \
+            ) " );
+
+    
+    st.set("owner_id", edition.m_ownerID )
+      .set("name", edition.m_name )
+      .execute();
+    
+    edition.setID(m_conn.lastInsertId("edition_id_seq"));
+
+}
+
+unsigned long  EditionManager::saveAsNewIfNotExist( Edition& edition )
+{
+    try
+    {
+        tntdb::Statement st = m_conn.prepare( "SELECT id FROM edition \n\
+                        WHERE owner_id = :v1  \n\
+                        AND name = :v2 " );
+
+        st.set("v1", edition.getOwnerID() )
+          .set("v2", edition.getName() )
+          .selectValue();
+    }
+    catch (const tntdb::NotFound&)
+    {
+        saveAsNew(edition);
+    }
+
+    return edition.getID();
+}
+
+void EditionManager::saveUpdate( const Edition& edition )
+{
+    tntdb::Statement st = m_conn.prepare( 
+        "UPDATE edition SET \n\
+                owner_id = :ownerID, \n\
+                name = :name, \
+                publishername = :publisherName, \
+                releasenumber = :releaseNumber, \
+                releasedate = :releaseDate, \
+                releaseplace = :releasePlace \
+            WHERE id = :id"
+    );
+    
+    st.set("ownerID", edition.m_ownerID )
+      .set("name", edition.m_name )
+      .set("publisherName", edition.m_publisherName )
+      .set("releaseNumber", edition.m_releaseNumber )
+      .set("releaseDate", edition.m_releaseDate )
+      .set("releasePlace", edition.m_releasePlace )
+      .set("id", edition.m_ID )
+      .execute();
 }

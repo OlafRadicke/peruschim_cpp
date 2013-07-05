@@ -75,7 +75,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     DEBUG "quote_id: " << quote_id << std::endl;
     DEBUG "session_quote_id: " << session_quote_id << std::endl;
 
-    editionList =  EditionManager::getAllEditions( userSession.getUserID() );
+    EditionManager editionManager;
+    editionList = editionManager.getAllEditions( userSession.getUserID() );
 
     if ( quote_id > 0 ) {
         session_quote_id = quote_id;
@@ -159,7 +160,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     }
 
     if ( rest_button == "reset" ) {
-        editionList =  EditionManager::getAllEditions( userSession.getUserID() );
+        editionList =  editionManager.getAllEditions( userSession.getUserID() );
         quoteData = QuoteRegister::getQuoteWithID( session_quote_id );
     }
 

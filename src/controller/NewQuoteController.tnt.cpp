@@ -149,7 +149,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         feedback = "Der Vers wurde gespeichert!";
     } else {
         DEBUG "userSession.getUserID(): " << userSession.getUserID() << std::endl;
-        editionList =  EditionManager::getAllEditions( userSession.getUserID() );
+        EditionManager editionManager;
+        editionList =  editionManager.getAllEditions( userSession.getUserID() );
 
     }
 

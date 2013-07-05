@@ -22,13 +22,10 @@
 #define EDITION_H
 
 #include <string>
-#include <vector>
-#include "Config.h"
-#include "DatabaseProxy.h"
-
 
 class Edition
 {
+    friend class EditionManager;
 
 public:
     /**
@@ -43,7 +40,7 @@ public:
     /**
      * Get ID.
      **/
-    const unsigned long getID() const
+    unsigned long getID() const
     {
         return this->m_ID;
     }
@@ -51,23 +48,32 @@ public:
     /**
      * Get name.
      **/
-    const std::string getName() const
+    const std::string& getName() const
     {
         return this->m_name;
     }
 
     /**
+     * Get owner ID.
+     **/
+    unsigned long getOwnerID() const
+    {
+        return this->m_ownerID;
+    }
+
+    /**
     * Get publisher name.
     **/
-    const std::string getPublisherName( ) const
+    const std::string& getPublisherName( ) const
     {
         return this->m_publisherName;
     }
 
     /**
     * Get release date.
+    * TODO use cxxtools::Date
     **/
-    const std::string getReleaseDate( ) const
+    const std::string& getReleaseDate( ) const
     {
         return this->m_releaseDate;
     }
@@ -75,7 +81,7 @@ public:
     /**
     * Get release number.
     **/
-    const std::string  getReleaseNumber( ) const
+    const std::string& getReleaseNumber( ) const
     {
         return this->m_releaseNumber;
     }
@@ -83,27 +89,10 @@ public:
     /**
     * Get release place.
     **/
-    const std::string getReleasePlace( ) const
+    const std::string& getReleasePlace( ) const
     {
         return this->m_releasePlace;
     }
-
-    /**
-     * Save date as new data set in database.
-     **/
-    void saveAsNew();
-
-
-    /**
-     * Save date as new data set in database if data does not exist in data base.
-     * @return Return ID of Edition, new or old.
-     **/
-    unsigned long saveAsNewIfNotExist();
-
-    /**
-     * Save date update in in database..
-     **/
-    void saveUpdate();
 
     // sets ==================================
     /**
@@ -119,7 +108,7 @@ public:
      * Set name.
      * @param name new name.
      **/
-    void setName( std::string name )
+    void setName( const std::string& name )
     {
         this->m_name = name;
     }
@@ -128,7 +117,7 @@ public:
      * Set id of owner.
      * @param user_id id of owner.
      **/
-    void setOwnerID( const unsigned long user_id ){
+    void setOwnerID( unsigned long user_id ){
         this->m_ownerID = user_id;
     }
 
@@ -136,15 +125,16 @@ public:
     * Set publisher name.
     * @param name new name.
     **/
-    void setPublisherName( std::string name )
+    void setPublisherName( const std::string& name )
     {
         this->m_publisherName = name;
     }
 
     /**
     * Set release date.
+    * TODO use cxxtools::Date
     **/
-    void setReleaseDate( const std::string releaseDate )
+    void setReleaseDate( const std::string& releaseDate )
     {
         this->m_releaseDate = releaseDate;
     }
@@ -153,7 +143,7 @@ public:
     * Set release number.
     * @param number new number.
     **/
-    void setReleaseNumber( std::string number )
+    void setReleaseNumber( const std::string& number )
     {
         this->m_releaseNumber = number;
     }
@@ -162,7 +152,7 @@ public:
     * Set release place.
     * @param place new place.
     **/
-    void setReleasePlace( std::string place )
+    void setReleasePlace( const std::string& place )
     {
         this->m_releasePlace = place;
     }
@@ -201,6 +191,7 @@ private:
     /**
      *  edition date
      * Example: "2008-03-22"
+     * TODO use cxxtools::Date
      **/
     std::string m_releaseDate;
 

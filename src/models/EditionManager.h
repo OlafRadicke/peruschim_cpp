@@ -21,43 +21,62 @@
 #ifndef EDITIONMANAGER_H
 #define EDITIONMANAGER_H
 
-#include <vector>
-
 #include "Edition.h"
-#include "Config.h"
+#include <vector>
+#include <tntdb/connection.h>
 
 class EditionManager {
 
 public:
+    EditionManager();
 
+    explicit EditionManager(tntdb::Connection& conn);
 
     /**
      * Delete a edition data with a specifed id.
      * @arg id a edition.
      **/
-    static void deleteEditionByID ( unsigned long id );
+    void deleteEditionByID ( unsigned long id );
 
     /**
      * Get back all editions data of a user.
      * @arg user_id usr id
      * @return list of all edition datas.
      **/
-    static std::vector<Edition> getAllEditions ( unsigned long user_id );
+    std::vector<Edition> getAllEditions ( unsigned long user_id );
 
     /**
      * Get back a edition data with a specifed id.
      * @arg id a edition.
      **/
-    static Edition getEditionByID ( unsigned long id );
+    Edition getEditionByID ( unsigned long id );
 
     /**
      * Cecked if this edition in use of any quote.
      * @arg id a edition.
      * @return get back a number of quote that this edition us.
      **/
-    static bool isEditionInUse ( unsigned long id );
+    bool isEditionInUse ( unsigned long id );
+
+    /**
+     * Save date as new data set in database.
+     **/
+    void saveAsNew(Edition& edition);
+
+    /**
+     * Save date as new data set in database if data does not exist in data base.
+     * @return Return ID of Edition, new or old.
+     **/
+    unsigned long saveAsNewIfNotExist(Edition& edition);
+
+    /**
+     * Save date update in in database..
+     **/
+    void saveUpdate(const Edition& edition);
 
 private:
+
+    tntdb::Connection m_conn;
 
 };
 

@@ -20,6 +20,7 @@
 */
 
 #include "Quote.h"
+#include "Config.h"
 #include <tntdb/transaction.h>
 #include <tntdb/connect.h>
 #include <tntdb/result.h>

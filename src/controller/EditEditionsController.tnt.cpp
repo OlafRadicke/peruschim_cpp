@@ -65,9 +65,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     DEBUG std::endl;
 
     // edit action
+    EditionManager editionManager;
     if ( edit_edition_id > 0 ) {
-        edition_title = EditionManager::getEditionByID( edit_edition_id ).getName() ;
-        editionData = EditionManager::getEditionByID( edit_edition_id ) ;
+        edition_title = editionManager.getEditionByID( edit_edition_id ).getName() ;
+        editionData = editionManager.getEditionByID( edit_edition_id ) ;
         session_edition_id = edit_edition_id;
     }
     DEBUG std::endl;
@@ -83,7 +84,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         editionData.setReleaseNumber( modified_releasenumber );
         editionData.setReleasePlace( modified_releaseplace );
 
-        editionData.saveUpdate();
+        editionManager.saveUpdate(editionData);
 
         feedback = "Die Änderungen wurden gespeichert!";
     }
@@ -91,12 +92,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     // deleting action
     if ( delete_edition_id > 0 ) {
         DEBUG "delete_edition_id: " << delete_edition_id << std::endl;
-        int useCount = EditionManager::isEditionInUse( delete_edition_id );
+        int useCount = editionManager.isEditionInUse( delete_edition_id );
         if ( useCount > 0 ) {
             feedback = "Die Ausgabe wird noch von anderen Einträgen verwendet \
                 und kann deshalb nicht gelöscht werden!";
         } else {
-            EditionManager::deleteEditionByID( delete_edition_id );
+            editionManager.deleteEditionByID( delete_edition_id );
             feedback = "Die Ausgabe wurde gelöscht.";
         }
     }
@@ -107,10 +108,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         editionData.setName( new_edition_title );
         editionData.setOwnerID( userSession.getUserID() );
-        editionData.saveAsNew();
+        editionManager.saveAsNew(editionData);
 
     }
 
-    editionList =  EditionManager::getAllEditions( userSession.getUserID() );
+    editionList =  editionManager.getAllEditions( userSession.getUserID() );
 
 </%cpp>
