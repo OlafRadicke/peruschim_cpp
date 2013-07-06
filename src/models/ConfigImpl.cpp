@@ -52,6 +52,9 @@ void ConfigImpl::generatingConfigExample( const std::string& filename )
 void ConfigImpl::read(const std::string& filename)
 {
     std::ifstream in(filename.c_str());
+    if (!in)
+        throw std::runtime_error("failed to open configuration file \"" + filename + '"');
+
     cxxtools::PropertiesDeserializer deserializer(in);
     deserializer.deserialize(*this);
 
