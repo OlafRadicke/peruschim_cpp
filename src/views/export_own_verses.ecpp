@@ -1,4 +1,4 @@
-<%include>./src/controller/ExportOwnVersesController.tnt.cpp</%include>
+<%include>controller/ExportOwnVersesController.tnt.cpp</%include>
 
 <!DOCTYPE HTML>
 <html>
@@ -8,8 +8,8 @@
     <& "style" &>
 </head>
 <body>
-    <%include>./src/views/parts/user-session.ecpp.html</%include>
-    <%include>./src/views/parts/head.ecpp.html</%include>
+    <%include>views/parts/user-session.ecpp.html</%include>
+    <%include>views/parts/head.ecpp.html</%include>
     <br />
     <div class="mainmenue">
         <ul>
@@ -38,6 +38,6 @@
         </p>
 
     </div>
-<%include>./src/views/parts/foot.ecpp.html</%include>
+<%include>views/parts/foot.ecpp.html</%include>
 </body>
 </html>

@@ -41,11 +41,11 @@ string user_view;
     vector<KeywordCount> keywordTitlesCounts;
     // ACL Check
     if ( userSession.isInRole ( "user" ) == false ) {
-        DEBUG "Nicht eingelogt" << std::endl;
+        DEBUG "Nicht eingeloggt" << std::endl;
         keywordTitlesCounts =
             KeywordRegister::getAllPubKeywordTitleAndCound();
     } else {
-        DEBUG "Eingelogt" << std::endl;
+        DEBUG "Eingeloggt" << std::endl;
         DEBUG "user_view: " << user_view << endl;
         if ( user_view == "privateitems" && user_view != "") {
             DEBUG "PRIVATEITEMS: " << PRIVATEITEMS << std::endl;

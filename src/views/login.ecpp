@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
-<%include>./src/controller/LoginController.tnt.cpp</%include>
+<%include>controller/LoginController.tnt.cpp</%include>
 
 <!DOCTYPE HTML>
 <html>
@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <& "style" &>
 </head>
 <body>
-    <%include>./src/views/parts/head.ecpp.html</%include>
+    <%include>views/parts/head.ecpp.html</%include>
     <br />
     <div class="smallgroupbox">
         <form method="post" >
@@ -42,6 +42,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </form>
     </div>
 
-<%include>./src/views/parts/foot.ecpp.html</%include>
+<%include>views/parts/foot.ecpp.html</%include>
 </body>
 </html>

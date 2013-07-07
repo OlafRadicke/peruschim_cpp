@@ -1,0 +1,21 @@
+peruschim_cpp is now built using autotools.
+
+To build peruschim_cpp do the following steps:
+
+  * check out the latest version from github (https://github.com/OlafRadicke/peruschim_cpp)
+  * run "autoreconf -i"
+  * run "./configure"
+  * run "make"
+
+You get a binary in src/peruschim_cpp.
+
+Alternatively you can build it into another directory. You have to run configure
+from that directory then like this:
+
+  * run "autoreconf -i"
+  * run "mkdir build"
+  * run "chdir build"
+  * run "../configure"
+  * run "make"
+
+Then you have all generated files in that build directory.
