@@ -1,6 +1,6 @@
 <%pre>
-    #include "../models/WebACL.h"
-    #include "../models/UserSession.h"
+    #include "models/WebACL.h"
+    #include "models/UserSession.h"
 </%pre>
 
 <%config>

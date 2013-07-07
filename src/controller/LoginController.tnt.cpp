@@ -16,13 +16,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
 <%pre>
-    #include "../models/WebACL.h"
-    #include "../models/UserSession.h"
+    #include "models/WebACL.h"
+    #include "models/UserSession.h"
 </%pre>
 
 <%args>
-    std::string name = "";
-    std::string password = "";
+    name;
+    password;
 </%args>
 
 <%session scope="global">

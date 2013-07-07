@@ -1,3 +1,4 @@
+AUTOMAKE_OPTIONS = subdir-objects
 bin_PROGRAMS = peruschim_cpp
 
 ecppSources = \
@@ -43,11 +44,18 @@ peruschim_cpp_SOURCES = \
 
 peruschim_cpp_LDFLAGS = -lcxxtools -ltntnet -ltntdb
 
-CLEANFILES = $(ecppSources:.ecpp=.cpp) $(icoSources:.ico=.cpp)
+CLEANFILES = $(ecppSources:.ecpp=.cpp) $(ecppSources:.ecpp=.deps) $(icoSources:.ico=.cpp)
 
+#
+# Rules for tntnet applications
+#
 SUFFIXES=.ecpp .ico .cpp
 
 .ecpp.cpp:
 	$(ECPPC) -I $(top_srcdir)/src -o $@ $<
+.ecpp.deps:
+	$(ECPPC) -M -n $* -I $(srcdir) -I $(srcdir)/include $< | $(SED) '1s/\(.*\).cpp:/\1.cpp \1.deps:/' > $@
 .ico.cpp:
 	$(ECPPC) -b -m image/x-icon -o $@ $<
+
+-include $(ecppSources:.ecpp=.deps)
