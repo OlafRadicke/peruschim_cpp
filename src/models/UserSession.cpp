@@ -43,7 +43,7 @@ unsigned long UserSession::getUserID ( ) {
         return this->m_userID;
     } else {
 
-        tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+        tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
         tntdb::Statement st = conn.prepare( 
             "SELECT \
                 id \

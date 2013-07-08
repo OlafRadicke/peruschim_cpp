@@ -23,10 +23,6 @@
 
 #include <string>
 #include <cxxtools/serializationinfo.h>
-// #include <cxxtools/mutex.h>
-// #include <cxxtools/fileinfo.h>
-// #include <cxxtools/log.h>
-// #include <fstream>
 
 /**
 * @class ConfigImpl 
@@ -34,7 +30,6 @@
 class ConfigImpl
 {
     friend void operator>>= (const cxxtools::SerializationInfo& si, ConfigImpl& config);
-//     friend void operator<<= (const cxxtools::SerializationInfo& si, ConfigImpl& config);
 
 public:
     
@@ -47,12 +42,6 @@ public:
         m_mailFromAddress( "peruschim_cpp.conf@localhost" )
     { }
 
-    /**
-     * Function is generating a config file example.
-     * @arg filename Function is writting in a file with tis name.
-     */
-    void generatingConfigExample( const std::string& filename );
-    
     void read(const std::string& filename);
 
     const std::string& appIp() const
@@ -73,17 +62,7 @@ public:
     const std::string& mailFromAddress() const
     { return m_mailFromAddress; }
 
-    std::string get(const std::string& var) const
-    {
-        std::string value;
-        m_si.getMember(var) >>= value;
-        return value;
-    }
-    
-    
 private:
-    cxxtools::SerializationInfo m_si;
-
     std::string m_appIp;
     unsigned short m_appPort;
     std::string m_dbDriver;

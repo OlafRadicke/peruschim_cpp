@@ -220,7 +220,7 @@ std::vector<std::string> Quote::getKeywords() {
     if ( this->m_quoteKeywords.size() < 1 && this->m_ID > 0 ) {
 
         tntdb::Result result;
-        tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+        tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
         tntdb::Statement st = conn.prepare( "SELECT title \
             FROM quote_keyword \
             WHERE quote_id = :v1 \
@@ -246,7 +246,7 @@ std::string Quote::getKeywordsAsString(){
         tntdb::Result result;
         std::string seperator = "";
 
-        tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+        tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
         DEBUG std::endl;
         tntdb::Statement st = conn.prepare( "SELECT title \
             FROM quote_keyword \
@@ -283,7 +283,7 @@ void Quote::saveAsNew() {
     Config config;
     try {
         tntdb::Connection conn = 
-            tntdb::connectCached( config.get( "DB-DRIVER" ) );
+            tntdb::connectCached( config.dbDriver() );
 
         DEBUG std::endl;
         tntdb::Transaction trans(conn);
@@ -359,7 +359,7 @@ void Quote::saveUpdate(){
     Config config;
     try {
         tntdb::Connection conn = 
-            tntdb::connectCached( config.get( "DB-DRIVER" ) );
+            tntdb::connectCached( config.dbDriver() );
 
         tntdb::Transaction trans(conn);
         conn.prepare(

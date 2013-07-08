@@ -114,7 +114,7 @@ void WebACL::createAccount (
     password_salt = WebACL::genRandomSalt ( 16 );
     password_hash = cxxtools::md5 ( new_password + password_salt );
 
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
     tntdb::Statement st = conn.prepare(
         "INSERT INTO account \
         (   login_name, \
@@ -140,7 +140,7 @@ void WebACL::createAccount (
 
 
     if ( roll != "" ) {
-        conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+        conn = tntdb::connectCached( config.dbDriver() );
         st = conn.prepare(
                 "SELECT \
                     id \
@@ -156,7 +156,7 @@ void WebACL::createAccount (
             user_id = row[0].getInt();
         }
 
-        conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+        conn = tntdb::connectCached( config.dbDriver() );
         st = conn.prepare(
 
             "INSERT INTO account_acl_roll \
@@ -179,7 +179,7 @@ void WebACL::createAccount (
 
 AccountData WebACL::getAccountsWithID ( unsigned long id ){
     Config config;
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
 
     tntdb::Statement st = conn.prepare( "SELECT \
                 login_name, \
@@ -225,7 +225,7 @@ std::vector<AccountData> WebACL::getAllAccounts (){
     std::vector<AccountData> accounts;
     Config config;
 
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
     tntdb::Statement st = conn.prepare(
             "SELECT \
                 id, \
@@ -389,7 +389,7 @@ void WebACL::reSetUserRolls(
 
     log_debug("reSetUserRolls");
     Config config;
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
     tntdb::Statement st = conn.prepare( "DELETE FROM account_acl_roll \
                 WHERE account_id = :v1;");
     st.set( "v1", user_id ).execute();

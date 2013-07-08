@@ -37,7 +37,7 @@ vector<string> KeywordRegister::getAllKeywordTitles( void ){
     Config config;
     tntdb::Result result;
 
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
     result = conn.select( "SELECT DISTINCT title title FROM quote_keyword ORDER BY title" );
     for (tntdb::Result::const_iterator it = result.begin();
         it != result.end(); ++it
@@ -58,7 +58,7 @@ vector<KeywordCount> KeywordRegister::getAllKeywordTitleAndCound( const unsigned
     Config config;
     tntdb::Result result;
 
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
 
     tntdb::Statement st = conn.prepare( "SELECT title, \
                                 COUNT(title) As Anzahl \
@@ -93,7 +93,7 @@ vector<KeywordCount> KeywordRegister::getAllPubKeywordTitleAndCound( void ) {
     Config config;
     tntdb::Result result;
 
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
     result = conn.select(  "SELECT title, \
                                 COUNT(title) As Anzahl \
                             FROM quote_keyword \
@@ -124,7 +124,7 @@ vector<KeywordCount> KeywordRegister::getOwnKeywordTitleAndCound( const unsigned
     Config config;
     tntdb::Result result;
 
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
 
     tntdb::Statement st = conn.prepare( "SELECT title, \
                                 COUNT(title) As Anzahl \

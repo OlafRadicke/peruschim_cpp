@@ -25,7 +25,6 @@
 #include <vector>
 #include <map>
 
-#include "DatabaseProxy.h"
 #include "Edition.h"
 
 
@@ -335,7 +334,7 @@ private:
     unsigned long m_ID;
 
     /**
-     * quote keywords. Separated by commas.
+     * quote keywords.
      * Example: "Umkehr, Zöllner, Nachfolge"
      **/
     std::vector<std::string> m_quoteKeywords;

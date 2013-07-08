@@ -66,11 +66,6 @@ const std::string& Config::mailFromAddress() const
     return impl->mailFromAddress();
 }
 
-std::string Config::get(const std::string& var) const
-{
-    return impl->get(var);
-}
-
 Config::Config ()
     : impl(0)
 {

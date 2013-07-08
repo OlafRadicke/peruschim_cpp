@@ -42,8 +42,6 @@ public:
     const std::string& smtpServer() const;
     const std::string& mailFromAddress() const;
 
-    std::string get(const std::string& var) const;
-
 private:
     ConfigImpl* impl;
 };

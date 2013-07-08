@@ -35,7 +35,7 @@ std::vector< std::vector<std::string> > DatabaseProxy::sqlGet ( std::string sqlc
     tntdb::Result result;
 
     tntdb::Connection conn =
-        tntdb::connectCached( config.get( "DB-DRIVER" ) );
+        tntdb::connectCached( config.dbDriver() );
 
     result = conn.select( sqlcommand );
     for (tntdb::Result::const_iterator it = result.begin();
@@ -61,7 +61,7 @@ std::string DatabaseProxy::sqlGetSingle ( std::string sqlcommand )
     unsigned int     col_count;
     tntdb::Result result;
 
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
     result = conn.select( sqlcommand );
     for (tntdb::Result::const_iterator it = result.begin();
         it != result.end(); ++it
@@ -81,7 +81,7 @@ std::string DatabaseProxy::sqlGetSingle ( std::string sqlcommand )
 void DatabaseProxy::sqlSet ( std::string sqlcommand )
 {
     Config config;
-    tntdb::Connection conn = tntdb::connectCached( config.get( "DB-DRIVER" ) );
+    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
     log_debug("sqlcommand: " << sqlcommand);
     conn.execute( sqlcommand );
 }
