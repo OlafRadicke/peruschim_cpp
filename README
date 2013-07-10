@@ -14,7 +14,7 @@ from that directory then like this:
 
   * run "autoreconf -i"
   * run "mkdir build"
-  * run "chdir build"
+  * run "cd build"
   * run "../configure"
   * run "make"
 
