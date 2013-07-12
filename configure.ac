@@ -1,5 +1,6 @@
 AC_INIT(peruschim_cpp, 0.1, [Olaf Radicke <briefkasten@olaf-radicke.de>])
 AM_INIT_AUTOMAKE
+AC_CONFIG_MACRO_DIR([m4])
 
 AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_SRCDIR([src/peruschim_cpp.cpp])
