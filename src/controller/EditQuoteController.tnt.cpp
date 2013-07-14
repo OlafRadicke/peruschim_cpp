@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #include "models/Edition.h"
     #include "models/Quote.h"
     #include "models/QuoteRegister.h"
+    #include "manager/BibleManager.h"
     #include <iostream>
 
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -163,5 +164,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         editionList =  editionManager.getAllEditions( userSession.getUserID() );
         quoteData = QuoteRegister::getQuoteWithID( session_quote_id );
     }
+
+    BibleManager bibleManager;
 
 </%cpp>

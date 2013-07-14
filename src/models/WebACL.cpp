@@ -140,23 +140,8 @@ void WebACL::createAccount (
 
 
     if ( roll != "" ) {
-        conn = tntdb::connectCached( config.dbDriver() );
-        st = conn.prepare(
-                "SELECT \
-                    id \
-                FROM account \
-                WHERE login_name = :user_name"
-        );
-        st.set( "user_name", user_name ).execute();
-        for ( tntdb::Statement::const_iterator it = st.begin();
-            it != st.end();
-            ++it
-        ) {
-            tntdb::Row row = *it;
-            user_id = row[0].getInt();
-        }
+        user_id = conn.lastInsertId();
 
-        conn = tntdb::connectCached( config.dbDriver() );
         st = conn.prepare(
 
             "INSERT INTO account_acl_roll \
@@ -168,7 +153,8 @@ void WebACL::createAccount (
                 )"
         );
         st.set( "user_id", user_id )
-        .set( "roll", roll ).execute();
+          .set( "roll", roll )
+          .execute();
 
     }
 
