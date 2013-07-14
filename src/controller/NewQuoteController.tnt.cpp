@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #include "models/UserSession.h"
     #include "models/Edition.h"
     #include "models/Quote.h"
+    #include "manager/BibleManager.h"
 
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
     # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -153,5 +154,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         editionList =  editionManager.getAllEditions( userSession.getUserID() );
 
     }
+
+    BibleManager bibleManager;
 
 </%cpp>
