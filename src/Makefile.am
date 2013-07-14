@@ -8,7 +8,7 @@ ecppSources = \
 	views/edit_editions.ecpp \
 	views/EditOwnVersesView.ecpp \
 	views/editquote.ecpp \
-	views/export_own_verses.ecpp \
+	views/ExportOwnVersesView.ecpp \
 	views/home.ecpp \
 	views/import_own_verses.ecpp \
 	views/keyword_detail.ecpp \

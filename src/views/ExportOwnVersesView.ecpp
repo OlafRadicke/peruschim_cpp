@@ -1,4 +1,14 @@
-<%include>controller/ExportOwnVersesController.tnt.cpp</%include>
+
+<%session
+    scope="global"
+    include="models/QuoteRegister.h"
+    include="models/UserSession.h" >
+
+    UserSession userSession;
+    std::string jason_text;
+    std::string feedback;
+</%session>
+
 
 <!DOCTYPE HTML>
 <html>
@@ -16,7 +26,7 @@
             <li class="tableft"><a href="home">Home</a></li>
             <li class="tabmiddle"><a href="keyword_register">Schlagwortsuche</a></li>
             <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
-            <li class="tabmiddle_activ"><a href="portalaccount">Mein Account</a></li>
+            <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
             <li class="tabright"><a href="portaladmin">Administrationsportal</a></li>
         </ul>
     </div>

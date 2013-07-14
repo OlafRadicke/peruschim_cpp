@@ -1,5 +1,4 @@
 
-
 ABHÄNGIGKEITEN
 --------------
 
@@ -20,11 +19,42 @@ Peruschim benutzt PostgreSQL als Backend so das u.U.
 angegeben werden muss.
 
 
+Quellen übersetzen
+------------------
+
+Für die Erstellung von peruschim_cpp werden autotools verwendet.
+
+Um peruschim_cpp zu erstellen sind die folgenden Schritte nötig:
+
+  * check die letzte Version auf github aus  (https://github.com/OlafRadicke/peruschim_cpp)
+  * Und führe aus "autoreconf -i && ./configure && make"
+
+Die ausführbare Datei findest du nun unter src/peruschim_cpp.
+
+Alternativ kann das Build auch in einem separaten Verzeichnis erstellt werden.
+Dann ist wie folgt zu verfahren:
+
+  * "autoreconf -i" ausführen
+  * "mkdir build" ausführen
+  * "cd build" ausführen
+  * "../configure" ausführen
+  * "make" ausführen
+
+Nun sind alle generiereten Datein im Build-Verzeichnis zu finden. Noch ein Tipp:
+Die meisten Systeme haben heutzutage mehere CPUs oder Kerne. Um die volle 
+Leistung zu nutzen kann man auch "make -j 4" aufrufen, dann wird make mit vier
+Prozessen gleichzeitig laufen um die Zeit Kompilierens zu verkürzen. 
+
+Um das Verzeichnis von den Artefakten zu bereinigen wird der Befehl 
+"make distclean" aufgerufen. 
+
+
 INSTALLATION
 ------------
 
 
 DATENBANK VORBEREITEN
+=====================
 
 (unter Fedora 17)
 # Server installieren
@@ -60,17 +90,14 @@ psql -U peruschim_cpp -h localhost -W peruschim_cpp
 # Tabellen erstellen:
 psql -h localhost -U peruschim_cpp peruschim_cpp < /peruschim_cpp/PostgreSQL/db_schema.sql
 
-PERUSCHIM ÜBERSETZEN
-
-# Der Parameter "-j 4" ist optional und weist gnu make an, vier cores zu
-# benutzen, bzw. 4 Jobs parallel auszuführen.
-make -j 4
-
 
 STARTEN
 -------
 
-nach dem Komplieren einfach die Datei ./peruschim_cp ausfüren.
+nach dem Komplieren einfach die Datei ./peruschim_cp ausfüren. Es muss eine
+Konfigurationsdatei mit Namen "peruschim_cpp.conf" im ausführendem Verzeichnis
+vorhanden sein oder im Verzeichnis "/etc/".
+
 Das initale Passwort von User "admin" ist "admin". Das Passwort
 sollte sofort nach der Installation geändert werden.
 
