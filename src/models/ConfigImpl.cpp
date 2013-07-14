@@ -35,6 +35,7 @@ void ConfigImpl::read(const std::string& filename)
     cxxtools::JsonDeserializer deserializer(in);
     deserializer.deserialize(*this);
 
+    // Config logging.
     cxxtools::SerializationInfo* psi = deserializer.si()->findMember("logging");
     if (psi)
       log_init(*psi);

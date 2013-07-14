@@ -1,9 +1,10 @@
 #include "controller/ExportOwnVersesController.h"
 #include "models/QuoteRegister.h"
 #include "models/UserSession.h"
+#include <cxxtools/log.h>
 #include <iostream>
 
-log_define("ExportOwnVersesController")
+log_define("component.ExportOwnVersesController")
 
 static tnt::ComponentFactoryImpl<ExportOwnVersesController> factory("ExportOwnVersesController");
 
@@ -21,7 +22,6 @@ unsigned ExportOwnVersesController::operator() (tnt::HttpRequest& request, tnt::
     };
     
     jason_text = QuoteRegister::getJsonExport( userSession.getUserID() );
-    quoteList = QuoteRegister::getAllQuoteOfUser( userSession.getUserID() );
 
     return DECLINED;
 }

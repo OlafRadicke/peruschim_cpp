@@ -225,7 +225,7 @@ std::vector<std::string> Quote::getKeywords() {
             FROM quote_keyword \
             WHERE quote_id = :v1 \
             ORDER BY title" );
-        st.set("v1", this->m_ID ).execute();
+        st.set("v1", this->m_ID );
 
         for ( tntdb::Statement::const_iterator it = st.begin();
             it != st.end(); ++it ) {
@@ -240,7 +240,7 @@ std::vector<std::string> Quote::getKeywords() {
 std::string Quote::getKeywordsAsString(){
     DEBUG std::endl;
     Config config;
-    std::string keywordsAsString = "";
+    std::string keywordsAsString;
 
     if ( this->m_quoteKeywords.size() < 1 && this->m_ID > 0 ) {
         tntdb::Result result;
@@ -252,7 +252,7 @@ std::string Quote::getKeywordsAsString(){
             FROM quote_keyword \
             WHERE quote_id = :v1 \
             ORDER BY title" );
-        st.set("v1", this->m_ID ).execute();
+        st.set("v1", this->m_ID );
 
         for ( tntdb::Statement::const_iterator it = st.begin();
             it != st.end(); ++it ) {
