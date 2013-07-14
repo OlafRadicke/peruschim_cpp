@@ -34,19 +34,14 @@ class Quote
 
 public:
     /**
-     * Constructor init strings.
+     * Constructor.
      **/
     Quote();
 
     /**
-     * Try to build the Bibleserver.com url.
-     */
-    const std::string getBibleserverComURL();
-
-    /**
      * Get title of book.
      **/
-    const std::string getBookTitle() const
+    const std::string& getBookTitle() const
     {
         return this->m_bookTitle;
     }
@@ -54,7 +49,7 @@ public:
     /**
      * Get number of chapter begin.
      **/
-    const int getChapterBegin() const
+    unsigned getChapterBegin() const
     {
         return this->m_bookChapterBegin;
     }
@@ -62,7 +57,7 @@ public:
     /**
      * Get number of chapter end.
      **/
-    const int getChapterEnd() const
+    unsigned getChapterEnd() const
     {
         return this->m_bookChapterEnd;
     }
@@ -70,7 +65,7 @@ public:
     /**
      * Get id of edition.
      **/
-    const unsigned long getEditionID() const
+    unsigned long getEditionID() const
     {
         return this->m_editionID;
     }
@@ -78,7 +73,7 @@ public:
     /**
      * Get id of this quote.
      **/
-    unsigned long  getID( ) {
+    unsigned long getID( ) const {
         return this->m_ID;
     }
 
@@ -119,7 +114,7 @@ public:
     /**
      * Get number of sentence begin.
      **/
-    const int getSentenceBegin() const
+    unsigned getSentenceBegin() const
     {
         return this->m_bookSentenceBegin;
     }
@@ -127,7 +122,7 @@ public:
     /**
      * Get number of sentence end.
      **/
-    const int getSentenceEnd() const
+    unsigned getSentenceEnd() const
     {
         return this->m_bookSentenceEnd;
     }
@@ -171,7 +166,7 @@ public:
     /**
      * Set number of chapter begin.
      **/
-    void setChapterBegin( int number )
+    void setChapterBegin( unsigned number )
     {
         this->m_bookChapterBegin = number;
     }
@@ -179,7 +174,7 @@ public:
     /**
      * Set number of chapter end.
      **/
-    void setChapterEnd( int number )
+    void setChapterEnd( unsigned number )
     {
         this->m_bookChapterEnd = number;
     }
@@ -257,7 +252,7 @@ public:
     /**
      * Set number of sentence begin.
      **/
-    void setSentenceBegin ( int number )
+    void setSentenceBegin ( unsigned number )
     {
         this->m_bookSentenceBegin  = number;
     }
@@ -265,7 +260,7 @@ public:
     /**
      * Set number of sentence end.
      **/
-    void setSentenceEnd ( int number )
+    void setSentenceEnd ( unsigned number )
     {
         this->m_bookSentenceEnd  = number;
     }
@@ -301,25 +296,25 @@ private:
      * book chapter quote begin.
      * Example: "5"
      **/
-    int m_bookChapterBegin;
+    unsigned m_bookChapterBegin;
 
     /**
      *  book sentence quote begin.
      * Example: "27"
      **/
-    int m_bookSentenceBegin;
+    unsigned m_bookSentenceBegin;
 
     /**
      * book chapter quote end
      * Example: "5"
      **/
-    int m_bookChapterEnd;
+    unsigned m_bookChapterEnd;
 
     /**
      *  book sentence quote end
      * Example: "27"
      **/
-    int m_bookSentenceEnd;
+    unsigned m_bookSentenceEnd;
 
     /**
      * The edition id.
@@ -376,12 +371,6 @@ private:
      * lowercase.
      **/
     std::string lowercase ( std::string keywords );
-
-
-    /**
-     * Mapping bible books name of bibleserver.com
-     */
-    std::map<std::string, std::string> BibleserverComNames;
 
     /**
      * Buffer for edition data. Is use only by JSON-deserializeing.

@@ -22,6 +22,7 @@
 
 #include <string>
 #include <vector>
+#include <models/Quote.h>
 
 class BibleManager
 {
@@ -35,6 +36,10 @@ public:
     BibleBooksIterator bibleBooksEnd() const;
     unsigned bibleBooksCount() const;
     const std::string& bibleBook(unsigned n) const;
+
+    std::string getBibleserverComURL(const std::string& bookTitle, unsigned bookChapterBegin) const;
+    std::string getBibleserverComURL(const Quote& quote) const
+    { return getBibleserverComURL(quote.getBookTitle(), quote.getChapterBegin()); }
 
 private:
     class Impl;

@@ -38,10 +38,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     unsigned long  quote_id = 0;
     unsigned long  edition_id = 0;
     std::string book_title = "";
-    int         chapter_begin = 0;
-    int         sentence_begin = 0;
-    int         chapter_end = 0;
-    int         sentence_end = 0;
+    unsigned    chapter_begin = 0;
+    unsigned    sentence_begin = 0;
+    unsigned    chapter_end = 0;
+    unsigned    sentence_end = 0;
     std::string quote_text = "";
     std::string keywords = "";
     std::string note = "";
@@ -66,6 +66,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     std::string feedback = "";
     Edition editionData;
     Quote quoteData;
+    BibleManager bibleManager;
 
     // ACL Check
     if ( userSession.isInRole ( "user" ) == false ) {
@@ -98,16 +99,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         DEBUG std::endl;
         quoteData.setKeywords( keywords );
         quoteData.setNote( note );
-        DEBUG "is_private_data: " <<  is_private_data << std::endl;
-        if ( is_private_data == "true" ) {
-            quoteData.setIsPrivateData( true );
-        } else {
-            quoteData.setIsPrivateData( false );
-        }
+        quoteData.setIsPrivateData(is_private_data == "true" );
         DEBUG std::endl;
-        DEBUG "quoteData.getBibleserverComURL(): " << quoteData.getBibleserverComURL() << std::endl;
+        DEBUG "quoteData.getBibleserverComURL(): " << bibleManager.getBibleserverComURL(quoteData) << std::endl;
         DEBUG std::endl;
-        bibleserverComURL = quoteData.getBibleserverComURL();
+        bibleserverComURL = bibleManager.getBibleserverComURL(quoteData);
         DEBUG "bibleserverComURL: " << bibleserverComURL << std::endl;
     }
 
@@ -164,7 +160,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         editionList =  editionManager.getAllEditions( userSession.getUserID() );
         quoteData = QuoteRegister::getQuoteWithID( session_quote_id );
     }
-
-    BibleManager bibleManager;
 
 </%cpp>

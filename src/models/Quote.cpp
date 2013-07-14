@@ -26,114 +26,21 @@
 #include <tntdb/result.h>
 #include <tntdb/statement.h>
 #include <tntdb/error.h>
+#include <cxxtools/join.h>
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
-    Quote::Quote():
-        BibleserverComNames(),
-        tmpEditionData()
-    {
-        this->m_isPrivateData = false;
-        this->m_ownerID = 0;
-        this->m_bookChapterBegin = 0;
-        this->m_bookSentenceBegin = 0;
-        this->m_bookChapterEnd = 0;
-        this->m_bookSentenceEnd = 0;
-
-        // the maching with book name of bibleserver.com
-        BibleserverComNames["1. Mose"] = "1.Mose";
-        BibleserverComNames["2. Mose"] = "2.Mose";
-        BibleserverComNames["3. Mose"] = "3.Mose";
-        BibleserverComNames["4. Mose"] = "4.Mose";
-        BibleserverComNames["5. Mose"] = "5.Mose";
-        BibleserverComNames["Josua"] = "Josua";
-        BibleserverComNames["Richter"] = "Richter";
-        BibleserverComNames["Rut"] = "Rut";
-        BibleserverComNames["1. Samuel"] = "1.Samuel";
-        BibleserverComNames["2. Samuel"] = "2.Samuel";
-        BibleserverComNames["1. Könige"] = "1.Könige";
-        BibleserverComNames["2. Könige"] = "2.Könige";
-        BibleserverComNames["1. Chronik"] = "1.Chronik";
-        BibleserverComNames["2. Chronik"] = "2.Chronik";
-        BibleserverComNames["Esra"] = "Esra";
-        BibleserverComNames["Nehemia"] = "Nehemia";
-        BibleserverComNames["Tobit"] = "Tobit";
-        BibleserverComNames["Judit"] = "Judit";
-        BibleserverComNames["Ester"] = "Esther";
-        BibleserverComNames["1. Makkabäer"] = "1.Makkabäer";
-        BibleserverComNames["2. Makkabäer"] = "2.Makkabäer";
-        BibleserverComNames["3. Makkabäer"] = "";
-        BibleserverComNames["4. Makkabäer"] = "";
-        BibleserverComNames["Ijob"] = "Hiob";
-        BibleserverComNames["Psalmen"] = "Psalmen";
-        BibleserverComNames["Sprichwörter"] = "Sprüche";
-        BibleserverComNames["Kohelet"] = "Prediger";
-        BibleserverComNames["Hoheslied"] = "Hoheslied";
-        BibleserverComNames["Weisheit"] = "Weisheit";
-        BibleserverComNames["Jesus Sirach"] = "Jesus Sirach";
-        BibleserverComNames["Gebet des Manasse"] = "";
-        BibleserverComNames["Psalmen Salomos"] = "";
-        BibleserverComNames["Klagelieder Jeremias"] = "Klagelieder";
-        BibleserverComNames["Jesaja"] = "Jesaja";
-        BibleserverComNames["Jeremia"] = "Jeremia";
-        BibleserverComNames["Ezechiel"] = "Hesekiel";
-        BibleserverComNames["Baruch"] = "Baruch";
-        BibleserverComNames["Brief des Jeremia"] = "";
-        BibleserverComNames["Daniel"] = "Daniel";
-        BibleserverComNames["Hosea"] = "Hosea";
-        BibleserverComNames["Joel"] = "Joel";
-        BibleserverComNames["Amos"] = "Amos";
-        BibleserverComNames["Obadja"] = "Obadja";
-        BibleserverComNames["Jona"] = "Jona";
-        BibleserverComNames["Micha"] = "Micha";
-        BibleserverComNames["Nahum"] = "Nahum";
-        BibleserverComNames["Habakuk"] = "Habakuk";
-        BibleserverComNames["Zefanja"] = "Zefanja";
-        BibleserverComNames["Haggai"] = "Haggai";
-        BibleserverComNames["Sacharja"] = "Sacharja";
-        BibleserverComNames["Maleachi"] = "Maleachi";
-        BibleserverComNames["Matthäus"] = "Matthäus";
-        BibleserverComNames["Markus"] = "Markus";
-        BibleserverComNames["Lukas"] = "Lukas";
-        BibleserverComNames["Johannes"] = "Johannes";
-        BibleserverComNames["Apostelgeschichte"] = "Apostelgeschichte";
-        BibleserverComNames["Römer"] = "Römer";
-        BibleserverComNames["1. Korinther"] = "1.Korinther";
-        BibleserverComNames["2. Korinther"] = "2.Korinther";
-        BibleserverComNames["Galater"] = "Galater";
-        BibleserverComNames["Epheser"] = "Epheser";
-        BibleserverComNames["Philipper"] = "Philipper";
-        BibleserverComNames["Kolosser"] = "Kolosser";
-        BibleserverComNames["1. Thessalonicher"] = "1.Thessalonicher";
-        BibleserverComNames["2. Thessalonicher"] = "2.Thessalonicher";
-        BibleserverComNames["1. Timotheus"] = "1.Timotheus";
-        BibleserverComNames["2. Timotheus"] = "2.Timotheus";
-        BibleserverComNames["Titus"] = "Titus";
-        BibleserverComNames["Philemon"] = "Philemon";
-        BibleserverComNames["Hebräer"] = "Hebräer";
-        BibleserverComNames["Jakobus"] = "Jakobus";
-        BibleserverComNames["1. Petrus"] = "1.Petrus";
-        BibleserverComNames["2. Petrus"] = "2.Petrus";
-        BibleserverComNames["1. Johannes"] = "1.Johannes";
-        BibleserverComNames["2. Johannes"] = "2.Johannes";
-        BibleserverComNames["3. Johannes"] = "3.Johannes";
-        BibleserverComNames["Judas"] = "Judas";
-        BibleserverComNames["Offenbarung"] = "Offenbarung";
-    }
-
-
-const std::string Quote::getBibleserverComURL() {
-    if( this->m_bookTitle == "" ) return "";
-    if( this->m_bookChapterBegin == 0 ) return "";
-
-    std::stringstream sstr;
-    sstr << this->m_bookChapterBegin;
-
-    std::string url = "http://www.bibleserver.com/text/EU/";
-    url += BibleserverComNames[this->m_bookTitle] + "/" + sstr.str();
-    return url;
+Quote::Quote()
+  : m_isPrivateData(false),
+    m_ownerID(0),
+    m_bookChapterBegin(0),
+    m_bookSentenceBegin(0),
+    m_bookChapterEnd(0),
+    m_bookSentenceEnd(0)
+{
 }
+
 
 std::vector<std::string> Quote::getKeywords() {
     Config config;
@@ -148,8 +55,8 @@ std::vector<std::string> Quote::getKeywords() {
             ORDER BY title" );
         st.set("v1", this->m_ID );
 
-        for ( tntdb::Statement::const_iterator it = st.begin();
-            it != st.end(); ++it ) {
+        for ( tntdb::Statement::const_iterator it = st.begin(); it != st.end(); ++it )
+        {
             tntdb::Row row = *it;
             Quote dataQuote = Quote();
             this->m_quoteKeywords.push_back( row[0].getString() );
@@ -158,44 +65,10 @@ std::vector<std::string> Quote::getKeywords() {
     return this->m_quoteKeywords;
 }
 
-std::string Quote::getKeywordsAsString(){
-    DEBUG std::endl;
-    Config config;
-    std::string keywordsAsString;
-
-    if ( this->m_quoteKeywords.size() < 1 && this->m_ID > 0 ) {
-        tntdb::Result result;
-        std::string seperator = "";
-
-        tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
-        DEBUG std::endl;
-        tntdb::Statement st = conn.prepare( "SELECT title \
-            FROM quote_keyword \
-            WHERE quote_id = :v1 \
-            ORDER BY title" );
-        st.set("v1", this->m_ID );
-
-        for ( tntdb::Statement::const_iterator it = st.begin();
-            it != st.end(); ++it ) {
-            tntdb::Row row = *it;
-            Quote dataQuote = Quote();
-            DEBUG "single keyword: " <<  row[0].getString() << std::endl;
-            DEBUG "seperator: " <<  seperator << std::endl;
-            keywordsAsString += seperator + row[0].getString();
-            seperator =",";
-        }
-
-    } else {
-        std::string seperator ="";
-        for (unsigned int i=0; this->m_quoteKeywords.size()>i; i++ ) {
-            DEBUG "single keyword: " <<  this->m_quoteKeywords[i];
-            DEBUG "seperator: " <<  seperator << std::endl;
-            keywordsAsString += seperator + this->m_quoteKeywords[i];
-            seperator =",";
-        }
-    }
-
-    return keywordsAsString;
+std::string Quote::getKeywordsAsString()
+{
+    std::vector<std::string> keywords = getKeywords();
+    return cxxtools::join(keywords.begin(), keywords.end(), ',');
 }
 
 void Quote::saveAsNew() {

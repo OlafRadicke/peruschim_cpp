@@ -42,9 +42,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     std::string keywords = "";
     std::string note = "";
     std::string is_private_data = "false";
-    std::string save_button;
-    std::string create_button;
-    std::string look_up_button;
+    bool create_button;
+    bool look_up_button;
 </%args>
 
 <%session>
@@ -56,8 +55,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </%session>
 
 <%cpp>
+    BibleManager bibleManager;
+
     std::vector<Edition> editionList;
-    std::string feedback = "";
+    std::string feedback;
     Edition editionData;
     Quote quoteData;
 
@@ -68,11 +69,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     std::string userName  = userSession.getUserName();
 
 
-    DEBUG "save_button: " << save_button << std::endl;
     DEBUG "create_button: " << create_button << std::endl;
     DEBUG "look_up_button: " << look_up_button << std::endl;
 
-    if ( look_up_button == "clicked" ) {
+    if ( look_up_button ) {
         DEBUG "getBibleserverComURL..." << std::endl;
         quoteData.setEditionID( edition_id );
         quoteData.setBookTitle( book_title );
@@ -92,14 +92,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             quoteData.setIsPrivateData( false );
         }
         DEBUG std::endl;
-        DEBUG "quoteData.getBibleserverComURL(): " << quoteData.getBibleserverComURL() << std::endl;
+        DEBUG "quoteData.getBibleserverComURL(): " << bibleManager.getBibleserverComURL(quoteData) << std::endl;
         DEBUG std::endl;
-        bibleserverComURL = quoteData.getBibleserverComURL();
+        bibleserverComURL = bibleManager.getBibleserverComURL(quoteData);
         DEBUG "bibleserverComURL: " << bibleserverComURL << std::endl;
     }
 
     // is button "create" kicked?
-    if ( create_button == "Speichern" ) {
+    if ( create_button ) {
         DEBUG "edition_id: " << edition_id << std::endl;
         quoteData.setEditionID( edition_id );
 
@@ -154,7 +154,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         editionList =  editionManager.getAllEditions( userSession.getUserID() );
 
     }
-
-    BibleManager bibleManager;
 
 </%cpp>
