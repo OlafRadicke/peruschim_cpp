@@ -29,6 +29,7 @@ icoSources = \
 peruschim_cpp_SOURCES = \
 	controller/EditOwnVersesController.cpp \
 	peruschim_cpp.cpp \
+	manager/BibleManager.cpp \
 	models/AccountData.cpp \
 	models/Config.cpp \
 	models/ConfigImpl.cpp \

@@ -38,8 +38,6 @@ public:
      **/
     Quote();
 
-    std::vector<std::string> allBibleBooks;
-
     /**
      * Try to build the Bibleserver.com url.
      */

@@ -18,5 +18,6 @@ AC_CHECK_HEADER([tntdb/connect.h], , AC_MSG_ERROR([tntdb headers not found]))
 AC_CHECK_PROGS(ECPPC, [ecppc])
 
 AC_CONFIG_FILES([Makefile
-                 src/Makefile])
+                 src/Makefile
+                 utest/Makefile])
 AC_OUTPUT

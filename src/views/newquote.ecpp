@@ -74,12 +74,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <p>Buch:
                     <select name="book_title" size="1">
-%     for ( unsigned int i=0; i<quoteData.allBibleBooks.size(); i++) {
-%         if ( quoteData.allBibleBooks[i] == quoteData.getBookTitle() ) {
-                        <option value="<$  quoteData.allBibleBooks[i] $>" selected><$ quoteData.allBibleBooks[i] $></option>
-%         } else {
-                        <option value="<$  quoteData.allBibleBooks[i] $>"><$ quoteData.allBibleBooks[i] $></option>
-%         }
+%     for ( unsigned int i=0; i<bibleManager.bibleBooksCount(); i++) {
+                        <option value="<$  bibleManager.bibleBook(i) $>"<? quoteData.getBookTitle() == bibleManager.bibleBook(i) ? " selected" ?>>
+                            <$ bibleManager.bibleBook(i) $>
+                        </option>
 %     }
                     </select>
                 </p>
