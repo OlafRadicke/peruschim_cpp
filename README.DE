@@ -43,7 +43,10 @@ Dann ist wie folgt zu verfahren:
 Nun sind alle generiereten Datein im Build-Verzeichnis zu finden. Noch ein Tipp:
 Die meisten Systeme haben heutzutage mehere CPUs oder Kerne. Um die volle 
 Leistung zu nutzen kann man auch "make -j 4" aufrufen, dann wird make mit vier
-Prozessen gleichzeitig lauffen um die Zeit Kompilierens zu verkürzen. 
+Prozessen gleichzeitig laufen um die Zeit Kompilierens zu verkürzen. 
+
+Um das Verzeichnis von den Artefakten zu bereinigen wird der Befehl 
+"make distclean" aufgerufen. 
 
 
 INSTALLATION
