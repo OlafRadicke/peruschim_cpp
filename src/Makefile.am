@@ -28,6 +28,7 @@ icoSources = \
 
 peruschim_cpp_SOURCES = \
 	controller/EditOwnVersesController.cpp \
+	controller/ExportOwnVersesController.cpp \
 	peruschim_cpp.cpp \
 	manager/BibleManager.cpp \
 	models/AccountData.cpp \
