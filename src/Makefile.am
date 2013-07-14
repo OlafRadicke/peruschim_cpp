@@ -27,6 +27,7 @@ icoSources = \
 	resources/favicon.ico
 
 peruschim_cpp_SOURCES = \
+	controller/EditOwnVersesController.cpp \
 	peruschim_cpp.cpp \
 	models/AccountData.cpp \
 	models/Config.cpp \
