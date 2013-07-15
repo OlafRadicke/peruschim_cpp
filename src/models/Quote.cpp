@@ -34,9 +34,6 @@
 #include <algorithm>
 #include <locale>
 
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-
 namespace
 {
     std::string lowercase ( const std::string& str )
@@ -102,6 +99,6 @@ void Quote::setKeywords( const std::string& keywords )
     m_quoteKeywords.clear();
 
     std::string k = lowercase(cxxtools::trim(keywords));
-    cxxtools::split(cxxtools::Regex("[ \t]*,[ \t]*"), keywords, std::back_inserter(m_quoteKeywords));
+    cxxtools::split(cxxtools::Regex("[ \t]*,[ \t]*"), k, std::back_inserter(m_quoteKeywords));
 }
 
