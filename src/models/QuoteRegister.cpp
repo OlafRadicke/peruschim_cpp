@@ -26,10 +26,10 @@
 #include <tntdb/connection.h>
 
 #include "Config.h"
-#include "OString.h"
 #include "Quote.h"
 #include "QuoteRegister.h"
-#include "EditionManager.h"
+#include <manager/EditionManager.h>
+#include <manager/QuoteManager.h>
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -416,17 +416,30 @@ void QuoteRegister::jsonImport( const std::string jsonText,
         DEBUG "quoteContainer.allUserQuotes.size(): "
             << quoteContainer.allUserQuotes.size() <<  std::endl;
 
-        EditionManager editionManager;
+        Config config;
+        tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+        tntdb::Transaction trans(conn);
 
-        for (unsigned n = 0; n < quoteContainer.allUserQuotes.size(); ++n) {
-            DEBUG "n: " << n << std::endl;
-            quoteContainer.allUserQuotes[n].setOwnerID( owner_id );
-            Edition edition = quoteContainer.allUserQuotes[n].getTmpEditionData( );
-            edition.setOwnerID( owner_id );
+        EditionManager editionManager(conn);
+        QuoteManager quoteManager(conn);
+
+        for (unsigned n = 0; n < quoteContainer.allUserQuotes.size(); ++n)
+        {
             quoteContainer.allUserQuotes[n]
-                .setEditionID( editionManager.saveAsNewIfNotExist(edition) );
-            quoteContainer.allUserQuotes[n].saveAsNew();
+                          .setOwnerID( owner_id );
+
+            Edition edition = quoteContainer.allUserQuotes[n]
+                                            .getTmpEditionData( );
+
+            edition.setOwnerID( owner_id );
+
+            quoteContainer.allUserQuotes[n]
+                          .setEditionID( editionManager.saveAsNewIfNotExist(edition) );
+
+            quoteManager.saveAsNew(quoteContainer.allUserQuotes[n]);
         }
+
+        trans.commit();
     }
     catch (const std::exception& e)
     {

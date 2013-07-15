@@ -16,7 +16,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
 <%pre>
-    #include "models/EditionManager.h"
+    #include "manager/EditionManager.h"
+    #include "manager/QuoteManager.h"
     #include "models/WebACL.h"
     #include "models/UserSession.h"
     #include "models/Edition.h"
@@ -61,6 +62,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     std::string feedback;
     Edition editionData;
     Quote quoteData;
+    QuoteManager quoteManager;
 
     // ACL Check
     if ( userSession.isInRole ( "user" ) == false ) {
@@ -145,7 +147,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         DEBUG "owner id: " << userSession.getUserID() << std::endl;
         quoteData.setOwnerID( userSession.getUserID() );
 
-        quoteData.saveAsNew( );
+        quoteManager.saveAsNew(quoteData);
         bibleserverComURL = "";
         feedback = "Der Vers wurde gespeichert!";
     } else {

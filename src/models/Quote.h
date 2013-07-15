@@ -23,7 +23,6 @@
 
 #include <string>
 #include <vector>
-#include <map>
 
 #include "Edition.h"
 
@@ -31,6 +30,7 @@
 
 class Quote
 {
+    friend class QuoteManager;
 
 public:
     /**
@@ -90,7 +90,7 @@ public:
     /**
      * Get Note.
      **/
-    const std::string getNote() const
+    const std::string& getNote() const
     {
         return this->m_note;
     }
@@ -106,7 +106,7 @@ public:
     /**
      * Get quote text.
      **/
-    const std::string getQuoteText() const
+    const std::string& getQuoteText() const
     {
         return this->m_quoteText;
     }
@@ -130,7 +130,7 @@ public:
     /**
      * Set data of edition.
      **/
-    const Edition getTmpEditionData( )
+    const Edition& getTmpEditionData() const
     {
         return this->tmpEditionData;
     }
@@ -138,27 +138,17 @@ public:
     /**
      * get visible policy.
      **/
-    const bool isPrivateData() const
+    bool isPrivateData() const
     {
         return this->m_isPrivateData;
     }
-
-    /**
-     * Save date as new data set in database.
-     **/
-    void saveAsNew();
-
-    /**
-     * Save date update in in database..
-     **/
-    void saveUpdate();
 
     // sets ====================================================
 
     /**
      * Set title of book.
      **/
-    void setBookTitle( std::string title )
+    void setBookTitle(const std::string& title )
     {
         this->m_bookTitle = title;
     }
@@ -214,20 +204,20 @@ public:
      * Set keywords.
      * @param keywords string with comma separated label values
      **/
-    void setKeywords( std::string keywords ) ;
+    void setKeywords( const std::string& keywords ) ;
 
     /**
      * Set keywords.
      * @param keywordList list of keywors
      **/
-    void setKeywords( std::vector<std::string> keywordList ) {
+    void setKeywords( const std::vector<std::string>& keywordList ) {
         m_quoteKeywords = keywordList;
     };
 
     /**
      * Set Note.
      **/
-    void setNote( std::string note )
+    void setNote( const std::string& note )
     {
         this->m_note = note;
     }
@@ -244,7 +234,7 @@ public:
      * Set quote text.
      * @param text new value.
      **/
-    void setQuoteText( std::string text )
+    void setQuoteText( const std::string& text )
     {
         this->m_quoteText = text;
     }
@@ -269,12 +259,10 @@ public:
      * Set series text.
      * @param text new value.
      **/
-    void setSeries( std::string text )
+    void setSeries( const std::string& text )
     {
         this->m_bookSeries = text;
     }
-
-
 
 
 private:
@@ -365,12 +353,6 @@ private:
      * @return string with replacements
      **/
     std::string strReplace (std::string rep, std::string with, std::string in);
-
-    /**
-     * Return a copy of the string with all the cased characters converted to
-     * lowercase.
-     **/
-    std::string lowercase ( std::string keywords );
 
     /**
      * Buffer for edition data. Is use only by JSON-deserializeing.

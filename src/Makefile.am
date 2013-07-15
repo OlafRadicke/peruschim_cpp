@@ -31,11 +31,12 @@ peruschim_cpp_SOURCES = \
 	controller/ExportOwnVersesController.cpp \
 	peruschim_cpp.cpp \
 	manager/BibleManager.cpp \
+	manager/EditionManager.cpp \
+	manager/QuoteManager.cpp \
 	models/AccountData.cpp \
 	models/Config.cpp \
 	models/ConfigImpl.cpp \
 	models/DatabaseProxy.cpp \
-	models/EditionManager.cpp \
 	models/KeywordData.cpp \
 	models/KeywordRegister.cpp \
 	models/OString.cpp \

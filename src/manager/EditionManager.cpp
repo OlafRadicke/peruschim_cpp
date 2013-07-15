@@ -19,7 +19,7 @@
 */
 
 #include "EditionManager.h"
-#include "Config.h"
+#include "models/Config.h"
 #include <tntdb/connect.h>
 #include <tntdb/statement.h>
 #include <tntdb/error.h>

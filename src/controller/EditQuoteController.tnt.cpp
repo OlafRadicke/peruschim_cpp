@@ -17,7 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 <%pre>
-    #include "models/EditionManager.h"
+    #include "manager/EditionManager.h"
+    #include "manager/QuoteManager.h"
     #include "models/WebACL.h"
     #include "models/UserSession.h"
     #include "models/Edition.h"
@@ -46,9 +47,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     std::string keywords = "";
     std::string note = "";
     std::string is_private_data = "false";
-    std::string update_button;
-    std::string rest_button;
-    std::string look_up_button;
+    bool update_button;
+    bool rest_button;
+    bool look_up_button;
 </%args>
 
 <%session scope="global">
@@ -86,7 +87,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     }
 
 
-    if ( look_up_button == "clicked" ) {
+    if ( look_up_button ) {
         DEBUG "getBibleserverComURL..." << std::endl;
         quoteData.setEditionID( edition_id );
         quoteData.setBookTitle( book_title );
@@ -110,7 +111,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     DEBUG "create_button: " << update_button << std::endl;
     // is button "create" kicked?
-    if ( update_button == "Speichern" ) {
+    if ( update_button ) {
 
         DEBUG "session_quote_id" <<  session_quote_id << std::endl;
         quoteData.setID( session_quote_id );
@@ -152,11 +153,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         DEBUG "owner id: " << userSession.getUserID() << std::endl;
         quoteData.setOwnerID( userSession.getUserID() );
 
-        quoteData.saveUpdate();
+        QuoteManager quoteManager;
+        quoteManager.update(quoteData);
         feedback = "Der Vers wurde gespeichert!";
     }
 
-    if ( rest_button == "reset" ) {
+    if ( rest_button ) {
         editionList =  editionManager.getAllEditions( userSession.getUserID() );
         quoteData = QuoteRegister::getQuoteWithID( session_quote_id );
     }

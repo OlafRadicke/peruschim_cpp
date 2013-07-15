@@ -21,7 +21,7 @@
 #ifndef EDITIONMANAGER_H
 #define EDITIONMANAGER_H
 
-#include "Edition.h"
+#include "models/Edition.h"
 #include <vector>
 #include <tntdb/connection.h>
 
