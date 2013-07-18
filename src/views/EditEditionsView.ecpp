@@ -15,7 +15,20 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
-<%include>controller/EditEditionsController.tnt.cpp</%include>
+
+<%session
+    scope="global"
+    include="models/Edition.h"
+    include="models/WebACL.h"
+    include="models/UserSession.h" >
+
+        UserSession            userSession;
+        std::vector<Edition>   g_editionList;
+        std::string            g_feedback;
+        Edition                g_editionData;
+        long unsigned int      arg_edit_edition_id;
+</%session>
+
 
 <!DOCTYPE HTML>
 <html>
@@ -33,7 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <ul>
             <li class="tableft"><a href="home">Home</a></li>
             <li class="tabmiddle"><a href="keyword_register">Schlagwortsuche</a></li>
-            <li class="tabmiddle_activ"><a href="portalquote">Versverwaltung</a></li>
+            <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
             <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
             <li class="tabright"><a href="portaladmin">Administrationsportal</a></li>
         </ul>
@@ -43,70 +56,75 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="centerbox">
         <h1>Verwaltung der Bibelausgaben</h1>
 
-% if ( feedback != "" ) {
+% if ( g_feedback != "" ) {
 
-        <div class="feedback-box">
-            <b><$ feedback $> </b>
+        <div class="g_feedback-box">
+            <b><$ g_feedback $> </b>
         </div>
 
 % }
 
-        <form method="post" action="edit_editions">
+        <form method="post" action="EditEditions">
             <div class="simple-box">
                 Neuen Eintrag zu einer Bibelausgabe erstellen (Titel. z.B. Luther-, Elberfelder-, Einheitsübersetzung):&#160;
-                <input name="new_edition_title"
+                <input name="arg_new_edition_title"
                     type="text"
                     size="40"
                     maxlength="40">
                 &#160;
-                <button name="new_edition"
+                <button name="arg_new_edition"
                         value="pushed"
                         type="submit">Speichern
                 </button>
             </div>
 
             <div class="columnbox">
-% for ( unsigned int i=0; i < editionList.size(); i++) {
-%     if ( edit_edition_id == editionList[i].getID( ) ) {
+% for ( unsigned int i=0; i < g_editionList.size(); i++) {
+<br>
+arg_edit_edition_id: <$ arg_edit_edition_id  $>
+<br>
+g_editionList[i].getID( ): <$ g_editionList[i].getID( ) $>
+<br>
+%     if ( arg_edit_edition_id == g_editionList[i].getID( ) ) {
                 <div class="simple-box">
                     <p>Titel:<br>
-                        <input name="modified_title"
+                        <input name="arg_modified_title"
                             type="text"
                             size="40"
                             maxlength="40"
-                            value="<$ editionData.getName() $>" >
+                            value="<$ g_editionData.getName() $>" >
                     </p>
                     <p>Verlag:<br>
-                        <input name="modified_publishername"
+                        <input name="arg_modified_publishername"
                             type="text"
                             size="40"
                             maxlength="40"
-                            value="<$ editionData.getPublisherName( ) $>" >
+                            value="<$ g_editionData.getPublisherName( ) $>" >
                     </p>
                     <p>Auflage:<br>
-                        <input name="modified_releasenumber"
+                        <input name="arg_modified_releasenumber"
                             type="number"
                             size="40"
                             maxlength="40"
-                            value="<$ editionData.getReleaseNumber( ) $>" >
+                            value="<$ g_editionData.getReleaseNumber( ) $>" >
                     </p>
                     <p>Erscheinungsdatum:<br>
-                        <input name="modified_releasedate"
+                        <input name="arg_modified_releasedate"
                             type="date"
                             size="40"
                             maxlength="40"
-                            value="<$ editionData.getReleaseDate( ) $>" >
+                            value="<$ g_editionData.getReleaseDate( ) $>" >
                     </p>
                     <p>Erscheinungsort:<br>
-                        <input name="modified_releaseplace"
+                        <input name="arg_modified_releaseplace"
                             type="text"
                             size="40"
                             maxlength="40"
-                            value="<$ editionData.getReleasePlace() $>" >
+                            value="<$ g_editionData.getReleasePlace() $>" >
                     </p>
                     <p>
-                        <button name="save_modified"
-                                value="<$ editionList[i].getID( ) $>"
+                        <button name="arg_save_modified"
+                                value="<$ g_editionList[i].getID( ) $>"
                                 type="submit" >Änderung speichern
                         </button>
                     </p>
@@ -114,13 +132,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 %     } else {
                 <div class="simple-box">
-                    <i>"<$ editionList[i].getName() $>"</i>&#160;
-                    <button name="edit_edition_id"
-                            value="<$ editionList[i].getID( ) $>"
+                    <i>"<$ g_editionList[i].getName() $>"</i>&#160;
+                    <button name="arg_edit_edition_id"
+                            value="<$ g_editionList[i].getID( ) $>"
                             type="submit">Bearbeiten
                     </button>&#160;
-                    <button name="delete_edition_id"
-                            value="<$ editionList[i].getID( ) $>"
+                    <button name="arg_delete_edition_id"
+                            value="<$ g_editionList[i].getID( ) $>"
                             type="submit">Löschen
                     </button>
                 </div>

@@ -57,7 +57,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %     if ( 1 > editionList.size() ) {
             <div class="feedback-box">
                 <b>Bevor ein erster Vers angelegt werden kann, muss zunächst eine
-                    Bibelausgabe angelegt werden. <a href="/edit_editions">Jetzt
+                    Bibelausgabe angelegt werden. <a href="/EditEditions">Jetzt
                     Bibelausgabe anlegen...</a></b>
             </div>
 %     }
@@ -69,7 +69,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %                    for ( unsigned int i=0; i<editionList.size(); i++) {
                         <option value="<$  editionList[i].getID() $>"><$ editionList[i].getName() $></option>
 %                    }
-                    </select> <a href="/edit_editions">Neue Bibelausgabe anlegen...</a>
+                    </select> <a href="/EditEditions">Neue Bibelausgabe anlegen...</a>
                 </p>
 
                 <p>Buch:

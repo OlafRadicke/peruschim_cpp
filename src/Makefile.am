@@ -5,7 +5,7 @@ ecppSources = \
 	resources/style.ecpp \
 	views/access_denied.ecpp \
 	views/EditAccountView.ecpp \
-	views/edit_editions.ecpp \
+	views/EditEditionsView.ecpp \
 	views/EditOwnVersesView.ecpp \
 	views/editquote.ecpp \
 	views/ExportOwnVersesView.ecpp \
@@ -27,6 +27,8 @@ icoSources = \
 	resources/favicon.ico
 
 peruschim_cpp_SOURCES = \
+	controller/EditAccountController.cpp \
+	controller/EditEditionsController.cpp \
 	controller/EditOwnVersesController.cpp \
 	controller/ExportOwnVersesController.cpp \
 	peruschim_cpp.cpp \
