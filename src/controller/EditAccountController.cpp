@@ -18,8 +18,10 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-#include "controller/EditAccountController.h"
+#include <tnt/component.h>
+#include <tnt/componentfactory.h>
+#include <tnt/httprequest.h>
+#include <tnt/httpreply.h>
 
 #include "models/WebACL.h"
 #include "models/UserSession.h"
@@ -33,6 +35,15 @@
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
+class EditAccountController : public tnt::Component
+{
+public:
+    unsigned operator() (
+        tnt::HttpRequest& request,
+        tnt::HttpReply& reply,
+        tnt::QueryParams& qparam
+    );
+};
 
 static tnt::ComponentFactoryImpl<EditAccountController> factory("EditAccountController");
 
