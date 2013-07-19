@@ -48,20 +48,28 @@ static tnt::ComponentFactoryImpl<EditEditionsController> factory("EditEditionsCo
 
 unsigned EditEditionsController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
 {
-
     // Global variables
     TNT_SESSION_GLOBAL_VAR( UserSession,              userSession, () );
     TNT_SESSION_GLOBAL_VAR( std::string,              g_feedback, () );
-    TNT_SESSION_GLOBAL_VAR( Edition,                  g_editionData, () );
     TNT_SESSION_GLOBAL_VAR( std::string,              g_edition_title, () );
     TNT_SESSION_GLOBAL_VAR( std::vector<Edition>,     g_editionList, () );
-
+    TNT_SESSION_GLOBAL_VAR( bool,                     g_isEditionEdit, () );
+    TNT_SESSION_GLOBAL_VAR( long unsigned int,        g_editionID, () );
+    
+    // ACL Check
+    if ( userSession.isInRole ( "user" ) == false ) {
+        return reply.redirect ( "/access_denied" );
+    };
+    log_debug( "pass" );   
 
     // URL arguments
+    // create new edition
     std::string arg_new_edition_title =
         qparam.arg<std::string>("arg_new_edition_title");
-    long unsigned int arg_edit_edition_id =
-        qparam.arg<long unsigned int>("arg_edit_edition_id");
+    bool arg_new_edition =
+        qparam.arg<bool>("arg_new_edition_button");
+        
+    // save modified edition
     std::string arg_modified_title =
         qparam.arg<std::string>("arg_modified_title");
     std::string arg_modified_publishername =
@@ -72,49 +80,60 @@ unsigned EditEditionsController::operator() (tnt::HttpRequest& request, tnt::Htt
         qparam.arg<std::string>("arg_modified_releasedate");
     std::string arg_modified_releaseplace =
         qparam.arg<std::string>("arg_modified_releaseplace");
-    std::string arg_save_modified =
-        qparam.arg<std::string>("arg_save_modified");
-    long unsigned int arg_delete_edition_id =
-        qparam.arg<long unsigned int>("arg_delete_edition_id");
-    bool arg_new_edition =
-        qparam.arg<bool>("arg_new_edition");
+    long unsigned int arg_modified_id =
+        qparam.arg<long unsigned int>("arg_modified_id");
+    bool arg_save_modified_button =
+        qparam.arg<bool>("arg_save_modified_button");
         
-    long unsigned int session_edition_id = 0;
-
-    // ACL Check
-    if ( userSession.isInRole ( "user" ) == false ) {
-        return reply.redirect ( "/access_denied" );
-    };
-    log_debug( "pass" );
+    // open edition modifieding
+    long unsigned int arg_edit_edition_id =
+        qparam.arg<long unsigned int>("arg_edit_edition_id");
+    bool arg_edition_edition_button =
+        qparam.arg<bool>("arg_edition_edition_button");
+        
+    // delete edition
+    long unsigned int arg_delete_edition_id =    
+        qparam.arg<long unsigned int>("arg_delete_edition_id");
+    bool arg_delete_edition_button =
+        qparam.arg<bool>("arg_delete_edition_button");
+        
+    log_debug( "arg_edition_edition_button: " << arg_edition_edition_button );
+    g_isEditionEdit = arg_edition_edition_button;
+    if ( g_isEditionEdit ) {
+        log_debug( "arg_edit_edition_id: " << arg_edit_edition_id );
+        g_editionID = arg_edit_edition_id;
+    }
+    
+    if ( arg_delete_edition_button ) {
+        g_editionID = arg_delete_edition_id;
+    }
 
     // edit action
     EditionManager editionManager;
-    if ( arg_edit_edition_id > 0 ) {
-        g_edition_title = editionManager.getEditionByID( arg_edit_edition_id )
-            .getName() ;
-        g_editionData = editionManager.getEditionByID( arg_edit_edition_id ) ;
-        session_edition_id = arg_edit_edition_id;
+    if ( g_isEditionEdit ) {
+//         pass;
     };
     log_debug("pass" );
 
     // save modifications action
-    if ( arg_save_modified != "" ) {
+    if ( arg_save_modified_button ) {
+        Edition editionData;
 
-        g_editionData.setID( session_edition_id );
-        g_editionData.setName( arg_modified_title );
-        g_editionData.setOwnerID( userSession.getUserID() );
-        g_editionData.setPublisherName( arg_modified_publishername );
-        g_editionData.setReleaseDate( arg_modified_releasedate );
-        g_editionData.setReleaseNumber( arg_modified_releasenumber );
-        g_editionData.setReleasePlace( arg_modified_releaseplace );
+        editionData.setID( arg_modified_id );
+        editionData.setName( arg_modified_title );
+        editionData.setOwnerID( userSession.getUserID() );
+        editionData.setPublisherName( arg_modified_publishername );
+        editionData.setReleaseDate( arg_modified_releasedate );
+        editionData.setReleaseNumber( arg_modified_releasenumber );
+        editionData.setReleasePlace( arg_modified_releaseplace );
 
-        editionManager.saveUpdate(g_editionData);
+        editionManager.saveUpdate(editionData);
 
         g_feedback = "Die Änderungen wurden gespeichert!";
     }
 
     // deleting action
-    if ( arg_delete_edition_id > 0 ) {
+    if ( arg_delete_edition_button ) {
         log_debug( "arg_delete_edition_id: " << arg_delete_edition_id );
         int useCount = editionManager.isEditionInUse( arg_delete_edition_id );
         if ( useCount > 0 ) {
@@ -129,10 +148,11 @@ unsigned EditEditionsController::operator() (tnt::HttpRequest& request, tnt::Htt
     // create new edition action
     if ( arg_new_edition ) {
         log_debug( "arg_new_edition: " << arg_new_edition );
+        Edition editionData;
 
-        g_editionData.setName( arg_new_edition_title );
-        g_editionData.setOwnerID( userSession.getUserID() );
-        editionManager.saveAsNew(g_editionData);
+        editionData.setName( arg_new_edition_title );
+        editionData.setOwnerID( userSession.getUserID() );
+        editionManager.saveAsNew(editionData);
 
     }
 

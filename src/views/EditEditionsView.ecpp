@@ -25,8 +25,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         UserSession            userSession;
         std::vector<Edition>   g_editionList;
         std::string            g_feedback;
-        Edition                g_editionData;
-        long unsigned int      arg_edit_edition_id;
+        bool                   g_isEditionEdit;
+        long unsigned int      g_editionID;
 </%session>
 
 
@@ -64,89 +64,105 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 % }
 
-        <form method="post" action="EditEditions">
-            <div class="simple-box">
+        <div class="simple-box">
+            <form method="post" action="EditEditions">
                 Neuen Eintrag zu einer Bibelausgabe erstellen (Titel. z.B. Luther-, Elberfelder-, Einheitsübersetzung):&#160;
                 <input name="arg_new_edition_title"
                     type="text"
                     size="40"
                     maxlength="40">
                 &#160;
-                <button name="arg_new_edition"
+                <button name="arg_new_edition_button"
                         value="pushed"
                         type="submit">Speichern
                 </button>
-            </div>
+            </form>
+        </div>
 
             <div class="columnbox">
 % for ( unsigned int i=0; i < g_editionList.size(); i++) {
-<br>
-arg_edit_edition_id: <$ arg_edit_edition_id  $>
-<br>
-g_editionList[i].getID( ): <$ g_editionList[i].getID( ) $>
-<br>
-%     if ( arg_edit_edition_id == g_editionList[i].getID( ) ) {
+%     if 
+%     ( 
+%         g_isEditionEdit == true &&
+%         g_editionID == g_editionList[i].getID() 
+%     ) {
                 <div class="simple-box">
-                    <p>Titel:<br>
-                        <input name="arg_modified_title"
-                            type="text"
-                            size="40"
-                            maxlength="40"
-                            value="<$ g_editionData.getName() $>" >
-                    </p>
-                    <p>Verlag:<br>
-                        <input name="arg_modified_publishername"
-                            type="text"
-                            size="40"
-                            maxlength="40"
-                            value="<$ g_editionData.getPublisherName( ) $>" >
-                    </p>
-                    <p>Auflage:<br>
-                        <input name="arg_modified_releasenumber"
-                            type="number"
-                            size="40"
-                            maxlength="40"
-                            value="<$ g_editionData.getReleaseNumber( ) $>" >
-                    </p>
-                    <p>Erscheinungsdatum:<br>
-                        <input name="arg_modified_releasedate"
-                            type="date"
-                            size="40"
-                            maxlength="40"
-                            value="<$ g_editionData.getReleaseDate( ) $>" >
-                    </p>
-                    <p>Erscheinungsort:<br>
-                        <input name="arg_modified_releaseplace"
-                            type="text"
-                            size="40"
-                            maxlength="40"
-                            value="<$ g_editionData.getReleasePlace() $>" >
-                    </p>
-                    <p>
-                        <button name="arg_save_modified"
-                                value="<$ g_editionList[i].getID( ) $>"
-                                type="submit" >Änderung speichern
-                        </button>
-                    </p>
+                    <form method="post" action="EditEditions">
+                        <p>Titel:<br>
+                            <input name="arg_modified_title"
+                                type="text"
+                                size="40"
+                                maxlength="40"
+                                value="<$ g_editionList[i].getName() $>" >
+                        </p>
+                        <p>Verlag:<br>
+                            <input name="arg_modified_publishername"
+                                type="text"
+                                size="40"
+                                maxlength="40"
+                                value="<$ g_editionList[i].getPublisherName( ) $>" >
+                        </p>
+                        <p>Auflage:<br>
+                            <input name="arg_modified_releasenumber"
+                                type="number"
+                                size="40"
+                                maxlength="40"
+                                value="<$ g_editionList[i].getReleaseNumber( ) $>" >
+                        </p>
+                        <p>Erscheinungsdatum:<br>
+                            <input name="arg_modified_releasedate"
+                                type="date"
+                                size="40"
+                                maxlength="40"
+                                value="<$ g_editionList[i].getReleaseDate( ) $>" >
+                        </p>
+                        <p>Erscheinungsort:<br>
+                            <input name="arg_modified_releaseplace"
+                                type="text"
+                                size="40"
+                                maxlength="40"
+                                value="<$ g_editionList[i].getReleasePlace() $>" >
+                        </p>
+                        <p>
+                            <input 
+                                type="hidden" 
+                                name="arg_modified_id"
+                                value="<$ g_editionList[i].getID() $>" >
+                            <button name="arg_save_modified_button"
+                                    value="pushed"
+                                    type="submit" >Änderung speichern
+                            </button>
+                        </p>
+                    </form>
                 </div>
 
 %     } else {
                 <div class="simple-box">
-                    <i>"<$ g_editionList[i].getName() $>"</i>&#160;
-                    <button name="arg_edit_edition_id"
-                            value="<$ g_editionList[i].getID( ) $>"
-                            type="submit">Bearbeiten
-                    </button>&#160;
-                    <button name="arg_delete_edition_id"
-                            value="<$ g_editionList[i].getID( ) $>"
-                            type="submit">Löschen
-                    </button>
+                    <form method="post" action="EditEditions">
+                        <i>"<$ g_editionList[i].getName() $> 
+                            (ID: <$g_editionList[i].getID() $>)"</i>&#160;
+                        <input 
+                            type="hidden" 
+                            name="arg_edit_edition_id"
+                            value="<$ g_editionList[i].getID( ) $>" >
+                        <button name="arg_edition_edition_button"
+                                value="pushed"
+                                type="submit">Bearbeiten
+                        </button>&#160;
+                        <input 
+                            type="hidden" 
+                            name="arg_delete_edition_id"
+                            value="<$ g_editionList[i].getID( ) $>" >
+                        <button name="arg_delete_edition_button"
+                                value="pushed"
+                                type="submit">Löschen
+                        </button>
+                    </form>
                 </div>
 %     }
 % }
 
             </div>
-        </form>
     </div>
 
 <%include>views/parts/foot.ecpp.html</%include>
