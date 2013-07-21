@@ -8,4 +8,4 @@ utest_SOURCES = \
 				$(top_srcdir)/src/manager/BibleManager.cpp \
 				BibleManager-test.cpp
 
-utest_LDFLAGS = -lcxxtools-unit
+utest_LDFLAGS = -lcxxtools -lcxxtools-unit

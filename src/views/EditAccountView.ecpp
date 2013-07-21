@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 <%session
-    scope="global"
+    scope="shared"
     include="models/AccountData.h"
     include="models/WebACL.h"
     include="models/UserSession.h" >
@@ -29,6 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         std::string              g_affirmation;
         AccountData              g_accountData;
         std::vector<std::string> g_allRolls;
+        bool                     s_isEditAccount;
 </%session>
 
 <!DOCTYPE HTML>
@@ -59,22 +60,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <b><$ g_feedback $> </b>
         </div>
 % }
-
-        <form method="post" >
 % if ( g_affirmation != "" ) {
-            <div class="feedback-box">
+        <div class="feedback-box">
+            <form method="post" >
                 <b><$ g_affirmation $> </b><br>
-                <button name="arg_affirmation_delete_account_id"
-                        value="<$ g_session_account_id $>"
+                <input
+                    type="hidden"
+                    name="arg_affirmation_delete_account_id"
+                    value="<$ g_session_account_id $>" >
+                <button name="arg_affirmation_delete_button"
+                        value="pushed"
                         type="submit">Löschen bestätigen
                 </button>
-            </div>
+            </form>
+        </div>
 % }
-            <div class="columnbox">
+        <div class="columnbox">
 % for ( unsigned int i_account = 0; i_account < g_accountList.size(); i_account++) {
-                <div class="simple-box">
-%     if ( g_session_account_id == g_accountList[i_account].getID() ) {
-<!-- %     if ( arg_edit_account_id == g_accountList[i_account].getID() ) { -->
+            <div class="simple-box">
+%     if (
+%         s_isEditAccount == true &&
+%         g_session_account_id == g_accountList[i_account].getID()
+%     ) {
+                <form method="post" >
                     <h2>Account bearbeiten</h2>
                     <p>
                         <label for="login_name">Login*: </label>
@@ -127,29 +135,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             maxlength="40">
                     </p>
                     <p><b>Rollen:</b>
-                        <select 
-                            class="userroles" 
-                            id="args_userroles" 
-                            name="args_userroles" 
+                        <select
+                            class="userroles"
+                            id="args_userroles"
+                            name="args_userroles"
                             size="3" multiple >
-%         for ( unsigned int i_rolls = 0; 
-%             i_rolls < g_allRolls.size(); 
-%             i_rolls++ 
+%         for ( unsigned int i_rolls = 0;
+%             i_rolls < g_allRolls.size();
+%             i_rolls++
 %         ) {
-%             if 
-%             ( 
+%             if
+%             (
 %                 WebACL::isUserInRole
-%                 ( 
-%                     g_accountData.getLogin_name(), 
+%                 (
+%                     g_accountData.getLogin_name(),
 %                     g_allRolls[i_rolls]
-%                 ) 
+%                 )
 %              ){
-                            <option class="userroles" 
+                            <option class="userroles"
                                 value="<$  g_allRolls[i_rolls] $>" selected>
                                 <$ g_allRolls[i_rolls] $>
                             </option>
 %              } else {
-                            <option class="userroles" 
+                            <option class="userroles"
                                 value="<$  g_allRolls[i_rolls] $>">
                                 <$ g_allRolls[i_rolls] $>
                             </option>
@@ -167,8 +175,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % }
                         />
                     </p>
-                    <p><button name="arg_button_update_account"
-                                value="Speichern"
+                    <p><button name="arg_update_account_button"
+                                value="pushed"
                                 type="submit">Speichern
                         </button>
                     </p>
@@ -178,22 +186,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <small>**Wenn kein Passwort gesetzt wurde, wird das
                         alte Passwort nicht verändert</small>
                     </p>
+                </form >
 %     } else {
+                <form method="post" >
+
                     <i><b>"<$ g_accountList[i_account].getLogin_name() $>"</b></i>
                     (<$ g_accountList[i_account].getID() $>)&#160;
-                    <button name="arg_edit_account_id"
-                            value="<$ g_accountList[i_account].getID() $>"
+                    <input
+                        type="hidden"
+                        name="arg_edit_account_id"
+                        value="<$ g_accountList[i_account].getID() $>" >
+                    <button name="arg_edit_account_button"
+                            value="pushed"
                             type="submit">Bearbeiten
                     </button>&#160;
-                    <button name="arg_delete_account_id"
-                            value="<$ g_accountList[i_account].getID() $>"
+                    <input
+                        type="hidden"
+                        name="arg_delete_account_id"
+                        value="<$ g_accountList[i_account].getID() $>" >
+                    <button name="arg_delete_account_button"
+                            value="pushed"
                             type="submit">Löschen
                     </button>
+                </form >
 %     }
-                </div>
-% }
             </div>
-        </form>
+% }
+        </div>
     </div>
 <%include>views/parts/foot.ecpp.html</%include>
 </body>
