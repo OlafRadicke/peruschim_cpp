@@ -23,12 +23,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     include="models/UserSession.h" >
 
         UserSession userSession;
-        std::vector<AccountData> g_accountList;
-        std::string              g_feedback;
-        unsigned long            g_session_account_id;
-        std::string              g_affirmation;
-        AccountData              g_accountData;
-        std::vector<std::string> g_allRolls;
+        std::vector<AccountData> s_accountList;
+        std::string              s_feedback;
+        unsigned long            s_session_account_id;
+        std::string              s_affirmation;
+        AccountData              s_accountData;
+        std::vector<std::string> s_allRolls;
         bool                     s_isEditAccount;
 </%session>
 
@@ -55,19 +55,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <br />
     <div class="centerbox">
         <h1>User-Accounts</h1>
-% if ( g_feedback != "" ) {
+% if ( s_feedback != "" ) {
         <div class="feedback-box">
-            <b><$ g_feedback $> </b>
+            <b><$ s_feedback $> </b>
         </div>
 % }
-% if ( g_affirmation != "" ) {
+% if ( s_affirmation != "" ) {
         <div class="feedback-box">
             <form method="post" >
-                <b><$ g_affirmation $> </b><br>
+                <b><$ s_affirmation $> </b><br>
                 <input
                     type="hidden"
                     name="arg_affirmation_delete_account_id"
-                    value="<$ g_session_account_id $>" >
+                    value="<$ s_session_account_id $>" >
                 <button name="arg_affirmation_delete_button"
                         value="pushed"
                         type="submit">Löschen bestätigen
@@ -76,11 +76,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </div>
 % }
         <div class="columnbox">
-% for ( unsigned int i_account = 0; i_account < g_accountList.size(); i_account++) {
+% for ( unsigned int i_account = 0; i_account < s_accountList.size(); i_account++) {
             <div class="simple-box">
 %     if (
 %         s_isEditAccount == true &&
-%         g_session_account_id == g_accountList[i_account].getID()
+%         s_session_account_id == s_accountList[i_account].getID()
 %     ) {
                 <form method="post" >
                     <h2>Account bearbeiten</h2>
@@ -91,7 +91,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             class="full-size"
                             name="arg_login_name"
                             type="text"
-                            value="<$ g_accountData.getLogin_name() $>"
+                            value="<$ s_accountData.getLogin_name() $>"
                             maxlength="80">
                     </p>
                     <p>
@@ -101,7 +101,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             class="full-size"
                             name="arg_name"
                             type="text"
-                            value="<$ g_accountData.getReal_name() $>"
+                            value="<$ s_accountData.getReal_name() $>"
                             maxlength="80">
                     </p>
                     <p>
@@ -111,7 +111,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             class="full-size"
                             name="arg_mail"
                             type="text"
-                            value="<$ g_accountData.getEmail() $>"
+                            value="<$ s_accountData.getEmail() $>"
                             maxlength="80">
                     </p>
                     <p>
@@ -141,25 +141,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             name="args_userroles"
                             size="3" multiple >
 %         for ( unsigned int i_rolls = 0;
-%             i_rolls < g_allRolls.size();
+%             i_rolls < s_allRolls.size();
 %             i_rolls++
 %         ) {
 %             if
 %             (
 %                 WebACL::isUserInRole
 %                 (
-%                     g_accountData.getLogin_name(),
-%                     g_allRolls[i_rolls]
+%                     s_accountData.getLogin_name(),
+%                     s_allRolls[i_rolls]
 %                 )
 %              ){
                             <option class="userroles"
-                                value="<$  g_allRolls[i_rolls] $>" selected>
-                                <$ g_allRolls[i_rolls] $>
+                                value="<$  s_allRolls[i_rolls] $>" selected>
+                                <$ s_allRolls[i_rolls] $>
                             </option>
 %              } else {
                             <option class="userroles"
-                                value="<$  g_allRolls[i_rolls] $>">
-                                <$ g_allRolls[i_rolls] $>
+                                value="<$  s_allRolls[i_rolls] $>">
+                                <$ s_allRolls[i_rolls] $>
                             </option>
 %             }
 %         }
@@ -170,7 +170,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         type="checkbox"
                         name="arg_is_inactive"
                         value="is_inactive"
-% if ( g_accountData.getAccount_disable() ) {
+% if ( s_accountData.getAccount_disable() ) {
                         checked
 % }
                         />
@@ -190,12 +190,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %     } else {
                 <form method="post" >
 
-                    <i><b>"<$ g_accountList[i_account].getLogin_name() $>"</b></i>
-                    (<$ g_accountList[i_account].getID() $>)&#160;
+                    <i><b>"<$ s_accountList[i_account].getLogin_name() $>"</b></i>
+                    (<$ s_accountList[i_account].getID() $>)&#160;
                     <input
                         type="hidden"
                         name="arg_edit_account_id"
-                        value="<$ g_accountList[i_account].getID() $>" >
+                        value="<$ s_accountList[i_account].getID() $>" >
                     <button name="arg_edit_account_button"
                             value="pushed"
                             type="submit">Bearbeiten
@@ -203,7 +203,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <input
                         type="hidden"
                         name="arg_delete_account_id"
-                        value="<$ g_accountList[i_account].getID() $>" >
+                        value="<$ s_accountList[i_account].getID() $>" >
                     <button name="arg_delete_account_button"
                             value="pushed"
                             type="submit">Löschen

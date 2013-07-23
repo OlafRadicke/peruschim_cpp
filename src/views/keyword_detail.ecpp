@@ -45,7 +45,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="centerbox">
         <h1>Schlagwort: <i><$ keyword $></i></h1>
         <div class="columnbox">
-            <form method="post" action="editquote">
+            <form method="post" action="EditQuote">
 % for ( unsigned int i=0; i < quoteList.size(); i++) {
                 <div class="simple-box">
                     <h2>
@@ -67,9 +67,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <li>Eigentümer: <i><$ owner.getLogin_name( ) $>(ID:<$ owner.getID( ) $>)</i></li>
                     </ul>
 %     if ( isLogin == true && quoteList[i].getOwnerID() == userSession.getUserID() ) {
-                    <button name="quote_id"
+                    <input
+                            type="hidden"
+                            name="arg_quote_id"
+                            value="<$ quoteList[i].getID() $>" >
+                    <button name="arg_edit_button"
                             class="full_width_button"
-                            value="<$ quoteList[i].getID( ) $>"
+                            value="pushed"
                             type="submit">Bearbeiten
                     </button>
 %     }

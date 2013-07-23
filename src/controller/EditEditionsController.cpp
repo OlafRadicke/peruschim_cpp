@@ -48,19 +48,19 @@ static tnt::ComponentFactoryImpl<EditEditionsController> factory("EditEditionsCo
 
 unsigned EditEditionsController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
 {
-    // Global variables
-    TNT_SESSION_GLOBAL_VAR( UserSession,              userSession, () );
-    TNT_SESSION_GLOBAL_VAR( std::string,              g_feedback, () );
-    TNT_SESSION_GLOBAL_VAR( std::string,              g_edition_title, () );
-    TNT_SESSION_GLOBAL_VAR( std::vector<Edition>,     g_editionList, () );
-    TNT_SESSION_GLOBAL_VAR( bool,                     g_isEditionEdit, () );
-    TNT_SESSION_GLOBAL_VAR( long unsigned int,        g_editionID, () );
-    
+    // Shared variables
+    TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
+    TNT_SESSION_SHARED_VAR( std::string,              s_feedback, () );
+    TNT_SESSION_SHARED_VAR( std::string,              s_edition_title, () );
+    TNT_SESSION_SHARED_VAR( std::vector<Edition>,     s_editionList, () );
+    TNT_SESSION_SHARED_VAR( bool,                     s_isEditionEdit, () );
+    TNT_SESSION_SHARED_VAR( long unsigned int,        s_editionID, () );
+
     // ACL Check
     if ( userSession.isInRole ( "user" ) == false ) {
         return reply.redirect ( "/access_denied" );
     };
-    log_debug( "pass" );   
+    log_debug( "pass" );
 
     // URL arguments
     // create new edition
@@ -68,7 +68,7 @@ unsigned EditEditionsController::operator() (tnt::HttpRequest& request, tnt::Htt
         qparam.arg<std::string>("arg_new_edition_title");
     bool arg_new_edition =
         qparam.arg<bool>("arg_new_edition_button");
-        
+
     // save modified edition
     std::string arg_modified_title =
         qparam.arg<std::string>("arg_modified_title");
@@ -84,33 +84,33 @@ unsigned EditEditionsController::operator() (tnt::HttpRequest& request, tnt::Htt
         qparam.arg<long unsigned int>("arg_modified_id");
     bool arg_save_modified_button =
         qparam.arg<bool>("arg_save_modified_button");
-        
+
     // open edition modifieding
     long unsigned int arg_edit_edition_id =
         qparam.arg<long unsigned int>("arg_edit_edition_id");
     bool arg_edition_edition_button =
         qparam.arg<bool>("arg_edition_edition_button");
-        
+
     // delete edition
-    long unsigned int arg_delete_edition_id =    
+    long unsigned int arg_delete_edition_id =
         qparam.arg<long unsigned int>("arg_delete_edition_id");
     bool arg_delete_edition_button =
         qparam.arg<bool>("arg_delete_edition_button");
-        
+
     log_debug( "arg_edition_edition_button: " << arg_edition_edition_button );
-    g_isEditionEdit = arg_edition_edition_button;
-    if ( g_isEditionEdit ) {
+    s_isEditionEdit = arg_edition_edition_button;
+    if ( s_isEditionEdit ) {
         log_debug( "arg_edit_edition_id: " << arg_edit_edition_id );
-        g_editionID = arg_edit_edition_id;
+        s_editionID = arg_edit_edition_id;
     }
-    
+
     if ( arg_delete_edition_button ) {
-        g_editionID = arg_delete_edition_id;
+        s_editionID = arg_delete_edition_id;
     }
 
     // edit action
     EditionManager editionManager;
-    if ( g_isEditionEdit ) {
+    if ( s_isEditionEdit ) {
 //         pass;
     };
     log_debug("pass" );
@@ -129,7 +129,7 @@ unsigned EditEditionsController::operator() (tnt::HttpRequest& request, tnt::Htt
 
         editionManager.saveUpdate(editionData);
 
-        g_feedback = "Die Änderungen wurden gespeichert!";
+        s_feedback = "Die Änderungen wurden gespeichert!";
     }
 
     // deleting action
@@ -137,11 +137,11 @@ unsigned EditEditionsController::operator() (tnt::HttpRequest& request, tnt::Htt
         log_debug( "arg_delete_edition_id: " << arg_delete_edition_id );
         int useCount = editionManager.isEditionInUse( arg_delete_edition_id );
         if ( useCount > 0 ) {
-            g_feedback = "Die Ausgabe wird noch von anderen Einträgen verwendet \
+            s_feedback = "Die Ausgabe wird noch von anderen Einträgen verwendet \
                 und kann deshalb nicht gelöscht werden!";
         } else {
             editionManager.deleteEditionByID( arg_delete_edition_id );
-            g_feedback = "Die Ausgabe wurde gelöscht.";
+            s_feedback = "Die Ausgabe wurde gelöscht.";
         }
     }
 
@@ -156,7 +156,7 @@ unsigned EditEditionsController::operator() (tnt::HttpRequest& request, tnt::Htt
 
     }
 
-    g_editionList =  editionManager.getAllEditions( userSession.getUserID() );
+    s_editionList =  editionManager.getAllEditions( userSession.getUserID() );
 
     return DECLINED;
 }

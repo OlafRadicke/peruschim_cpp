@@ -17,16 +17,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 <%session
-    scope="global"
+    scope="shared"
     include="models/Edition.h"
     include="models/WebACL.h"
     include="models/UserSession.h" >
 
         UserSession            userSession;
-        std::vector<Edition>   g_editionList;
-        std::string            g_feedback;
-        bool                   g_isEditionEdit;
-        long unsigned int      g_editionID;
+        std::vector<Edition>   s_editionList;
+        std::string            s_feedback;
+        bool                   s_isEditionEdit;
+        long unsigned int      s_editionID;
 </%session>
 
 
@@ -56,10 +56,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="centerbox">
         <h1>Verwaltung der Bibelausgaben</h1>
 
-% if ( g_feedback != "" ) {
+% if ( s_feedback != "" ) {
 
-        <div class="g_feedback-box">
-            <b><$ g_feedback $> </b>
+        <div class="feedback-box">
+            <b><$ s_feedback $> </b>
         </div>
 
 % }
@@ -80,11 +80,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </div>
 
             <div class="columnbox">
-% for ( unsigned int i=0; i < g_editionList.size(); i++) {
-%     if 
-%     ( 
-%         g_isEditionEdit == true &&
-%         g_editionID == g_editionList[i].getID() 
+% for ( unsigned int i=0; i < s_editionList.size(); i++) {
+%     if
+%     (
+%         s_isEditionEdit == true &&
+%         s_editionID == s_editionList[i].getID()
 %     ) {
                 <div class="simple-box">
                     <form method="post" action="EditEditions">
@@ -93,41 +93,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 type="text"
                                 size="40"
                                 maxlength="40"
-                                value="<$ g_editionList[i].getName() $>" >
+                                value="<$ s_editionList[i].getName() $>" >
                         </p>
                         <p>Verlag:<br>
                             <input name="arg_modified_publishername"
                                 type="text"
                                 size="40"
                                 maxlength="40"
-                                value="<$ g_editionList[i].getPublisherName( ) $>" >
+                                value="<$ s_editionList[i].getPublisherName( ) $>" >
                         </p>
                         <p>Auflage:<br>
                             <input name="arg_modified_releasenumber"
                                 type="number"
                                 size="40"
                                 maxlength="40"
-                                value="<$ g_editionList[i].getReleaseNumber( ) $>" >
+                                value="<$ s_editionList[i].getReleaseNumber( ) $>" >
                         </p>
                         <p>Erscheinungsdatum:<br>
                             <input name="arg_modified_releasedate"
                                 type="date"
                                 size="40"
                                 maxlength="40"
-                                value="<$ g_editionList[i].getReleaseDate( ) $>" >
+                                value="<$ s_editionList[i].getReleaseDate( ) $>" >
                         </p>
                         <p>Erscheinungsort:<br>
                             <input name="arg_modified_releaseplace"
                                 type="text"
                                 size="40"
                                 maxlength="40"
-                                value="<$ g_editionList[i].getReleasePlace() $>" >
+                                value="<$ s_editionList[i].getReleasePlace() $>" >
                         </p>
                         <p>
-                            <input 
-                                type="hidden" 
+                            <input
+                                type="hidden"
                                 name="arg_modified_id"
-                                value="<$ g_editionList[i].getID() $>" >
+                                value="<$ s_editionList[i].getID() $>" >
                             <button name="arg_save_modified_button"
                                     value="pushed"
                                     type="submit" >Änderung speichern
@@ -139,20 +139,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %     } else {
                 <div class="simple-box">
                     <form method="post" action="EditEditions">
-                        <i>"<$ g_editionList[i].getName() $> 
-                            (ID: <$g_editionList[i].getID() $>)"</i>&#160;
-                        <input 
-                            type="hidden" 
+                        <i>"<$ s_editionList[i].getName() $>
+                            (ID: <$s_editionList[i].getID() $>)"</i>&#160;
+                        <input
+                            type="hidden"
                             name="arg_edit_edition_id"
-                            value="<$ g_editionList[i].getID( ) $>" >
+                            value="<$ s_editionList[i].getID( ) $>" >
                         <button name="arg_edition_edition_button"
                                 value="pushed"
                                 type="submit">Bearbeiten
                         </button>&#160;
-                        <input 
-                            type="hidden" 
+                        <input
+                            type="hidden"
                             name="arg_delete_edition_id"
-                            value="<$ g_editionList[i].getID( ) $>" >
+                            value="<$ s_editionList[i].getID( ) $>" >
                         <button name="arg_delete_edition_button"
                                 value="pushed"
                                 type="submit">Löschen
