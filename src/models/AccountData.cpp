@@ -141,7 +141,7 @@ void AccountData::setNewPassword ( std::string newpassword ) {
     tntdb::Statement st = conn.prepare(
         "UPDATE account \
             SET password_hash=:v1, \
-                password_salt=:v2 \ 
+                password_salt=:v2  \
           WHERE id= :v3");
 
     st.set( "v1", password_hash )
