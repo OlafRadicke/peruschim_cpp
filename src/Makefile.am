@@ -9,9 +9,9 @@ ecppSources = \
 	views/EditOwnVersesView.ecpp \
 	views/EditQuoteView.ecpp \
 	views/ExportOwnVersesView.ecpp \
+	views/KeywordDetailView.ecpp \
 	views/home.ecpp \
 	views/ImportOwnVersesView.ecpp \
-	views/keyword_detail.ecpp \
 	views/keyword_register.ecpp \
 	views/login.ecpp \
 	views/logout.ecpp \
@@ -33,6 +33,7 @@ peruschim_cpp_SOURCES = \
 	controller/EditQuoteController.cpp \
 	controller/ExportOwnVersesController.cpp \
 	controller/ImportOwnVersesController.cpp \
+	controller/KeywordDetailController.ecpp \
 	peruschim_cpp.cpp \
 	manager/BibleManager.cpp \
 	manager/EditionManager.cpp \

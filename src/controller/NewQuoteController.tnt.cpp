@@ -51,7 +51,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     std::string bibleserverComURL = "";
 </%session>
 
-<%session scope="global">
+<%session scope="shared">
     UserSession userSession;
 </%session>
 

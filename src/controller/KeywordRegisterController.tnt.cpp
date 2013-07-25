@@ -33,7 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 string user_view;
 </%args>
 
-<%session scope="global">
+<%session scope="shared">
     UserSession userSession;
 </%session>
 

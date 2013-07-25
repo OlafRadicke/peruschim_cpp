@@ -32,7 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     std::string password_b;
     std::string button_update_account;
 </%args>
-<%session scope="global">
+<%session scope="shared">
     UserSession userSession;
 </%session>
 
