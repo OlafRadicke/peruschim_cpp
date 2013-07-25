@@ -26,8 +26,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         std::string            s_feedback;
         bool                   s_isEditionEdit;
         long unsigned int      s_editionID;
-        bool                   s_clear_old_verses;
-        std::string            s_jason_text;
+        bool                   s_clearOldVerses;
+        std::string            s_jasonText;
 </%session>
 
 <!DOCTYPE HTML>
@@ -62,7 +62,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <form method="post" >
 
-% if ( s_clear_old_verses ) {
+% if ( s_clearOldVerses ) {
             <div class="feedback-box">
                 <h2>Achtung!</h2>
                 <p>Du hast ausgewählt das alle vorhandenen Verse durch den Import
@@ -80,13 +80,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     class="jason_text"
                     name="arg_jason_text"
                     cols="80"
-                    rows="10"><$ s_jason_text $></textarea>
+                    rows="10"><$ s_jasonText $></textarea>
             </p>
             <p>Vorhandenen Verse löschen<input
                     type="checkbox"
                     value="true"
                     name="arg_clear_old_verses"
-% if ( s_clear_old_verses ) {
+% if ( s_clearOldVerses ) {
                     checked
 % }
                     ></p>

@@ -54,8 +54,8 @@ unsigned ImportOwnVersesController::operator() (tnt::HttpRequest& request, tnt::
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
     TNT_SESSION_SHARED_VAR( std::string,              s_feedback, () );
-    TNT_SESSION_SHARED_VAR( bool,                     s_clear_old_verses, () );
-    TNT_SESSION_SHARED_VAR( std::string,              s_jason_text, () );
+    TNT_SESSION_SHARED_VAR( bool,                     s_clearOldVerses, () );
+    TNT_SESSION_SHARED_VAR( std::string,              s_jasonText, () );
 
 
     // ACL Check
@@ -73,8 +73,8 @@ unsigned ImportOwnVersesController::operator() (tnt::HttpRequest& request, tnt::
     bool arg_affirmation_clear_old_button =
         qparam.arg<bool>("arg_affirmation_clear_old_button");
 
-    s_jason_text = arg_jason_text;
-    s_clear_old_verses = arg_clear_old_verses;
+    s_jasonText = arg_jason_text;
+    s_clearOldVerses = arg_clear_old_verses;
 
     // is button "Importieren" kicked?
     if ( arg_import_button ) {
@@ -93,7 +93,7 @@ unsigned ImportOwnVersesController::operator() (tnt::HttpRequest& request, tnt::
             QuoteRegister::deleteAllQuoteOfUser( userSession.getUserID() );
             QuoteRegister::jsonImport( arg_jason_text, userSession.getUserID() );
             s_feedback += " und der Import erfogrich eingespielt.";
-            s_clear_old_verses = false;
+            s_clearOldVerses = false;
     }
 
     return DECLINED;
