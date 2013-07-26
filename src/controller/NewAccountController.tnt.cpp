@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     std::string password_a = "";
     std::string password_b = "";
 </%args>
-<%session scope="global">
+<%session scope="shared">
     // define your session scope variables here
     // std::string mySessionState;
     // userSession;

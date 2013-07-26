@@ -9,7 +9,7 @@
 <%args>
 </%args>
 
-<%session scope="global">
+<%session scope="shared">
     UserSession userSession();
 </%session>
 

@@ -34,7 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="mainmenue">
         <ul>
             <li class="tableft"><a href="home">Home</a></li>
-            <li class="tabmiddle_activ"><a href="keyword_register">Schlagwortsuche</a></li>
+            <li class="tabmiddle"><a href="keyword_register">Schlagwortsuche</a></li>
             <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
             <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
             <li class="tabright"><a href="portaladmin">Administrationsportal</a></li>
@@ -50,13 +50,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <div>
             <form method="post" action="keyword_register">
                 <select name="user_view" size="1">
-% if ( userSession.getItemViewMode ( ) == PRIVATEITEMS ) {
+%     if ( userSession.getItemViewMode ( ) == PRIVATEITEMS ) {
                     <option value="allitems" >Alle Einträge zeigen</option>
                     <option value="privateitems" selected>Nur eigene Einträge zeigen</option>
-% } else {
+%     } else {
                     <option value="allitems" selected>Alle Einträge zeigen</option>
                     <option value="privateitems">Nur eigene Einträge zeigen</option>
-% }
+%     }
                 </select>
                 <button name="quote"
                             value="view_change"
@@ -98,27 +98,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <a href="#letter_ü">ü</a>
         </div>
 
-        <form method="post" action="keyword_detail">
-%               string lastLetter = "";
-%               for ( unsigned int i=0; i<keywordTitlesCounts.size(); i++) {
-%                   if ( lastLetter != keywordTitlesCounts[i].Name.substr (0,1) ) {
-%                       lastLetter = keywordTitlesCounts[i].Name.substr (0,1);
-%                       if ( i != 0 ) {
+% string lastLetter = "";
+% for ( unsigned int i=0; i<keywordTitlesCounts.size(); i++) {
+%     if ( lastLetter != keywordTitlesCounts[i].Name.substr (0,1) ) {
+%         lastLetter = keywordTitlesCounts[i].Name.substr (0,1);
+%         if ( i != 0 ) {
             </div>
-%                       }
-            <h3 id="letter_<$ keywordTitlesCounts[i].Name.substr (0,1) $>" >
-                <$ keywordTitlesCounts[i].Name.substr (0,1) $>
-            </h3>
-            <div class="columnbox-triple">
-%               }
-                <button name="keyword"
+%         }
+        <h3 id="letter_<$ keywordTitlesCounts[i].Name.substr (0,1) $>" >
+            <$ keywordTitlesCounts[i].Name.substr (0,1) $>
+        </h3>
+        <div class="columnbox-triple">
+%     }
+            <form method="post" action="KeywordDetail">
+                <input
+                        type="hidden"
+                        name="arg_keyword"
+                        value="<$ keywordTitlesCounts[i].Name $>" >
+                <button name="arg_detail_button"
                         class="full_width_button"
-                        value="<$ keywordTitlesCounts[i].Name $>"
+                        value="pushed"
                         type="submit"><$ keywordTitlesCounts[i].Name $>(<$ keywordTitlesCounts[i].Count $>)
                 </button>
-%           }
-            </div>
-        </form>
+            </form>
+% }
+        </div>
     </div>
 
 <%include>views/parts/foot.ecpp.html</%include>

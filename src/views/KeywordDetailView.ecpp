@@ -16,8 +16,17 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
+<%session
+    scope="shared"
+    include="models/Quote.h"
+    include="models/WebACL.h"
+    include="models/UserSession.h" >
+        UserSession              userSession;
+        std::vector<Quote>       s_quoteList;
+        bool                     s_isLogin;
+        std::string              s_keyword;
+</%session>
 
-<%include>controller/KeywordDetailController.tnt.cpp</%include>
 
 <!DOCTYPE HTML>
 <html>
@@ -34,7 +43,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="mainmenue">
         <ul>
             <li class="tableft"><a href="home">Home</a></li>
-            <li class="tabmiddle_activ"><a href="keyword_register">Schlagwortsuche</a></li>
+            <li class="tabmiddle"><a href="keyword_register">Schlagwortsuche</a></li>
             <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
             <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
             <li class="tabright"><a href="portaladmin">Administrationsportal</a></li>
@@ -43,34 +52,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <br />
 
     <div class="centerbox">
-        <h1>Schlagwort: <i><$ keyword $></i></h1>
+        <h1>Schlagwort: <i><$ s_keyword $></i></h1>
         <div class="columnbox">
             <form method="post" action="EditQuote">
-% for ( unsigned int i=0; i < quoteList.size(); i++) {
+% for ( unsigned int i=0; i < s_quoteList.size(); i++) {
                 <div class="simple-box">
                     <h2>
-                        <$ quoteList[i].getBookTitle() $>&#160;
-                        <$ quoteList[i].getChapterBegin() $>:
-                        <$ quoteList[i].getSentenceBegin() $>
+                        <$ s_quoteList[i].getBookTitle() $>&#160;
+                        <$ s_quoteList[i].getChapterBegin() $>:
+                        <$ s_quoteList[i].getSentenceBegin() $>
                     </h2>
                     <ul>
-                        <li>Zitat: <i><$ quoteList[i].getQuoteText() $></i></li>
-                        <li>Notiz: <i><$ quoteList[i].getNote() $></i></li>
+                        <li>Zitat: <i><$ s_quoteList[i].getQuoteText() $></i></li>
+                        <li>Notiz: <i><$ s_quoteList[i].getNote() $></i></li>
                         <li>Schlagworte: <ul>
-%     std::vector<std::string> keywordList = quoteList[i].getKeywords();
+%     std::vector<std::string> keywordList = s_quoteList[i].getKeywords();
 %     for ( unsigned int i2=0; i2 <  keywordList.size(); i2++) {
                             <li><i><$ keywordList[i2] $></i>
 %     }
                         </ul>
                         </li>
-%     AccountData owner = WebACL::getAccountsWithID( quoteList[i].getOwnerID() );
+%     AccountData owner = WebACL::getAccountsWithID( s_quoteList[i].getOwnerID() );
                         <li>Eigentümer: <i><$ owner.getLogin_name( ) $>(ID:<$ owner.getID( ) $>)</i></li>
                     </ul>
-%     if ( isLogin == true && quoteList[i].getOwnerID() == userSession.getUserID() ) {
+%     if ( s_isLogin == true && s_quoteList[i].getOwnerID() == userSession.getUserID() ) {
                     <input
                             type="hidden"
                             name="arg_quote_id"
-                            value="<$ quoteList[i].getID() $>" >
+                            value="<$ s_quoteList[i].getID() $>" >
                     <button name="arg_edit_button"
                             class="full_width_button"
                             value="pushed"
