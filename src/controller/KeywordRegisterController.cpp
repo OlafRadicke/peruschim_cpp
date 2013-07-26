@@ -58,12 +58,6 @@ unsigned KeywordRegisterController::operator() (tnt::HttpRequest& request, tnt::
     TNT_SESSION_SHARED_VAR( vector<KeywordCount>,     s_keywordTitlesCounts, ());
 
 
-
-    // ACL Check
-    if ( userSession.isInRole ( "user" ) == false ) {
-        return reply.redirect ( "/access_denied" );
-    };
-
     // define the query parameters
     std::string  arg_user_view =
         qparam.arg<std::string>("arg_user_view");
