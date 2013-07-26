@@ -9,6 +9,7 @@ ABHÄNGIGKEITEN
 zum übersetzen von Tntnet:
 - automake
 - autoconf
+- autoconf-archive
 - libtool
 - postgresql-devel
 - zlib-devel
@@ -132,5 +133,5 @@ Wenn die Fehlermeldung
     ../configure: line 15037: syntax error near unexpected token `-Wall,'
     ../configure: line 15037: `AX_CHECK_COMPILE_FLAG(-Wall, CPPFLAGS="$CPPFLAGS -Wall")'
 
-kommt.
+kommt. Muss noch das Paket "autoconf-archive" installiert werden
 
