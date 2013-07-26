@@ -15,8 +15,16 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
+<%session
+    scope="shared"
+    include="models/KeywordRegister.h"
+    include="models/WebACL.h"
+    include="models/UserSession.h" >
 
-<%include>controller/KeywordRegisterController.tnt.cpp</%include>
+        UserSession            userSession;
+        vector<KeywordCount>   s_keywordTitlesCounts;
+</%session>
+
 
 <!DOCTYPE HTML>
 <html>
@@ -34,7 +42,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="mainmenue">
         <ul>
             <li class="tableft"><a href="home">Home</a></li>
-            <li class="tabmiddle"><a href="keyword_register">Schlagwortsuche</a></li>
+            <li class="tabmiddle_activ"><a href="keyword_register">Schlagwortsuche</a></li>
             <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
             <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
             <li class="tabright"><a href="portaladmin">Administrationsportal</a></li>
@@ -48,8 +56,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 % if (  userSession.isInRole ( "user" ) == true) {
         <div>
-            <form method="post" action="keyword_register">
-                <select name="user_view" size="1">
+            <form method="post" action="KeywordRegister">
+                <select name="arg_user_view" size="1">
 %     if ( userSession.getItemViewMode ( ) == PRIVATEITEMS ) {
                     <option value="allitems" >Alle Einträge zeigen</option>
                     <option value="privateitems" selected>Nur eigene Einträge zeigen</option>
@@ -58,8 +66,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <option value="privateitems">Nur eigene Einträge zeigen</option>
 %     }
                 </select>
-                <button name="quote"
-                            value="view_change"
+                <button name="arg_view_change_button"
+                            value="pushed"
                             type="submit">wechseln
                 </button>
             </form>
@@ -99,14 +107,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </div>
 
 % string lastLetter = "";
-% for ( unsigned int i=0; i<keywordTitlesCounts.size(); i++) {
-%     if ( lastLetter != keywordTitlesCounts[i].Name.substr (0,1) ) {
-%         lastLetter = keywordTitlesCounts[i].Name.substr (0,1);
+% for ( unsigned int i=0; i<s_keywordTitlesCounts.size(); i++) {
+%     if ( lastLetter != s_keywordTitlesCounts[i].Name.substr (0,1) ) {
+%         lastLetter = s_keywordTitlesCounts[i].Name.substr (0,1);
 %         if ( i != 0 ) {
             </div>
 %         }
-        <h3 id="letter_<$ keywordTitlesCounts[i].Name.substr (0,1) $>" >
-            <$ keywordTitlesCounts[i].Name.substr (0,1) $>
+        <h3 id="letter_<$ s_keywordTitlesCounts[i].Name.substr (0,1) $>" >
+            <$ s_keywordTitlesCounts[i].Name.substr (0,1) $>
         </h3>
         <div class="columnbox-triple">
 %     }
@@ -114,11 +122,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <input
                         type="hidden"
                         name="arg_keyword"
-                        value="<$ keywordTitlesCounts[i].Name $>" >
+                        value="<$ s_keywordTitlesCounts[i].Name $>" >
                 <button name="arg_detail_button"
                         class="full_width_button"
                         value="pushed"
-                        type="submit"><$ keywordTitlesCounts[i].Name $>(<$ keywordTitlesCounts[i].Count $>)
+                        type="submit"><$ s_keywordTitlesCounts[i].Name $>(<$ s_keywordTitlesCounts[i].Count $>)
                 </button>
             </form>
 % }

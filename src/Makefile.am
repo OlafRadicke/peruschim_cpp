@@ -9,10 +9,10 @@ ecppSources = \
 	views/EditOwnVersesView.ecpp \
 	views/EditQuoteView.ecpp \
 	views/ExportOwnVersesView.ecpp \
-	views/KeywordDetailView.ecpp \
 	views/home.ecpp \
 	views/ImportOwnVersesView.ecpp \
-	views/keyword_register.ecpp \
+	views/KeywordDetailView.ecpp \
+	views/KeywordRegisterView.ecpp \
 	views/login.ecpp \
 	views/logout.ecpp \
 	views/mainmenu.ecpp \
@@ -33,8 +33,8 @@ peruschim_cpp_SOURCES = \
 	controller/EditQuoteController.cpp \
 	controller/ExportOwnVersesController.cpp \
 	controller/ImportOwnVersesController.cpp \
-	controller/KeywordDetailController.ecpp \
-	peruschim_cpp.cpp \
+	controller/KeywordDetailController.cpp \
+	controller/KeywordRegisterController.cpp \
 	manager/BibleManager.cpp \
 	manager/EditionManager.cpp \
 	manager/QuoteManager.cpp \
@@ -49,6 +49,7 @@ peruschim_cpp_SOURCES = \
 	models/QuoteRegister.cpp \
 	models/UserSession.cpp \
 	models/WebACL.cpp \
+	peruschim_cpp.cpp \
 	$(ecppSources) $(icoSources)
 
 peruschim_cpp_LDFLAGS = -lcxxtools -ltntnet -ltntdb

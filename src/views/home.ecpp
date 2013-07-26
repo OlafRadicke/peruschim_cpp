@@ -54,7 +54,7 @@ srand (time(NULL));
     <div class="mainmenue">
         <ul>
             <li class="tableft_activ"><a href="home">Home</a></li>
-            <li class="tabmiddle"><a href="keyword_register">Schlagwortsuche</a></li>
+            <li class="tabmiddle"><a href="KeywordRegister">Schlagwortsuche</a></li>
             <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
             <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
             <li class="tabright"><a href="portaladmin">Administrationsportal</a></li>

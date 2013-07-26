@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="mainmenue">
         <ul>
             <li class="tableft"><a href="home">Home</a></li>
-            <li class="tabmiddle"><a href="keyword_register">Schlagwortsuche</a></li>
+            <li class="tabmiddle"><a href="KeywordRegister">Schlagwortsuche</a></li>
             <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
             <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
             <li class="tabright_activ"><a href="portaladmin">Administrationsportal</a></li>
