@@ -30,7 +30,7 @@ log_define("EditionManager")
 
 
 EditionManager::EditionManager()
-    : m_conn(tntdb::connectCached( Config().dbDriver() ))
+    : m_conn(tntdb::connectCached( Config::it().dbDriver() ))
 { }
 
 EditionManager::EditionManager(tntdb::Connection& conn)

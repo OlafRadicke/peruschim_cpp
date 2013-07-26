@@ -36,9 +36,8 @@ void AccountData::deleteAllData() {
 
     DEBUG "saveUpdate" << std::endl;
     DEBUG "m_account_disable: " << m_account_disable << std::endl;
-    Config config;
 
-    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Transaction trans(conn);
 
     conn.prepare(
@@ -104,9 +103,8 @@ void AccountData::saveUpdate() {
 
     DEBUG "saveUpdate" << std::endl;
     DEBUG "m_account_disable: " << m_account_disable << std::endl;
-    Config config;
 
-    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Statement st = conn.prepare(
         "UPDATE account \
             SET login_name      = :v1, \
@@ -131,12 +129,10 @@ void AccountData::setNewPassword ( std::string newpassword ) {
     std::string password_salt;
     std::string password_hash;
 
-    Config config;
-
     password_salt = AccountData::genRandomSalt ( 16 );
     password_hash = cxxtools::md5 ( newpassword + password_salt );
 
-    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     DEBUG std::endl;
     tntdb::Statement st = conn.prepare(
         "UPDATE account \

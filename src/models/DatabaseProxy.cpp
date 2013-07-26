@@ -29,13 +29,12 @@ log_define("models.DatabaseProxy")
 
 std::vector< std::vector<std::string> > DatabaseProxy::sqlGet ( std::string sqlcommand )
 {
-    Config config;
     std::vector< std::vector<std::string> >  list_2d;
     unsigned int     col_count;
     tntdb::Result result;
 
     tntdb::Connection conn =
-        tntdb::connectCached( config.dbDriver() );
+        tntdb::connectCached( Config::it().dbDriver() );
 
     result = conn.select( sqlcommand );
     for (tntdb::Result::const_iterator it = result.begin();
@@ -57,11 +56,10 @@ std::vector< std::vector<std::string> > DatabaseProxy::sqlGet ( std::string sqlc
 
 std::string DatabaseProxy::sqlGetSingle ( std::string sqlcommand )
 {
-    Config config;
     unsigned int     col_count;
     tntdb::Result result;
 
-    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     result = conn.select( sqlcommand );
     for (tntdb::Result::const_iterator it = result.begin();
         it != result.end(); ++it
@@ -80,8 +78,7 @@ std::string DatabaseProxy::sqlGetSingle ( std::string sqlcommand )
 
 void DatabaseProxy::sqlSet ( std::string sqlcommand )
 {
-    Config config;
-    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     log_debug("sqlcommand: " << sqlcommand);
     conn.execute( sqlcommand );
 }

@@ -10,7 +10,10 @@ int main ( int argc, char* argv[] )
 {
     try
     {
-        Config config;
+        Config& config = Config::it();
+        config.read();
+
+        log_init(config.logging());
 
         tnt::Tntnet app;
         app.listen( config.appIp(), config.appPort() );

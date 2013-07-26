@@ -22,28 +22,62 @@
 #define CONFIG_H
 
 #include <string>
-
-class ConfigImpl;
+#include <cxxtools/serializationinfo.h>
 
 /**
 * @class Config This class read a configuration file.
-* The form of date in the configuration file is:
-* key = value
+* The form of date in the configuration file is json.
 */
 class Config {
 
-public:
-    Config();
+    friend void operator>>= (const cxxtools::SerializationInfo& si, Config& config );
 
-    const std::string& appIp() const;
-    unsigned short     appPort() const;
-    const std::string& dbDriver() const;
-    unsigned           sessionTimeout() const;
-    const std::string& smtpServer() const;
-    const std::string& mailFromAddress() const;
+    Config()
+      : configRead(false),
+        m_appIp(""),
+        m_appPort(8008),
+        m_dbDriver("postgresql:dbname=peruschim"),
+        m_sessionTimeout( 1000 ),
+        m_smtpServer( "localhost" ),
+        m_mailFromAddress( "peruschim_cpp.conf@localhost" )
+    { }
+
+public:
+    static Config& it();
+
+    void read(const std::string& filename = "");
+
+    const cxxtools::SerializationInfo& logging() const
+    { return m_logging; }
+
+    const std::string& appIp() const
+    { return m_appIp; }
+
+    unsigned short appPort() const
+    { return m_appPort; }
+
+    const std::string& dbDriver() const
+    { return m_dbDriver; }
+
+    unsigned sessionTimeout() const
+    { return m_sessionTimeout; }
+
+    const std::string& smtpServer() const
+    { return m_smtpServer; }
+
+    const std::string& mailFromAddress() const
+    { return m_mailFromAddress; }
 
 private:
-    ConfigImpl* impl;
+    bool configRead;
+
+    cxxtools::SerializationInfo m_logging;
+    std::string m_appIp;
+    unsigned short m_appPort;
+    std::string m_dbDriver;
+    unsigned m_sessionTimeout;
+    std::string m_smtpServer;
+    std::string m_mailFromAddress;
 };
 
 #endif

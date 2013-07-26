@@ -67,11 +67,10 @@ Quote::Quote()
 
 
 std::vector<std::string> Quote::getKeywords() {
-    Config config;
 
     if ( this->m_quoteKeywords.size() < 1 && this->m_ID > 0 ) {
 
-        tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+        tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
         tntdb::Statement st = conn.prepare( "SELECT title \
             FROM quote_keyword \
             WHERE quote_id = :v1 \

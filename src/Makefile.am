@@ -40,7 +40,6 @@ peruschim_cpp_SOURCES = \
 	manager/QuoteManager.cpp \
 	models/AccountData.cpp \
 	models/Config.cpp \
-	models/ConfigImpl.cpp \
 	models/DatabaseProxy.cpp \
 	models/KeywordData.cpp \
 	models/KeywordRegister.cpp \

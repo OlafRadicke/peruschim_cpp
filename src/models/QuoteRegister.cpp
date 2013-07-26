@@ -36,9 +36,8 @@
 
 void QuoteRegister::deleteAllQuoteOfUser( const unsigned long userID ){
     DEBUG "deleteAllQuoteOfUser: " << userID << std::endl;
-    Config config;
 
-    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Transaction trans(conn);
     conn.prepare( "DELETE FROM  quote_keyword \n\
         WHERE quote_id IN ( SELECT id FROM quote WHERE owner_id= :v1 )")
@@ -51,9 +50,8 @@ void QuoteRegister::deleteAllQuoteOfUser( const unsigned long userID ){
 
 void QuoteRegister::deleteQuote( const unsigned long quoteID ) {
     DEBUG "deleteQuote: " << quoteID << std::endl;
-    Config config;
 
-    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Transaction trans(conn);
     conn.prepare( "DELETE FROM  quote_keyword \n\
         WHERE quote_id = :quoteid ")
@@ -97,9 +95,8 @@ std::vector<Quote> QuoteRegister::getQuotes ( tntdb::Statement st ){
 Quote QuoteRegister::getQuoteWithID( const unsigned long id ) {
     DEBUG std::endl;
     std::vector< Quote > quoteList;
-    Config config;
     DEBUG std::endl;
-    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Statement st = conn.prepare( "SELECT \
         title, \
         chapter_begin, \
@@ -134,9 +131,8 @@ Quote QuoteRegister::getQuoteWithID( const unsigned long id ) {
 std::vector<Quote> QuoteRegister::getAllPubQuoteOfKeyword( const std::string keyword ) {
     DEBUG std::endl;
     std::vector< Quote > quoteList;
-    Config config;
 
-    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Statement st = conn.prepare( "SELECT \
         title, \
         chapter_begin, \
@@ -338,9 +334,8 @@ std::string QuoteRegister::getJsonExport( const unsigned long userID ) {
 std::vector<Quote> QuoteRegister::getAllQuoteOfUser( const unsigned long userID ) {
     DEBUG "userID: " << userID << std::endl;
     std::vector< Quote > quoteList;
-    Config config;
 
-    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Statement st = conn.prepare( "SELECT \
         title, \
         chapter_begin, \
@@ -370,9 +365,8 @@ std::vector<Quote> QuoteRegister::getAllQuoteOfKeyword(
     DEBUG "keyword: " << keyword <<  std::endl;
     DEBUG "userID: " << userID << std::endl;
     std::vector< Quote > quoteList;
-    Config config;
-    
-    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Statement st = conn.prepare( "SELECT \
         title, \
         chapter_begin, \
@@ -405,7 +399,6 @@ void QuoteRegister::jsonImport( const std::string jsonText,
                                 unsigned long owner_id ) {
     try
     {
-        // define a empty config object
         QuoteExportContainer quoteContainer;
         std::stringstream sstream;
         sstream.str( jsonText );
@@ -416,8 +409,7 @@ void QuoteRegister::jsonImport( const std::string jsonText,
         DEBUG "quoteContainer.allUserQuotes.size(): "
             << quoteContainer.allUserQuotes.size() <<  std::endl;
 
-        Config config;
-        tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+        tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
         tntdb::Transaction trans(conn);
 
         EditionManager editionManager(conn);
