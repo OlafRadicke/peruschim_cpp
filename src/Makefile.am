@@ -33,7 +33,7 @@ peruschim_cpp_SOURCES = \
 	controller/EditQuoteController.cpp \
 	controller/ExportOwnVersesController.cpp \
 	controller/ImportOwnVersesController.cpp \
-	controller/KeywordDetailController.ecpp \
+	controller/KeywordDetailController.cpp \
 	peruschim_cpp.cpp \
 	manager/BibleManager.cpp \
 	manager/EditionManager.cpp \
