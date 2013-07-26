@@ -42,8 +42,7 @@ bool WebACL::authUser ( const std::string& user_name, const std::string& passwor
     std::string password_hash_b;
     std::string password_salt;
 
-    Config config;
-    tntdb::Connection conn = tntdb::connectCached(config.dbDriver());
+    tntdb::Connection conn = tntdb::connectCached(Config::it().dbDriver());
 
     // password salt request.
     try
@@ -108,13 +107,11 @@ void WebACL::createAccount (
     std::string password_hash = "";
     std::string password_salt = "";
     unsigned long user_id = 0;
-    Config config;
-
 
     password_salt = WebACL::genRandomSalt ( 16 );
     password_hash = cxxtools::md5 ( new_password + password_salt );
 
-    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Statement st = conn.prepare(
         "INSERT INTO account \
         (   login_name, \
@@ -164,8 +161,7 @@ void WebACL::createAccount (
 
 
 AccountData WebACL::getAccountsWithID ( unsigned long id ){
-    Config config;
-    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
 
     tntdb::Statement st = conn.prepare( "SELECT \
                 login_name, \
@@ -209,9 +205,8 @@ AccountData WebACL::getAccountsWithID ( unsigned long id ){
 std::vector<AccountData> WebACL::getAllAccounts (){
 
     std::vector<AccountData> accounts;
-    Config config;
 
-    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Statement st = conn.prepare(
             "SELECT \
                 id, \
@@ -374,8 +369,7 @@ void WebACL::reSetUserRolls(
 ){
 
     log_debug("reSetUserRolls");
-    Config config;
-    tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Statement st = conn.prepare( "DELETE FROM account_acl_roll \
                 WHERE account_id = :v1;");
     st.set( "v1", user_id ).execute();

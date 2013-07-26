@@ -346,15 +346,6 @@ private:
     std::string m_quoteText;
 
     /**
-     * Search and replace function.
-     * @param rep search string
-     * @param rep replace string
-     * @param rep original string
-     * @return string with replacements
-     **/
-    std::string strReplace (std::string rep, std::string with, std::string in);
-
-    /**
      * Buffer for edition data. Is use only by JSON-deserializeing.
      */
     Edition tmpEditionData;

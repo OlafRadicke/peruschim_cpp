@@ -17,7 +17,7 @@ QuoteManager::QuoteManager(tntdb::Connection& conn_)
 { }
 
 QuoteManager::QuoteManager()
-    : conn(tntdb::connectCached( Config().dbDriver() ))
+    : conn(tntdb::connectCached( Config::it().dbDriver() ))
 {
 }
 

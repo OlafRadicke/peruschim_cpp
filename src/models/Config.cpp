@@ -19,74 +19,61 @@
 */
 
 #include "Config.h"
-#include "ConfigImpl.h"
-#include <cxxtools/serializationinfo.h>
-#include <cxxtools/propertiesdeserializer.h>
-#include <cxxtools/mutex.h>
+#include <cxxtools/jsondeserializer.h>
 #include <cxxtools/fileinfo.h>
-#include <cxxtools/log.h>
 #include <fstream>
 
-
-
-namespace
+Config& Config::it()
 {
-    bool configRead = false;
-    ConfigImpl theImpl;
-    cxxtools::Mutex mutex;
+    static Config theConfig;
+    return theConfig;
 }
 
-const std::string& Config::appIp() const
+void Config::read(const std::string& filename)
 {
-    return impl->appIp();
-}
+    std::string fname;
 
-unsigned short Config::appPort() const
-{
-    return impl->appPort();
-}
-
-const std::string& Config::dbDriver() const
-{
-    return impl->dbDriver();
-}
-
-unsigned Config::sessionTimeout() const
-{
-    return impl->sessionTimeout();
-}
-
-const std::string& Config::smtpServer() const
-{
-    return impl->smtpServer();
-}
-
-const std::string& Config::mailFromAddress() const
-{
-    return impl->mailFromAddress();
-}
-
-Config::Config ()
-    : impl(0)
-{
-    cxxtools::MutexLock lock(mutex);
-    if (!configRead)
+    if (!filename.empty())
     {
-        std::string fname;
-
-        if (cxxtools::FileInfo::exists("peruschim_cpp.conf"))
-        {
-            fname = "peruschim_cpp.conf";
-        }
-        else
-        {
-            fname = "/etc/peruschim_cpp.conf";
-        }
-
-        theImpl.read(fname);
-        configRead = true;
+        fname = filename;
+    }
+    if (cxxtools::FileInfo::exists("peruschim_cpp.conf"))
+    {
+        fname = "peruschim_cpp.conf";
+    }
+    else
+    {
+        fname = "/etc/peruschim_cpp.conf";
     }
 
-    impl = &theImpl;
+    std::ifstream in(fname.c_str());
+    if (!in)
+        throw std::runtime_error("failed to open configuration file \"" + fname + '"');
+
+    cxxtools::JsonDeserializer deserializer(in);
+    deserializer.deserialize(*this);
 }
 
+/**
+* define how to deserialize the config file
+* @arg si serialization info
+* @arg config config class
+*/
+void operator>>= (const cxxtools::SerializationInfo& si, Config& config )
+{
+    // "si.getMember" with 2 parameters - member name and a reference - fills
+    // the reference only if found This makes logging configuration optional.
+
+    si.getMember("logging", config.m_logging);
+
+    // "si.getMember" with one parameter - the member name - throws an
+    // exception when the member is not found. Using it makes the setting
+    // mandatory.
+
+    si.getMember("appIp")           >>= config.m_appIp;
+    si.getMember("appPort")         >>= config.m_appPort;
+    si.getMember("dbDriver")        >>= config.m_dbDriver;
+    si.getMember("sessionRuntime")  >>= config.m_sessionTimeout;
+    si.getMember("smtpServer")      >>= config.m_smtpServer;
+    si.getMember("mailFromAddress") >>= config.m_mailFromAddress;
+}

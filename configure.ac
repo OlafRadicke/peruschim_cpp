@@ -11,6 +11,8 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
+AM_INIT_AUTOMAKE([-Wall -Werror foreign])
+
 AC_LANG(C++)
 AC_CHECK_HEADER([cxxtools/arg.h], , AC_MSG_ERROR([cxxtools headers not found]))
 AC_CHECK_HEADER([tnt/tntnet.h], , AC_MSG_ERROR([tntnet headers not found]))

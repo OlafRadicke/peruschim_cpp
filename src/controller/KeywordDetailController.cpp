@@ -32,7 +32,7 @@
 #include "models/QuoteRegister.h"
 
 
-log_define("component.KeywordDetailController");
+log_define("component.KeywordDetailController")
 
 class KeywordDetailController : public tnt::Component
 {

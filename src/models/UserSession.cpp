@@ -37,13 +37,12 @@ void UserSession::addRoll ( std::vector<std::string> rolls ) {
 
 unsigned long UserSession::getUserID ( ) {
     DEBUG std::endl;
-    Config config;
     if ( this->m_userID > 0 ) {
         DEBUG std::endl;
         return this->m_userID;
     } else {
 
-        tntdb::Connection conn = tntdb::connectCached( config.dbDriver() );
+        tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
         tntdb::Statement st = conn.prepare( 
             "SELECT \
                 id \
