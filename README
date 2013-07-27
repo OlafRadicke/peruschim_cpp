@@ -1,3 +1,7 @@
+
+Build
+-----
+
 peruschim_cpp is now built using autotools.
 
 To build peruschim_cpp do the following steps:
@@ -19,3 +23,19 @@ from that directory then like this:
   * run "make"
 
 Then you have all generated files in that build directory.
+
+
+Requirement / dependencies
+--------------------------
+
+- gcc-g++
+- tntnet
+- tntnet-devel
+- tntdb
+zum übersetzen von Tntnet:
+- automake
+- autoconf
+- libtool
+- postgresql-devel
+- zlib-devel
+- openssl-devel

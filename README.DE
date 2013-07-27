@@ -124,13 +124,3 @@ muss lauten:
 Oder je nach dem wo deine Lib installiert ist. Danach muss die Konfiguration
 vom System neu eingelesen werden. Das geschied mir dem Befehl: "ldconfig"
 
-syntax error near unexpected token
-==================================
-
-Wenn die Fehlermeldung 
-
-    ../configure: line 15037: syntax error near unexpected token `-Wall,'
-    ../configure: line 15037: `AX_CHECK_COMPILE_FLAG(-Wall, CPPFLAGS="$CPPFLAGS -Wall")'
-
-kommt.
-
