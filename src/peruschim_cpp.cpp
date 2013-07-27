@@ -17,13 +17,20 @@ int main ( int argc, char* argv[] )
 
         tnt::Tntnet app;
         app.listen( config.appIp(), config.appPort() );
-        app.mapUrl( "^/login", "login" ).setPathInfo( "login" );
 
+        // configure static stuff
+        app.mapUrl("^/resources/(.*)", "resources")
+           .setPathInfo("resources/$1");
+        app.mapUrl("^/favicon.ico$", "resources")
+           .setPathInfo("resources/favicon.ico");
+
+        // special pages
+        app.mapUrl( "^/(.*)$", "$1" );
+        app.mapUrl( "^/$", "home" );
+
+        // mvc stuff
         app.mapUrl( "^/(.*)$", "$1Controller" );
         app.mapUrl( "^/(.*)$", "$1View" );
-        app.mapUrl( "^/$", "home" ).setPathInfo( "home" );
-
-        app.mapUrl( "^/(.*)$", "$1" );
 
         std::cout << "peruschim cpp is started and run on http://" << config.appIp()
             << ":" <<  config.appPort() << "/" << std::endl;

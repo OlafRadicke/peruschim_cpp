@@ -2,7 +2,7 @@ AUTOMAKE_OPTIONS = subdir-objects
 bin_PROGRAMS = peruschim_cpp
 
 ecppSources = \
-	resources/style.ecpp \
+	style.ecpp \
 	views/access_denied.ecpp \
 	views/EditAccountView.ecpp \
 	views/EditEditionsView.ecpp \
@@ -23,8 +23,9 @@ ecppSources = \
 	views/portalquote.ecpp \
 	views/reset_own_password.ecpp
 
-icoSources = \
-	resources/favicon.ico
+staticSources = \
+	resources/favicon.ico \
+	resources/peruschim.css
 
 peruschim_cpp_SOURCES = \
 	controller/EditAccountController.cpp \
@@ -49,15 +50,21 @@ peruschim_cpp_SOURCES = \
 	models/UserSession.cpp \
 	models/WebACL.cpp \
 	peruschim_cpp.cpp \
-	$(ecppSources) $(icoSources)
+	$(ecppSources)
+
+nodist_peruschim_cpp_SOURCES = \
+	resources.cpp
 
 peruschim_cpp_LDFLAGS = -lcxxtools -ltntnet -ltntdb
 
-CLEANFILES = $(ecppSources:.ecpp=.cpp) $(ecppSources:.ecpp=.deps) $(icoSources:.ico=.cpp)
+CLEANFILES = $(ecppSources:.ecpp=.cpp) $(ecppSources:.ecpp=.deps) resource.cpp
 
 #
 # Rules for tntnet applications
 #
+resources.cpp: $(staticSources) Makefile.am
+	$(ECPPC) -bb -z -n resources -p -o resources.cpp -I$(srcdir) $(staticSources)
+
 SUFFIXES=.ecpp .ico .cpp
 
 .ecpp.cpp:
