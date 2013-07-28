@@ -78,7 +78,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <h1>Administrationsportal</h1>
         <div class="columnbox">
             <ul>
-                <li><a href="newaccount"><b>Neuer Account:</b></a> Einen neuen Account für das Webportal anlegen.</li>
+                <li><a href="NewAccount"><b>Neuer Account:</b></a> Einen neuen Account für das Webportal anlegen.</li>
                 <li><a href="EditAccount"><b>Accounts bearbeiten:</b></a> Einen Account bearbeiten oder löschen.</li>
             </ul>
         </div>

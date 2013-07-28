@@ -22,10 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     include="models/UserSession.h" >
 
         UserSession            userSession;
-        std::vector<Edition>   s_editionList;
         std::string            s_feedback;
-        bool                   s_isEditionEdit;
-        long unsigned int      s_editionID;
         bool                   s_clearOldVerses;
         std::string            s_jasonText;
 </%session>
