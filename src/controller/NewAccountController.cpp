@@ -29,8 +29,6 @@
 
 #include "models/WebACL.h"
 #include "models/UserSession.h"
-#include "models/QuoteRegister.h"
-#include "models/Quote.h"
 
 
 log_define("component.NewAccountController")

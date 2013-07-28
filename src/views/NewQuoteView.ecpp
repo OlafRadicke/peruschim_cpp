@@ -15,8 +15,20 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
+<%session
+    scope="shared"
+    include="models/UserSession.h" 
+    include="models/Edition.h" 
+    include="models/Quote.h" 
+    include="manager/BibleManager.h">
 
-<%include>controller/NewQuoteController.tnt.cpp</%include>
+        UserSession            userSession;
+        std::string            s_feedback;
+        std::string            s_bibleserverComURL;
+        std::vector<Edition>   s_editionList;
+        Quote                  s_quoteData;
+        BibleManager           s_bibleManager;
+</%session>
 
 <!DOCTYPE HTML>
 <html>
@@ -34,7 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <ul>
             <li class="tableft"><a href="home">Home</a></li>
             <li class="tabmiddle"><a href="KeywordRegister">Schlagwortsuche</a></li>
-            <li class="tabmiddle_activ"><a href="portalquote">Versverwaltung</a></li>
+            <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
             <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
             <li class="tabright"><a href="portaladmin">Administrationsportal</a></li>
         </ul>
@@ -45,16 +57,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="centerbox">
         <h1>Neuen Verseintrag erstellen</h1>
 
-% if ( feedback != "" ) {
+% if ( s_feedback != "" ) {
 
         <div class="feedback-box">
-            <b><$ feedback $> </b>
+            <b><$ s_feedback $> </b>
         </div>
 
 % } else {
 
         <div class="flush-left-box">
-%     if ( 1 > editionList.size() ) {
+%     if ( 1 > s_editionList.size() ) {
             <div class="feedback-box">
                 <b>Bevor ein erster Vers angelegt werden kann, muss zunächst eine
                     Bibelausgabe angelegt werden. <a href="/EditEditions">Jetzt
@@ -65,72 +77,72 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <form method="post" >
 
                 <p>Edition:
-                    <select name="edition_id" size="1">
-%                    for ( unsigned int i=0; i<editionList.size(); i++) {
-                        <option value="<$  editionList[i].getID() $>"><$ editionList[i].getName() $></option>
+                    <select name="arg_edition_id" size="1">
+%                    for ( unsigned int i=0; i<s_editionList.size(); i++) {
+                        <option value="<$  s_editionList[i].getID() $>"><$ s_editionList[i].getName() $></option>
 %                    }
                     </select> <a href="/EditEditions">Neue Bibelausgabe anlegen...</a>
                 </p>
 
                 <p>Buch:
-                    <select name="book_title" size="1">
-%     for ( unsigned int i=0; i<bibleManager.bibleBooksCount(); i++) {
-                        <option value="<$  bibleManager.bibleBook(i) $>"<? quoteData.getBookTitle() == bibleManager.bibleBook(i) ? " selected" ?>>
-                            <$ bibleManager.bibleBook(i) $>
+                    <select name="arg_book_title" size="1">
+%     for ( unsigned int i=0; i < s_bibleManager.bibleBooksCount(); i++) {
+                        <option value="<$  s_bibleManager.bibleBook(i) $>"<? s_quoteData.getBookTitle() == s_bibleManager.bibleBook(i) ? " selected" ?>>
+                            <$ s_bibleManager.bibleBook(i) $>
                         </option>
 %     }
                     </select>
                 </p>
 
                 <p><b>von</b><br>Kapitel: <input
-                        name="chapter_begin"
+                        name="arg_chapter_begin"
                         type="number"
                         min="1"
                         max="200"
-%     if ( quoteData.getChapterBegin() > 0 ) {
-                        value="<$ quoteData.getChapterBegin() $>"
+%     if ( s_quoteData.getChapterBegin() > 0 ) {
+                        value="<$ s_quoteData.getChapterBegin() $>"
 %     }
                         required /> Vers: <input
-                        name="sentence_begin"
+                        name="arg_sentence_begin"
                         type="number"
                         min="1"
                         max="200"
-%     if ( quoteData.getSentenceBegin() > 0 ) {
-                        value="<$ quoteData.getSentenceBegin() $>"
+%     if ( s_quoteData.getSentenceBegin() > 0 ) {
+                        value="<$ s_quoteData.getSentenceBegin() $>"
 %     }
                         required /></p>
 
                 <p><b>bis</b><br>Kapitel: <input
-                        name="chapter_end"
+                        name="arg_chapter_end"
                         type="number"
                         min="1"
                         max="200"
-%     if ( quoteData.getChapterEnd() > 0 ) {
-                        value="<$ quoteData.getChapterEnd() $>"
+%     if ( s_quoteData.getChapterEnd() > 0 ) {
+                        value="<$ s_quoteData.getChapterEnd() $>"
 %     }
                         /> Vers: <input
-                        name="sentence_end"
+                        name="arg_sentence_end"
                         type="number"
                         min="1"
                         max="200"
-%     if ( quoteData.getSentenceEnd() > 0 ) {
-                        value="<$ quoteData.getSentenceEnd() $>"
+%     if ( s_quoteData.getSentenceEnd() > 0 ) {
+                        value="<$ s_quoteData.getSentenceEnd() $>"
 %     }
                         />
                 </p>
-%     if ( bibleserverComURL != "" ) {
+%     if ( s_bibleserverComURL != "" ) {
                 <div class="feedback-box">
                     Du kanst unter der folgenden URL deine Bibelstelle nachschlagen: <br>
-                    <b><a href="<$ bibleserverComURL $>"><$ bibleserverComURL $></a></b>
+                    <b><a href="<$ s_bibleserverComURL $>"><$ s_bibleserverComURL $></a></b>
                 </div>
 %     }
                 <p>
                     Zitat: <br>
                     <textarea
-                        name="quote_text"
+                        name="arg_quote_text"
                         class="full-width"
-                        rows="2"><$ quoteData.getQuoteText() $></textarea> <br>
-                    <button name="look_up_button"
+                        rows="2"><$ s_quoteData.getQuoteText() $></textarea> <br>
+                    <button name="arg_look_up_button"
                             value="clicked"
                             type="submit">Auf bibleserver.com nachschlagen
                     </button>
@@ -138,24 +150,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <p>Schlagworte (Komma getrennt): <br><input
                         class="full-width"
-                        name="keywords"
+                        name="arg_keywords"
                         type="text"
-                        value="<$ quoteData.getKeywordsAsString() $>"
+                        value="<$ s_quoteData.getKeywordsAsString() $>"
                         maxlength="300"></p>
 
 
                 <p>Notizen/Anmerungen: <br>
                     <textarea
                         class="full-width"
-                        name="note"
-                        rows="10"><$ quoteData.getNote( ) $></textarea>
+                        name="arg_note"
+                        rows="10"><$ s_quoteData.getNote( ) $></textarea>
                 </p>
                 <p>Datensatz nicht öffentlicht sichtbar machen <input
                         type="checkbox"
                         id="is_private_data"
                         value="true"
-                        name="is_private_data"
-%     if ( quoteData.isPrivateData() ) {
+                        name="arg_is_private_data"
+%     if ( s_quoteData.isPrivateData() ) {
                         checked ></p>
 %     } else {
                         ></p>
@@ -163,7 +175,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <p>
                     <button id="save_button"
-                            name="create_button"
+                            name="arg_create_button"
                             value="Speichern"
                             type="submit">Speichern
                     </button></p>

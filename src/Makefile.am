@@ -17,7 +17,7 @@ ecppSources = \
 	views/logout.ecpp \
 	views/mainmenu.ecpp \
 	views/NewAccountView.ecpp \
-	views/newquote.ecpp \
+	views/NewQuoteView.ecpp \
 	views/portalaccount.ecpp \
 	views/portaladmin.ecpp \
 	views/portalquote.ecpp \
@@ -37,6 +37,7 @@ peruschim_cpp_SOURCES = \
 	controller/KeywordDetailController.cpp \
 	controller/KeywordRegisterController.cpp \
 	controller/NewAccountController.cpp \
+	controller/NewQuoteController.cpp \
 	manager/BibleManager.cpp \
 	manager/EditionManager.cpp \
 	manager/QuoteManager.cpp \

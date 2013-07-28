@@ -76,7 +76,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <h1>Versverwaltungsportal</h1>
         <div class="columnbox">
             <ul>
-                <li><a href="newquote"><b>Neuer Vers:</b></a> Einen neuen Verseintrag erstellen.</li>
+                <li><a href="NewQuote"><b>Neuer Vers:</b></a> Einen neuen Verseintrag erstellen.</li>
                 <!-- <li><a href="editquote"><b>Verse bearbeiten:</b></a> Eigene Verse bearbeiten.</li> -->
                 <li><a href="EditEditions"><b>Ausgaben:</b></a> Einen neuen
                     Datensatz zu einer Bibel-Ausgabe anlegen oder bearbeiten.
