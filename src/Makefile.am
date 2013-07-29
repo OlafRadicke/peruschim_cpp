@@ -13,7 +13,7 @@ ecppSources = \
 	views/ImportOwnVersesView.ecpp \
 	views/KeywordDetailView.ecpp \
 	views/KeywordRegisterView.ecpp \
-	views/login.ecpp \
+	views/LogInView.ecpp \
 	views/logout.ecpp \
 	views/mainmenu.ecpp \
 	views/NewAccountView.ecpp \
@@ -21,7 +21,7 @@ ecppSources = \
 	views/portalaccount.ecpp \
 	views/portaladmin.ecpp \
 	views/portalquote.ecpp \
-	views/reset_own_password.ecpp
+	views/ResetOwnPasswordView.ecpp
 
 staticSources = \
 	resources/favicon.ico \
@@ -36,8 +36,10 @@ peruschim_cpp_SOURCES = \
 	controller/ImportOwnVersesController.cpp \
 	controller/KeywordDetailController.cpp \
 	controller/KeywordRegisterController.cpp \
+	controller/LogInController.cpp \
 	controller/NewAccountController.cpp \
 	controller/NewQuoteController.cpp \
+	controller/ResetOwnPasswordController.cpp \
 	manager/BibleManager.cpp \
 	manager/EditionManager.cpp \
 	manager/QuoteManager.cpp \

@@ -73,7 +73,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <div class="columnbox">
             <ul>
                 <li>
-                    <a href="reset_own_password">
+                    <a href="ResetOwnPassword">
                         <b>Passwort ändern:</b>
                     </a> Mein Passwort ändern.
                 </li>

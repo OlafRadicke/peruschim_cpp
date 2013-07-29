@@ -15,7 +15,11 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
-<%include>controller/LoginController.tnt.cpp</%include>
+<%session
+    scope="shared"
+    include="models/UserSession.h" >
+        std::string            s_feedback;
+</%session>
 
 <!DOCTYPE HTML>
 <html>
@@ -30,12 +34,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="smallgroupbox">
         <form method="post" >
             <h2>Login</h2>
+% if ( s_feedback != "" ) {
+            <div class="feedback-box">
+                <b><$ s_feedback $> </b>
+            </div>
+% }
             <p>Für den gewählten Bereich muss du angemeldet sein. Bitte
                authentifiziere dich...
-            <p>Benutzer:<br><input class="full-size" name="name" type="text" size="40" maxlength="40"></p>
-            <p>Passwort:<br><input class="full-size" name="password" type="password" size="40" maxlength="40"></p>
-            <p><button name="login"
-                            value="kicked"
+            <p>Benutzer:<br>
+                <input
+                    class="full-size"
+                    name="arg_name"
+                    type="text"
+                    size="40"
+                    maxlength="40"></p>
+            <p>Passwort:<br>
+                <input
+                    class="full-size"
+                    name="arg_password"
+                    type="password"
+                    size="40"
+                    maxlength="40"></p>
+            <p><button name="arg_login_button"
+                            value="pushed"
                             type="submit">Login
                 </button>
             </p>
