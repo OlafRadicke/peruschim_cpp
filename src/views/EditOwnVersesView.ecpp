@@ -1,14 +1,12 @@
 
 
 <%session
-    scope="global"
+    scope="shared"
     include="models/Quote.h"
     include="models/UserSession.h" >
 
     UserSession userSession;
     std::vector<Quote> quoteList;
-
-
     std::string feedback;
     std::string affirmation_question;
     unsigned long session_verse_id;

@@ -53,7 +53,7 @@ unsigned ResetOwnPasswordController::operator() (tnt::HttpRequest& request, tnt:
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
     TNT_SESSION_SHARED_VAR( std::string,              s_feedback, () );
 
-
+    s_feedback = "Test";
     // ACL Check
     if ( userSession.isInRole ( "user" ) == false ) {
         return reply.redirect ( "/access_denied" );
@@ -91,7 +91,7 @@ unsigned ResetOwnPasswordController::operator() (tnt::HttpRequest& request, tnt:
             s_feedback = "Es wurde kein neues Passwort gesetzt";
         };
     }
-
+    log_debug( "CHECK s_feedback:" << s_feedback);
     return DECLINED;
 }
 
