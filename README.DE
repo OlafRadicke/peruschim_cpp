@@ -138,3 +138,12 @@ Dann muss der folgende Befehl ausgeführt werden:
  autoreconf -ivf
 
 Und danach weiter mit "./configure && make"
+
+TODOs
+=====
+
+* Wahrnungen beim Übersetzen bearbeiten.
+* Feedback beim editieren von Versen einbauen.
+* TNT_REQUEST_SHARED_VAR() und <%request scope="shared"> verwenden.
+* "Neuen Verseintrag erstellen" werden alte Datensäze geladen.
+

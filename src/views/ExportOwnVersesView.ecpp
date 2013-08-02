@@ -1,6 +1,6 @@
 
 <%session
-    scope="global"
+    scope="shared"
     include="models/QuoteRegister.h"
     include="models/UserSession.h" >
 

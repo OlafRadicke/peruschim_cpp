@@ -55,12 +55,14 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
 {
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    TNT_SESSION_SHARED_VAR( std::string,              s_feedback, () );
     TNT_SESSION_SHARED_VAR( Quote,                    s_quoteData, () );
     TNT_SESSION_SHARED_VAR( unsigned long,            s_quote_id, () );
-    TNT_SESSION_SHARED_VAR( std::vector<Edition>,     s_editionList, () );
-    TNT_SESSION_SHARED_VAR( std::string,              s_bibleserverComURL, () );
     TNT_SESSION_SHARED_VAR( BibleManager,             s_bibleManager, () );
+    
+    TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
+    TNT_REQUEST_SHARED_VAR( std::vector<Edition>,     s_editionList, () );
+    TNT_REQUEST_SHARED_VAR( std::string,              s_bibleserverComURL, () );
+
 
     // ACL Check
     if ( userSession.isInRole ( "user" ) == false ) {
@@ -100,10 +102,6 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
         qparam.arg<bool>("arg_look_up_button");
     bool arg_rest_button =
         qparam.arg<bool>("arg_rest_button");
-
-    std::string feedback = "";
-    Edition editionData;
-
 
 
     std::string userName  = userSession.getUserName();
@@ -188,7 +186,10 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
 
         QuoteManager quoteManager;
         quoteManager.update(s_quoteData);
-        feedback = "Der Vers wurde gespeichert!";
+        s_feedback = "Der Vers wurde gespeichert!";
+        
+        s_quoteData = Quote();
+        s_quote_id = 0;       
     }
 
     if ( arg_rest_button ) {
