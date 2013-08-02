@@ -159,7 +159,6 @@ void WebACL::createAccount (
 
 /* G ----------------------------------------------------------------------- */
 
-
 AccountData WebACL::getAccountsWithID ( unsigned long id ){
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
 
