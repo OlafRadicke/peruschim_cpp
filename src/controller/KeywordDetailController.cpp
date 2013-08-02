@@ -56,10 +56,6 @@ unsigned KeywordDetailController::operator() (tnt::HttpRequest& request, tnt::Ht
     TNT_SESSION_SHARED_VAR( bool,                     s_isLogin, () );
     TNT_SESSION_SHARED_VAR( std::string,              s_keyword, () );
 
-    // ACL Check
-    if ( userSession.isInRole ( "user" ) == false ) {
-        return reply.redirect ( "/access_denied" );
-    };
 
     // define the query parameters
     std::string  arg_keyword =
