@@ -1,5 +1,34 @@
 AUTOMAKE_OPTIONS = subdir-objects
 bin_PROGRAMS = peruschim_cpp
+AM_CPPFLAGS = -I$(srcdir)
+
+EXTRA_DIST = \
+	controller/LogoutController.tnt.cpp \
+	resources/favicon.ico \
+	resources/piwik.ecpp \
+	resources/peruschim.css \
+	views/parts/user-session.ecpp.html \
+	views/parts/head.ecpp.html \
+	views/parts/foot.ecpp.html
+
+noinst_HEADERS = \
+	controller/EditOwnVersesController.h \
+	controller/EditOwnVerses.h \
+	controller/ExportOwnVersesController.h \
+	manager/BibleManager.h \
+	manager/EditionManager.h \
+	manager/QuoteManager.h \
+	models/AccountData.h \
+	models/Config.h \
+	models/DatabaseProxy.h \
+	models/Edition.h \
+	models/KeywordData.h \
+	models/KeywordRegister.h \
+	models/OString.h \
+	models/Quote.h \
+	models/QuoteRegister.h \
+	models/UserSession.h \
+	models/WebACL.h
 
 ecppSources = \
 	style.ecpp \
@@ -61,7 +90,7 @@ nodist_peruschim_cpp_SOURCES = \
 
 peruschim_cpp_LDFLAGS = -lcxxtools -ltntnet -ltntdb
 
-CLEANFILES = $(ecppSources:.ecpp=.cpp) $(ecppSources:.ecpp=.deps) resource.cpp
+CLEANFILES = $(ecppSources:.ecpp=.cpp) $(ecppSources:.ecpp=.deps) resources.cpp
 
 #
 # Rules for tntnet applications
