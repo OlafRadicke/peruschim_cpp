@@ -1,4 +1,4 @@
-AC_INIT(peruschim_cpp, 0.1, [Olaf Radicke <briefkasten@olaf-radicke.de>])
+AC_INIT(peruschim_cpp, 1, [Olaf Radicke <briefkasten@olaf-radicke.de>])
 AM_INIT_AUTOMAKE
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -23,4 +23,5 @@ AC_CHECK_PROGS(ECPPC, [ecppc])
 AC_CONFIG_FILES([Makefile
                  src/Makefile
                  utest/Makefile])
+
 AC_OUTPUT

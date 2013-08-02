@@ -5,8 +5,8 @@ Group: Web-Applications
 License: AGPL
 Release: 1
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-olaf-%(%{__id_u} -n)
-BuildArch:
 Requires: tntnet
+BuildRequires: autoconf
 Source: peruschim_cpp-%{version}.tar.gz
 
 %description
@@ -28,6 +28,10 @@ install  $RPM_BUILD_DIR/peruschim_cpp-%{version}/src/peruschim_cpp  \
 install  $RPM_BUILD_DIR/peruschim_cpp-%{version}/exsamples/peruschim_cpp.conf \
     $RPM_BUILD_ROOT/usr/bin/peruschim_cpp/peruschim_cpp.conf.exsample
 
+%clean
+rm -rf $RPM_BUILD_ROOT
 
-%prep
-%setup
+
+%changelog
+* Fri Aug  2 2013 Olaf Radicke <briefkasten@olaf-radicke.de> 1
+- Erste version.
