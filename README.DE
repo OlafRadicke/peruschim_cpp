@@ -124,3 +124,17 @@ muss lauten:
 Oder je nach dem wo deine Lib installiert ist. Danach muss die Konfiguration
 vom System neu eingelesen werden. Das geschied mir dem Befehl: "ldconfig"
 
+
+AC_PROG_LIBTOOL: command not found
+==================================
+
+Wenn der folgende Fehler auftritt beim übersetzen:
+
+ ./configure: line 2413: AC_PROG_LIBTOOL: command not found
+ configure: error: cannot find install-sh or install.sh in "." "./.." "./../.."
+
+Dann muss der folgende Befehl ausgeführt werden:
+
+ autoreconf -ivf
+
+Und danach weiter mit "./configure && make"
