@@ -42,8 +42,6 @@ public:
     );
 };
 
-
-
 static tnt::ComponentFactoryImpl<EditEditionsController> factory("EditEditionsController");
 
 unsigned EditEditionsController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
@@ -51,7 +49,6 @@ unsigned EditEditionsController::operator() (tnt::HttpRequest& request, tnt::Htt
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
     TNT_SESSION_SHARED_VAR( std::string,              s_feedback, () );
-    TNT_SESSION_SHARED_VAR( std::string,              s_edition_title, () );
     TNT_SESSION_SHARED_VAR( std::vector<Edition>,     s_editionList, () );
     TNT_SESSION_SHARED_VAR( bool,                     s_isEditionEdit, () );
     TNT_SESSION_SHARED_VAR( long unsigned int,        s_editionID, () );

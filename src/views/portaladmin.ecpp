@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <%args>
 </%args>
 
-<%session scope="global">
+<%session scope="shared">
     // define your session scope variables here
     // std::string mySessionState;
     UserSession userSession;

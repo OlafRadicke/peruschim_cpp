@@ -34,7 +34,7 @@
 #include "models/QuoteRegister.h"
 
 
-log_define("component.KeywordRegisterController");
+log_define("component.KeywordRegisterController")
 
 class KeywordRegisterController : public tnt::Component
 {
