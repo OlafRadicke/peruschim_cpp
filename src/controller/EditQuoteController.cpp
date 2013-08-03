@@ -55,12 +55,13 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
 {
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    TNT_SESSION_SHARED_VAR( std::string,              s_feedback, () );
     TNT_SESSION_SHARED_VAR( Quote,                    s_quoteData, () );
     TNT_SESSION_SHARED_VAR( unsigned long,            s_quote_id, () );
-    TNT_SESSION_SHARED_VAR( std::vector<Edition>,     s_editionList, () );
-    TNT_SESSION_SHARED_VAR( std::string,              s_bibleserverComURL, () );
     TNT_SESSION_SHARED_VAR( BibleManager,             s_bibleManager, () );
+
+    TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
+    TNT_REQUEST_SHARED_VAR( std::vector<Edition>,     s_editionList, () );
+    TNT_REQUEST_SHARED_VAR( std::string,              s_bibleserverComURL, () );
 
     // ACL Check
     if ( userSession.isInRole ( "user" ) == false ) {
