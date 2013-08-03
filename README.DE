@@ -41,12 +41,12 @@ Dann ist wie folgt zu verfahren:
   * "make" ausführen
 
 Nun sind alle generiereten Datein im Build-Verzeichnis zu finden. Noch ein Tipp:
-Die meisten Systeme haben heutzutage mehere CPUs oder Kerne. Um die volle 
+Die meisten Systeme haben heutzutage mehere CPUs oder Kerne. Um die volle
 Leistung zu nutzen kann man auch "make -j 4" aufrufen, dann wird make mit vier
-Prozessen gleichzeitig laufen um die Zeit Kompilierens zu verkürzen. 
+Prozessen gleichzeitig laufen um die Zeit Kompilierens zu verkürzen.
 
-Um das Verzeichnis von den Artefakten zu bereinigen wird der Befehl 
-"make distclean" aufgerufen. 
+Um das Verzeichnis von den Artefakten zu bereinigen wird der Befehl
+"make distclean" aufgerufen.
 
 
 INSTALLATION
@@ -146,4 +146,5 @@ TODOs
 * Feedback beim editieren von Versen einbauen.
 * TNT_REQUEST_SHARED_VAR() und <%request scope="shared"> verwenden.
 * "Neuen Verseintrag erstellen" werden alte Datensäze geladen.
+* CSS für Mobile-Version
 

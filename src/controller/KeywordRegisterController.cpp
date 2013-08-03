@@ -54,7 +54,7 @@ unsigned KeywordRegisterController::operator() (tnt::HttpRequest& request, tnt::
 {
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    TNT_SESSION_SHARED_VAR( std::string,              s_feedback, () );
+//     TNT_SESSION_SHARED_VAR( std::string,              s_feedback, () );
     TNT_SESSION_SHARED_VAR( vector<KeywordCount>,     s_keywordTitlesCounts, ());
 
 
