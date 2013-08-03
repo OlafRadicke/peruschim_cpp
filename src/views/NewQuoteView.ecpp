@@ -17,18 +17,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <%session
     scope="shared"
-    include="models/UserSession.h" 
-    include="models/Edition.h" 
-    include="models/Quote.h" 
+    include="models/UserSession.h"
+    include="models/Edition.h"
+    include="models/Quote.h"
     include="manager/BibleManager.h">
 
         UserSession            userSession;
-        std::string            s_feedback;
-        std::string            s_bibleserverComURL;
-        std::vector<Edition>   s_editionList;
         Quote                  s_quoteData;
         BibleManager           s_bibleManager;
 </%session>
+
+<%request
+    scope="shared"
+    include="models/Edition.h">
+        std::string            s_feedback;
+        std::vector<Edition>   s_editionList;
+        std::string            s_bibleserverComURL;
+</%request>
 
 <!DOCTYPE HTML>
 <html>

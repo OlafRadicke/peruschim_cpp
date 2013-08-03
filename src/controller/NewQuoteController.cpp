@@ -58,12 +58,12 @@ unsigned NewQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRep
 {
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    TNT_SESSION_SHARED_VAR( std::string,              s_feedback, () );
-    TNT_SESSION_SHARED_VAR( std::string,              s_bibleserverComURL, () );
-    TNT_SESSION_SHARED_VAR( std::vector<Edition>,     s_editionList, () );
     TNT_SESSION_SHARED_VAR( Quote,                    s_quoteData, () );
     TNT_SESSION_SHARED_VAR( BibleManager,             s_bibleManager, () );
 
+    TNT_REQUEST_SHARED_VAR( std::string,              s_bibleserverComURL, () );
+    TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
+    TNT_REQUEST_SHARED_VAR( std::vector<Edition>,     s_editionList, () );
 
     // ACL Check
     if ( userSession.isInRole ( "user" ) == false ) {
@@ -95,10 +95,10 @@ unsigned NewQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRep
         qparam.arg<bool>("arg_create_button");
     bool arg_look_up_button =
         qparam.arg<bool>("arg_look_up_button");
-          
+
     Edition editionData;
-    QuoteManager quoteManager;       
-        
+    QuoteManager quoteManager;
+
     if ( arg_look_up_button ) {
         log_debug( "getBibleserverComURL..." );
         s_quoteData.setEditionID( arg_edition_id );
@@ -120,7 +120,7 @@ unsigned NewQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRep
 //         }
         s_quoteData.setIsPrivateData( arg_is_private_data );
         log_debug( "pass" );
-        log_debug( "s_quoteData.getBibleserverComURL(): " 
+        log_debug( "s_quoteData.getBibleserverComURL(): "
             << s_bibleManager.getBibleserverComURL(s_quoteData) );
         log_debug( "pass" );
         s_bibleserverComURL = s_bibleManager.getBibleserverComURL(s_quoteData);

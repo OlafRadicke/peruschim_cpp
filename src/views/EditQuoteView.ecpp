@@ -27,7 +27,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         BibleManager           s_bibleManager;
 </%session>
 
-
 <%request
     scope="shared"
     include="models/Edition.h">
