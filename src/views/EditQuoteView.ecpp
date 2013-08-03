@@ -27,13 +27,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         BibleManager           s_bibleManager;
 </%session>
 
-<%request 
+
+<%request
     scope="shared"
     include="models/Edition.h">
         std::string            s_feedback;
         std::vector<Edition>   s_editionList;
         std::string            s_bibleserverComURL;
-<%request >
+</%request>
 
 <!DOCTYPE HTML>
 <html>

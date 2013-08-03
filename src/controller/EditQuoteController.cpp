@@ -58,7 +58,7 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
     TNT_SESSION_SHARED_VAR( Quote,                    s_quoteData, () );
     TNT_SESSION_SHARED_VAR( unsigned long,            s_quote_id, () );
     TNT_SESSION_SHARED_VAR( BibleManager,             s_bibleManager, () );
-    
+
     TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
     TNT_REQUEST_SHARED_VAR( std::vector<Edition>,     s_editionList, () );
     TNT_REQUEST_SHARED_VAR( std::string,              s_bibleserverComURL, () );
@@ -187,9 +187,9 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
         QuoteManager quoteManager;
         quoteManager.update(s_quoteData);
         s_feedback = "Der Vers wurde gespeichert!";
-        
+
         s_quoteData = Quote();
-        s_quote_id = 0;       
+        s_quote_id = 0;
     }
 
     if ( arg_rest_button ) {
