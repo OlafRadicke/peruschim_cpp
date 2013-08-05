@@ -146,5 +146,6 @@ TODOs
 * Feedback beim editieren von Versen einbauen.
 * TNT_REQUEST_SHARED_VAR() und <%request scope="shared"> verwenden.
 * "Neuen Verseintrag erstellen" werden alte Datensäze geladen.
-* CSS für Mobile-Version
+* CSS für Mobile-Version. @media only screen and (max-width: 320px){}
+* Schatten-Efekt austauschen in CSS für over
 
