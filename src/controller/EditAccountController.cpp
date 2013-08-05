@@ -31,11 +31,6 @@
 #include <iostream>
 #include <cxxtools/log.h>
 
-
-
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-
 log_define("component.EditAccountController")
 
 class EditAccountController : public tnt::Component
@@ -55,14 +50,15 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
 
     // shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    TNT_SESSION_SHARED_VAR( std::string,              s_feedback, () );
-    TNT_SESSION_SHARED_VAR( unsigned long,            s_session_account_id, () );
-    TNT_SESSION_SHARED_VAR( std::string,              s_affirmation, () );
-    TNT_SESSION_SHARED_VAR( std::vector<AccountData>, s_accountList, () );
-    TNT_SESSION_SHARED_VAR( AccountData,              s_accountData, () );
-    TNT_SESSION_SHARED_VAR( std::vector<std::string>, s_userRolls, () );
-    TNT_SESSION_SHARED_VAR( std::vector<std::string>, s_allRolls, () );
-    TNT_SESSION_SHARED_VAR( bool,                     s_isEditAccount, () );
+
+    TNT_REQUEST_SHARED_VAR( std::string,              s_affirmation, () );
+    TNT_REQUEST_SHARED_VAR( std::vector<AccountData>, s_accountList, () );
+    TNT_REQUEST_SHARED_VAR( AccountData,              s_accountData, () );
+    TNT_REQUEST_SHARED_VAR( std::vector<std::string>, s_userRolls, () );
+    TNT_REQUEST_SHARED_VAR( std::vector<std::string>, s_allRolls, () );
+    TNT_REQUEST_SHARED_VAR( bool,                     s_isEditAccount, () );
+    TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
+
 
     // ACL Check
     if ( userSession.isInRole ( "admin" ) == false ) {
@@ -85,8 +81,11 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
         qparam.args<std::string>("args_userroles");
     bool arg_is_inactive =
         qparam.arg<bool>("arg_is_inactive");
+    unsigned long arg_update_account_id =
+        qparam.arg<unsigned long>("arg_update_account_id");
     bool arg_update_account_button =
         qparam.arg<bool>("arg_update_account_button");
+
 
     unsigned long arg_edit_account_id =
         qparam.arg<unsigned long>("arg_edit_account_id");
@@ -116,9 +115,10 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
         s_accountData =  WebACL::getAccountsWithID ( arg_edit_account_id );
         log_debug( "s_accountData.getLogin_name(): " <<
             s_accountData.getLogin_name()  );
+        log_debug( "s_accountData.getID(): " <<
+            s_accountData.getID () );
         s_userRolls = WebACL::getRoll ( s_accountData.getLogin_name() );
         s_allRolls = WebACL::getAllRolls();
-        s_session_account_id = arg_edit_account_id;
         log_debug( "s_accountData.getAccount_disable(): " <<
             s_accountData.getAccount_disable() );
 
@@ -129,8 +129,8 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
         s_affirmation = "";
         s_feedback = "";
         log_debug( "Speichern" );
-        log_debug( "s_session_account_id: " << s_session_account_id );
-        s_accountData.setID( s_session_account_id );
+        log_debug( "arg_update_account_id: " << arg_update_account_id );
+        s_accountData.setID( arg_update_account_id );
         log_debug( "arg_login_name: " << arg_login_name );
         s_accountData.setLogin_name( arg_login_name );
         log_debug( "arg_name: " << arg_name );
@@ -141,7 +141,7 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
         s_accountData.setAccount_disable( arg_is_inactive );
 
         log_debug( "args_userroles.size(): " << args_userroles.size() );
-        WebACL::reSetUserRolls( s_session_account_id, args_userroles);
+        WebACL::reSetUserRolls( arg_update_account_id, args_userroles);
         s_accountData.saveUpdate();
 
         // check if new password set.
@@ -153,11 +153,11 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
             } else {
                 // check is password empty.
                 s_accountData.setNewPassword( arg_password_a );
-                s_session_account_id = 0;
+                arg_update_account_id = 0;
                 s_feedback = "Die Daten wurden gespeichert und das Passwort neu gesetzt!";
             };
         } else {
-            s_session_account_id = 0;
+            arg_update_account_id = 0;
             s_feedback = "Die Daten wurden gespeichert!";
         };
         s_accountList = WebACL::getAllAccounts();
@@ -167,12 +167,11 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
     if ( arg_delete_account_button ) {
         s_affirmation = "";
         s_feedback = "";
-        s_session_account_id = arg_delete_account_id;
-        s_accountData =  WebACL::getAccountsWithID ( s_session_account_id );
+        s_accountData =  WebACL::getAccountsWithID ( arg_delete_account_id );
         log_debug( "s_accountData.getLogin_name(): " <<
             s_accountData.getLogin_name() );
         s_affirmation = "Account \""+ s_accountData.getLogin_name() +" (ID " + \
-            cxxtools::convert<std::string>( s_session_account_id ) \
+            cxxtools::convert<std::string>( arg_delete_account_id ) \
             + ")\" und allen zugehörigen Daten wirklich löschen?";
 
     }

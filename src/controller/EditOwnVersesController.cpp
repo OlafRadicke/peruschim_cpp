@@ -1,16 +1,52 @@
-#include "controller/EditOwnVersesController.h"
+/*
+Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+
+#include <tnt/component.h>
+#include <tnt/componentfactory.h>
+#include <tnt/httprequest.h>
+#include <tnt/httpreply.h>
+
+#include "models/WebACL.h"
+#include "models/UserSession.h"
 #include "models/Quote.h"
 #include "models/QuoteRegister.h"
 #include "models/OString.h"
 #include <iostream>
-
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+#include <cxxtools/log.h>
 
 
-static tnt::ComponentFactoryImpl<EditOwnVerses> factory("EditOwnVersesController");
+log_define("component.EditOwnVersesController")
 
-unsigned EditOwnVerses::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
+class EditOwnVersesController : public tnt::Component
+{
+public:
+    unsigned operator() (
+        tnt::HttpRequest& request,
+        tnt::HttpReply& reply,
+        tnt::QueryParams& qparam
+    );
+};
+
+
+
+static tnt::ComponentFactoryImpl<EditOwnVersesController> factory("EditOwnVersesController");
+
+unsigned EditOwnVersesController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
 {
 
     TNT_SESSION_GLOBAL_VAR( UserSession, userSession, ());
@@ -21,18 +57,18 @@ unsigned EditOwnVerses::operator() (tnt::HttpRequest& request, tnt::HttpReply& r
     TNT_SESSION_GLOBAL_VAR( std::string, affirmation_question, ());
     // id of selectetet verse.
     TNT_SESSION_GLOBAL_VAR( unsigned long, session_verse_id, (0));
-    unsigned long delete_verse_id = 
+    unsigned long delete_verse_id =
         qparam.arg<unsigned long>("delete_verse_id");
-    unsigned long affirmation_delete_verse_id =   
+    unsigned long affirmation_delete_verse_id =
         qparam.arg<unsigned long>("affirmation_delete_verse_id");
 
-    DEBUG "userSession.getUserName(): " << userSession.getUserName() << std::endl;
+    log_debug( "userSession.getUserName(): " << userSession.getUserName() );
     // ACL Check
     if ( userSession.isInRole ( "user" ) == false ) {
-        DEBUG "Nicht eingeloggt" << std::endl;
+        log_debug( "Nicht eingeloggt" );
         return reply.redirect ( "/access_denied" );
     }
-    DEBUG "Eingeloggt" << std::endl;
+    log_debug( "Eingeloggt" );
 //     quoteList = QuoteRegister::getAllQuoteOfUser( userSession.getUserID() );
 
     // is button delete pushed?
@@ -41,22 +77,22 @@ unsigned EditOwnVerses::operator() (tnt::HttpRequest& request, tnt::HttpReply& r
         feedback = "";
         session_verse_id = delete_verse_id;
         Quote quoteInfo = QuoteRegister::getQuoteWithID( session_verse_id ) ;
-        affirmation_question = 
+        affirmation_question =
             "Bibelvers mit "+ quoteInfo.getBookTitle() + " " + \
             cxxtools::convert<std::string>( quoteInfo.getChapterBegin() ) + \
             ":" + cxxtools::convert<std::string>( quoteInfo.getSentenceBegin() ) + \
             " (ID: " + cxxtools::convert<std::string>(session_verse_id) \
             + ") wirklich löschen?";
-        DEBUG "affirmation_question" << affirmation_question << std::endl;
+        log_debug( "affirmation_question" << affirmation_question );
     }
 
     // if delete affirmation clicked.
     if ( affirmation_delete_verse_id > 0 ) {
         affirmation_question = "";
         feedback = "";
-        DEBUG "will löschen: " << affirmation_delete_verse_id << std::endl;
-        QuoteRegister::deleteQuote( 
-            cxxtools::convert<unsigned long>( affirmation_delete_verse_id )        
+        log_debug( "will löschen: " << affirmation_delete_verse_id );
+        QuoteRegister::deleteQuote(
+            cxxtools::convert<unsigned long>( affirmation_delete_verse_id )
         );
         feedback = \
             "Der Bibelverse mit der ID " + \

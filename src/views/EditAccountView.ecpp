@@ -18,19 +18,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <%session
     scope="shared"
+    include="models/UserSession.h" >
+        UserSession userSession;
+</%session>
+
+<%request
+    scope="shared"
     include="models/AccountData.h"
     include="models/WebACL.h"
-    include="models/UserSession.h" >
-
-        UserSession userSession;
-        std::vector<AccountData> s_accountList;
+    include="models/Edition.h">
         std::string              s_feedback;
-        unsigned long            s_session_account_id;
+        std::vector<AccountData> s_accountList;
         std::string              s_affirmation;
         AccountData              s_accountData;
         std::vector<std::string> s_allRolls;
         bool                     s_isEditAccount;
-</%session>
+</%request>
+
 
 <!DOCTYPE HTML>
 <html>
@@ -67,7 +71,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <input
                     type="hidden"
                     name="arg_affirmation_delete_account_id"
-                    value="<$ s_session_account_id $>" >
+                    value="<$ s_accountData.getID() $>" >
                 <button name="arg_affirmation_delete_button"
                         value="pushed"
                         type="submit">Löschen bestätigen
@@ -80,7 +84,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <div class="simple-box">
 %     if (
 %         s_isEditAccount == true &&
-%         s_session_account_id == s_accountList[i_account].getID()
+%         s_accountData.getID() == s_accountList[i_account].getID()
 %     ) {
                 <form method="post" >
                     <h2>Account bearbeiten</h2>
@@ -175,6 +179,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % }
                         />
                     </p>
+                    <input
+                        type="hidden"
+                        name="arg_update_account_id"
+                        value="<$ s_accountData.getID() $>" >
                     <p><button name="arg_update_account_button"
                                 value="pushed"
                                 type="submit">Speichern
@@ -200,6 +208,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             value="pushed"
                             type="submit">Bearbeiten
                     </button>&#160;
+                </form >
+                <form method="post" >
                     <input
                         type="hidden"
                         name="arg_delete_account_id"

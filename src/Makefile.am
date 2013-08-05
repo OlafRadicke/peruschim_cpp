@@ -12,9 +12,7 @@ EXTRA_DIST = \
 	views/parts/foot.ecpp.html
 
 noinst_HEADERS = \
-	controller/EditOwnVersesController.h \
 	controller/EditOwnVerses.h \
-	controller/ExportOwnVersesController.h \
 	manager/BibleManager.h \
 	manager/EditionManager.h \
 	manager/QuoteManager.h \
