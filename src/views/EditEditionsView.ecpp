@@ -18,16 +18,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <%session
     scope="shared"
-    include="models/Edition.h"
-    include="models/WebACL.h"
     include="models/UserSession.h" >
 
         UserSession            userSession;
+</%session>
+
+<%request
+    scope="shared"
+    include="models/Edition.h"
+    include="models/WebACL.h">
+
         std::vector<Edition>   s_editionList;
         std::string            s_feedback;
         bool                   s_isEditionEdit;
-        long unsigned int      s_editionID;
-</%session>
+        unsigned long          s_editionID;
+</%request>
 
 
 <!DOCTYPE HTML>

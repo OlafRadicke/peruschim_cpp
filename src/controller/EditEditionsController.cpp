@@ -48,10 +48,11 @@ unsigned EditEditionsController::operator() (tnt::HttpRequest& request, tnt::Htt
 {
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    TNT_SESSION_SHARED_VAR( std::string,              s_feedback, () );
-    TNT_SESSION_SHARED_VAR( std::vector<Edition>,     s_editionList, () );
-    TNT_SESSION_SHARED_VAR( bool,                     s_isEditionEdit, () );
-    TNT_SESSION_SHARED_VAR( long unsigned int,        s_editionID, () );
+
+    TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
+    TNT_REQUEST_SHARED_VAR( std::vector<Edition>,     s_editionList, () );
+    TNT_REQUEST_SHARED_VAR( bool,                     s_isEditionEdit, () );
+    TNT_REQUEST_SHARED_VAR( unsigned long,            s_editionID, () );
 
     // ACL Check
     if ( userSession.isInRole ( "user" ) == false ) {
