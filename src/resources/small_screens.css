@@ -4,6 +4,23 @@ br.clear-both {
    clear: both;
 }
 
+/* --------------- head lines --------------------- */
+
+h1 {
+    padding: 0px;
+    margin: 0px;
+}
+
+h2 {
+    padding: 0px;
+    margin: 0px;
+}
+
+h3 {
+    padding: 0px;
+    margin: 0px;
+}
+
 /* --------------- button -------------------------- */
 
 button {
@@ -57,40 +74,34 @@ button:hover {
     border-top-left-radius:5px;
     border-bottom-left-radius:5px;
 
-/*
-    -moz-box-shadow: 5px 5px 8px #ADADAD;
-    -webkit-box-shadow: 5px 5px 8px #ADADAD;
-    box-shadow: 5px 5px 8px #ADADAD;
-*/
 }
 
 /* ----------------- select -------------------------- */
 
 select {
-    padding: 2px;
+    padding: 0px;
     border: 2px solid #006;
     color: #FFFFFF;
 
     background: #6870FE;
-    background-color: #6870FE;
     background: linear-gradient( top, #6870FE, #12057A);
     background: -webkit-linear-gradient( top, #6870FE, #12057A);
     background: -moz-linear-gradient( top, #6870FE, #12057A);
     background: -ms-linear-gradient( top, #6870FE, #12057A);
 
 
-    -moz-border-radius-topright:5px;
-    -moz-border-radius-bottomright:5px;
-    -webkit-border-top-right-radius:5px;
-    -webkit-border-bottom-right-radius:5px;
-    border-top-right-radius:5px;
-    border-bottom-right-radius:5px;
-    -moz-border-radius-topleft:5px;
-    -moz-border-radius-bottomleft:5px;
-    -webkit-border-top-left-radius:5px;
-    -webkit-border-bottom-left-radius:5px;
-    border-top-left-radius:5px;
-    border-bottom-left-radius:5px;
+    -moz-border-radius-topright:1px;
+    -moz-border-radius-bottomright:1px;
+    -webkit-border-top-right-radius:1px;
+    -webkit-border-bottom-right-radius:1px;
+    border-top-right-radius:1px;
+    border-bottom-right-radius:1px;
+    -moz-border-radius-topleft:1px;
+    -moz-border-radius-bottomleft:1px;
+    -webkit-border-top-left-radius:1px;
+    -webkit-border-bottom-left-radius:1px;
+    border-top-left-radius:1px;
+    border-bottom-left-radius:1px;
 }
 
 option  {
@@ -107,18 +118,6 @@ option  {
 select.userroles {background: darkblue; color: white;}
 option.userroles {background: darkblue}
 
-/* --------------- label -------------------------- */
-
-/*
-
-label.fix-size {
-    display: block;
-    width: 30%;
-    float: left;
-    margin: 2px 4px 6px 4px;
-    text-align: right;
-}
-*/
 
 /* ---------  input --------------------------------*/
 
@@ -140,13 +139,13 @@ div#logo-black {
     color: #FFFFFF;
     text-align: center;
 
-    border-top-right-radius: 15px;
-    -moz-border-radius-topright: 15px;
-    -webkit-border-top-right-radius : 15px;
+    border-top-right-radius: 5px;
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-right-radius : 5px;
 
-    border-top-left-radius: 15px;
-    -moz-border-radius-topleft: 15px;
-    -webkit-border-top-left-radius: 15px;
+    border-top-left-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -webkit-border-top-left-radius: 5px;
 
 
     background: #000000;
@@ -158,7 +157,7 @@ div#logo-black {
     width: 300px ;
     margin-left: auto ;
     margin-right: auto ;
-    margin-bottom: 2px;
+    margin-bottom: 0px;
 
 }
 
@@ -166,13 +165,13 @@ div#logo-blue {
     color: #FFFFFF;
     text-align: center;
 
-    border-bottom-right-radius: 15px;
-    -moz-border-radius-bottomright: 15px;
-    -webkit-border-bottom-right-radius: 15px;
+    border-bottom-right-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -webkit-border-bottom-right-radius: 5px;
 
-    border-bottom-left-radius: 15px;
-    -moz-border-radius-bottomleft: 15px;
-    -webkit-border-bottom-left-radius: 15px;
+    border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-left-radius: 5px;
 
     background: #12057A;
     background: linear-gradient( top, #1907A5, #12057A);
@@ -183,7 +182,7 @@ div#logo-blue {
     width: 300px ;
     margin-left: auto ;
     margin-right: auto ;
-    margin-top: 2px;
+    margin-top: 0px;
 }
 
 div#header-logo h3 {
@@ -218,7 +217,7 @@ div.columnbox{
     border-style: solid;
     border-color: #C3C3C3;
 
-    padding: 2px;
+    padding: 1px;
     margin: 0px;
 
     border-radius: 1px;
@@ -233,14 +232,12 @@ div.columnbox-triple{
     border-style: solid;
     border-color: #C3C3C3;
 
-    padding: 2px;
+    padding: 1px;
     margin: 0px;
 
     border-radius: 1px;
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
-
-
 }
 
 
@@ -250,16 +247,13 @@ div.centerbox{
     text-align: center;
     border-style: solid;
     border-color: #C3C3C3;
-    width: 90% ;
+    width: 100% ;
     padding: 20px;
     margin: auto;
     border-radius: 1px;
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
 
-    box-shadow: 5px 5px 8px #B3B3B3;
-    -moz-box-shadow: 5px 5px 8px #B3B3B3;
-    -webkit-box-shadow: 5px 5px 8px #B3B3B3;
 }
 
 /* -------- flush left box -------------------------- */
@@ -268,16 +262,12 @@ div.flush-left-box{
     text-align: left;
     border-style: solid;
     border-color: #C3C3C3;
-    width: 70% ;
-    padding: 20px;
+    width: 100% ;
+    padding: 2px;
     margin: auto;
     border-radius: 1px;
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
-
-    box-shadow: 5px 5px 8px #B3B3B3;
-    -moz-box-shadow: 5px 5px 8px #B3B3B3;
-    -webkit-box-shadow: 5px 5px 8px #B3B3B3;
 }
 
 
@@ -287,29 +277,26 @@ div.smallgroupbox{
     text-align: center;
     border-style: solid;
     border-color: #C3C3C3;
-    width: 30% ;
-    padding: 20px;
+    width: 100% ;
+    padding: 2px;
     margin: auto;
     border-radius: 1px;
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
 
-    box-shadow: 5px 5px 8px #B3B3B3;
-    -moz-box-shadow: 5px 5px 8px #B3B3B3;
-    -webkit-box-shadow: 5px 5px 8px #B3B3B3;
 }
 
 
 /* -------- feedback box -------------------------- */
 
 div.feedback-box{
-    background-color: #FFF34B;
+    background: #FFF34B;
     text-align: center;
     border-style: solid;
     border-color: #C3C3C3;
-    width: 85% ;
-    padding: 20px;
-    margin: 5px auto 5px auto;
+    width: 95% ;
+    padding: 2px;
+    margin: 1px auto 1px auto;
     border-radius: 1px;
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
@@ -318,16 +305,16 @@ div.feedback-box{
 /* --------------- login link --------------------- */
 
 div.login-link {
-    width: 70% ;
-    padding: 20px;
+    width: 100% ;
+    padding: 1px;
     margin: auto;
     text-align: right;
     padding: 0px;
-    margin: 5px;
+    margin: 1px;
 }
 
 div.login-link ul {
-    display: inline-block;
+/*     display: inline-block; */
     list-style: none;
     padding: 0px;
     margin: 0px;
@@ -337,11 +324,12 @@ div.login-link ul {
 div.mainmenue{
     text-align: center;
     padding: 0px;
-    margin: 5px;
+    margin: 1px;
 }
 
 div.mainmenue ul {
-    display: inline-block;
+/*     display: inline-block; */
+    width: 100% ;
     list-style: none;
     padding: 0px;
     margin: 0px;
@@ -351,16 +339,11 @@ div.mainmenue ul {
 
 
 div.mainmenue li.tableft {
-    display: inline-block;
+/*     display: inline-block; */
     padding: 0 0 0 0 ;
     margin:  0px  ;
     background:black;
-    -moz-border-radius-topleft:5px;
-    -moz-border-radius-bottomleft:5px;
-    -webkit-border-top-left-radius:5px;
-    -webkit-border-bottom-left-radius:5px;
-    border-top-left-radius:5px;
-    border-bottom-left-radius:5px;
+
     background: linear-gradient( top, #A0A0A0, #373737);
     background: -webkit-linear-gradient( top, #A0A0A0, #373737);
     background: -moz-linear-gradient( top, #A0A0A0, #373737);
@@ -368,17 +351,10 @@ div.mainmenue li.tableft {
 }
 
 div.mainmenue li.tableft_activ {
-    display: inline-block;
+/*     display: inline-block; */
     margin: 0px ;
     background: #979797;
-    -moz-border-radius-topleft:5px;
-    -moz-border-radius-bottomleft:5px;
-    -webkit-border-top-left-radius:5px;
-    -webkit-border-bottom-left-radius:5px;
-    border-top-left-radius:5px;
-    border-bottom-left-radius:5px;
 
-/*  #c1c1c1 */
     background: linear-gradient( top, #fff, #979797);
     background: -webkit-linear-gradient( top, #fff, #979797);
     background: -moz-linear-gradient( top, #fff, #979797);
@@ -388,7 +364,7 @@ div.mainmenue li.tableft_activ {
 /* ---------  middle -----------------*/
 
 div.mainmenue li.tabmiddle {
-    display: inline-block;
+/*     display: inline-block; */
     padding: 0 0 0 0 ;
     background:#373737;
     background: linear-gradient( top, #A0A0A0, #373737);
@@ -398,7 +374,7 @@ div.mainmenue li.tabmiddle {
 }
 
 div.mainmenue li.tabmiddle_activ {
-    display: inline-block;
+/*     display: inline-block; */
     background: #979797;
     background: linear-gradient( top, #fff, #979797);
     background: -webkit-linear-gradient( top, #fff, #979797);
@@ -408,15 +384,9 @@ div.mainmenue li.tabmiddle_activ {
 /* ---------------- right ---------------- */
 
 div.mainmenue li.tabright {
-    display: inline-block;
+/*     display: inline-block; */
     padding: 0 0 0 0 ;
     background:#373737;
-    -moz-border-radius-topright:5px;
-    -moz-border-radius-bottomright:5px;
-    -webkit-border-top-right-radius:5px;
-    -webkit-border-bottom-right-radius:5px;
-    border-top-right-radius:5px;
-    border-bottom-right-radius:5px;
 
     background: linear-gradient( top, #A0A0A0, #373737);
     background: -webkit-linear-gradient( top, #A0A0A0, #373737);
@@ -425,16 +395,11 @@ div.mainmenue li.tabright {
 }
 
 div.mainmenue li.tabright_activ {
-    display: inline-block;
+/*     display: inline-block; */
     padding-left: 0px;
     background: #979797;
     margin: 0px ;
-    -moz-border-radius-topright:5px;
-    -moz-border-radius-bottomright:5px;
-    -webkit-border-top-right-radius:5px;
-    -webkit-border-bottom-right-radius:5px;
-    border-top-right-radius:5px;
-    border-bottom-right-radius:5px;
+
     background: linear-gradient( top, #fff, #979797);
     background: -webkit-linear-gradient( top, #fff, #979797);
     background: -moz-linear-gradient( top, #fff, #979797);
@@ -460,19 +425,6 @@ div.mainmenue li a span {
 input#delet_button {
     color: #FFFFFF;
     background: #FF0000;
-
-    -moz-border-radius-topright:5px;
-    -moz-border-radius-bottomright:5px;
-    -webkit-border-top-right-radius:5px;
-    -webkit-border-bottom-right-radius:5px;
-    border-top-right-radius:5px;
-    border-bottom-right-radius:5px;
-    -moz-border-radius-topleft:5px;
-    -moz-border-radius-bottomleft:5px;
-    -webkit-border-top-left-radius:5px;
-    -webkit-border-bottom-left-radius:5px;
-    border-top-left-radius:5px;
-    border-bottom-left-radius:5px;
 }
 
 /* ----- Form save button ------------------------------------------------- */
@@ -480,19 +432,6 @@ input#delet_button {
 input#save_button {
     color: #FFFFFF;
     background: #008000;
-
-    -moz-border-radius-topright:5px;
-    -moz-border-radius-bottomright:5px;
-    -webkit-border-top-right-radius:5px;
-    -webkit-border-bottom-right-radius:5px;
-    border-top-right-radius:5px;
-    border-bottom-right-radius:5px;
-    -moz-border-radius-topleft:5px;
-    -moz-border-radius-bottomleft:5px;
-    -webkit-border-top-left-radius:5px;
-    -webkit-border-bottom-left-radius:5px;
-    border-top-left-radius:5px;
-    border-bottom-left-radius:5px;
 }
 
 /* ----- Form keyword button ---------------------------------------------- */
@@ -518,8 +457,8 @@ input.full-width {
 
 
 input.half-width {
-    width: 50% ;
-    padding: 20px;
+    width: 100% ;
+    padding: 1px;
     margin: auto;
 }
 
@@ -539,7 +478,7 @@ th {
     background: -moz-linear-gradient( left, #FF383B, #FFFFFF);
     background: -ms-linear-gradient( left, #FF383B, #FFFFFF);
 
-    padding: 5px 10px 5px 10px ;
+    padding: 1px 2px 1px 2px ;
 /*    margin: auto;*/
 }
 
@@ -550,7 +489,7 @@ td {
     background: -webkit-linear-gradient( left, #A0A0A0, #FFFFFF);
     background: -moz-linear-gradient( left, #A0A0A0, #FFFFFF);
     background: -ms-linear-gradient( left, #A0A0A0, #FFFFFF);
-    padding: 5px 10px 5px 10px ;
+    padding: 1px 2px 1px 2px ;
 }
 
 p#foot {

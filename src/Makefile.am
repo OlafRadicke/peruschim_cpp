@@ -7,6 +7,7 @@ EXTRA_DIST = \
 	resources/favicon.ico \
 	resources/piwik.ecpp \
 	resources/peruschim.css \
+	resources/small_screens.css \
 	views/parts/user-session.ecpp.html \
 	views/parts/head.ecpp.html \
 	views/parts/foot.ecpp.html
@@ -52,7 +53,8 @@ ecppSources = \
 
 staticSources = \
 	resources/favicon.ico \
-	resources/peruschim.css
+	resources/peruschim.css \
+	resources/small_screens.css
 
 peruschim_cpp_SOURCES = \
 	controller/EditAccountController.cpp \
