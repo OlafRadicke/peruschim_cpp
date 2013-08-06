@@ -33,8 +33,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %dir %attr(770, root, root) /usr/bin/peruschim_cpp/
-%attr(775, root, root) usr/bin/peruschim_cpp/peruschim_cpp
-%attr(774, root, root) usr/bin/peruschim_cpp/peruschim_cpp.conf.exsample
+%attr(775, root, root) /usr/bin/peruschim_cpp/peruschim_cpp
+%attr(774, root, root) /usr/bin/peruschim_cpp/peruschim_cpp.conf.exsample
 
 
 %changelog
