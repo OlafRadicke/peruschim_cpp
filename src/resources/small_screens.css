@@ -131,14 +131,6 @@ input.full-size {
 
 /* -------- LOGO + Header -------------------------- */
 
-div#header-logo{
-
-    -moz-transform:rotate(8deg); /* Firefox 3.6 Firefox 4 */
-    -webkit-transform:rotate(8deg); /* Safari */
-    -o-transform:rotate(8deg); /* Opera */
-    -ms-transform:rotate(8deg); /* IE9 */
-    transform:rotate(8deg); /* W3C */
-}
 
 div#header-logo a {
     text-decoration:none;
@@ -157,16 +149,11 @@ div#logo-black {
     -webkit-border-top-left-radius: 15px;
 
 
-    background-color: #000000;
+    background: #000000;
     background: linear-gradient( top, #202020, #000000  );
     background: -webkit-linear-gradient( top, #202020, #000000  );
     background: -moz-linear-gradient( top, #202020, #000000  );
     background: -ms-linear-gradient( top, #202020, #000000  );
-
-
-    -moz-box-shadow: 5px 5px 8px #B3B3B3;
-    -webkit-box-shadow: 5px 5px 8px #B3B3B3;
-    box-shadow: 5px 5px 8px #B3B3B3;
 
     width: 300px ;
     margin-left: auto ;
@@ -187,15 +174,11 @@ div#logo-blue {
     -moz-border-radius-bottomleft: 15px;
     -webkit-border-bottom-left-radius: 15px;
 
-    background-color: #1907A5;
+    background: #12057A;
     background: linear-gradient( top, #1907A5, #12057A);
     background: -webkit-linear-gradient( top, #1907A5, #12057A);
     background: -moz-linear-gradient( top, #1907A5, #12057A);
     background: -ms-linear-gradient( top, #1907A5, #12057A);
-
-    -moz-box-shadow: 5px 5px 8px #B3B3B3;
-    -webkit-box-shadow: 5px 5px 8px #B3B3B3;
-    box-shadow: 5px 5px 8px #B3B3B3;
 
     width: 300px ;
     margin-left: auto ;
@@ -203,7 +186,7 @@ div#logo-blue {
     margin-top: 2px;
 }
 
-div#header-logo h1 {
+div#header-logo h3 {
     padding: 0px;
     margin: 0px;
 }
@@ -215,12 +198,12 @@ div.simple-box{
     text-align: left;
     border-style: solid;
     border-color: #C3C3C3;
-    padding: 5px;
-    margin: 5px;
+    padding: 0px;
+    margin: 0px;
 
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
+    border-radius: 1px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
 
     break-inside: avoid-column;
     page-break-inside: avoid;
@@ -228,34 +211,19 @@ div.simple-box{
 }
 
 /* -------- Main box (with 2 columns) -------------------------- */
+/* no efacts for small screens                                    */
 
 div.columnbox{
     text-align: left;
     border-style: solid;
     border-color: #C3C3C3;
-/*
-    width: 90% ;
-    padding: 20px;
-    margin: auto;
-*/
-    padding: 20px;
-    margin: 5px;
 
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
+    padding: 2px;
+    margin: 0px;
 
-    /* -- zweispaltig -- */
-    column-count: 2;
-    -moz-column-count: 2;
-    -moz-column-gap: 2em;
-    -webkit-column-count: 2;
-
-/*
-    box-shadow: 5px 5px 8px #B3B3B3;
-    -moz-box-shadow: 5px 5px 8px #B3B3B3;
-    -webkit-box-shadow: 5px 5px 8px #B3B3B3;
-*/
+    border-radius: 1px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
 }
 
 /* -------- Main box (with 3 columns) -------------------------- */
@@ -265,18 +233,12 @@ div.columnbox-triple{
     border-style: solid;
     border-color: #C3C3C3;
 
-    padding: 20px;
-    margin: 5px;
+    padding: 2px;
+    margin: 0px;
 
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-
-    /* -- zweispaltig -- */
-    column-count: 3;
-    -moz-column-count: 3;
-    -moz-column-gap: 3em;
-    -webkit-column-count: 3;
+    border-radius: 1px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
 
 
 }
@@ -291,9 +253,9 @@ div.centerbox{
     width: 90% ;
     padding: 20px;
     margin: auto;
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
+    border-radius: 1px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
 
     box-shadow: 5px 5px 8px #B3B3B3;
     -moz-box-shadow: 5px 5px 8px #B3B3B3;
@@ -309,9 +271,9 @@ div.flush-left-box{
     width: 70% ;
     padding: 20px;
     margin: auto;
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
+    border-radius: 1px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
 
     box-shadow: 5px 5px 8px #B3B3B3;
     -moz-box-shadow: 5px 5px 8px #B3B3B3;
@@ -328,9 +290,9 @@ div.smallgroupbox{
     width: 30% ;
     padding: 20px;
     margin: auto;
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
+    border-radius: 1px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
 
     box-shadow: 5px 5px 8px #B3B3B3;
     -moz-box-shadow: 5px 5px 8px #B3B3B3;
@@ -348,9 +310,9 @@ div.feedback-box{
     width: 85% ;
     padding: 20px;
     margin: 5px auto 5px auto;
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
+    border-radius: 1px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
 }
 
 /* --------------- login link --------------------- */

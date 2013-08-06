@@ -23,19 +23,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 </%pre>
 
-<%config>
-</%config>
-
-<%args>
-</%args>
-
-<%session scope="global">
+<%session scope="shared">
 UserSession userSession;
 </%session>
-
-<%cpp>
-srand (time(NULL));
-</%cpp>
 
 
 <!DOCTYPE HTML>

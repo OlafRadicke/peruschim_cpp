@@ -29,7 +29,7 @@ noinst_HEADERS = \
 	models/WebACL.h
 
 ecppSources = \
-	style.ecpp \
+	views/parts/style.ecpp \
 	views/access_denied.ecpp \
 	views/EditAccountView.ecpp \
 	views/EditEditionsView.ecpp \

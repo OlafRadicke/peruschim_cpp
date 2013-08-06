@@ -33,7 +33,7 @@
 #include "models/Quote.h"
 
 
-log_define("component.ImportOwnVersesController");
+log_define("component.ImportOwnVersesController")
 
 class ImportOwnVersesController : public tnt::Component
 {
