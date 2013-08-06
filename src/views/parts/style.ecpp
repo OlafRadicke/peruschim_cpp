@@ -1,11 +1,12 @@
-<link 
-    rel="stylesheet" 
-    href="/resources/peruschim.css" 
-    type="text/css"
-    media="only screen and (min-width: 800px)" />
 
 <link
     rel="stylesheet"
     href="/resources/small_screens.css"
     type="text/css"
-    media="handheld, only screen and (max-width: 800px)" />
+    media="handheld, only screen and (max-width: 800px), only screen and (max-device-width : 800px) " />
+
+<link 
+    rel="stylesheet" 
+    href="/resources/peruschim.css" 
+    type="text/css"
+    media="only screen and (min-width: 800px), only screen and (min-device-width : 800px)" />
