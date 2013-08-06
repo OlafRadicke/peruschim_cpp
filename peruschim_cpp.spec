@@ -5,7 +5,7 @@ Group: Web-Applications
 License: AGPL
 Release: 1
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-olaf-%(%{__id_u} -n)
-Requires: tntnet
+Requires: 
 BuildRequires: autoconf
 Source: peruschim_cpp-%{version}.tar.gz
 
