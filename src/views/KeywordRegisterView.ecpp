@@ -17,14 +17,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <%session
     scope="shared"
-    include="models/KeywordRegister.h"
     include="models/WebACL.h"
     include="models/UserSession.h" >
 
         UserSession            userSession;
-        vector<KeywordCount>   s_keywordTitlesCounts;
 </%session>
 
+<%request
+    scope="shared"
+    include="models/KeywordRegister.h">
+        vector<KeywordCount>   s_keywordTitlesCounts;
+</%request>
 
 <!DOCTYPE HTML>
 <html>

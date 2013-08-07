@@ -1,13 +1,17 @@
 
 <%session
     scope="shared"
-    include="models/QuoteRegister.h"
     include="models/UserSession.h" >
 
-    UserSession userSession;
-    std::string jason_text;
-    std::string feedback;
+        UserSession userSession;
 </%session>
+
+
+<%request
+    scope="shared">
+        std::string s_jason_text;
+        std::string s_feedback;
+</%request>
 
 
 <!DOCTYPE HTML>
@@ -34,9 +38,9 @@
     <div class="centerbox">
 
         <h1>Versexport</h1>
-% if ( feedback != "" ) {
+% if ( s_feedback != "" ) {
         <div class="feedback-box">
-            <b><$ feedback $> </b>
+            <b><$ s_feedback $> </b>
         </div>
 % }
         <p>Für den Export aller deiner Verse in JSON-Format:<br>
@@ -44,7 +48,7 @@
                 class="jason_text"
                 name="jason_text"
                 cols="80"
-                rows="10"><$ jason_text $></textarea>
+                rows="10"><$ s_jason_text $></textarea>
         </p>
 
     </div>

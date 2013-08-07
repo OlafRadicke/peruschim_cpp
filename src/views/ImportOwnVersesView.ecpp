@@ -17,15 +17,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <%session
     scope="shared"
-    include="models/Edition.h"
     include="models/WebACL.h"
     include="models/UserSession.h" >
 
         UserSession            userSession;
+</%session>
+
+<%request
+    scope="shared">
+
         std::string            s_feedback;
         bool                   s_clearOldVerses;
         std::string            s_jasonText;
-</%session>
+</%request>
 
 <!DOCTYPE HTML>
 <html>

@@ -51,12 +51,9 @@ unsigned EditOwnVersesController::operator() (tnt::HttpRequest& request, tnt::Ht
 
     TNT_SESSION_GLOBAL_VAR( UserSession,                  userSession, ());
     
-    
     TNT_REQUEST_GLOBAL_VAR( std::vector<Quote>,           s_quoteList, ());
-
     TNT_REQUEST_GLOBAL_VAR( std::string,                   s_feedback, ());
     TNT_REQUEST_GLOBAL_VAR( std::string,       s_affirmation_question, ());
-    // id of selectetet verse.
     TNT_REQUEST_GLOBAL_VAR( unsigned long,                s_quote_id, (0));
 
     

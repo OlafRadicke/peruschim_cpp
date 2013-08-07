@@ -52,9 +52,10 @@ unsigned KeywordDetailController::operator() (tnt::HttpRequest& request, tnt::Ht
 {
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    TNT_SESSION_SHARED_VAR( std::vector<Quote>,       s_quoteList, () );
-    TNT_SESSION_SHARED_VAR( bool,                     s_isLogin, () );
-    TNT_SESSION_SHARED_VAR( std::string,              s_keyword, () );
+    
+    TNT_REQUEST_SHARED_VAR( std::vector<Quote>,       s_quoteList, () );
+    TNT_REQUEST_SHARED_VAR( bool,                     s_isLogin, () );
+    TNT_REQUEST_SHARED_VAR( std::string,              s_keyword, () );
 
 
     // define the query parameters

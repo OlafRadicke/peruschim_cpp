@@ -54,14 +54,17 @@ unsigned KeywordRegisterController::operator() (tnt::HttpRequest& request, tnt::
 {
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-//     TNT_SESSION_SHARED_VAR( std::string,              s_feedback, () );
-    TNT_SESSION_SHARED_VAR( vector<KeywordCount>,     s_keywordTitlesCounts, ());
+    
+//     TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
+    TNT_REQUEST_SHARED_VAR( vector<KeywordCount>,     s_keywordTitlesCounts, ());
 
 
     // define the query parameters
     std::string  arg_user_view =
         qparam.arg<std::string>("arg_user_view");
-
+    bool arg_view_change_button =
+        qparam.arg<bool>("arg_view_change_button");        
+       
 
     // ACL Check
     if ( userSession.isInRole ( "user" ) == false ) {
@@ -71,13 +74,15 @@ unsigned KeywordRegisterController::operator() (tnt::HttpRequest& request, tnt::
     } else {
         log_debug( "Eingeloggt" );
         log_debug( "arg_user_view: " << arg_user_view );
-        if ( arg_user_view == "privateitems" && arg_user_view != "") {
-            log_debug( "PRIVATEITEMS: " << PRIVATEITEMS );
-            userSession.setItemViewMode ( PRIVATEITEMS );
-        } else {
-            // "allitems"
-            log_debug( "ALLITEMS: " << ALLITEMS );
-            userSession.setItemViewMode( ALLITEMS );
+        if ( arg_view_change_button ) {
+            if ( arg_user_view == "privateitems" ) {
+                log_debug( "PRIVATEITEMS: " << PRIVATEITEMS );
+                userSession.setItemViewMode ( PRIVATEITEMS );
+            } else {
+                // "allitems"
+                log_debug( "ALLITEMS: " << ALLITEMS );
+                userSession.setItemViewMode( ALLITEMS );
+            }
         }
         if (  userSession.getItemViewMode() == PRIVATEITEMS ) {
             s_keywordTitlesCounts =
