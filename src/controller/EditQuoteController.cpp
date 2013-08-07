@@ -35,7 +35,7 @@
 #include "models/QuoteRegister.h"
 #include "manager/BibleManager.h"
 
-log_define("component.EditQuoteController");
+log_define("component.EditQuoteController")
 
 class EditQuoteController : public tnt::Component
 {
@@ -55,10 +55,9 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
 {
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    TNT_SESSION_SHARED_VAR( Quote,                    s_quoteData, () );
-    TNT_SESSION_SHARED_VAR( unsigned long,            s_quote_id, () );
-    TNT_SESSION_SHARED_VAR( BibleManager,             s_bibleManager, () );
-
+    
+    TNT_REQUEST_SHARED_VAR( BibleManager,             s_bibleManager, () );
+    TNT_REQUEST_SHARED_VAR( Quote,                    s_quoteData, () );
     TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
     TNT_REQUEST_SHARED_VAR( std::vector<Edition>,     s_editionList, () );
     TNT_REQUEST_SHARED_VAR( std::string,              s_bibleserverComURL, () );
@@ -106,20 +105,19 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
 
     std::string userName  = userSession.getUserName();
     log_debug( "arg_quote_id: " << arg_quote_id );
-    log_debug( "s_quote_id" <<  s_quote_id );
     log_debug( "arg_update_button: " << arg_update_button );
 
     EditionManager editionManager;
     s_editionList = editionManager.getAllEditions( userSession.getUserID() );
 
     if ( arg_edit_button ) {
-        s_quote_id = arg_quote_id;
         s_quoteData = QuoteRegister::getQuoteWithID( arg_quote_id );
     }
 
 
     if ( arg_look_up_button ) {
         log_debug( "getBibleserverComURL..." );
+        s_quoteData.setID(arg_quote_id);
         s_quoteData.setEditionID( arg_edition_id );
         s_quoteData.setBookTitle( arg_book_title );
         s_quoteData.setChapterBegin( arg_chapter_begin );
@@ -144,8 +142,8 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
     // is button "create" kicked?
     if ( arg_update_button ) {
 
-        log_debug( "s_quote_id" <<  s_quote_id );
-        s_quoteData.setID( s_quote_id );
+        log_debug( "arg_quote_id" <<  arg_quote_id );
+        s_quoteData.setID(arg_quote_id);
 
         log_debug( "arg_edition_id: " << arg_edition_id );
         s_quoteData.setEditionID( arg_edition_id );
@@ -186,15 +184,12 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
 
         QuoteManager quoteManager;
         quoteManager.update(s_quoteData);
-        s_feedback = "Der Vers wurde gespeichert!";
-
-        s_quoteData = Quote();
-        s_quote_id = 0;
+        s_feedback = "Der Versänderungen wurde gespeichert!";
     }
 
     if ( arg_rest_button ) {
         s_editionList =  editionManager.getAllEditions( userSession.getUserID() );
-        s_quoteData = QuoteRegister::getQuoteWithID( s_quote_id );
+        s_quoteData = QuoteRegister::getQuoteWithID( arg_quote_id );
     }
 
 

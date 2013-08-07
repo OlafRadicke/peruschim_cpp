@@ -18,19 +18,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <%session
     scope="shared"
-    include="models/UserSession.h"
-    include="models/Quote.h"
-    include="manager/BibleManager.h">
-
+    include="models/UserSession.h">
         UserSession            userSession;
-        Quote                  s_quoteData;
-        BibleManager           s_bibleManager;
 </%session>
 
 <%request
     scope="shared"
-    include="models/Edition.h">
+    include="models/Quote.h"
+    include="models/Edition.h"
+    include="manager/BibleManager.h">
         std::string            s_feedback;
+        BibleManager           s_bibleManager;
+        Quote                  s_quoteData;
         std::vector<Edition>   s_editionList;
         std::string            s_bibleserverComURL;
 </%request>
@@ -62,7 +61,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="centerbox">
         <h1>Verseintrag <i>"<$ s_quoteData.getBookTitle() $>
             <$ s_quoteData.getChapterBegin() $>:<$ s_quoteData.getSentenceBegin() $>
-            "</i>&nbsp;(ID:<$ s_quoteData.getID( ) $>) bearbeiten</h1>
+            "</i>&nbsp;(ID:<$ s_quoteData.getID( ) $>)</h1>
 
 % if ( s_feedback != "" ) {
 
@@ -165,7 +164,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <p>Datensatz nicht öffentlich sichtbar machen <input
                         type="checkbox"
                         id="is_private_data"
-%     if ( s_quoteData.isPrivateData( ) ) {
+%     if ( s_quoteData.isPrivateData() ) {
                         value="true"
 %     } else {
                         value="false"
@@ -173,6 +172,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         name="arg_is_private_data" /></p>
 
                 <p>
+                    <input
+                        type="hidden"
+                        name="arg_quote_id"
+                        value="<$ s_quoteData.getID() $>" >
                     <button
                         id="save_button"
                         type="submit"

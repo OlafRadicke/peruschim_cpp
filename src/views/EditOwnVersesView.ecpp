@@ -2,15 +2,19 @@
 
 <%session
     scope="shared"
-    include="models/Quote.h"
     include="models/UserSession.h" >
 
-    UserSession userSession;
-    std::vector<Quote> quoteList;
-    std::string feedback;
-    std::string affirmation_question;
-    unsigned long session_verse_id;
+        UserSession        userSession;
 </%session>
+
+<%request
+    scope="shared"
+    include="models/Quote.h">
+        std::vector<Quote> s_quoteList;
+        std::string        s_feedback;
+        std::string        s_affirmation_question;
+        unsigned long      s_quote_id;
+</%request>
 
 
 <!DOCTYPE HTML>
@@ -39,17 +43,21 @@
     <div class="centerbox">
         <h1>Verwaltung der eigenen Verse</h1>
 
-% if ( feedback != "" ) {
+% if ( s_feedback != "" ) {
         <div class="feedback-box">
-            <b><$ feedback $> </b>
+            <b><$ s_feedback $> </b>
         </div>
 % }
-% if ( affirmation_question != "" ) {
+% if ( s_affirmation_question != "" ) {
         <div class="feedback-box">
-            <b><$ affirmation_question $> </b><br>
+            <b><$ s_affirmation_question $> </b><br>
             <form method="post" action="EditOwnVerses">
-                <button name="affirmation_delete_verse_id"
-                        value="<$ session_verse_id $>"
+                <input
+                    type="hidden"
+                    name="arg_quote_id"
+                    value="<$ s_quote_id $>" >
+                <button name="arg_affirmation_delete_button"
+                        value="pushed"
                         type="submit">Löschen bestätigen
                 </button>
             </form>
@@ -57,23 +65,31 @@
 % }
 
         <div class="columnbox">
-% for ( unsigned int i=0; i < quoteList.size(); i++) {
+% for ( unsigned int i=0; i < s_quoteList.size(); i++) {
             <div class="simple-box">
                 <h2>
-                    <$ quoteList[i].getBookTitle() $>&#160;
-                    <$ quoteList[i].getChapterBegin() $>:
-                    <$ quoteList[i].getSentenceBegin() $>
+                    <$ s_quoteList[i].getBookTitle() $>&#160;
+                    <$ s_quoteList[i].getChapterBegin() $>:
+                    <$ s_quoteList[i].getSentenceBegin() $>
                 </h2>
                 <ul>
-                <form method="post" action="editquote">
-                    <button name="quote_id"
-                            value="<$ quoteList[i].getID( ) $>"
+                <form method="post" action="EditQuote">
+                    <input
+                        type="hidden"
+                        name="arg_quote_id"
+                        value="<$ s_quoteList[i].getID( ) $>" >
+                    <button name="arg_edit_button"
+                            value="<$ s_quoteList[i].getID( ) $>"
                             type="submit">Bearbeiten
                     </button>
                 </form>
                 <form method="post" action="EditOwnVerses">
-                    <button name="delete_verse_id"
-                            value="<$ quoteList[i].getID( ) $>"
+                    <input
+                        type="hidden"
+                        name="arg_quote_id"
+                        value="<$ s_quoteList[i].getID( ) $>" >
+                    <button name="arg_delete_verse_button"
+                            value="pusched"
                             type="submit">Löschen
                     </button>
                 </form>

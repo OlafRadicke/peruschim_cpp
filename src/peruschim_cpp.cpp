@@ -1,4 +1,5 @@
 #include <tnt/tntnet.h>
+#include <tnt/configurator.h>
 #include <string>
 #include <cxxtools/log.h>
 #include "./models/Config.h"
@@ -16,6 +17,9 @@ int main ( int argc, char* argv[] )
         log_init(config.logging());
 
         tnt::Tntnet app;
+        tnt::Configurator tntConfigurator(app);
+        tntConfigurator.setSessionTimeout ( config.sessionTimeout() );
+        
         app.listen( config.appIp(), config.appPort() );
 
         // configure static stuff

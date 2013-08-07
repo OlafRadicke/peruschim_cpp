@@ -49,18 +49,24 @@ static tnt::ComponentFactoryImpl<EditOwnVersesController> factory("EditOwnVerses
 unsigned EditOwnVersesController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
 {
 
-    TNT_SESSION_GLOBAL_VAR( UserSession, userSession, ());
-    TNT_SESSION_GLOBAL_VAR( std::vector<Quote>, quoteList, ());
+    TNT_SESSION_GLOBAL_VAR( UserSession,                  userSession, ());
+    
+    
+    TNT_REQUEST_GLOBAL_VAR( std::vector<Quote>,           s_quoteList, ());
 
-    // text with feedback infomation;
-    TNT_SESSION_GLOBAL_VAR( std::string, feedback, ());
-    TNT_SESSION_GLOBAL_VAR( std::string, affirmation_question, ());
+    TNT_REQUEST_GLOBAL_VAR( std::string,                   s_feedback, ());
+    TNT_REQUEST_GLOBAL_VAR( std::string,       s_affirmation_question, ());
     // id of selectetet verse.
-    TNT_SESSION_GLOBAL_VAR( unsigned long, session_verse_id, (0));
-    unsigned long delete_verse_id =
-        qparam.arg<unsigned long>("delete_verse_id");
-    unsigned long affirmation_delete_verse_id =
-        qparam.arg<unsigned long>("affirmation_delete_verse_id");
+    TNT_REQUEST_GLOBAL_VAR( unsigned long,                s_quote_id, (0));
+
+    
+
+    unsigned long arg_quote_id =
+        qparam.arg<unsigned long>("arg_quote_id");
+    bool arg_affirmation_delete_button =
+        qparam.arg<unsigned long>("arg_affirmation_delete_button");
+    bool arg_delete_verse_button =
+        qparam.arg<unsigned long>("arg_delete_verse_button");
 
     log_debug( "userSession.getUserName(): " << userSession.getUserName() );
     // ACL Check
@@ -69,38 +75,33 @@ unsigned EditOwnVersesController::operator() (tnt::HttpRequest& request, tnt::Ht
         return reply.redirect ( "/access_denied" );
     }
     log_debug( "Eingeloggt" );
-//     quoteList = QuoteRegister::getAllQuoteOfUser( userSession.getUserID() );
 
     // is button delete pushed?
-    if ( delete_verse_id > 0 ) {
-        affirmation_question = "";
-        feedback = "";
-        session_verse_id = delete_verse_id;
-        Quote quoteInfo = QuoteRegister::getQuoteWithID( session_verse_id ) ;
-        affirmation_question =
+    if ( arg_delete_verse_button ) {
+        s_quote_id = arg_quote_id;
+        Quote quoteInfo = QuoteRegister::getQuoteWithID( s_quote_id ) ;
+        s_affirmation_question =
             "Bibelvers mit "+ quoteInfo.getBookTitle() + " " + \
             cxxtools::convert<std::string>( quoteInfo.getChapterBegin() ) + \
             ":" + cxxtools::convert<std::string>( quoteInfo.getSentenceBegin() ) + \
-            " (ID: " + cxxtools::convert<std::string>(session_verse_id) \
+            " (ID: " + cxxtools::convert<std::string>(s_quote_id) \
             + ") wirklich löschen?";
-        log_debug( "affirmation_question" << affirmation_question );
+        log_debug( "s_affirmation_question" << s_affirmation_question );
     }
 
     // if delete affirmation clicked.
-    if ( affirmation_delete_verse_id > 0 ) {
-        affirmation_question = "";
-        feedback = "";
-        log_debug( "will löschen: " << affirmation_delete_verse_id );
+    if ( arg_affirmation_delete_button ) {
+        
+        log_debug( "will löschen: " << arg_quote_id );
         QuoteRegister::deleteQuote(
-            cxxtools::convert<unsigned long>( affirmation_delete_verse_id )
+            cxxtools::convert<unsigned long>( arg_quote_id )
         );
-        feedback = \
+        s_feedback = \
             "Der Bibelverse mit der ID " + \
-             cxxtools::convert<std::string>( affirmation_delete_verse_id ) + \
+             cxxtools::convert<std::string>( arg_quote_id ) + \
              " wurde gelöscht!";
-        affirmation_delete_verse_id = 0;
     }
-    quoteList = QuoteRegister::getAllQuoteOfUser( userSession.getUserID() );
+    s_quoteList = QuoteRegister::getAllQuoteOfUser( userSession.getUserID() );
 
     return DECLINED;
 }
