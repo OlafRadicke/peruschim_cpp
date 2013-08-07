@@ -51,7 +51,7 @@ unsigned ResetOwnPasswordController::operator() (tnt::HttpRequest& request, tnt:
 {
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    TNT_SESSION_SHARED_VAR( std::string,              s_feedback, () );
+    TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
 
     s_feedback = "Test";
     // ACL Check

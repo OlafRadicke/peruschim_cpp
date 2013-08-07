@@ -58,9 +58,9 @@ unsigned NewQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRep
 {
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    TNT_SESSION_SHARED_VAR( Quote,                    s_quoteData, () );
     TNT_SESSION_SHARED_VAR( BibleManager,             s_bibleManager, () );
 
+    TNT_REQUEST_SHARED_VAR( Quote,                    s_quoteData, () );
     TNT_REQUEST_SHARED_VAR( std::string,              s_bibleserverComURL, () );
     TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
     TNT_REQUEST_SHARED_VAR( std::vector<Edition>,     s_editionList, () );
@@ -113,11 +113,6 @@ unsigned NewQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRep
         s_quoteData.setKeywords( arg_keywords );
         s_quoteData.setNote( arg_note );
         log_debug( "arg_is_private_data: " <<  arg_is_private_data );
-//         if ( arg_is_private_data == "true" ) {
-//             s_quoteData.setIsPrivateData( true );
-//         } else {
-//             s_quoteData.setIsPrivateData( false );
-//         }
         s_quoteData.setIsPrivateData( arg_is_private_data );
         log_debug( "pass" );
         log_debug( "s_quoteData.getBibleserverComURL(): "
@@ -165,11 +160,6 @@ unsigned NewQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRep
         s_quoteData.setNote( arg_note );
 
         log_debug( "arg_is_private_data: " << arg_is_private_data );
-//         if ( arg_is_private_data == "true" ) {
-//             s_quoteData.setIsPrivateData( true );
-//         } else {
-//             s_quoteData.setIsPrivateData( false );
-//         }
         s_quoteData.setIsPrivateData( arg_is_private_data );
         log_debug( "owner id: " << userSession.getUserID() );
         s_quoteData.setOwnerID( userSession.getUserID() );

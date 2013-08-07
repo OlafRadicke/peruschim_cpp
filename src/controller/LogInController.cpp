@@ -50,7 +50,8 @@ unsigned LogInController::operator() (tnt::HttpRequest& request, tnt::HttpReply&
 {
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    TNT_SESSION_SHARED_VAR( std::string,              s_feedback, () );
+    
+    TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
 
 
     // define the query parameters

@@ -3,12 +3,6 @@
     #include "models/UserSession.h"
 </%pre>
 
-<%config>
-</%config>
-
-<%args>
-</%args>
-
 <%session scope="shared">
     UserSession userSession();
 </%session>

@@ -19,18 +19,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     scope="shared"
     include="models/UserSession.h"
     include="models/Edition.h"
-    include="models/Quote.h"
     include="manager/BibleManager.h">
 
         UserSession            userSession;
-        Quote                  s_quoteData;
         BibleManager           s_bibleManager;
 </%session>
 
 <%request
     scope="shared"
-    include="models/Edition.h">
+    include="models/Edition.h"
+    include="models/Quote.h">
         std::string            s_feedback;
+        Quote                  s_quoteData;
         std::vector<Edition>   s_editionList;
         std::string            s_bibleserverComURL;
 </%request>

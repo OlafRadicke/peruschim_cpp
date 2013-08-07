@@ -286,6 +286,11 @@ div.smallgroupbox{
 
 }
 
+/* -------- small text -------------------------- */
+
+span.small{
+    font-size: 75%;
+}
 
 /* -------- feedback box -------------------------- */
 

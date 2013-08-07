@@ -233,11 +233,7 @@ div.columnbox{
     text-align: left;
     border-style: solid;
     border-color: #C3C3C3;
-/*
-    width: 90% ;
-    padding: 20px;
-    margin: auto;
-*/
+
     padding: 20px;
     margin: 5px;
 
@@ -251,11 +247,6 @@ div.columnbox{
     -moz-column-gap: 2em;
     -webkit-column-count: 2;
 
-/*
-    box-shadow: 5px 5px 8px #B3B3B3;
-    -moz-box-shadow: 5px 5px 8px #B3B3B3;
-    -webkit-box-shadow: 5px 5px 8px #B3B3B3;
-*/
 }
 
 /* -------- Main box (with 3 columns) -------------------------- */
@@ -319,8 +310,8 @@ div.flush-left-box{
 }
 
 
-
 /* -------- small box (for dialogs) -------------------------- */
+
 div.smallgroupbox{
     text-align: center;
     border-style: solid;
@@ -337,6 +328,11 @@ div.smallgroupbox{
     -webkit-box-shadow: 5px 5px 8px #B3B3B3;
 }
 
+/* -------- small text -------------------------- */
+
+span.small{
+    font-size: 75%;
+}
 
 /* -------- feedback box -------------------------- */
 

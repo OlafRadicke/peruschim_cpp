@@ -18,10 +18,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <%session
     scope="shared"
     include="models/UserSession.h" >
-
         UserSession            userSession;
-        std::string            s_feedback;
 </%session>
+
+<%request
+    scope="shared">
+        std::string              s_feedback;
+</%request>
 
 <!DOCTYPE HTML>
 <html>
