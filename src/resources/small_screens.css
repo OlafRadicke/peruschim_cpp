@@ -248,8 +248,9 @@ div.centerbox{
     border-style: solid;
     border-color: #C3C3C3;
     width: 100% ;
-    padding: 20px;
-    margin: auto;
+    padding: 0px;
+/*     margin: auto; */
+    margin: 0px;
     border-radius: 1px;
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
@@ -263,8 +264,9 @@ div.flush-left-box{
     border-style: solid;
     border-color: #C3C3C3;
     width: 100% ;
-    padding: 2px;
-    margin: auto;
+    padding: 0px;
+/*     margin: auto; */
+    margin: 0px;
     border-radius: 1px;
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
@@ -278,8 +280,9 @@ div.smallgroupbox{
     border-style: solid;
     border-color: #C3C3C3;
     width: 100% ;
-    padding: 2px;
-    margin: auto;
+    padding: 0px;
+/*     margin: auto; */
+    margin: 0px;
     border-radius: 1px;
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
@@ -300,8 +303,9 @@ div.feedback-box{
     border-style: solid;
     border-color: #C3C3C3;
     width: 95% ;
-    padding: 2px;
-    margin: 1px auto 1px auto;
+    padding: 1px;
+/*     margin: 1px auto 1px auto; */
+    margin: 1px;
     border-radius: 1px;
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
@@ -416,7 +420,7 @@ div.mainmenue li a {
     color:#fff;
     text-decoration: none;
     padding: 0px 0px 0px 0px;
-    margin: 5px;
+    margin: 1px;
 }
 
 div.mainmenue li a span {
