@@ -61,6 +61,7 @@ unsigned SwitchToHandheldVersionController::operator()
     bool  arg_abort_button =
         qparam.arg<bool>("arg_abort_button");
 
+    userSession.isHandheldVersion(true);
     if ( arg_okay_button ) {
         log_debug("switsch to the handheld version");
         userSession.isHandheldVersion(true);
