@@ -37,7 +37,7 @@ class UserSession {
 public:
 
 
-    UserSession () : m_username( "" ), m_userID( 0 ) {}
+    UserSession () : m_username( "" ), m_userID( 0 ), m_HandheldVersion(false) {}
 
      /**
      * Add a roll.
@@ -59,9 +59,17 @@ public:
     void cleanRoll ( ) { m_userroles.clear(); }
 
     /**
-     * Session logout.
+     * Get back, is user need the handheld version.
+     * @return The value "true" is yes, he like the handheld version.
      **/
-    void logout( );
+    bool isHandheldVersion() { return m_HandheldVersion; }
+    
+
+    /**
+     * Set is user need the handheld version.
+     * @arg switchValue The value "true" is yes, he like the handheld version.
+     **/    
+    void isHandheldVersion( bool switchValue ){ m_HandheldVersion = switchValue; }
 
     /**
      * Check is user in this site rolle.
@@ -80,6 +88,12 @@ public:
     void setUserName ( std::string username ) {
         m_username = username;
     }
+    
+
+    /**
+     * Session logout.
+     **/
+    void logout( );    
 
     /**
      * Get back the mode of item view.
@@ -131,6 +145,11 @@ private:
      * Options: "all","public"
      */
     ItemView m_item_view;
+    
+    /**
+     * Is the value "true" it's meaning "yes", he like the handheld version.
+     **/    
+    bool m_HandheldVersion;
 
 };
 

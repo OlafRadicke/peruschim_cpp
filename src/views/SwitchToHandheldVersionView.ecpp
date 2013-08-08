@@ -33,34 +33,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <br />
     <div class="smallgroupbox">
         <form method="post" >
-            <h2>Login</h2>
+            <h2>Zur Ansicht für mobile Geräte wechseln</h2>
 % if ( s_feedback != "" ) {
             <div class="feedback-box">
                 <b><$ s_feedback $> </b>
             </div>
 % }
-            <p>Für den gewählten Bereich muss du angemeldet sein. Bitte
-               authentifiziere dich...
+            <p>Du kannst hier für die Zeit der Sizung zur Ansicht für mobile Geräte wechseln
             </p>
-            <p>Benutzer:<br>
-                <input
-                    class="full-size"
-                    name="arg_name"
-                    type="text"
-                    size="40"
-                    maxlength="40">
-            </p>
-            <p>Passwort:<br>
-                <input
-                    class="full-size"
-                    name="arg_password"
-                    type="password"
-                    size="40"
-                    maxlength="40"></p>
-            <p>
-                <button name="arg_login_button"
+            <p><button name="arg_okay_button"
                             value="pushed"
-                            type="submit">Login
+                            type="submit">Wechsel zu mobile Geräte
+                </button>
+            </p>
+            <p><button name="arg_abort_button"
+                            value="pushed"
+                            type="submit">Wechsel zu PC-Ansicht
                 </button>
             </p>
         </form>
