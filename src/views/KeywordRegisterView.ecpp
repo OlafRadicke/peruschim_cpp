@@ -78,35 +78,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <br>
 % }
         <div class="centerbox">
-            <a href="#letter_a">a</a>
-            <a href="#letter_b">b</a>
-            <a href="#letter_c">c</a>
-            <a href="#letter_d">d</a>
-            <a href="#letter_e">e</a>
-            <a href="#letter_f">f</a>
-            <a href="#letter_g">g</a>
-            <a href="#letter_h">h</a>
-            <a href="#letter_i">i</a>
-            <a href="#letter_j">j</a>
-            <a href="#letter_k">k</a>
-            <a href="#letter_l">l</a>
-            <a href="#letter_m">m</a>
-            <a href="#letter_n">n</a>
-            <a href="#letter_o">o</a>
-            <a href="#letter_p">p</a>
-            <a href="#letter_q">q</a>
-            <a href="#letter_r">r</a>
-            <a href="#letter_s">s</a>
-            <a href="#letter_t">t</a>
-            <a href="#letter_u">u</a>
-            <a href="#letter_v">v</a>
-            <a href="#letter_w">w</a>
-            <a href="#letter_x">x</a>
-            <a href="#letter_y">y</a>
-            <a href="#letter_z">z</a>
-            <a href="#letter_ä">ä</a>
-            <a href="#letter_ö">ö</a>
-            <a href="#letter_ü">ü</a>
+            <a href="#letter_a"><span class="big">a</span></a>
+            <a href="#letter_b"><span class="big">b</span></a>
+            <a href="#letter_c"><span class="big">c</span></a>
+            <a href="#letter_d"><span class="big">d</span></a>
+            <a href="#letter_e"><span class="big">e</span></a>
+            <a href="#letter_f"><span class="big">f</span></a>
+            <a href="#letter_g"><span class="big">g</span></a>
+            <a href="#letter_h"><span class="big">h</span></a>
+            <a href="#letter_i"><span class="big">i</span></a>
+            <a href="#letter_j"><span class="big">j</span></a>
+            <a href="#letter_k"><span class="big">k</span></a>
+            <a href="#letter_l"><span class="big">l</span></a>
+            <a href="#letter_m"><span class="big">m</span></a>
+            <a href="#letter_n"><span class="big">n</span></a>
+            <a href="#letter_o"><span class="big">o</span></a>
+            <a href="#letter_p"><span class="big">p</span></a>
+            <a href="#letter_q"><span class="big">q</span></a>
+            <a href="#letter_r"><span class="big">r</span></a>
+            <a href="#letter_s"><span class="big">s</span></a>
+            <a href="#letter_t"><span class="big">t</span></a>
+            <a href="#letter_u"><span class="big">u</span></a>
+            <a href="#letter_v"><span class="big">v</span></a>
+            <a href="#letter_w"><span class="big">w</span></a>
+            <a href="#letter_x"><span class="big">x</span></a>
+            <a href="#letter_y"><span class="big">y</span></a>
+            <a href="#letter_z"><span class="big">z</span></a>
+            <a href="#letter_ä"><span class="big">ä</span></a>
+            <a href="#letter_ö"><span class="big">ö</span></a>
+            <a href="#letter_ü"><span class="big">ü</span></a>
         </div>
 
 % string lastLetter = "";

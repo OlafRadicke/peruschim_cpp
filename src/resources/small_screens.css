@@ -7,19 +7,38 @@ br.clear-both {
 /* --------------- head lines --------------------- */
 
 h1 {
+    
+    font-size: 120%;
     padding: 0px;
     margin: 0px;
 }
 
 h2 {
+    font-size: 110%;
     padding: 0px;
     margin: 0px;
 }
 
 h3 {
+    font-size: 105%;
     padding: 0px;
     margin: 0px;
 }
+
+/* -------- small text -------------------------- */
+
+span.small{
+    font-size: 75%;
+}
+
+/* -------- small text -------------------------- */
+
+span.big{
+    font-size: 120%;
+    padding: 2px;
+    margin: 2px;
+}
+
 
 /* --------------- button -------------------------- */
 
@@ -267,7 +286,14 @@ div.flush-left-box{
     padding: 0px;
 /*     margin: auto; */
     margin: 0px;
-    border-radius: 1px;
+    border-radius/* -------- small text -------------------------- */
+
+span.small{
+    font-size: 75%;
+}
+
+span.big
+: 1px;
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
 }
@@ -289,11 +315,6 @@ div.smallgroupbox{
 
 }
 
-/* -------- small text -------------------------- */
-
-span.small{
-    font-size: 75%;
-}
 
 /* -------- feedback box -------------------------- */
 
