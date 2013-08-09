@@ -50,6 +50,7 @@ ecppSources = \
 	views/portaladmin.ecpp \
 	views/portalquote.ecpp \
 	views/ResetOwnPasswordView.ecpp \
+	views/RSSfeedView.ecpp \
 	views/SwitchToHandheldVersionView.ecpp
 
 staticSources = \
@@ -74,6 +75,7 @@ peruschim_cpp_SOURCES = \
 	manager/BibleManager.cpp \
 	manager/EditionManager.cpp \
 	manager/QuoteManager.cpp \
+	manager/RSSfeedManager.cpp \
 	models/AccountData.cpp \
 	models/Config.cpp \
 	models/DatabaseProxy.cpp \

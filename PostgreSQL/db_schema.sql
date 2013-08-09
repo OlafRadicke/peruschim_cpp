@@ -182,11 +182,25 @@ CREATE TABLE quote (
 -- COMMENT ON COLUMN quote.privatedata IS 'Is this value TRUE than the data set is private.';
 
 
+
 CREATE TABLE quote_keyword (
     id              SERIAL    PRIMARY KEY,
     quote_id        BIGINT    NOT NULL,
     title           TEXT      NOT NULL,
     FOREIGN KEY  (quote_id)   REFERENCES quote (id)
 );
+-- COMMENT ON TABLE quote_keyword IS 'the key words of the quotes.';
+-- COMMENT ON COLUMN quote_keyword.quote_id IS 'id from a quotes to like key word with quotes.';
+-- COMMENT ON COLUMN quote_keyword.title IS 'key word title like "gebet".';
+
+
+CREATE TABLE rss_feeds(
+    id              SERIAL    PRIMARY KEY,
+    title           TEXT      NOT NULL,
+    linkurl         TEXT      NOT NULL,
+    description     TEXT      NOT NULL,
+    createtime      TIMESTAMP NOT NULL
+);
+-- COMMENT ON TABLE rss_feeds IS 'puplic rss feed items.';
 
 COMMIT;

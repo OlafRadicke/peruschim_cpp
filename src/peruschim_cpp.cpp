@@ -31,6 +31,7 @@ int main ( int argc, char* argv[] )
         // special pages
         app.mapUrl( "^/(.*)$", "$1" );
         app.mapUrl( "^/$", "home" );
+        app.mapUrl( "^/rss.xml", "RSSfeedView" );
 
         // mvc stuff
         app.mapUrl( "^/(.*)$", "$1Controller" );

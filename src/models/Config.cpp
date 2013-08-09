@@ -76,4 +76,6 @@ void operator>>= (const cxxtools::SerializationInfo& si, Config& config )
     si.getMember("sessionRuntime")  >>= config.m_sessionTimeout;
     si.getMember("smtpServer")      >>= config.m_smtpServer;
     si.getMember("mailFromAddress") >>= config.m_mailFromAddress;
+    si.getMember("domain")          >>= config.m_domainName;
+    
 }

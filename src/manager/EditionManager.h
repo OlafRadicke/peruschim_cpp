@@ -1,8 +1,7 @@
 /**
 * @author Olaf Radicke <briefkasten@olaf-rdicke.de>
 * @date 2013
-* @copyright
-* Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+* @copyright Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Affero General Public License as published by

@@ -39,7 +39,8 @@ class Config {
         m_dbDriver("postgresql:dbname=peruschim"),
         m_sessionTimeout( 1000 ),
         m_smtpServer( "localhost" ),
-        m_mailFromAddress( "peruschim_cpp.conf@localhost" )
+        m_mailFromAddress( "peruschim_cpp.conf@localhost" ),
+        m_domainName( "peruschim.domain" )
     { }
 
 public:
@@ -58,6 +59,9 @@ public:
 
     const std::string& dbDriver() const
     { return m_dbDriver; }
+    
+    const std::string& domainName() const
+    { return m_domainName; }
 
     unsigned sessionTimeout() const
     { return m_sessionTimeout; }
@@ -75,6 +79,7 @@ private:
     std::string m_appIp;
     unsigned short m_appPort;
     std::string m_dbDriver;
+    std::string m_domainName;
     unsigned m_sessionTimeout;
     std::string m_smtpServer;
     std::string m_mailFromAddress;

@@ -1,12 +1,27 @@
-/*
- * Copyright (C) 2013 Tommi Maekitalo
- *
- */
+/**
+* @author Tommi Maekitalo <tommi@tntnet.org>
+* @date 2013
+* @copyright Copyright (C) 2013  Tommi Maekitalo <tommi@tntnet.org>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or later
+* version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #include <manager/QuoteManager.h>
-
+#include <manager/RSSfeedManager.h>
 #include <models/Config.h>
 #include <models/Quote.h>
+#include <models/RSSfeed.h>
 
 #include <tntdb/connect.h>
 #include <tntdb/transaction.h>
@@ -92,6 +107,7 @@ void QuoteManager::saveAsNew(Quote& quote)
     }
 
     trans.commit();
+    
 }
 
 /**
@@ -158,4 +174,22 @@ void QuoteManager::update(const Quote& quote)
     }
 
     trans.commit();
+    
+    if ( !quote.m_isPrivateData ) {
+        RSSfeed newFeed;
+        newFeed.setTitle( "Neuer Verseintrag" );
+        const unsigned long qID = quote.m_ownerID;
+        Quote c_quote = quote;
+        std::string keyWords = c_quote.getKeywordsAsString();
+        std::string description = "Der Benutzer mit der ID " \
+            + cxxtools::convert<std::string>( qID ) + " hat einen " \
+            + "neuen Verse angelegt. \n\n Bibelstelle: " + quote.m_bookTitle \
+            + " " + cxxtools::convert<std::string>( quote.m_bookChapterBegin ) \
+            + ":" + cxxtools::convert<std::string>( quote.m_bookSentenceBegin ) \
+            + "\n\n Zitat: \"" + quote.m_quoteText + "\" \n\n Notiz: " \
+            + quote.m_note + " \n\n Schlagworte: " + keyWords;
+        newFeed.setDescription( description );
+        RSSfeedManager feedManager;
+        feedManager.addNewFeed( newFeed );
+    }
 }
