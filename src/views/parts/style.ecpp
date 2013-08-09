@@ -5,6 +5,8 @@
         UserSession            userSession;
 </%session>
 
+<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
+
 % if ( userSession.isHandheldVersion() ) {
     <meta name="viewport" content="width=device-width" />
     <link

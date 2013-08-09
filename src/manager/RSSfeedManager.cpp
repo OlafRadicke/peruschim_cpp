@@ -131,15 +131,17 @@ std::vector<RSSfeed> RSSfeedManager::getFeeds ( int days ){
         feed.setTitle( row[1].getString() );
         feed.setLinkURL( row[2].getString() );
         feed.setDescription( row[3].getString() );
-        tntdb::Datetime dbdt = row[3].getDatetime() ;
-        cxxtools::DateTime cxxdt(
-            dbdt.getYear(),
-            dbdt.getMonth(),
-            dbdt.getDay(),
-            dbdt.getHour(),
-            dbdt.getMinute(),
-            dbdt.getSecond()
-        );
+        cxxtools::DateTime cxxdt;
+        row[3].get(cxxdt);        
+//         tntdb::Datetime dbdt = row[3].getDatetime() ;
+//         cxxtools::DateTime cxxdt(
+//             dbdt.getYear(),
+//             dbdt.getMonth(),
+//             dbdt.getDay(),
+//             dbdt.getHour(),
+//             dbdt.getMinute(),
+//             dbdt.getSecond()
+//         );
         feed.setCreateTime( cxxdt );
         feedList.push_back( feed );
     }

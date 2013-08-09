@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #include <models/Config.h>
     #include <manager/RSSfeedManager.h>
     #include <models/RSSfeed.h>
+    #include <time.h>
 </%pre>
 
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -43,9 +44,47 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <description><$ feedList[i].getDescription()  $></description>
         </item>
 % }
-<# Form: Mon, 06 Sep 2009 16:20:00 +0000  #>
+
+<# target date format (RFC 822): Mon, 06 Sep 2009 16:20:00 +0000  #>
 % cxxtools::DateTime lastupdate = feedManager.getLastUpdate();
-        <pubDate><$ lastupdate.toIsoString() $></pubDate>
+% time_t rawtime;
+% struct tm * timeinfo;
+% const char * weekday[] = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
+% const char * monthname[] = {"NON",
+%     "Jan","Feb","Mar",
+%     "Apr","May","Jun",
+%     "Jul","Aug","Sep",
+%     "Oct","Nov","Dec"};
+% std::string strhour;
+% std::string strminute;
+% std::string strsecond;
+% time ( &rawtime );
+% timeinfo = localtime ( &rawtime );
+% timeinfo->tm_year = lastupdate.year();
+% timeinfo->tm_mon = lastupdate.month();
+% timeinfo->tm_mday = lastupdate.day();
+% mktime ( timeinfo );
+% if ( lastupdate.hour() < 10 ) {
+%     strhour = "0" + cxxtools::convert<std::string>( lastupdate.hour() );
+% } else {
+%     strhour = cxxtools::convert<std::string>( lastupdate.hour() );
+% };
+% if ( lastupdate.minute() < 10 ) {
+%     strminute = 
+%          "0" + cxxtools::convert<std::string>( lastupdate.minute() );
+% } else {
+%     strminute = 
+%          cxxtools::convert<std::string>( lastupdate.minute() );
+% };
+% if ( lastupdate.second() < 10 ) {
+%     strsecond = 
+%          "0" + cxxtools::convert<std::string>( lastupdate.second() );
+% } else {
+%     strsecond = 
+%          cxxtools::convert<std::string>( lastupdate.second() );
+% };
+
+        <pubDate><$ weekday[timeinfo->tm_wday] $> , <$ lastupdate.day() $> <$ monthname[lastupdate.month()] $> <$ lastupdate.year() $> <$ strhour $>:<$ strminute $>:<$ strsecond $>  +0000 </pubDate>
 
     </channel>
 </rss>
