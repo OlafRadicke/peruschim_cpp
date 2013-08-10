@@ -31,7 +31,14 @@ public:
     RSSfeedManager();
 
     explicit RSSfeedManager(tntdb::Connection& conn);
-
+    
+    /**
+     * Covert cxxtools::DateTime to RFC 822 format.
+     * @arg cxxdt the datetime.
+     * @retourn a date sting in RFC 822 format.
+     **/
+    std::string  covertDate( cxxtools::DateTime cxxdt );
+    
     /**
      * Get back all feed younger than x days.
      * @arg days how many days go back.
@@ -41,8 +48,10 @@ public:
 
     /**
      * Get back the date of the last feed.
+     * Target date format is RFC 822.
+     * Exampel: Mon, 06 Sep 2009 16:20:00 +0000
      **/
-    cxxtools::DateTime  getLastUpdate( );    
+    std::string getLastUpdate( );    
     
     /**
      * Save a new feed.

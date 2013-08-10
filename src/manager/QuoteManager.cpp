@@ -26,6 +26,10 @@
 #include <tntdb/connect.h>
 #include <tntdb/transaction.h>
 #include <tntdb/statement.h>
+#include <cxxtools/log.h>
+
+
+log_define("QuoteManager")
 
 QuoteManager::QuoteManager(tntdb::Connection& conn_)
     : conn(conn_)
@@ -108,6 +112,24 @@ void QuoteManager::saveAsNew(Quote& quote)
 
     trans.commit();
     
+    log_debug("new quote id: " << quote.m_ID );
+    if ( !quote.m_isPrivateData ) {
+        RSSfeed newFeed;
+        newFeed.setTitle( "Neuer Verseintrag" );
+        const unsigned long qID = quote.m_ownerID;
+        Quote c_quote = quote;
+        std::string keyWords = c_quote.getKeywordsAsString();
+        std::string description = "Der Benutzer mit der ID " \
+            + cxxtools::convert<std::string>( qID ) + " hat einen " \
+            + "neuen Verse angelegt. \n\n Bibelstelle: " + quote.m_bookTitle \
+            + " " + cxxtools::convert<std::string>( quote.m_bookChapterBegin ) \
+            + ":" + cxxtools::convert<std::string>( quote.m_bookSentenceBegin ) \
+            + "\n\n Zitat: \"" + quote.m_quoteText + "\" \n\n Notiz: " \
+            + quote.m_note + " \n\n Schlagworte: " + keyWords;
+        newFeed.setDescription( description );
+        RSSfeedManager feedManager;
+        feedManager.addNewFeed( newFeed );
+    }    
 }
 
 /**
@@ -175,15 +197,19 @@ void QuoteManager::update(const Quote& quote)
 
     trans.commit();
     
+    log_debug("update quote id: " << quote.m_ID );
     if ( !quote.m_isPrivateData ) {
         RSSfeed newFeed;
         newFeed.setTitle( "Neuer Verseintrag" );
-        const unsigned long qID = quote.m_ownerID;
+        const unsigned long oID = quote.m_ownerID;
+        std::string str_oID = cxxtools::convert<std::string>( oID );
         Quote c_quote = quote;
+        const unsigned long qID = quote.m_ID;
+        std::string str_qID = cxxtools::convert<std::string>( qID );
         std::string keyWords = c_quote.getKeywordsAsString();
-        std::string description = "Der Benutzer mit der ID " \
-            + cxxtools::convert<std::string>( qID ) + " hat einen " \
-            + "neuen Verse angelegt. \n\n Bibelstelle: " + quote.m_bookTitle \
+        std::string description = "Der Benutzer mit der ID " + str_oID \
+            + " hat den Vers ID" + str_qID + " geänder. \n\n Bibelstelle: "\
+            + quote.m_bookTitle \
             + " " + cxxtools::convert<std::string>( quote.m_bookChapterBegin ) \
             + ":" + cxxtools::convert<std::string>( quote.m_bookSentenceBegin ) \
             + "\n\n Zitat: \"" + quote.m_quoteText + "\" \n\n Notiz: " \
