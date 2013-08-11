@@ -42,9 +42,8 @@ RSSfeedManager::RSSfeedManager()
 void RSSfeedManager::addNewFeed( RSSfeed newFeed )
 {
     log_debug("addNewFeed"  );
-    tntdb::Transaction trans(conn);
 
-    tntdb::Statement insQuote = conn.prepare(
+    tntdb::Statement insRSS = conn.prepare(
         "INSERT INTO rss_feeds \
         ( \
             title,  \
@@ -59,14 +58,14 @@ void RSSfeedManager::addNewFeed( RSSfeed newFeed )
         )"
     );
     
-    insQuote.set( "title", newFeed.m_title )
+    insRSS.set( "title", newFeed.m_title )
             .set( "linkurl", newFeed.m_linkurl )
             .set( "description", newFeed.m_description )
             .execute();
 
     unsigned long feedID = conn.lastInsertId("rss_feeds_id_seq");
 
-    tntdb::Statement insQuoteKeyword = conn.prepare(
+    tntdb::Statement insRSSchannel = conn.prepare(
             "INSERT INTO rss_feeds_channel \
              ( \
                  channel_title, \
@@ -77,15 +76,16 @@ void RSSfeedManager::addNewFeed( RSSfeed newFeed )
              )"
         );
 
-    insQuoteKeyword.set( "rss_feeds_id", feedID );
-
+    log_debug( __LINE__ << " newFeed.channels.size(): " <<  newFeed.channels.size() );
     for (unsigned int i=0; i < newFeed.channels.size(); ++i )
     {
-        insQuoteKeyword.set( "channel_title", newFeed.channels[i] )
+        log_debug( __LINE__ << " newFeed.channels.size(): " <<  newFeed.channels.size() );
+        insRSSchannel
+        .set( "rss_feeds_id", feedID )
+        .set( "channel_title", newFeed.channels[i] )
                        .execute();
     }    
     
-    trans.commit();
     
     log_debug("feed angelegt id: " <<  feedID );
 }

@@ -43,8 +43,6 @@ public:
     );
 };
 
-
-
 static tnt::ComponentFactoryImpl<NewAccountController> factory("NewAccountController");
 
 unsigned NewAccountController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
@@ -73,8 +71,6 @@ unsigned NewAccountController::operator() (tnt::HttpRequest& request, tnt::HttpR
     std::string  arg_mail =
         qparam.arg<std::string>("arg_mail");
         
-        
-
 
     // is button "create" Speichern?
     if ( arg_create_button ) {

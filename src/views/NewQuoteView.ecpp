@@ -79,7 +79,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </div>
 %     }
             <br class="clear-both">
-            <form method="post" >
+            <form method="post" action="NewQuote">
 
                 <p>Edition:
                     <select name="arg_edition_id" size="1">
@@ -181,7 +181,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <p>
                     <button id="save_button"
                             name="arg_create_button"
-                            value="Speichern"
+                            value="pushed"
                             type="submit">Speichern
                     </button></p>
             </form>

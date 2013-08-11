@@ -50,8 +50,6 @@ public:
     );
 };
 
-
-
 static tnt::ComponentFactoryImpl<NewQuoteController> factory("NewQuoteController");
 
 unsigned NewQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
@@ -165,7 +163,6 @@ unsigned NewQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRep
         s_quoteData.setOwnerID( userSession.getUserID() );
 
         quoteManager.saveAsNew(s_quoteData);
-        s_bibleserverComURL = "";
         s_feedback = "Der Vers wurde gespeichert!";
     } else {
         log_debug( "userSession.getUserID(): " << userSession.getUserID() );
