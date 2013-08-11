@@ -56,7 +56,8 @@ ecppSources = \
 staticSources = \
 	resources/favicon.ico \
 	resources/peruschim.css \
-	resources/small_screens.css
+	resources/small_screens.css \
+	resources/feed-icon.png
 
 peruschim_cpp_SOURCES = \
 	controller/EditAccountController.cpp \

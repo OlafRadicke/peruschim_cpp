@@ -45,6 +45,7 @@ QuoteManager::QuoteManager()
  **/
 void QuoteManager::saveAsNew(Quote& quote)
 {
+    log_debug("saveAsNew"  );
     tntdb::Transaction trans(conn);
 
     tntdb::Statement insQuote = conn.prepare(
@@ -113,8 +114,10 @@ void QuoteManager::saveAsNew(Quote& quote)
     trans.commit();
     
     log_debug("new quote id: " << quote.m_ID );
+    log_debug("quote.m_isPrivateData: " << quote.m_isPrivateData );
     if ( !quote.m_isPrivateData ) {
         RSSfeed newFeed;
+        log_debug( "Neuer Verseintrag" );
         newFeed.setTitle( "Neuer Verseintrag" );
         const unsigned long qID = quote.m_ownerID;
         Quote c_quote = quote;
@@ -127,6 +130,7 @@ void QuoteManager::saveAsNew(Quote& quote)
             + "\n\n Zitat: \"" + quote.m_quoteText + "\" \n\n Notiz: " \
             + quote.m_note + " \n\n Schlagworte: " + keyWords;
         newFeed.setDescription( description );
+        newFeed.channels.push_back("quote");
         RSSfeedManager feedManager;
         feedManager.addNewFeed( newFeed );
     }    
@@ -137,6 +141,7 @@ void QuoteManager::saveAsNew(Quote& quote)
  **/
 void QuoteManager::update(const Quote& quote)
 {
+    log_debug("update"  );
     tntdb::Transaction trans(conn);
 
     tntdb::Statement updQuote = conn.prepare(
@@ -215,6 +220,7 @@ void QuoteManager::update(const Quote& quote)
             + "\n\n Zitat: \"" + quote.m_quoteText + "\" \n\n Notiz: " \
             + quote.m_note + " \n\n Schlagworte: " + keyWords;
         newFeed.setDescription( description );
+        newFeed.channels.push_back("quote");
         RSSfeedManager feedManager;
         feedManager.addNewFeed( newFeed );
     }

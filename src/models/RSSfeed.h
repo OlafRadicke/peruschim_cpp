@@ -76,10 +76,6 @@ public:
     {
         return this->m_createtime;
     }
-//     const tntdb::Datetime& getCreateTime() const
-//     {
-//         return this->m_createtime;
-//     }
 
     
     // sets ====================================================
@@ -125,20 +121,19 @@ public:
     {
         this->m_createtime = createtime;
     }
-//     void setCreateTime(const tntdb::Datetime& createtime )
-//     {
-//         this->m_createtime = createtime;
-//     }
     
-
+    /**
+     * List with the channels.
+     **/   
+    std::vector<std::string> channels;
+    
 private:
     
-    unsigned long      m_id;
-    std::string        m_title;
-    std::string        m_linkurl;
-    std::string        m_description;
-    cxxtools::DateTime m_createtime;
-//     tntdb::Datetime m_createtime;
+    unsigned long            m_id;
+    std::string              m_title;
+    std::string              m_linkurl;
+    std::string              m_description;
+    cxxtools::DateTime       m_createtime;
 
 };
 

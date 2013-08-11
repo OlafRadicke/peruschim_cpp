@@ -202,5 +202,15 @@ CREATE TABLE rss_feeds(
     createtime      TIMESTAMP NOT NULL
 );
 -- COMMENT ON TABLE rss_feeds IS 'puplic rss feed items.';
+-- COMMENT ON COLUMN rss_feeds.linkurl IS 'Linkt to artikle.';
+
+CREATE TABLE rss_feeds_channel(
+    id              SERIAL    PRIMARY KEY,
+    channel_title   TEXT      NOT NULL,
+    rss_feeds_id    BIGINT    NOT NULL,
+    FOREIGN KEY  (rss_feeds_id)   REFERENCES rss_feeds (id)
+);
+-- COMMENT ON TABLE rss_feeds_channel IS 'the channels of a rss feed item.';
+-- COMMENT ON COLUMN rss_feeds_channel.rss_feeds_id IS 'Linkt to rss feed item.';
 
 COMMIT;

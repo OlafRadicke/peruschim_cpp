@@ -20,6 +20,7 @@
 
 #include "WebACL.h"
 #include "DatabaseProxy.h"
+#include <manager/RSSfeedManager.h>
 #include <string>
 
 #include <tntdb/connect.h>
@@ -154,6 +155,17 @@ void WebACL::createAccount (
           .execute();
 
     }
+    
+    RSSfeed newFeed;
+    newFeed.setTitle( "Neuer Account" );
+    std::string description = "Der Account mit der ID " 
+        + cxxtools::convert<std::string>( user_id ) \
+        + " wurde neu erstellt. Als Login wurde \"" + user_name 
+        + "\" gewählt, und als real name: \"" + real_name + "\".";
+    newFeed.setDescription( description );
+    newFeed.channels.push_back("account");
+    RSSfeedManager feedManager;
+    feedManager.addNewFeed( newFeed );    
 
 }
 

@@ -1,13 +1,14 @@
 
 
     <div class="login-link">
+        <a href="SwitchToHandheldVersion">Mobilen Version</a>
+        <br>
 % if (  userSession.isInRole ( "user" ) == true) {
         <$ userSession.getUserName( ) $>(ID:<$ userSession.getUserID( ) $>) <a href="logout">Abmelden</a>
 % } else {
         <a href="LogIn">Anmelden</a>
 % }
         <br>
-        <a href="SwitchToHandheldVersion">Mobilen Version</a>
+        <a href="rss.xml"><img src="feed-icon.png"  width="22px" height="auto"  align="right"  vspace="0" hspace="0" /></a>
     </div>
-
 

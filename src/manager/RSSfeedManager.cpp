@@ -41,6 +41,7 @@ RSSfeedManager::RSSfeedManager()
 
 void RSSfeedManager::addNewFeed( RSSfeed newFeed )
 {
+    log_debug("addNewFeed"  );
     tntdb::Transaction trans(conn);
 
     tntdb::Statement insQuote = conn.prepare(
@@ -63,7 +64,30 @@ void RSSfeedManager::addNewFeed( RSSfeed newFeed )
             .set( "description", newFeed.m_description )
             .execute();
 
+    unsigned long feedID = conn.lastInsertId("rss_feeds_id_seq");
+
+    tntdb::Statement insQuoteKeyword = conn.prepare(
+            "INSERT INTO rss_feeds_channel \
+             ( \
+                 channel_title, \
+                 rss_feeds_id \
+             ) VALUES ( \
+                 :channel_title, \
+                 :rss_feeds_id \
+             )"
+        );
+
+    insQuoteKeyword.set( "rss_feeds_id", feedID );
+
+    for (unsigned int i=0; i < newFeed.channels.size(); ++i )
+    {
+        insQuoteKeyword.set( "channel_title", newFeed.channels[i] )
+                       .execute();
+    }    
+    
     trans.commit();
+    
+    log_debug("feed angelegt id: " <<  feedID );
 }
 
 
@@ -92,32 +116,12 @@ std::string  RSSfeedManager::getLastUpdate(){
     }
 
     log_debug("cxxdt.toIsoString(): " <<  cxxdt.toIsoString() );
-    
-//     struct tm timeinfo;
-//     timeinfo.tm_year = cxxdt.year();
-//     timeinfo.tm_mon = cxxdt.month() - 1;
-//     timeinfo.tm_mday = cxxdt.day();
-//     timeinfo.tm_wday = 0;
-//     timeinfo.tm_hour = cxxdt.hour();
-//     timeinfo.tm_min = cxxdt.minute();
-//     timeinfo.tm_sec = cxxdt.second();
-//     timeinfo.tm_isdst = 0;
-//     // somewhat strange to use mktime to convert tm to time_t 
-//     // and localtime_r back to tm but we need the day of week
-//     time_t t = mktime(&timeinfo);  
-//     // localtime_r is the thread safe variant of localtime.
-//     localtime_r(&t, &timeinfo);
-//     char buffer[80];
-//     strftime(buffer, sizeof(buffer), "%a, %d %b %Y %T %z", &timeinfo);
-//     
-//     return std::string(buffer);
     return covertDate( cxxdt );
 }
 
 std::string  RSSfeedManager::covertDate( cxxtools::DateTime cxxdt ){
 
     struct tm timeinfo;
-//     timeinfo.tm_year = cxxdt.year();
     timeinfo.tm_year = ( cxxdt.year() - 1900 );
     timeinfo.tm_mon = cxxdt.month() - 1;
     timeinfo.tm_mday = cxxdt.day();
@@ -132,9 +136,7 @@ std::string  RSSfeedManager::covertDate( cxxtools::DateTime cxxdt ){
     // localtime_r is the thread safe variant of localtime.
     localtime_r(&t, &timeinfo);
     char buffer[80];
-//     strftime(buffer, sizeof(buffer), "%a, %d %b %y %T %z", &timeinfo);
     strftime(buffer, sizeof(buffer), "%a, %d %b %Y %T %z", &timeinfo);
-//     strftime(buffer, sizeof(buffer), "%a, %d %b %G %T %z", &timeinfo);
     
     return std::string(buffer);
 }
@@ -152,7 +154,6 @@ std::vector<RSSfeed> RSSfeedManager::getFeeds ( int days ){
                     WHERE createtime >  now() - INTERVAL '" + strDays + " day' \
                     ORDER BY createtime ");
     st.execute();
-//     st.set( "days", days ).execute();
 
     for (tntdb::Statement::const_iterator it = st.begin();
         it != st.end(); ++it
@@ -165,16 +166,7 @@ std::vector<RSSfeed> RSSfeedManager::getFeeds ( int days ){
         feed.setLinkURL( row[2].getString() );
         feed.setDescription( row[3].getString() );
         cxxtools::DateTime cxxdt;
-        row[4].get(cxxdt);        
-//         tntdb::Datetime dbdt = row[3].getDatetime() ;
-//         cxxtools::DateTime cxxdt(
-//             dbdt.getYear(),
-//             dbdt.getMonth(),
-//             dbdt.getDay(),
-//             dbdt.getHour(),
-//             dbdt.getMinute(),
-//             dbdt.getSecond()
-//         );
+        row[4].get(cxxdt);
         feed.setCreateTime( cxxdt );
         feedList.push_back( feed );
     }
