@@ -27,10 +27,14 @@ int main ( int argc, char* argv[] )
            .setPathInfo("resources/$1");
         app.mapUrl("^/favicon.ico$", "resources")
            .setPathInfo("resources/favicon.ico");
+        app.mapUrl("^/feed-icon.png$", "resources")
+           .setPathInfo("resources/feed-icon.png");
+           
 
         // special pages
         app.mapUrl( "^/(.*)$", "$1" );
         app.mapUrl( "^/$", "home" );
+        app.mapUrl( "^/rss.xml", "RSSfeedView" );
 
         // mvc stuff
         app.mapUrl( "^/(.*)$", "$1Controller" );

@@ -50,12 +50,14 @@ ecppSources = \
 	views/portaladmin.ecpp \
 	views/portalquote.ecpp \
 	views/ResetOwnPasswordView.ecpp \
+	views/RSSfeedView.ecpp \
 	views/SwitchToHandheldVersionView.ecpp
 
 staticSources = \
 	resources/favicon.ico \
 	resources/peruschim.css \
-	resources/small_screens.css
+	resources/small_screens.css \
+	resources/feed-icon.png
 
 peruschim_cpp_SOURCES = \
 	controller/EditAccountController.cpp \
@@ -74,6 +76,7 @@ peruschim_cpp_SOURCES = \
 	manager/BibleManager.cpp \
 	manager/EditionManager.cpp \
 	manager/QuoteManager.cpp \
+	manager/RSSfeedManager.cpp \
 	models/AccountData.cpp \
 	models/Config.cpp \
 	models/DatabaseProxy.cpp \
