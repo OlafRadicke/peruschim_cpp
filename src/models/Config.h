@@ -32,16 +32,7 @@ class Config {
 
     friend void operator>>= (const cxxtools::SerializationInfo& si, Config& config );
 
-    Config()
-      : configRead(false),
-        m_appIp(""),
-        m_appPort(8008),
-        m_dbDriver("postgresql:dbname=peruschim"),
-        m_sessionTimeout( 1000 ),
-        m_smtpServer( "localhost" ),
-        m_mailFromAddress( "peruschim_cpp.conf@localhost" ),
-        m_domainName( "peruschim.domain" )
-    { }
+
 
 public:
     static Config& it();
@@ -83,6 +74,21 @@ private:
     unsigned m_sessionTimeout;
     std::string m_smtpServer;
     std::string m_mailFromAddress;
+    
+
+public:    
+    
+    Config()
+      : configRead(false),
+        m_appIp(""),
+        m_appPort(8008),
+        m_dbDriver("postgresql:dbname=peruschim"),
+        m_sessionTimeout( 1000 ),
+        m_smtpServer( "localhost" ),
+        m_mailFromAddress( "peruschim_cpp.conf@localhost" ),
+        m_domainName( "peruschim.domain" )
+    { }
+    
 };
 
 #endif

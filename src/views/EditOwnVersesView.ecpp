@@ -79,7 +79,7 @@
                         name="arg_quote_id"
                         value="<$ s_quoteList[i].getID( ) $>" >
                     <button name="arg_edit_button"
-                            value="<$ s_quoteList[i].getID( ) $>"
+                            value="pusched"
                             type="submit">Bearbeiten
                     </button>
                 </form>
@@ -92,6 +92,7 @@
                             value="pusched"
                             type="submit">Löschen
                     </button>
+
                 </form>
             </div>
 % }

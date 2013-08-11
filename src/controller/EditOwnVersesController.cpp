@@ -60,10 +60,10 @@ unsigned EditOwnVersesController::operator() (tnt::HttpRequest& request, tnt::Ht
 
     unsigned long arg_quote_id =
         qparam.arg<unsigned long>("arg_quote_id");
-    bool arg_affirmation_delete_button =
-        qparam.arg<unsigned long>("arg_affirmation_delete_button");
     bool arg_delete_verse_button =
-        qparam.arg<unsigned long>("arg_delete_verse_button");
+        qparam.arg<bool>("arg_delete_verse_button");
+    bool arg_affirmation_delete_button =
+        qparam.arg<bool>("arg_affirmation_delete_button");
 
     log_debug( "userSession.getUserName(): " << userSession.getUserName() );
     // ACL Check
@@ -71,10 +71,14 @@ unsigned EditOwnVersesController::operator() (tnt::HttpRequest& request, tnt::Ht
         log_debug( "Nicht eingeloggt" );
         return reply.redirect ( "/access_denied" );
     }
-    log_debug( "Eingeloggt" );
+    log_debug( __LINE__ << " Eingeloggt" );
+    log_debug( __LINE__ << " arg_quote_id" << arg_quote_id);
+    log_debug( __LINE__ << " arg_delete_verse_button" << arg_delete_verse_button);
+    log_debug( __LINE__ << " arg_affirmation_delete_button" << arg_affirmation_delete_button);
 
     // is button delete pushed?
     if ( arg_delete_verse_button ) {
+        log_debug( "arg_delete_verse_button" );
         s_quote_id = arg_quote_id;
         Quote quoteInfo = QuoteRegister::getQuoteWithID( s_quote_id ) ;
         s_affirmation_question =
@@ -88,6 +92,7 @@ unsigned EditOwnVersesController::operator() (tnt::HttpRequest& request, tnt::Ht
 
     // if delete affirmation clicked.
     if ( arg_affirmation_delete_button ) {
+        log_debug( "arg_affirmation_delete_button" );
         
         log_debug( "will löschen: " << arg_quote_id );
         QuoteRegister::deleteQuote(

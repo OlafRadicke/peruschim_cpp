@@ -69,7 +69,6 @@ std::vector<Quote> QuoteRegister::getQuotes ( tntdb::Statement st ){
     for (tntdb::Statement::const_iterator it = st.begin();
         it != st.end(); ++it
     ) {
-        DEBUG std::endl;
         tntdb::Row row = *it;
         Quote dataQuote = Quote();
 
