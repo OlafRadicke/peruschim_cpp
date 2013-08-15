@@ -28,7 +28,13 @@ h3 {
 /* -------- small text -------------------------- */
 
 span.small{
-    font-size: 75%;
+/*     font-size: 75%; */
+    display: none 
+}
+
+span.explanation{
+/*     font-size: 75%; */
+    display: none 
 }
 
 /* -------- small text -------------------------- */

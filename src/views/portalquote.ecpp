@@ -77,11 +77,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <div class="columnbox">
             <ul>
                 <li><a href="NewQuote"><b>Neuer Vers:</b></a> 
-                    <span class="small">Einen neuen Verseintrag erstellen.</span></li>
+                    <span class="explanation">Einen neuen Verseintrag erstellen.</span></li>
                 <!-- <li><a href="editquote"><b>Verse bearbeiten:</b></a> 
-                    <span class="small">Eigene Verse bearbeiten.</li> -->
+                    <span class="explanation">Eigene Verse bearbeiten.</li> -->
                 <li><a href="EditEditions"><b>Ausgaben:</b></a> 
-                    <span class="small">Einen neuen
+                    <span class="explanation">Einen neuen
                     Datensatz zu einer Bibel-Ausgabe anlegen oder bearbeiten.</span>
                 </li>
             </ul>
