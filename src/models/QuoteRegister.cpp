@@ -288,7 +288,7 @@ struct QuoteExportContainer
 * @arg si serialization info
 * @arg QuoteExportContainer
 */
-void operator<<= ( cxxtools::SerializationInfo& si, 
+void operator<<= ( cxxtools::SerializationInfo& si,
                    const QuoteExportContainer& quoteContainer )
 {
     si.addMember("user-quotes") <<= quoteContainer.allUserQuotes;
@@ -299,7 +299,7 @@ void operator<<= ( cxxtools::SerializationInfo& si,
 * @arg si serialization info
 * @arg QuoteExportContainer
 */
-void operator>>= ( const cxxtools::SerializationInfo& si, 
+void operator>>= ( const cxxtools::SerializationInfo& si,
                    QuoteExportContainer& quoteContainer)
 {
     DEBUG "deserialize the QuoteExportContainer... " << std::endl;
@@ -350,7 +350,7 @@ std::vector<Quote> QuoteRegister::getAllQuoteOfUser( const unsigned long userID 
         series \
     FROM quote \
     WHERE owner_id= :v1  \
-    ORDER BY series, title, chapter_begin" );
+    ORDER BY series, title, chapter_begin, sentence_begin" );
     st.set( "v1", userID ).execute();
 
     return getQuotes ( st );
@@ -394,7 +394,7 @@ std::vector<Quote> QuoteRegister::getAllQuoteOfKeyword(
     return getQuotes ( st );
 }
 
-void QuoteRegister::jsonImport( const std::string jsonText, 
+void QuoteRegister::jsonImport( const std::string jsonText,
                                 unsigned long owner_id ) {
     try
     {
