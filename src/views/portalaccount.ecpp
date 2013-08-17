@@ -75,22 +75,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <li>
                     <a href="ResetOwnPassword">
                         <b>Passwort ändern:</b>
-                    </a> <span class="small">Mein Passwort ändern.</span>
+                    </a> <span class="explanation">Mein Passwort ändern.</span>
                 </li>
                 <li>
                     <a href="EditOwnVerses">
                         <b>Verse berbeiten:</b>
-                    </a> <span class="small">Die eigenen Verse auflisten und bearbeiten.</span>
+                    </a> <span class="explanation">Die eigenen Verse auflisten und bearbeiten.</span>
                 </li>
                 <li>
                     <a href="ExportOwnVerses">
                         <b>Verse exportieren:</b>
-                    </a> <span class="small">Exportieren der eigenen Verse zum Sichern, Migrieren oder Bearbeiten.</span>
+                    </a> <span class="explanation">Exportieren der eigenen Verse zum Sichern, Migrieren oder Bearbeiten.</span>
                 </li>
                 <li>
                     <a href="ImportOwnVerses">
                         <b>Verse importieren:</b>
-                    </a> <span class="small">Importieren von eigenen Versen zum Migrieren oder zur externen Bearbeitung.</span>
+                    </a> <span class="explanation">Importieren von eigenen Versen zum Migrieren oder zur externen Bearbeitung.</span>
                 </li>
 
             </ul>

@@ -79,10 +79,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <div class="columnbox">
             <ul>
                 <li><a href="NewAccount"><b>Neuer Account:</b></a> 
-                    <span class="small">Einen neuen Account für das Webportal anlegen.</span>
+                    <span class="explanation">Einen neuen Account für das Webportal anlegen.</span>
                 </li>
                 <li><a href="EditAccount"><b>Accounts bearbeiten:</b></a> 
-                    <span class="small">Einen Account bearbeiten oder löschen.</span>
+                    <span class="explanation">Einen Account bearbeiten oder löschen.</span>
                 </li>
             </ul>
         </div>

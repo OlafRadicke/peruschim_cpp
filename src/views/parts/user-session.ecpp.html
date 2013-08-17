@@ -1,7 +1,11 @@
 
 
     <div class="login-link">
+% if ( userSession.isHandheldVersion() ) {
+        <a href="SwitchToHandheldVersion">Normale Ansicht</a>
+% } else {
         <a href="SwitchToHandheldVersion">Mobilen Version</a>
+% }
         <br>
 % if (  userSession.isInRole ( "user" ) == true) {
         <$ userSession.getUserName( ) $>(ID:<$ userSession.getUserID( ) $>) <a href="logout">Abmelden</a>
