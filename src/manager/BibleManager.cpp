@@ -48,7 +48,11 @@ public:
         return bibleBooks.at(n);
     }
 
-    std::string getBibleserverComURL(const std::string& bookTitle, unsigned bookChapterBegin) const;
+    std::string getBibleserverComURL(
+        const std::string& bibleTrans,
+        const std::string& bookTitle,
+        unsigned bookChapterBegin
+    ) const;
 
 private:
     Impl()
@@ -249,15 +253,40 @@ BibleManager::Impl& BibleManager::Impl::getInstance()
     return impl;
 }
 
-std::string BibleManager::Impl::getBibleserverComURL(const std::string& bookTitle, unsigned bookChapterBegin) const
+// std::string BibleManager::Impl::getBibleserverComURL(
+//     const std::string& bookTitle,
+//     unsigned bookChapterBegin) const
+// {
+//     std::string t = bookTitle;
+//     std::map<std::string, std::string>::const_iterator it =
+//         bibleserverComNames.find(bookTitle);
+//     if (it != bibleserverComNames.end())
+//         t = it->second;
+//
+//     std::ostringstream s;
+//     s << "http://www.bibleserver.com/text/EU/"
+//       << t
+//       << '/'
+//       << bookChapterBegin;
+//
+//     return s.str();
+// }
+
+std::string BibleManager::Impl::getBibleserverComURL(
+    const std::string& bibleTrans,
+    const std::string& bookTitle,
+    unsigned bookChapterBegin) const
 {
     std::string t = bookTitle;
-    std::map<std::string, std::string>::const_iterator it = bibleserverComNames.find(bookTitle);
+    std::map<std::string, std::string>::const_iterator it =
+        bibleserverComNames.find(bookTitle);
     if (it != bibleserverComNames.end())
         t = it->second;
 
     std::ostringstream s;
-    s << "http://www.bibleserver.com/text/EU/"
+    s << "http://www.bibleserver.com/text/"
+      << bibleTrans
+      << "/"
       << t
       << '/'
       << bookChapterBegin;
@@ -293,7 +322,24 @@ const std::string& BibleManager::bibleBook(unsigned n) const
     return impl->bibleBook(n);
 }
 
-std::string BibleManager::getBibleserverComURL(const std::string& bookTitle, unsigned bookChapterBegin) const
+// std::string BibleManager::getBibleserverComURL(
+//     const std::string& bookTitle,
+//     unsigned bookChapterBegin) const
+// {
+//     return impl->getBibleserverComURL(
+//         bookTitle,
+//         bookChapterBegin
+//     );
+// }
+
+std::string BibleManager::getBibleserverComURL(
+    const std::string& bibleTrans,
+    const std::string& bookTitle,
+    unsigned bookChapterBegin) const
 {
-    return impl->getBibleserverComURL(bookTitle, bookChapterBegin);
+    return impl->getBibleserverComURL(
+        bibleTrans,
+        bookTitle,
+        bookChapterBegin
+    );
 }

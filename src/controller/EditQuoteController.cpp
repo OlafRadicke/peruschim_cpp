@@ -55,7 +55,7 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
 {
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    
+
     TNT_REQUEST_SHARED_VAR( BibleManager,             s_bibleManager, () );
     TNT_REQUEST_SHARED_VAR( Quote,                    s_quoteData, () );
     TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
@@ -131,9 +131,10 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
         s_quoteData.setNote( arg_note );
         s_quoteData.setIsPrivateData( arg_is_private_data );
         log_debug( "pass" );
-        log_debug( "s_quoteData.getBibleserverComURL(): " << s_bibleManager.getBibleserverComURL(s_quoteData) );
+        log_debug( "s_quoteData.getBibleserverComURL(): " <<
+            s_bibleManager.getBibleserverComURL( "EU", s_quoteData ) );
         log_debug( "pass" );
-        s_bibleserverComURL = s_bibleManager.getBibleserverComURL( s_quoteData );
+        s_bibleserverComURL = s_bibleManager.getBibleserverComURL( "EU", s_quoteData );
         log_debug( "s_bibleserverComURL: " << s_bibleserverComURL );
     }
 

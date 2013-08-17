@@ -42,8 +42,13 @@ public:
     void bibleserverComURL()
     {
         BibleManager bibleManager;
-        CXXTOOLS_UNIT_ASSERT_EQUALS(bibleManager.getBibleserverComURL("2. Mose", 2), "http://www.bibleserver.com/text/EU/2.Mose/2");
-    CXXTOOLS_UNIT_ASSERT_EQUALS(bibleManager.getBibleserverComURL("Ijob", 5), "http://www.bibleserver.com/text/EU/Hiob/5");
+        CXXTOOLS_UNIT_ASSERT_EQUALS(
+            bibleManager.getBibleserverComURL("EU", "2. Mose", 2),
+            "http://www.bibleserver.com/text/EU/2.Mose/2"
+        );
+    CXXTOOLS_UNIT_ASSERT_EQUALS(
+        bibleManager.getBibleserverComURL("ELB", "Ijob", 5),
+        "http://www.bibleserver.com/text/ELB/Hiob/5");
     }
 };
 

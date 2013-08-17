@@ -147,6 +147,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         name="arg_quote_text"
                         class="full-width"
                         rows="2"><$ s_quoteData.getQuoteText() $></textarea> <br>
+
+                    <select name="arg_bible_trans" size="1">
+                        <option value="LUT"<? userSession.getPrefersBibleTrans() == "LUT" ? " selected" ?>>
+                            Luther 1986
+                        </option>
+                        <option value="ELB"<? userSession.getPrefersBibleTrans() == "ELB" ? " selected" ?>>
+                            Elberfelder
+                        </option>
+                        <option value="HFA"<? userSession.getPrefersBibleTrans() == "HFA" ? " selected" ?>>
+                            Hoffnung für alle
+                        </option>
+                        <option value="SLT"<? userSession.getPrefersBibleTrans() == "SLT" ? " selected" ?>>
+                            Schlachter 2000
+                        </option>
+                        <option value="NGÜ"<? userSession.getPrefersBibleTrans() == "NGÜ" ? " selected" ?>>
+                            Neue Genfer
+                        </option>
+                        <option value="GNB"<? userSession.getPrefersBibleTrans() == "GNB" ? " selected" ?>>
+                            Gute Nachricht
+                        </option>
+                        <option value="EU"<? userSession.getPrefersBibleTrans() == "EU" ? " selected" ?>>
+                            Einheitsübersetzung
+                        </option>
+                        <option value="NLB"<? userSession.getPrefersBibleTrans() == "NLB" ? " selected" ?>>
+                            Neues Leben
+                        </option>
+                    </select>
                     <button name="arg_look_up_button"
                             value="clicked"
                             type="submit">Auf bibleserver.com nachschlagen

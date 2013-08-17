@@ -36,9 +36,62 @@ public:
     unsigned bibleBooksCount() const;
     const std::string& bibleBook(unsigned n) const;
 
-    std::string getBibleserverComURL(const std::string& bookTitle, unsigned bookChapterBegin) const;
-    std::string getBibleserverComURL(const Quote& quote) const
-    { return getBibleserverComURL(quote.getBookTitle(), quote.getChapterBegin()); }
+    /**
+     * Get back a depth link to http://bibleserver.com
+     * @arg bookTitle title of a bible book
+     * @arg bookChapterBegin number of a chapter
+     * @return link as string
+     */
+    std::string getBibleserverComURL(
+        const std::string& bookTitle,
+        unsigned bookChapterBegin
+    ) const;
+
+    /**
+     * Get back a depth link to http://bibleserver.com
+     * @arg bibleTrans type of bible translation.
+     * @arg bookTitle title of a bible book
+     * @arg bookChapterBegin number of a chapter
+     * @return link as string
+     */
+    std::string getBibleserverComURL(
+        const std::string& bibleTrans,
+        const std::string& bookTitle,
+        unsigned bookChapterBegin
+    ) const;
+
+    /*
+     * Get back a depth link to http://bibleserver.com
+     * @arg quote a instance of class Quote with information about book and
+     * chapter.
+     * @return link as string
+     */
+//     std::string getBibleserverComURL(
+//         const Quote& quote) const
+//     {
+//         return getBibleserverComURL(
+//             quote.getBookTitle(),
+//             quote.getChapterBegin()
+//         );
+//     }
+
+    /**
+     * Get back a depth link to http://bibleserver.com
+     * @arg bibleTrans type of bible translation.
+     * @arg quote a instance of class Quote with information about book and
+     * chapter.
+     * @return link as string
+     */
+    std::string getBibleserverComURL(
+        const std::string& bibleTrans,
+        const Quote& quote) const
+    {
+        return getBibleserverComURL(
+            bibleTrans,
+            quote.getBookTitle(),
+            quote.getChapterBegin()
+        );
+    }
 
 private:
     class Impl;

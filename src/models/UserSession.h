@@ -58,17 +58,42 @@ public:
      **/
     void cleanRoll ( ) { m_userroles.clear(); }
 
+
+    /**
+     * Get back the mode of item view.
+     */
+    ItemView getItemViewMode() {
+        return this->m_item_view;
+    }
+
+    /**
+     * Get back the user login name.
+     * @return login name.
+     **/
+    std::string getUserName() { return m_username; }
+
+    /**
+     * get back the Prefers bible translation.
+     */
+    std::string getPrefersBibleTrans() { return prefersBibleTrans; }
+
+    /**
+     * Get back the user ID.
+     * @return ID of user.
+     **/
+    unsigned long  getUserID();
+
     /**
      * Get back, is user need the handheld version.
      * @return The value "true" is yes, he like the handheld version.
      **/
     bool isHandheldVersion() { return m_HandheldVersion; }
-    
+
 
     /**
      * Set is user need the handheld version.
      * @arg switchValue The value "true" is yes, he like the handheld version.
-     **/    
+     **/
     void isHandheldVersion( bool switchValue ){ m_HandheldVersion = switchValue; }
 
     /**
@@ -85,41 +110,29 @@ public:
      **/
     bool isInRole ( std::vector<std::string> siterolls ) ;
 
-    void setUserName ( std::string username ) {
-        m_username = username;
-    }
-    
-
     /**
      * Session logout.
      **/
-    void logout( );    
+    void logout( );
 
-    /**
-     * Get back the mode of item view.
-     */
-    ItemView getItemViewMode() {
-        return this->m_item_view;
-    }
-
-    /**
-     * Get back the user login name.
-     * @return login name.
-     **/
-    std::string getUserName() { return m_username; }
-
-
-    /**
-     * Get back the user ID.
-     * @return ID of user.
-     **/
-    unsigned long  getUserID();
 
     /**
      * Set the mode of item view.
      */
     void setItemViewMode ( ItemView mode) {
         this->m_item_view = mode;
+    }
+
+
+    /**
+     * set back the Prefers bible translation.
+     */
+    void setPrefersBibleTrans( std::string prefersTrans ) {
+        this->prefersBibleTrans = prefersTrans;
+    }
+
+    void setUserName ( std::string username ) {
+        m_username = username;
     }
 
 private:
@@ -145,11 +158,16 @@ private:
      * Options: "all","public"
      */
     ItemView m_item_view;
-    
+
     /**
      * Is the value "true" it's meaning "yes", he like the handheld version.
-     **/    
+     **/
     bool m_HandheldVersion;
+
+    /**
+     * The prefers bible translation.
+     */
+    std::string prefersBibleTrans;
 
 };
 
