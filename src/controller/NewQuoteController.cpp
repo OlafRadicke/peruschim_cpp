@@ -119,7 +119,6 @@ unsigned NewQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRep
         log_debug( "s_quoteData.getBibleserverComURL(): "
             << s_bibleManager.getBibleserverComURL( arg_bible_trans, s_quoteData) );
         log_debug( "pass" );
-//         s_bibleserverComURL = s_bibleManager.getBibleserverComURL(s_quoteData);
         s_bibleserverComURL =
             s_bibleManager.getBibleserverComURL( arg_bible_trans, s_quoteData);
         log_debug( "s_bibleserverComURL: " << s_bibleserverComURL );

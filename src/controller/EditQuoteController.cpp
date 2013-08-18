@@ -97,6 +97,8 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
         qparam.arg<bool>("arg_edit_button");
     bool arg_update_button =
         qparam.arg<bool>("arg_update_button");
+    std::string arg_bible_trans =
+        qparam.arg<std::string>("arg_bible_trans");
     bool arg_look_up_button =
         qparam.arg<bool>("arg_look_up_button");
     bool arg_rest_button =
@@ -116,6 +118,7 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
 
 
     if ( arg_look_up_button ) {
+        userSession.setPrefersBibleTrans( arg_bible_trans );
         log_debug( "getBibleserverComURL..." );
         s_quoteData.setID(arg_quote_id);
         s_quoteData.setEditionID( arg_edition_id );
@@ -132,9 +135,10 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
         s_quoteData.setIsPrivateData( arg_is_private_data );
         log_debug( "pass" );
         log_debug( "s_quoteData.getBibleserverComURL(): " <<
-            s_bibleManager.getBibleserverComURL( "EU", s_quoteData ) );
+            s_bibleManager.getBibleserverComURL( arg_bible_trans, s_quoteData ) );
         log_debug( "pass" );
-        s_bibleserverComURL = s_bibleManager.getBibleserverComURL( "EU", s_quoteData );
+        s_bibleserverComURL =
+            s_bibleManager.getBibleserverComURL( arg_bible_trans, s_quoteData);
         log_debug( "s_bibleserverComURL: " << s_bibleserverComURL );
     }
 

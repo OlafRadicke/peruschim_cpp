@@ -48,7 +48,7 @@ public:
         );
     CXXTOOLS_UNIT_ASSERT_EQUALS(
         bibleManager.getBibleserverComURL("ELB", "Ijob", 5),
-        "http://www.bibleserver.com/text/ELB/Hiob/5");
+        "http://www.bibleserver.com/text/ELB.'/Hiob/5");
     }
 };
 
