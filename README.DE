@@ -6,6 +6,8 @@ ABHÄNGIGKEITEN
 - tntnet
 - tntnet-devel
 - tntdb
+- poco-devel
+
 zum übersetzen von Tntnet:
 - automake
 - autoconf

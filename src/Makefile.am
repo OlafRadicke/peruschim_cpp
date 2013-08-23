@@ -93,7 +93,7 @@ peruschim_cpp_SOURCES = \
 nodist_peruschim_cpp_SOURCES = \
 	resources.cpp
 
-peruschim_cpp_LDFLAGS = -lcxxtools -ltntnet -ltntdb
+peruschim_cpp_LDFLAGS = -lcxxtools -ltntnet -ltntdb -lPocoFoundation
 
 CLEANFILES = $(ecppSources:.ecpp=.cpp) $(ecppSources:.ecpp=.deps) resources.cpp
 
