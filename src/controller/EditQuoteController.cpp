@@ -114,6 +114,7 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
 
     if ( arg_edit_button ) {
         s_quoteData = QuoteRegister::getQuoteWithID( arg_quote_id );
+        log_debug( "########## s_quoteData.isPrivateData(): " << s_quoteData.isPrivateData() );
     }
 
 
@@ -179,10 +180,11 @@ unsigned EditQuoteController::operator() (tnt::HttpRequest& request, tnt::HttpRe
 
         log_debug( "arg_is_private_data: " << arg_is_private_data );
         if ( arg_is_private_data ) {
-            s_quoteData.setIsPrivateData( false );
+            log_debug( "########### IS PRIVATE######### " << arg_is_private_data );
         } else {
-            s_quoteData.setIsPrivateData( true );
+            log_debug( "########### IS NOT PRIVATE######### " << arg_is_private_data );
         }
+        s_quoteData.setIsPrivateData( arg_is_private_data );
 
         log_debug( "owner id: " << userSession.getUserID() );
         s_quoteData.setOwnerID( userSession.getUserID() );

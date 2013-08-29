@@ -7,7 +7,7 @@ br.clear-both {
 /* --------------- head lines --------------------- */
 
 h1 {
-    
+
     font-size: 120%;
     padding: 0px;
     margin: 0px;
@@ -29,12 +29,12 @@ h3 {
 
 span.small{
 /*     font-size: 75%; */
-    display: none 
+    display: none
 }
 
 span.explanation{
 /*     font-size: 75%; */
-    display: none 
+    display: none
 }
 
 /* -------- small text -------------------------- */
@@ -99,6 +99,48 @@ button:hover {
     border-top-left-radius:5px;
     border-bottom-left-radius:5px;
 
+}
+
+/* --------------- button low priority -------------------------- */
+
+button.low_priority {
+    padding: 0px;
+    border: 1px solid #C3C3C3;
+    color: black;
+    background: #fff;
+
+    -moz-border-radius-topright:0px;
+    -moz-border-radius-bottomright:0px;
+    -webkit-border-top-right-radius:0px;
+    -webkit-border-bottom-right-radius:0px;
+    border-top-right-radius:0px;
+    border-bottom-right-radius:0px;
+    -moz-border-radius-topleft:0px;
+    -moz-border-radius-bottomleft:0px;
+    -webkit-border-top-left-radius:0px;
+    -webkit-border-bottom-left-radius:0px;
+    border-top-left-radius:0px;
+    border-bottom-left-radius:0px;
+}
+
+button.low_priority:hover {
+    padding: 0px;
+    border: 1px solid #C3C3C3;
+    color: #fff;
+    background: #979797;
+
+    -moz-border-radius-topright:0px;
+    -moz-border-radius-bottomright:0px;
+    -webkit-border-top-right-radius:0px;
+    -webkit-border-bottom-right-radius:0px;
+    border-top-right-radius:0px;
+    border-bottom-right-radius:0px;
+    -moz-border-radius-topleft:0px;
+    -moz-border-radius-bottomleft:0px;
+    -webkit-border-top-left-radius:0px;
+    -webkit-border-bottom-left-radius:0px;
+    border-top-left-radius:0px;
+    border-bottom-left-radius:0px;
 }
 
 /* ----------------- select -------------------------- */

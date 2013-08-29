@@ -188,15 +188,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         name="arg_note"
                         cols="80"
                         rows="10"><$ s_quoteData.getNote() $></textarea></p>
-                <p>Datensatz nicht öffentlich sichtbar machen <input
+                <p>Datensatz nicht öffentlich sichtbar machen
+                    <input
                         type="checkbox"
                         id="is_private_data"
-%     if ( s_quoteData.isPrivateData() ) {
+                        name="arg_is_private_data"
                         value="true"
-%     } else {
-                        value="false"
-%     }
-                        name="arg_is_private_data" /></p>
+% log_debug( "#####VIEW##### s_quoteData.isPrivateData(): " << s_quoteData.isPrivateData() );
+%     if ( s_quoteData.isPrivateData() ) {
+                        checked
+%     } 
+                    /></p>
 
                 <p>
                     <input
