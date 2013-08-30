@@ -50,7 +50,7 @@ public:
 
     const std::string& dbDriver() const
     { return m_dbDriver; }
-    
+
     const std::string& domainName() const
     { return m_domainName; }
 
@@ -64,20 +64,19 @@ public:
     { return m_mailFromAddress; }
 
 private:
-    bool configRead;
-
+    bool                        configRead;
     cxxtools::SerializationInfo m_logging;
-    std::string m_appIp;
-    unsigned short m_appPort;
-    std::string m_dbDriver;
-    std::string m_domainName;
-    unsigned m_sessionTimeout;
-    std::string m_smtpServer;
-    std::string m_mailFromAddress;
-    
+    std::string                 m_appIp;
+    unsigned short              m_appPort;
+    std::string                 m_dbDriver;
+    std::string                 m_domainName;
+    unsigned                    m_sessionTimeout;
+    std::string                 m_smtpServer;
+    std::string                 m_mailFromAddress;
 
-public:    
-    
+
+public:
+
     Config()
       : configRead(false),
         m_appIp(""),
@@ -88,7 +87,7 @@ public:
         m_mailFromAddress( "peruschim_cpp.conf@localhost" ),
         m_domainName( "peruschim.domain" )
     { }
-    
+
 };
 
 #endif

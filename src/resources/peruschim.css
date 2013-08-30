@@ -56,12 +56,48 @@ button:hover {
     -webkit-border-bottom-left-radius:5px;
     border-top-left-radius:5px;
     border-bottom-left-radius:5px;
+}
 
-/*
-    -moz-box-shadow: 5px 5px 8px #ADADAD;
-    -webkit-box-shadow: 5px 5px 8px #ADADAD;
-    box-shadow: 5px 5px 8px #ADADAD;
-*/
+/* --------------- button low priority -------------------------- */
+
+button.low_priority {
+    padding: 0px;
+    border: 1px solid #C3C3C3;
+    color: black;
+    background: #fff;
+
+    -moz-border-radius-topright:0px;
+    -moz-border-radius-bottomright:0px;
+    -webkit-border-top-right-radius:0px;
+    -webkit-border-bottom-right-radius:0px;
+    border-top-right-radius:0px;
+    border-bottom-right-radius:0px;
+    -moz-border-radius-topleft:0px;
+    -moz-border-radius-bottomleft:0px;
+    -webkit-border-top-left-radius:0px;
+    -webkit-border-bottom-left-radius:0px;
+    border-top-left-radius:0px;
+    border-bottom-left-radius:0px;
+}
+
+button.low_priority:hover {
+    padding: 0px;
+    border: 1px solid #C3C3C3;
+    color: #fff;
+    background: #979797;
+
+    -moz-border-radius-topright:0px;
+    -moz-border-radius-bottomright:0px;
+    -webkit-border-top-right-radius:0px;
+    -webkit-border-bottom-right-radius:0px;
+    border-top-right-radius:0px;
+    border-bottom-right-radius:0px;
+    -moz-border-radius-topleft:0px;
+    -moz-border-radius-bottomleft:0px;
+    -webkit-border-top-left-radius:0px;
+    -webkit-border-bottom-left-radius:0px;
+    border-top-left-radius:0px;
+    border-bottom-left-radius:0px;
 }
 
 /* ----------------- select -------------------------- */

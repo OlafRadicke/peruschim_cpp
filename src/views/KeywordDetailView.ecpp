@@ -59,28 +59,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="centerbox">
         <h1>Schlagwort: <i><$ s_keyword $></i></h1>
         <div class="columnbox">
-            <form method="post" action="EditQuote">
 % for ( unsigned int i=0; i < s_quoteList.size(); i++) {
-                <div class="simple-box">
-                    <h2>
-                        <$ s_quoteList[i].getBookTitle() $>&#160;
-                        <$ s_quoteList[i].getChapterBegin() $>:
-                        <$ s_quoteList[i].getSentenceBegin() $>
-                    </h2>
-                    <ul>
-                        <li>Zitat: <i><$ s_quoteList[i].getQuoteText() $></i></li>
-                        <li>Notiz: <i><$ s_quoteList[i].getNote() $></i></li>
-                        <li>Schlagworte: <ul>
+            <div class="simple-box">
+                <h2>
+                    <$ s_quoteList[i].getBookTitle() $>&#160;
+                    <$ s_quoteList[i].getChapterBegin() $>:
+                    <$ s_quoteList[i].getSentenceBegin() $>
+                </h2>
+                <ul>
+                    <li>Zitat: <i><$ s_quoteList[i].getQuoteText() $></i></li>
+                    <li>Notiz: <i><$ s_quoteList[i].getNote() $></i></li>
+                    <li>Schlagworte:
 %     std::vector<std::string> keywordList = s_quoteList[i].getKeywords();
 %     for ( unsigned int i2=0; i2 <  keywordList.size(); i2++) {
-                            <li><i><$ keywordList[i2] $></i>
+                            <form method="post" action="KeywordDetail">
+                                <input
+                                        type="hidden"
+                                        name="arg_keyword"
+                                        value="<$ keywordList[i2] $>" >
+                                <button name="arg_detail_button"
+                                        class="low_priority"
+                                        value="pushed"
+                                        type="submit"><i><$ keywordList[i2] $></i>
+                                </button>
+                            </form>
 %     }
-                        </ul>
-                        </li>
+                    </li>
 %     AccountData owner = WebACL::getAccountsWithID( s_quoteList[i].getOwnerID() );
                         <li>Eigentümer: <i><$ owner.getLogin_name( ) $>(ID:<$ owner.getID( ) $>)</i></li>
-                    </ul>
+                </ul>
 %     if ( s_isLogin == true && s_quoteList[i].getOwnerID() == userSession.getUserID() ) {
+                <form method="post" action="EditQuote">
                     <input
                             type="hidden"
                             name="arg_quote_id"
@@ -90,10 +99,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             value="pushed"
                             type="submit">Bearbeiten
                     </button>
+                </form>
 %     }
-                </div>
+            </div>
 % }
-            </form>
         </div>
     </div>
 
