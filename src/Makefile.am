@@ -17,6 +17,7 @@ noinst_HEADERS = \
 	manager/BibleManager.h \
 	manager/EditionManager.h \
 	manager/QuoteManager.h \
+	manager/RSSfeedManager.h \
 	models/AccountData.h \
 	models/Config.h \
 	models/DatabaseProxy.h \
