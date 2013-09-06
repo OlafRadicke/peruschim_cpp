@@ -1,0 +1,129 @@
+<#
+Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#>
+
+
+<%session
+    scope="shared"
+    include="models/UserSession.h" >
+        UserSession userSession;
+</%session>
+
+<%request
+    scope="shared"
+    include="models/AccountData.h"
+    include="models/WebACL.h"
+    include="models/Edition.h">
+        std::string              s_feedback;
+        std::vector<AccountData> s_trustedAccountList;
+        std::vector<AccountData> s_searchAccountList;
+</%request>
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>PERUSCHHIM - Neuen Account anlegen</title>
+    <meta charset = "UTF-8" />
+    <& "style" &>
+</head>
+<body>
+    <%include>views/parts/user-session.ecpp.html</%include>
+    <%include>views/parts/head.ecpp.html</%include>
+    <br />
+    <div class="mainmenue">
+        <ul>
+            <li class="tableft"><a href="home">Home</a></li>
+            <li class="tabmiddle"><a href="KeywordRegister">Schlagwortsuche</a></li>
+            <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
+            <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
+            <li class="tabright"><a href="portaladmin">Administrationsportal</a></li>
+        </ul>
+    </div>
+    <br />
+    <div class="centerbox">
+        <h1>Anderen Benutzern das Vertrauen aussprechen oder entziehen</h1>
+% if ( s_feedback != "" ) {
+        <div class="feedback-box">
+            <b><$ s_feedback $> </b>
+        </div>
+% }
+
+        <div class="columnbox">
+            <h2>Vertrauen entziehen</h2>
+            <p>Diesen Benutzern hast du dein Vertrauen ausgesprochen:</p>
+% for ( unsigned int i_accountT = 0; i_accountT < s_trustedAccountList.size(); i_accountT++) {
+            <form method="post" >
+                <p>
+                    <$ s_trustedAccountList[i_accountT].getLogin_name() $>
+                    "<$ s_trustedAccountList[i_accountT].getReal_name() $>"
+                    (ID: <$ s_trustedAccountList[i_accountT].getID() $>)
+                </p>
+                <input
+                    type="hidden"
+                    name="arg_account_id"
+                    value="<$ s_trustedAccountList[i_accountT].getID() $>" >
+                <p>
+                    <button name="arg_revoke_trust_button"
+                            value="pushed"
+                            type="submit">Vertrauen entziehen
+                    </button>
+                </p>
+            </form >
+% }
+        </div>
+        <div class="columnbox">
+            <h2>Vertrauen aussprechen</h2>
+                <p>Benutzer:
+                    <input
+                        type="text"
+                        name="arg_serach_string">
+                    <button
+                        id="arg_serch_user_button"
+                        type="submit"
+                        name="arg_update_button"
+                        value="Speichern">suchen</button>
+                    <button
+                        id="arg_get_all_user_button"
+                        type="submit"
+                        name="arg_reset_button"
+                        value="reset">alle anzeigen</button>
+                    <a href="/home" >Abbruch</a></p>
+% for ( unsigned int i_accountS = 0; i_accountS < s_searchAccountList.size(); i_accountS++) {
+            <form method="post" >
+                <p>
+                    <$ s_searchAccountList[i_accountS].getLogin_name() $>
+                    "<$ s_searchAccountList[i_accountS].getReal_name() $>"
+                    (ID: <$ s_searchAccountList[i_accountS].getID() $>)
+                </p>
+                <input
+                    type="hidden"
+                    name="arg_account_id"
+                    value="<$ s_searchAccountList[i_accountS].getID() $>" >
+                <p>
+                    <button name="arg_trust_user_button"
+                            value="pushed"
+                            type="submit">Vertrauen aussprechen
+                    </button>
+                </p>
+            </form >
+% }
+        </div>
+    </div>
+
+<%include>views/parts/foot.ecpp.html</%include>
+</body>
+</html>

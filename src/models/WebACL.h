@@ -66,6 +66,13 @@ public:
     );
 
     /**
+     * Generated a random string for password salt.
+     * @para len length of sting.
+     * @return a random string
+     */
+    std::string static genRandomSalt ( const int len ) ;
+
+    /**
      * Get a account data with a specific id.
      * @arg id id from a account.
      * @return account data.
@@ -90,6 +97,13 @@ public:
      * @return list of user roles
      **/
     static std::vector<std::string> getRoll( const std::string& user_name );
+
+    /**
+     * Get back search result as account datas.
+     * @para serach_string a serach string.
+     * @return list of all account datas.
+     **/
+    static std::vector<AccountData> getSearchAccounts( const std::string& serach_string );
 
     /**
      * Check is user in database exist.
@@ -120,11 +134,17 @@ public:
     );
 
     /**
-     * Generated a random string for password salt.
-     * @para len length of sting.
-     * @return a random string
-     */
-    std::string static genRandomSalt ( const int len ) ;
+     * Remove a trusted link between tow user.
+     * This delete recursive the complied trusted link tree from untrusted
+     * account. Has a user no more guarantors, he can't publish his comments.
+     * @para trusted_account_id id of a trust user.
+     * @para guarantor_id id of his guarantor.
+     **/
+    void static setRevokeTrustAccounts(
+        const unsigned long trusted_account_id,
+        const unsigned long guarantor_id
+    );
+
 
     /**
      * Reset user rolls. So it's delete all rolls of a user and than reset
@@ -137,7 +157,18 @@ public:
         const std::vector<std::string> user_rolls
     );
 
-private:
+    /**
+     * Set a trusted link between tow user.
+     * Has a user a guarantor with trust, he can publish his comments.
+     * But guarantor must be a trusted by other user!
+     * @para trusted_account_id id of a trust user.
+     * @para guarantor_id id of his guarantor.
+     **/
+    void static setTrustAccounts(
+        const unsigned long trusted_account_id,
+        const unsigned long guarantor_id
+    );
+
 
 };
 

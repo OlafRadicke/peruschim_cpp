@@ -155,17 +155,17 @@ void WebACL::createAccount (
           .execute();
 
     }
-    
+
     RSSfeed newFeed;
     newFeed.setTitle( "Neuer Account" );
-    std::string description = "Der Account mit der ID " 
+    std::string description = "Der Account mit der ID "
         + cxxtools::convert<std::string>( user_id ) \
-        + " wurde neu erstellt. Als Login wurde \"" + user_name 
+        + " wurde neu erstellt. Als Login wurde \"" + user_name
         + "\" gewählt, und als real name: \"" + real_name + "\".";
     newFeed.setDescription( description );
     newFeed.channels.push_back("account");
     RSSfeedManager feedManager;
-    feedManager.addNewFeed( newFeed );    
+    feedManager.addNewFeed( newFeed );
 
 }
 
@@ -255,6 +255,7 @@ std::vector<AccountData> WebACL::getAllAccounts (){
 
 }
 
+
 std::string WebACL::genRandomSalt ( const int len) {
     /* initialize random seed: */
     srand (time(NULL));
@@ -315,6 +316,51 @@ std::vector<std::string> WebACL::getRoll ( const std::string& user_name ){
     return rolls;
 }
 
+
+std::vector<AccountData> WebACL::getSearchAccounts( const std::string& serach_string_ ) {
+    std::string serach_string = "%" + serach_string_ + "%";
+    std::vector<AccountData> accounts;
+
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
+    tntdb::Statement st = conn.prepare(
+            "SELECT \
+                id, \
+                login_name, \
+                real_name, \
+                password_hash, \
+                password_salt, \
+                email, \
+                account_disable  \
+            FROM account \
+            WHERE login_name LIKE :search \
+            OR real_name LIKE :search \
+            ORDER BY login_name"
+    );
+    st.set( "search", serach_string ).execute();
+
+    for (tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+//         Edition edition;
+        AccountData accountData;
+
+        accountData.setID( row[0].getInt() );
+        accountData.setLogin_name( row[1].getString () );
+        accountData.setReal_name( row[2].getString () );
+        accountData.setPassword_hash( row[3].getString () );
+        accountData.setPassword_salt( row[4].getString () );
+        accountData.setEmail( row[5].getString () );
+        accountData.setAccount_disable( row[5].getBool () );
+
+        accounts.push_back ( accountData );
+    }
+
+    log_debug("accounts.size(): " <<  accounts.size());
+    return accounts;
+
+}
+
 /* I ----------------------------------------------------------------------- */
 
 bool WebACL::isUserExist ( std::string user_name ){
@@ -373,6 +419,76 @@ void WebACL::setPassword (  std::string user_name, std::string new_password ) {
     }
 
 }
+
+void WebACL::setRevokeTrustAccounts(
+    const unsigned long trusted_account_id,
+    const unsigned long guarantor_id
+){
+    log_debug( __LINE__ + "start...");
+
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
+
+    tntdb::Statement st = conn.prepare(
+            "SELECT trusted_account_id  \
+            FROM account_trust \
+            WHERE guarantor_id = :trusted_account_id "
+    );
+    st.set( "trusted_account_id", trusted_account_id ).execute();
+
+    for (tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+        // Yes, this delete recursive the completed trusted link tree of this
+        // user.
+        WebACL::setRevokeTrustAccounts(
+            row[0].getInt(),
+            trusted_account_id
+        );
+    }
+
+    st = conn.prepare(
+        "DELETE FROM account_trust \
+        WHERE trusted_account_id = :trusted_account_id \
+        AND guarantor_id = :guarantor_id;"
+    );
+    st.set("trusted_account_id", trusted_account_id )
+    .set("guarantor_id", guarantor_id ).execute();
+
+}
+
+
+void WebACL::setTrustAccounts(
+    const unsigned long trusted_account_id,
+    const unsigned long guarantor_id
+) {
+    log_debug( __LINE__ + "start...");
+
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
+    tntdb::Statement st = conn.prepare(
+        "IF  ( \
+            SELECT count() \
+            FROM account_trust  \
+            WHEHR trusted_account_id =:guarantor_id  \
+             ) > 0 \
+        THEN \
+            INSERT INTO account_trust \
+            (   trusted_account_id, \
+                guarantor_id, \
+                createtime )\
+            VALUES \
+            (   :trusted_account_id,  \
+                :guarantor_id,  \
+                new()  \
+            ) \
+        END IF;"
+    );
+    st.set("trusted_account_id", trusted_account_id )
+    .set("guarantor_id", guarantor_id ).execute();
+
+}
+
+/* R ----------------------------------------------------------------------- */
 
 void WebACL::reSetUserRolls(
     const unsigned long  user_id,

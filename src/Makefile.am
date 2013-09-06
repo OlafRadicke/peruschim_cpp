@@ -51,7 +51,8 @@ ecppSources = \
 	views/portalquote.ecpp \
 	views/ResetOwnPasswordView.ecpp \
 	views/RSSfeedView.ecpp \
-	views/SwitchToHandheldVersionView.ecpp
+	views/SwitchToHandheldVersionView.ecpp \
+	views/TrustAUserView.ecpp
 
 staticSources = \
 	resources/favicon.ico \
@@ -73,6 +74,7 @@ peruschim_cpp_SOURCES = \
 	controller/NewQuoteController.cpp \
 	controller/ResetOwnPasswordController.cpp \
 	controller/SwitchToHandheldVersionController.cpp \
+	controller/TrustAUserController.cpp \
 	manager/BibleManager.cpp \
 	manager/EditionManager.cpp \
 	manager/QuoteManager.cpp \
