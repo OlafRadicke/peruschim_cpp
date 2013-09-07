@@ -31,7 +31,7 @@
 #include <iostream>
 #include <cxxtools/log.h>
 
-// log_define("component.TrustAUserController")
+log_define("component.TrustAUserController")
 
 class TrustAUserController : public tnt::Component
 {
@@ -48,6 +48,7 @@ static tnt::ComponentFactoryImpl<TrustAUserController> factory("TrustAUserContro
 unsigned TrustAUserController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
 {
 
+    log_debug( __LINE__ << "pass" );
     // shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
 

@@ -83,6 +83,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </a> <span class="explanation">Die eigenen Verse auflisten und bearbeiten.</span>
                 </li>
                 <li>
+                    <a href="TrustAUser">
+                        <b>Benutzer denen ich Vertraue:</b>
+                    </a> <span class="explanation">Anderen Benutzern das Vertrauen aussprechen oder wieder entziehen. Benutzer denen niemand vertraut, deren Kommentare und Verse werden nicht angezeigt.</span>
+                </li>
+                <li>
                     <a href="ExportOwnVerses">
                         <b>Verse exportieren:</b>
                     </a> <span class="explanation">Exportieren der eigenen Verse zum Sichern, Migrieren oder Bearbeiten.</span>

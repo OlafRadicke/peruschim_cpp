@@ -62,8 +62,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </div>
 % }
 
+        <h2>Vertrauen entziehen</h2>
         <div class="columnbox">
-            <h2>Vertrauen entziehen</h2>
             <p>Diesen Benutzern hast du dein Vertrauen ausgesprochen:</p>
 % for ( unsigned int i_accountT = 0; i_accountT < s_trustedAccountList.size(); i_accountT++) {
             <form method="post" >
@@ -85,9 +85,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </form >
 % }
         </div>
+        <h2>Vertrauen aussprechen</h2>
         <div class="columnbox">
-            <h2>Vertrauen aussprechen</h2>
-                <p>Benutzer:
+            <p>
+                <form method="post" >
                     <input
                         type="text"
                         name="arg_serach_string">
@@ -101,7 +102,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         type="submit"
                         name="arg_reset_button"
                         value="reset">alle anzeigen</button>
-                    <a href="/home" >Abbruch</a></p>
+                </form >
+            </p>
 % for ( unsigned int i_accountS = 0; i_accountS < s_searchAccountList.size(); i_accountS++) {
             <form method="post" >
                 <p>
