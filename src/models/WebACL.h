@@ -85,6 +85,7 @@ public:
      **/
     static std::vector<AccountData> getAllAccounts ( );
 
+
     /**
      * Get back all exist roles.
      * @return list of user roles
@@ -104,6 +105,13 @@ public:
      * @return list of all account datas.
      **/
     static std::vector<AccountData> getSearchAccounts( const std::string& serach_string );
+
+    /**
+     * Get back all account data where in trust of a specific user.
+     * @arg guarantor_id id from a guarantor account/user.
+     * @return list of account datas.
+     **/
+    static std::vector<AccountData> getTrustAccounts( unsigned long guarantor_id );
 
     /**
      * Check is user in database exist.

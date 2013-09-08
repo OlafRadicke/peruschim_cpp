@@ -255,25 +255,6 @@ std::vector<AccountData> WebACL::getAllAccounts (){
 
 }
 
-
-std::string WebACL::genRandomSalt ( const int len) {
-    /* initialize random seed: */
-    srand (time(NULL));
-    std::string randomString = "";
-    static const char alphanum[] =
-        "0123456789"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz";
-    for (int i = 0; i < len; ++i) {
-        int randNo = rand() % (sizeof(alphanum) - 1) ;
-        log_debug("randNo: " << randNo);
-        randomString.push_back ( alphanum[randNo] );
-    }
-    return randomString;
-}
-
-// bis hier
-
 std::vector<std::string> WebACL::getAllRolls ( ){
     DatabaseProxy database_proxy;
     std::vector< std::vector<std::string> > sqlResult;
@@ -289,6 +270,22 @@ std::vector<std::string> WebACL::getAllRolls ( ){
         rolls.push_back ( sqlResult[i][0] );
     }
     return rolls;
+}
+
+std::string WebACL::genRandomSalt ( const int len) {
+    /* initialize random seed: */
+    srand (time(NULL));
+    std::string randomString = "";
+    static const char alphanum[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
+    for (int i = 0; i < len; ++i) {
+        int randNo = rand() % (sizeof(alphanum) - 1) ;
+        log_debug("randNo: " << randNo);
+        randomString.push_back ( alphanum[randNo] );
+    }
+    return randomString;
 }
 
 
@@ -342,7 +339,6 @@ std::vector<AccountData> WebACL::getSearchAccounts( const std::string& serach_st
         it != st.end(); ++it
     ) {
         tntdb::Row row = *it;
-//         Edition edition;
         AccountData accountData;
 
         accountData.setID( row[0].getInt() );
@@ -360,6 +356,54 @@ std::vector<AccountData> WebACL::getSearchAccounts( const std::string& serach_st
     return accounts;
 
 }
+
+
+std::vector<AccountData> WebACL::getTrustAccounts( unsigned long guarantor_id ){
+
+    std::vector<AccountData> accounts;
+
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
+    tntdb::Statement st = conn.prepare(
+            "SELECT \
+                id, \
+                login_name, \
+                real_name, \
+                password_hash, \
+                password_salt, \
+                email, \
+                account_disable  \
+            FROM account \
+            WHERE id IN ( \
+                SELECT trusted_account_id \
+                FROM account_trust \
+                WHERE guarantor_id = :guarantor_id \
+                ) \
+            ORDER BY login_name"
+    );
+    st.set( "guarantor_id", guarantor_id ).execute();
+
+    for (tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+        AccountData accountData;
+
+        accountData.setID( row[0].getInt() );
+        accountData.setLogin_name( row[1].getString () );
+        accountData.setReal_name( row[2].getString () );
+        accountData.setPassword_hash( row[3].getString () );
+        accountData.setPassword_salt( row[4].getString () );
+        accountData.setEmail( row[5].getString () );
+        accountData.setAccount_disable( row[5].getBool () );
+
+        accounts.push_back ( accountData );
+    }
+
+    log_debug("accounts.size(): " <<  accounts.size());
+    return accounts;
+
+}
+
 
 /* I ----------------------------------------------------------------------- */
 

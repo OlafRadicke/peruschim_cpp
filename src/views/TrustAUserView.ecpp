@@ -76,7 +76,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     type="hidden"
                     name="arg_account_id"
                     value="<$ s_trustedAccountList[i_accountT].getID() $>" >
-                <p>
                     <button name="arg_revoke_trust_button"
                             value="pushed"
                             type="submit">Vertrauen entziehen
@@ -86,36 +85,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % }
         </div>
         <h2>Vertrauen aussprechen</h2>
+        <p>
+            <form method="post" >
+                <input
+                    type="text"
+                    name="arg_serach_string">
+                <button
+                    type="pushed"
+                    name="arg_serch_user_button"
+                    value="Speichern">suchen</button>
+            </form >
+            <form method="post" >
+                <button
+                    type="pushed"
+                    name="arg_get_all_user_button"
+                    value="reset">alle anzeigen</button>
+            </form >
+        </p>
         <div class="columnbox">
-            <p>
-                <form method="post" >
-                    <input
-                        type="text"
-                        name="arg_serach_string">
-                    <button
-                        id="arg_serch_user_button"
-                        type="submit"
-                        name="arg_update_button"
-                        value="Speichern">suchen</button>
-                    <button
-                        id="arg_get_all_user_button"
-                        type="submit"
-                        name="arg_reset_button"
-                        value="reset">alle anzeigen</button>
-                </form >
-            </p>
 % for ( unsigned int i_accountS = 0; i_accountS < s_searchAccountList.size(); i_accountS++) {
             <form method="post" >
                 <p>
                     <$ s_searchAccountList[i_accountS].getLogin_name() $>
                     "<$ s_searchAccountList[i_accountS].getReal_name() $>"
                     (ID: <$ s_searchAccountList[i_accountS].getID() $>)
-                </p>
                 <input
                     type="hidden"
                     name="arg_account_id"
                     value="<$ s_searchAccountList[i_accountS].getID() $>" >
-                <p>
                     <button name="arg_trust_user_button"
                             value="pushed"
                             type="submit">Vertrauen aussprechen

@@ -19,7 +19,7 @@ int main ( int argc, char* argv[] )
         tnt::Tntnet app;
         tnt::Configurator tntConfigurator(app);
         tntConfigurator.setSessionTimeout ( config.sessionTimeout() );
-        
+
         app.listen( config.appIp(), config.appPort() );
 
         // configure static stuff
@@ -29,7 +29,7 @@ int main ( int argc, char* argv[] )
            .setPathInfo("resources/favicon.ico");
         app.mapUrl("^/feed-icon.png$", "resources")
            .setPathInfo("resources/feed-icon.png");
-           
+
 
         // special pages
         app.mapUrl( "^/(.*)$", "$1" );
@@ -39,6 +39,9 @@ int main ( int argc, char* argv[] )
         // mvc stuff
         app.mapUrl( "^/(.*)$", "$1Controller" );
         app.mapUrl( "^/(.*)$", "$1View" );
+
+        // nur zum test....
+        app.mapUrl( "^/TrustAUser", "TrustAUserController" );
 
         std::cout << "peruschim cpp is started and run on http://" << config.appIp()
             << ":" <<  config.appPort() << "/" << std::endl;
