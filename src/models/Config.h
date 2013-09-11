@@ -82,10 +82,10 @@ public:
         m_appIp(""),
         m_appPort(8008),
         m_dbDriver("postgresql:dbname=peruschim"),
+        m_domainName( "peruschim.domain" ),
         m_sessionTimeout( 1000 ),
         m_smtpServer( "localhost" ),
-        m_mailFromAddress( "peruschim_cpp.conf@localhost" ),
-        m_domainName( "peruschim.domain" )
+        m_mailFromAddress( "peruschim_cpp.conf@localhost" )
     { }
 
 };

@@ -63,19 +63,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % }
 
         <h2>Vertrauen entziehen</h2>
+        <p>Diesen Benutzern hast du dein Vertrauen ausgesprochen:</p>
         <div class="columnbox">
-            <p>Diesen Benutzern hast du dein Vertrauen ausgesprochen:</p>
 % for ( unsigned int i_accountT = 0; i_accountT < s_trustedAccountList.size(); i_accountT++) {
             <form method="post" >
                 <p>
                     <$ s_trustedAccountList[i_accountT].getLogin_name() $>
                     "<$ s_trustedAccountList[i_accountT].getReal_name() $>"
                     (ID: <$ s_trustedAccountList[i_accountT].getID() $>)
-                </p>
-                <input
-                    type="hidden"
-                    name="arg_account_id"
-                    value="<$ s_trustedAccountList[i_accountT].getID() $>" >
+                    <input
+                        type="hidden"
+                        name="arg_account_id"
+                        value="<$ s_trustedAccountList[i_accountT].getID() $>" >
                     <button name="arg_revoke_trust_button"
                             value="pushed"
                             type="submit">Vertrauen entziehen

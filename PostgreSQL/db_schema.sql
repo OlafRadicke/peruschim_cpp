@@ -219,11 +219,24 @@ CREATE TABLE account_trust (
     guarantor_id         BIGINT    NOT NULL,
     createtime           TIMESTAMP NOT NULL,
     FOREIGN KEY  (trusted_account_id)   REFERENCES account (id),
-    FOREIGN KEY  (guarantor_id) REFERENCES edition (id)
+    FOREIGN KEY  (guarantor_id) REFERENCES account (id)
 );
 -- COMMENT ON TABLE account_trust IS 'Links for user trust user.';
 -- COMMENT ON COLUMN account_trust.trusted_account_id IS 'The account where we are in trust.';
 -- COMMENT ON COLUMN account_trust.guarantor_id IS 'This account give the guarant.';
+
+-- Default value
+INSERT INTO account_trust
+(
+    trusted_account_id,
+    guarantor_id,
+    createtime
+)
+VALUES (
+    1,
+    1,
+    now()
+);
 
 
 COMMIT;

@@ -114,11 +114,19 @@ public:
     static std::vector<AccountData> getTrustAccounts( unsigned long guarantor_id );
 
     /**
+     * Check is this account trusted..
+     * @para acount_id name of the user/account.
+     * @return true = trusted, false = no trusted.
+     **/
+    static bool isTrustedAccount( unsigned long acount_id );
+
+    /**
      * Check is user in database exist.
      * @para user_name name of the user.
      * @return true = exist, false = no exist.
      **/
     static bool isUserExist( std::string user_name );
+
 
     /**
      * Check is user in a roll.

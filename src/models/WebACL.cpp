@@ -20,6 +20,7 @@
 
 #include "WebACL.h"
 #include "DatabaseProxy.h"
+#include <models/OString.h>
 #include <manager/RSSfeedManager.h>
 #include <string>
 
@@ -378,6 +379,7 @@ std::vector<AccountData> WebACL::getTrustAccounts( unsigned long guarantor_id ){
                 FROM account_trust \
                 WHERE guarantor_id = :guarantor_id \
                 ) \
+            AND NOT id = :guarantor_id \
             ORDER BY login_name"
     );
     st.set( "guarantor_id", guarantor_id ).execute();
@@ -406,6 +408,25 @@ std::vector<AccountData> WebACL::getTrustAccounts( unsigned long guarantor_id ){
 
 
 /* I ----------------------------------------------------------------------- */
+
+bool WebACL::isTrustedAccount( unsigned long acount_id ){
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
+
+    tntdb::Statement sel = conn.prepare(
+        "SELECT count(id) \
+            FROM account_trust \
+            WHERE trusted_account_id = :acount_id "
+    );
+
+    tntdb::Row row = sel.set("acount_id", acount_id).selectRow();
+
+    if (  row[0].getInt() < 1 ) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
 
 bool WebACL::isUserExist ( std::string user_name ){
     log_debug("start...");
@@ -507,25 +528,31 @@ void WebACL::setTrustAccounts(
     const unsigned long guarantor_id
 ) {
     log_debug( __LINE__ + "start...");
+    if ( trusted_account_id == guarantor_id ) {
+        std::string str_guarantor_id = OString::unsignedLongToStr( guarantor_id );
+        std::string errorinfo = "User (id" + str_guarantor_id + ") can't trust self!";
+        throw errorinfo;
+    }
+    // Nur User/Accounts die schon Vertrauen besitzen, können Vertrauen
+    // aussprechen.
+    if ( isTrustedAccount( guarantor_id ) ) {
+        return;
+    }
+
+    log_debug( __LINE__ + " Schritt ZWEI...");
 
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
+
     tntdb::Statement st = conn.prepare(
-        "IF  ( \
-            SELECT count() \
-            FROM account_trust  \
-            WHEHR trusted_account_id =:guarantor_id  \
-             ) > 0 \
-        THEN \
-            INSERT INTO account_trust \
+        "INSERT INTO account_trust \
             (   trusted_account_id, \
                 guarantor_id, \
                 createtime )\
-            VALUES \
+        VALUES \
             (   :trusted_account_id,  \
                 :guarantor_id,  \
-                new()  \
-            ) \
-        END IF;"
+                now()  \
+            )"
     );
     st.set("trusted_account_id", trusted_account_id )
     .set("guarantor_id", guarantor_id ).execute();

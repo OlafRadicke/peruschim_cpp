@@ -78,38 +78,51 @@ unsigned TrustAUserController::operator() (tnt::HttpRequest& request, tnt::HttpR
     bool arg_trust_user_button =
         qparam.arg<bool>("arg_trust_user_button");
 
+    if ( WebACL::isTrustedAccount( userSession.getUserID() ) ) {
+        s_feedback = "Derzeit gibt es nehmenden der dir vertraut! \
+            Das bedeutet, das du niemanden deinerseits das Vertrauen \
+            aussprechen kannst. Solange wie du nicht das Vertrauen eines \
+            anderen Benutzer bekommen hast (dem wiederum von anderen \
+            vertraut wird) sind deine Beiträge für andere nicht sichtbar.";
+    } else {
 
-    if( arg_serch_user_button ) {
-        std::cout <<  __FILE__ << __LINE__ << "####  arg_serch_user_button  ####" << std::endl;
-        if( arg_serach_string != "" ) {
-            s_searchAccountList = WebACL::getSearchAccounts( arg_serach_string );
-        } else {
-            s_feedback = "Suchstring ist leer!";
+
+        if( arg_serch_user_button ) {
+            std::cout <<  __FILE__ << __LINE__ << "####  arg_serch_user_button  ####" << std::endl;
+            if( arg_serach_string != "" ) {
+                s_searchAccountList = WebACL::getSearchAccounts( arg_serach_string );
+            } else {
+                s_feedback = "Suchstring ist leer!";
+            }
         }
-    }
 
-    if( arg_get_all_user_button ) {
-        std::cout <<  __FILE__ << __LINE__ << "####  arg_get_all_user_button  ####" << std::endl;
-        s_searchAccountList = WebACL::getAllAccounts( );
-    }
+        if( arg_get_all_user_button ) {
+            std::cout <<  __FILE__ << __LINE__ << "####  arg_get_all_user_button  ####" << std::endl;
+            s_searchAccountList = WebACL::getAllAccounts( );
+        }
 
-    if( arg_revoke_trust_button ) {
-        std::cout <<  __FILE__ << __LINE__ << "####  arg_revoke_trust_button  ####" << std::endl;
-        WebACL::setRevokeTrustAccounts(
-            arg_account_id,
-            userSession.getUserID()
-        );
-    }
+        if( arg_revoke_trust_button ) {
+            std::cout <<  __FILE__ << __LINE__ << "####  arg_revoke_trust_button  ####" << std::endl;
+            WebACL::setRevokeTrustAccounts(
+                arg_account_id,
+                userSession.getUserID()
+            );
+        }
 
-    if( arg_trust_user_button ) {
-        std::cout <<  __FILE__ << __LINE__ << "####  arg_trust_user_button  ####" << std::endl;
-        WebACL::setTrustAccounts(
-            arg_account_id,
-            userSession.getUserID()
-        );
-    }
+        if( arg_trust_user_button ) {
+            std::cout <<  __FILE__ << __LINE__ << "####  arg_trust_user_button  ####" << std::endl;
+            if ( arg_account_id == userSession.getUserID() ) {
+                s_feedback = "Es ist nicht möglich sich selbst das Vertrauen auszusprechen!";
+            } else {
+                WebACL::setTrustAccounts(
+                    arg_account_id,
+                    userSession.getUserID()
+                );
+            }
+        }
 
-    s_trustedAccountList = WebACL::getTrustAccounts( userSession.getUserID() );
+        s_trustedAccountList = WebACL::getTrustAccounts( userSession.getUserID() );
+    }
 
     return DECLINED;
 }

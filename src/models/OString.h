@@ -32,13 +32,13 @@ public:
 
     /**
      * Convert int to string.
-     * @param sqlcommand a sql command.
+     * @param number a number.
      **/
     static std::string IntToStr( const int number );
 
         /**
      * Convert unsigned long number to string.
-     * @param sqlcommand a sql command.
+     * @param number a number.
      **/
     static std::string unsignedLongToStr( unsigned long number );
 

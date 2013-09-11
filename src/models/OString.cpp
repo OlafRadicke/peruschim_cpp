@@ -52,7 +52,7 @@ std::string OString::IntToStr( const int number )
    return ss.str();//return a string with the contents of the stream
 }
 
-std::string unsignedLongToStr( unsigned long number )
+std::string OString::unsignedLongToStr( unsigned long number )
 {
    std::stringstream ss;//create a stringstream
    ss << number;//add number to the stream
