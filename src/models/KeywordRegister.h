@@ -62,20 +62,21 @@ public:
     static vector<string> getAllKeywordTitles( void );
 
     /**
-    * Get all used keywords with cound. Public keywords and own private user
-    * keywords.
+    * Get all used keywords with count.
+    * It's get only public keywords and the own private data of owner_id.
+    * The Data from untrusted users is ignore.
     * @arg owner_id login id.
     **/
     static vector<KeywordCount> getAllKeywordTitleAndCound( const unsigned long owner_id );
 
     /**
     * Get all used keywords with cound of public quotes.
+    * The Data from untrusted users is ignore.
     **/
     static vector<KeywordCount> getAllPubKeywordTitleAndCound( void );
 
     /**
-    * Get only user own keywords.
-    * keywords.
+    * Get only user own keywords. It is tusted or not.
     * @arg owner_id login id.
     **/
     static vector<KeywordCount> getOwnKeywordTitleAndCound( const unsigned long owner_id );

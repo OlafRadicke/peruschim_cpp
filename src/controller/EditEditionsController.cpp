@@ -42,7 +42,7 @@ public:
     );
 };
 
-static tnt::ComponentFactoryImpl<EditEditionsController> factory("EditEditionsController");
+static tnt::ComponentFactoryImpl<EditEditionsController> factory("component.EditEditionsController");
 
 unsigned EditEditionsController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
 {

@@ -557,6 +557,19 @@ void WebACL::setTrustAccounts(
     st.set("trusted_account_id", trusted_account_id )
     .set("guarantor_id", guarantor_id ).execute();
 
+
+    // Create a feed item
+    RSSfeed newFeed;
+    newFeed.setTitle( "Vertrauen ausgesprochen" );
+    std::string str_tID = cxxtools::convert<std::string>( trusted_account_id );
+    std::string str_gID = cxxtools::convert<std::string>( guarantor_id );
+    std::string description = "Der Benutzer mit der ID " + str_gID \
+        + " hat Benutzer mit der ID " + str_tID
+        + " sein Vertrauen ausgesprochen.";
+    newFeed.setDescription( description );
+    newFeed.channels.push_back("trust");
+    RSSfeedManager feedManager;
+    feedManager.addNewFeed( newFeed );
 }
 
 /* R ----------------------------------------------------------------------- */
