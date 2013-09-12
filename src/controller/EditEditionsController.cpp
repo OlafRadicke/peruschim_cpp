@@ -42,7 +42,7 @@ public:
     );
 };
 
-static tnt::ComponentFactoryImpl<EditEditionsController> factory("component.EditEditionsController");
+static tnt::ComponentFactoryImpl<EditEditionsController> factory("EditEditionsController");
 
 unsigned EditEditionsController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
 {
@@ -58,8 +58,7 @@ unsigned EditEditionsController::operator() (tnt::HttpRequest& request, tnt::Htt
     if ( userSession.isInRole ( "user" ) == false ) {
         return reply.redirect ( "/access_denied" );
     };
-    log_debug( "pass" );
-
+    
     // URL arguments
     // create new edition
     std::string arg_new_edition_title =

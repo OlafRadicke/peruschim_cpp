@@ -41,7 +41,7 @@ int main ( int argc, char* argv[] )
         app.mapUrl( "^/(.*)$", "$1View" );
 
         // nur zum test....
-        app.mapUrl( "^/TrustAUser", "TrustAUserController" );
+//         app.mapUrl( "^/EditEditions", "EditEditionsController" );
 
         std::cout << "peruschim cpp is started and run on http://" << config.appIp()
             << ":" <<  config.appPort() << "/" << std::endl;

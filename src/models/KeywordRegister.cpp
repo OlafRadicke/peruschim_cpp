@@ -90,6 +90,7 @@ vector<KeywordCount> KeywordRegister::getAllKeywordTitleAndCound( const unsigned
                                       ( SELECT trusted_account_id \
                                         FROM account_trust \
                                       ) \
+                                  OR owner_id = :v1 \
                                 ) \
                             GROUP BY title \
                             ORDER BY title"

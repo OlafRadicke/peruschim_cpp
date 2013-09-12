@@ -47,7 +47,6 @@ static tnt::ComponentFactoryImpl<TrustAUserController> factory("TrustAUserContro
 
 unsigned TrustAUserController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
 {
-    std::cout <<  __FILE__ << __LINE__ << "####  pass  ####" << std::endl;
     log_debug( __LINE__ << "pass" );
     // shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
@@ -87,8 +86,7 @@ unsigned TrustAUserController::operator() (tnt::HttpRequest& request, tnt::HttpR
     } else {
 
 
-        if( arg_serch_user_button ) {
-            std::cout <<  __FILE__ << __LINE__ << "####  arg_serch_user_button  ####" << std::endl;
+        if( arg_serch_user_button ) { << std::endl;
             if( arg_serach_string != "" ) {
                 s_searchAccountList = WebACL::getSearchAccounts( arg_serach_string );
             } else {
@@ -97,12 +95,10 @@ unsigned TrustAUserController::operator() (tnt::HttpRequest& request, tnt::HttpR
         }
 
         if( arg_get_all_user_button ) {
-            std::cout <<  __FILE__ << __LINE__ << "####  arg_get_all_user_button  ####" << std::endl;
             s_searchAccountList = WebACL::getAllAccounts( );
         }
 
         if( arg_revoke_trust_button ) {
-            std::cout <<  __FILE__ << __LINE__ << "####  arg_revoke_trust_button  ####" << std::endl;
             WebACL::setRevokeTrustAccounts(
                 arg_account_id,
                 userSession.getUserID()
@@ -110,7 +106,6 @@ unsigned TrustAUserController::operator() (tnt::HttpRequest& request, tnt::HttpR
         }
 
         if( arg_trust_user_button ) {
-            std::cout <<  __FILE__ << __LINE__ << "####  arg_trust_user_button  ####" << std::endl;
             if ( arg_account_id == userSession.getUserID() ) {
                 s_feedback = "Es ist nicht möglich sich selbst das Vertrauen auszusprechen!";
             } else {
