@@ -86,7 +86,7 @@ unsigned TrustAUserController::operator() (tnt::HttpRequest& request, tnt::HttpR
     } else {
 
 
-        if( arg_serch_user_button ) { << std::endl;
+        if( arg_serch_user_button ) { 
             if( arg_serach_string != "" ) {
                 s_searchAccountList = WebACL::getSearchAccounts( arg_serach_string );
             } else {

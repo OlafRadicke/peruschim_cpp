@@ -64,6 +64,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </button>
             </p>
         </form>
+        </p><a href="NewAccount">Hier</a> kannst du dir ein Account erstellen</p>
     </div>
 
 <%include>views/parts/foot.ecpp.html</%include>

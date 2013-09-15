@@ -48,14 +48,10 @@ static tnt::ComponentFactoryImpl<NewAccountController> factory("NewAccountContro
 unsigned NewAccountController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
 {
     // Shared variables
-    TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
     TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
 
 
-    // ACL Check
-    if ( userSession.isInRole ( "user" ) == false ) {
-        return reply.redirect ( "/access_denied" );
-    };
+    // No ACL Check. User can create a account self.
 
     // define the query parameters
     bool  arg_create_button =
@@ -70,7 +66,7 @@ unsigned NewAccountController::operator() (tnt::HttpRequest& request, tnt::HttpR
         qparam.arg<std::string>("arg_password_b");
     std::string  arg_mail =
         qparam.arg<std::string>("arg_mail");
-        
+
 
     // is button "create" Speichern?
     if ( arg_create_button ) {
@@ -89,23 +85,23 @@ unsigned NewAccountController::operator() (tnt::HttpRequest& request, tnt::HttpR
                 } else {
                     // create ne account...
                     try {
-                        WebACL::createAccount( 
-                            arg_login_name, 
-                            arg_password_a,  
-                            arg_real_name, 
-                            arg_mail, 
+                        WebACL::createAccount(
+                            arg_login_name,
+                            arg_password_a,
+                            arg_real_name,
+                            arg_mail,
                             "user"
                         );
                     } catch ( char * errstr ) {
                         log_error( "Exception raised: " << errstr );
-                        s_feedback = "Es trat ein Problem auf: " 
+                        s_feedback = "Es trat ein Problem auf: "
                             + std::string ( errstr ) ;
                     }
                     s_feedback = "Der Account wurde angelegt!";
                 }
             }
         };
-    }        
+    }
 
     return DECLINED;
 }
