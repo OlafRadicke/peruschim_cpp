@@ -19,10 +19,10 @@
 */
 
 
-#include "models/WebACL.h"
+#include "manager/EditionManager.h"
+#include "manager/WebACL.h"
 #include "models/UserSession.h"
 #include "models/Edition.h"
-#include "manager/EditionManager.h"
 #include <iostream>
 #include <cxxtools/log.h>
 #include <tnt/component.h>
@@ -58,7 +58,7 @@ unsigned EditEditionsController::operator() (tnt::HttpRequest& request, tnt::Htt
     if ( userSession.isInRole ( "user" ) == false ) {
         return reply.redirect ( "/access_denied" );
     };
-    
+
     // URL arguments
     // create new edition
     std::string arg_new_edition_title =

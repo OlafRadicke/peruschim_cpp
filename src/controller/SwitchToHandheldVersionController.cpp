@@ -28,8 +28,8 @@
 #include <tnt/httpreply.h>
 
 
-#include "models/WebACL.h"
-#include "models/UserSession.h"
+#include <manager/WebACL.h>
+#include <models/UserSession.h>
 
 
 log_define("component.SwitchToHandheldVersionController")
@@ -46,12 +46,12 @@ public:
 
 static tnt::ComponentFactoryImpl<SwitchToHandheldVersionController> factory("SwitchToHandheldVersionController");
 
-unsigned SwitchToHandheldVersionController::operator() 
+unsigned SwitchToHandheldVersionController::operator()
     (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
 {
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    
+
 //     TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
 
 
@@ -72,7 +72,7 @@ unsigned SwitchToHandheldVersionController::operator()
         userSession.isHandheldVersion(false);
         return reply.redirect ( "/home" );
     }
-    
+
 
     return DECLINED;
 }

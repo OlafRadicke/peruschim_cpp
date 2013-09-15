@@ -18,8 +18,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "KeywordRegister.h"
-#include "Config.h"
+#include <manager/KeywordRegister.h>
+#include <models/Config.h>
 
 #include <tntdb/connection.h>
 #include <tntdb/connect.h>

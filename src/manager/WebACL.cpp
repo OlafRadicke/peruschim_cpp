@@ -18,8 +18,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "WebACL.h"
-#include "DatabaseProxy.h"
+#include <manager/WebACL.h>
+#include <models/DatabaseProxy.h>
 #include <models/OString.h>
 #include <manager/RSSfeedManager.h>
 #include <string>

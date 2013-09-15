@@ -22,14 +22,14 @@
 #include <tnt/componentfactory.h>
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
-
-#include "models/WebACL.h"
-#include "models/UserSession.h"
-#include "models/Quote.h"
-#include "models/QuoteRegister.h"
-#include "models/OString.h"
 #include <iostream>
 #include <cxxtools/log.h>
+
+#include <manager/QuoteRegister.h>
+#include <manager/WebACL.h>
+#include <models/UserSession.h>
+#include <models/Quote.h>
+#include <models/OString.h>
 
 log_define("component.TrustAUserController")
 
@@ -86,7 +86,7 @@ unsigned TrustAUserController::operator() (tnt::HttpRequest& request, tnt::HttpR
     } else {
 
 
-        if( arg_serch_user_button ) { 
+        if( arg_serch_user_button ) {
             if( arg_serach_string != "" ) {
                 s_searchAccountList = WebACL::getSearchAccounts( arg_serach_string );
             } else {

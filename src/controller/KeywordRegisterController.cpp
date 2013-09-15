@@ -27,11 +27,11 @@
 #include <tnt/httpreply.h>
 
 
-#include "models/WebACL.h"
-#include "models/UserSession.h"
-#include "models/KeywordRegister.h"
-#include "models/Quote.h"
-#include "models/QuoteRegister.h"
+#include <manager/KeywordRegister.h>
+#include <manager/QuoteRegister.h>
+#include <manager/WebACL.h>
+#include <models/UserSession.h>
+#include <models/Quote.h>
 
 
 log_define("component.KeywordRegisterController")
@@ -54,7 +54,7 @@ unsigned KeywordRegisterController::operator() (tnt::HttpRequest& request, tnt::
 {
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    
+
 //     TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
     TNT_REQUEST_SHARED_VAR( vector<KeywordCount>,     s_keywordTitlesCounts, ());
 
@@ -63,8 +63,8 @@ unsigned KeywordRegisterController::operator() (tnt::HttpRequest& request, tnt::
     std::string  arg_user_view =
         qparam.arg<std::string>("arg_user_view");
     bool arg_view_change_button =
-        qparam.arg<bool>("arg_view_change_button");        
-       
+        qparam.arg<bool>("arg_view_change_button");
+
 
     // ACL Check
     if ( userSession.isInRole ( "user" ) == false ) {

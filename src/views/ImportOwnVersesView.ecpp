@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <%session
     scope="shared"
-    include="models/WebACL.h"
+    include="manager/WebACL.h"
     include="models/UserSession.h" >
 
         UserSession            userSession;

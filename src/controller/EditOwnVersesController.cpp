@@ -21,11 +21,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
 
-#include "models/WebACL.h"
-#include "models/UserSession.h"
-#include "models/Quote.h"
-#include "models/QuoteRegister.h"
-#include "models/OString.h"
+#include <manager/QuoteRegister.h>
+#include <manager/WebACL.h>
+#include <models/UserSession.h>
+#include <models/Quote.h>
+#include <models/OString.h>
 #include <iostream>
 #include <cxxtools/log.h>
 
@@ -50,13 +50,13 @@ unsigned EditOwnVersesController::operator() (tnt::HttpRequest& request, tnt::Ht
 {
 
     TNT_SESSION_GLOBAL_VAR( UserSession,                  userSession, ());
-    
+
     TNT_REQUEST_GLOBAL_VAR( std::vector<Quote>,           s_quoteList, ());
     TNT_REQUEST_GLOBAL_VAR( std::string,                   s_feedback, ());
     TNT_REQUEST_GLOBAL_VAR( std::string,       s_affirmation_question, ());
     TNT_REQUEST_GLOBAL_VAR( unsigned long,                s_quote_id, (0));
 
-    
+
 
     unsigned long arg_quote_id =
         qparam.arg<unsigned long>("arg_quote_id");
@@ -93,7 +93,7 @@ unsigned EditOwnVersesController::operator() (tnt::HttpRequest& request, tnt::Ht
     // if delete affirmation clicked.
     if ( arg_affirmation_delete_button ) {
         log_debug( "arg_affirmation_delete_button" );
-        
+
         log_debug( "will löschen: " << arg_quote_id );
         QuoteRegister::deleteQuote(
             cxxtools::convert<unsigned long>( arg_quote_id )

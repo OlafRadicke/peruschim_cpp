@@ -2,7 +2,7 @@
 #include <tnt/configurator.h>
 #include <string>
 #include <cxxtools/log.h>
-#include "./models/Config.h"
+#include <models/Config.h>
 
 
 log_define("PERUSCHIM")

@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <%request
     scope="shared"
     include="models/Edition.h"
-    include="models/WebACL.h">
+    include="manager/WebACL.h">
 
         std::vector<Edition>   s_editionList;
         std::string            s_feedback;

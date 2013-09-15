@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <%pre>
     // put your includes here
     // #include "foo.h"
-    #include "models/WebACL.h"
+    #include "manager/WebACL.h"
     #include "models/UserSession.h"
 
     # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -76,11 +76,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <h1>Versverwaltungsportal</h1>
         <div class="columnbox">
             <ul>
-                <li><a href="NewQuote"><b>Neuer Vers:</b></a> 
+                <li><a href="NewQuote"><b>Neuer Vers:</b></a>
                     <span class="explanation">Einen neuen Verseintrag erstellen.</span></li>
-                <!-- <li><a href="editquote"><b>Verse bearbeiten:</b></a> 
+                <!-- <li><a href="editquote"><b>Verse bearbeiten:</b></a>
                     <span class="explanation">Eigene Verse bearbeiten.</li> -->
-                <li><a href="EditEditions"><b>Ausgaben:</b></a> 
+                <li><a href="EditEditions"><b>Ausgaben:</b></a>
                     <span class="explanation">Einen neuen
                     Datensatz zu einer Bibel-Ausgabe anlegen oder bearbeiten.</span>
                 </li>

@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <%request
     scope="shared"
     include="models/AccountData.h"
-    include="models/WebACL.h"
+    include="manager/WebACL.h"
     include="models/Edition.h">
         std::string              s_feedback;
         std::vector<AccountData> s_accountList;

@@ -26,17 +26,13 @@
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
 
-
-#include "models/WebACL.h"
-#include "models/UserSession.h"
-
-#include "manager/BibleManager.h"
-#include "manager/EditionManager.h"
-#include "manager/QuoteManager.h"
-#include "models/Edition.h"
-#include "models/Quote.h"
-#include "models/UserSession.h"
-#include "models/WebACL.h"
+#include <manager/WebACL.h>
+#include <manager/BibleManager.h>
+#include <manager/EditionManager.h>
+#include <manager/QuoteManager.h>
+#include <models/Edition.h>
+#include <models/Quote.h>
+#include <models/UserSession.h>
 
 log_define("component.NewQuoteController")
 

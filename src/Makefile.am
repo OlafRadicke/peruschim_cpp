@@ -16,18 +16,18 @@ noinst_HEADERS = \
 	controller/EditOwnVerses.h \
 	manager/BibleManager.h \
 	manager/EditionManager.h \
+	manager/KeywordRegister.h \
 	manager/QuoteManager.h \
+	manager/QuoteRegister.h \
+	manager/WebACL.h \
 	models/AccountData.h \
 	models/Config.h \
 	models/DatabaseProxy.h \
 	models/Edition.h \
 	models/KeywordData.h \
-	models/KeywordRegister.h \
 	models/OString.h \
 	models/Quote.h \
-	models/QuoteRegister.h \
-	models/UserSession.h \
-	models/WebACL.h
+	models/UserSession.h
 
 ecppSources = \
 	views/parts/style.ecpp \
@@ -77,18 +77,18 @@ peruschim_cpp_SOURCES = \
 	controller/TrustAUserController.cpp \
 	manager/BibleManager.cpp \
 	manager/EditionManager.cpp \
+	manager/KeywordRegister.cpp \
 	manager/QuoteManager.cpp \
+	manager/QuoteRegister.cpp \
 	manager/RSSfeedManager.cpp \
+	manager/WebACL.cpp \
 	models/AccountData.cpp \
 	models/Config.cpp \
 	models/DatabaseProxy.cpp \
 	models/KeywordData.cpp \
-	models/KeywordRegister.cpp \
 	models/OString.cpp \
 	models/Quote.cpp \
-	models/QuoteRegister.cpp \
 	models/UserSession.cpp \
-	models/WebACL.cpp \
 	peruschim_cpp.cpp \
 	$(ecppSources)
 

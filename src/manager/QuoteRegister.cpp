@@ -25,9 +25,9 @@
 #include <tntdb/connect.h>
 #include <tntdb/connection.h>
 
-#include "Config.h"
-#include "Quote.h"
-#include "QuoteRegister.h"
+#include <models/Config.h>
+#include <models/Quote.h>
+#include <manager/QuoteRegister.h>
 #include <manager/EditionManager.h>
 #include <manager/QuoteManager.h>
 

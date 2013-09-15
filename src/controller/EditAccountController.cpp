@@ -23,11 +23,11 @@
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
 
-#include "models/WebACL.h"
-#include "models/UserSession.h"
-#include "models/Quote.h"
-#include "models/QuoteRegister.h"
-#include "models/OString.h"
+#include <manager/QuoteRegister.h>
+#include <manager/WebACL.h>
+#include <models/UserSession.h>
+#include <models/Quote.h>
+#include <models/OString.h>
 #include <iostream>
 #include <cxxtools/log.h>
 

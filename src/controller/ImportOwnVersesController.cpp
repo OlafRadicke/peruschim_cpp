@@ -27,10 +27,10 @@
 #include <tnt/httpreply.h>
 
 
-#include "models/WebACL.h"
-#include "models/UserSession.h"
-#include "models/QuoteRegister.h"
-#include "models/Quote.h"
+#include <manager/QuoteRegister.h>
+#include <manager/WebACL.h>
+#include <models/UserSession.h>
+#include <models/Quote.h>
 
 
 log_define("component.ImportOwnVersesController")
@@ -53,7 +53,7 @@ unsigned ImportOwnVersesController::operator() (tnt::HttpRequest& request, tnt::
 {
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    
+
     TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
     TNT_REQUEST_SHARED_VAR( bool,                     s_clearOldVerses, () );
     TNT_REQUEST_SHARED_VAR( std::string,              s_jasonText, () );

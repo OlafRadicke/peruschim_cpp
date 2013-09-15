@@ -28,8 +28,8 @@
 #include <tnt/httpreply.h>
 
 
-#include "models/WebACL.h"
-#include "models/UserSession.h"
+#include <manager/WebACL.h>
+#include <models/UserSession.h>
 
 
 log_define("component.LogInController")

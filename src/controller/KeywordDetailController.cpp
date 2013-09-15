@@ -26,10 +26,10 @@
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
 
-#include "models/WebACL.h"
-#include "models/UserSession.h"
-#include "models/Quote.h"
-#include "models/QuoteRegister.h"
+#include <manager/QuoteRegister.h>
+#include <manager/WebACL.h>
+#include <models/UserSession.h>
+#include <models/Quote.h>
 
 
 log_define("component.KeywordDetailController")
@@ -52,7 +52,7 @@ unsigned KeywordDetailController::operator() (tnt::HttpRequest& request, tnt::Ht
 {
     // Shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    
+
     TNT_REQUEST_SHARED_VAR( std::vector<Quote>,       s_quoteList, () );
     TNT_REQUEST_SHARED_VAR( bool,                     s_isLogin, () );
     TNT_REQUEST_SHARED_VAR( std::string,              s_keyword, () );
@@ -62,9 +62,9 @@ unsigned KeywordDetailController::operator() (tnt::HttpRequest& request, tnt::Ht
     std::string  arg_keyword =
         qparam.arg<std::string>("arg_keyword");
     s_keyword = arg_keyword;
-        
+
     log_debug( "arg_keyword: " << arg_keyword );
-    
+
     s_isLogin = false;
     // ACL Check
     if ( userSession.isInRole ( "user" ) == false ) {
@@ -76,8 +76,8 @@ unsigned KeywordDetailController::operator() (tnt::HttpRequest& request, tnt::Ht
         s_quoteList = QuoteRegister::getAllQuoteOfKeyword(
             arg_keyword,
             userSession.getUserID() );
-    };        
-        
+    };
+
 
     return DECLINED;
 }

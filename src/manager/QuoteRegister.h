@@ -24,10 +24,8 @@
 #include <string>
 #include <vector>
 #include <tntdb/statement.h>
-#include "DatabaseProxy.h"
-//#include "Edition.h"
-// #include "EditionManager.h"
-#include "Quote.h"
+#include <models/DatabaseProxy.h>
+#include <models/Quote.h>
 
 /**
  * Managed quote informations.

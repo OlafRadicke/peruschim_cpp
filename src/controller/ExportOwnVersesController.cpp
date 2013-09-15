@@ -20,8 +20,8 @@
 
 
 
-#include "models/QuoteRegister.h"
-#include "models/UserSession.h"
+#include <manager/QuoteRegister.h>
+#include <models/UserSession.h>
 
 #include <cxxtools/log.h>
 #include <tnt/component.h>
@@ -48,7 +48,7 @@ unsigned ExportOwnVersesController::operator() (tnt::HttpRequest& request, tnt::
 {
 
     TNT_SESSION_GLOBAL_VAR( UserSession,              userSession, ());
-    
+
     TNT_REQUEST_GLOBAL_VAR( std::string,              s_jason_text, ());
     TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
 
