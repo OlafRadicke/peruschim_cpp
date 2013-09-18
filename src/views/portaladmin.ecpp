@@ -81,8 +81,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <li><a href="NewAccount"><b>Neuer Account:</b></a>
                     <span class="explanation">Einen neuen Account für das Webportal anlegen.</span>
                 </li>
-                <li><a href="EditAccount"><b>Accounts bearbeiten:</b></a>
-                    <span class="explanation">Einen Account bearbeiten oder löschen.</span>
+                <li><a href="AccountRegister"><b>Accounts bearbeiten:</b></a>
+                    <span class="explanation">Accounts suchen und bearbeiten oder löschen.</span>
                 </li>
             </ul>
         </div>

@@ -99,10 +99,9 @@ unsigned TrustAUserController::operator() (tnt::HttpRequest& request, tnt::HttpR
         }
 
         if( arg_revoke_trust_button ) {
-            WebACL::setRevokeTrustAccounts(
-                arg_account_id,
-                userSession.getUserID()
-            );
+            AccountData accountData;
+            accountData.setID( arg_account_id );
+            accountData.revokeTrust( userSession.getUserID() );
         }
 
         if( arg_trust_user_button ) {

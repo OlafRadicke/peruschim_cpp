@@ -61,7 +61,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <p>E-Mail-Adresse:<br><input name="arg_mail" type="text" size="40" maxlength="80"></p>
             <p>Passwort*:<br><input name="arg_password_a" type="password" size="40" maxlength="40"></p>
             <p>Passwortwiederholung*:<br><input name="arg_password_b" type="password" size="40" maxlength="40"></p>
-            <p>*Pflichtfeld</p>
+            <p>
+                <span class="explanation">*Pflichtfeld. Die e-Mail-Adresse ist
+                    keine Pflicht, macht aber Sinnen, wenn du mal dein Passwort
+                    vergisst.
+                </span>
+            </p>
             <p>
                 <button name="arg_create_button"
                             value="pushed"

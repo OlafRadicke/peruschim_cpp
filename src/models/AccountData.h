@@ -46,22 +46,68 @@ public:
     {};
 
 
-    /**
-     * Delet all data of this account
-     */
-    void deleteAllData();
+// D --------------------------------------------------------------------------
 
-    void setID( unsigned long id ) { m_id = id; };
+    /**
+     * Delete all data of this account
+     * @arg liqudator_id how is the liqudator, the user that this account delete.
+     */
+    void deleteAllData( unsigned long liqudator_id );
+
+// G --------------------------------------------------------------------------
+
+    /**
+     * Get count of guarantor from a user.
+     * @return count of guarantor.
+     **/
+    int getGuarantorCount( );
+
+
+// R --------------------------------------------------------------------------
+
+    /**
+     * Remove all trusted link between tow a user.
+     * This delete recursive the complied trusted link tree.
+     * Has a user no more guarantors, he can't publish his comments.
+     **/
+    void revokeTrust();
+
+    /**
+     * Remove a trusted link between tow user.
+     * This delete recursive the complied trusted link tree from untrusted
+     * account. Has a user no more guarantors, he can't publish his comments.
+     * @para guarantor_id id of revoked guarantor.
+     **/
+    void revokeTrust( const unsigned long guarantor_id );
+
     unsigned long getID ( void ) { return m_id; };
 
-    void setLogin_name( std::string login_name ) { m_login_name = login_name; };
     std::string getLogin_name( void ) { return m_login_name; };
 
-    void setReal_name( std::string real_name ) { m_real_name = real_name; };
     std::string getReal_name( void ) { return m_real_name; };
 
-    void setPassword_hash( std::string password_hash ) { m_password_hash = password_hash; };
     std::string getPassword_hash( void ) { return m_password_hash; };
+
+    std::string getPassword_salt( void ) { return m_password_salt; };
+
+    std::string getEmail( void ) { return m_email; };
+
+    bool getAccount_disable( void ) { return m_account_disable; };
+
+// S --------------------------------------------------------------------------
+
+    /**
+     * Save date update in in database..
+     **/
+    void saveUpdate();
+
+    void setID( unsigned long id ) { m_id = id; };
+
+    void setLogin_name( std::string login_name ) { m_login_name = login_name; };
+
+    void setReal_name( std::string real_name ) { m_real_name = real_name; };
+
+    void setPassword_hash( std::string password_hash ) { m_password_hash = password_hash; };
 
     /**
      * Set a new passwort.
@@ -70,19 +116,11 @@ public:
     void setNewPassword( std::string newpassword );
 
     void setPassword_salt( std::string password_salt ) { m_password_salt = password_salt; };
-    std::string getPassword_salt( void ) { return m_password_salt; };
 
     void setEmail( std::string email ) { m_email = email; };
-    std::string getEmail( void ) { return m_email; };
 
     void setAccount_disable( bool account_disable ) { m_account_disable = account_disable; };
-    bool getAccount_disable( void ) { return m_account_disable; };
 
-
-    /**
-     * Save date update in in database..
-     **/
-    void saveUpdate();
 
 private:
 
@@ -100,6 +138,18 @@ private:
      * @return a random string
      */
     std::string static genRandomSalt( int len ) ;
+
+    /**
+     * Remove a trusted link between tow user.
+     * This delete recursive the complied trusted link tree from untrusted
+     * account. Has a user no more guarantors, he can't publish his comments.
+     * @para trusted_account_id id of a trust user.
+     * @para guarantor_id id of his guarantor.
+     **/
+    void static revokeTrust(
+        const unsigned long trusted_account_id,
+        const unsigned long guarantor_id
+    );
 
 };
 

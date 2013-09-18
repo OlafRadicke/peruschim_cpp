@@ -28,11 +28,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     include="manager/WebACL.h"
     include="models/Edition.h">
         std::string              s_feedback;
-        std::vector<AccountData> s_accountList;
         std::string              s_affirmation;
         AccountData              s_accountData;
         std::vector<std::string> s_allRolls;
-        bool                     s_isEditAccount;
 </%request>
 
 
@@ -70,80 +68,78 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <b><$ s_affirmation $> </b><br>
                 <input
                     type="hidden"
-                    name="arg_affirmation_delete_account_id"
+                    name="arg_affirmation_request"
                     value="<$ s_accountData.getID() $>" >
-                <button name="arg_affirmation_delete_button"
+                <button name="arg_affirmation_ok_button"
                         value="pushed"
-                        type="submit">Löschen bestätigen
+                        type="submit">Okay
+                </button>
+                <button name="arg_affirmation_no_button"
+                        value="pushed"
+                        type="submit">Abbrechen
                 </button>
             </form>
         </div>
 % }
         <div class="columnbox">
-% for ( unsigned int i_account = 0; i_account < s_accountList.size(); i_account++) {
-            <div class="simple-box">
-%     if (
-%         s_isEditAccount == true &&
-%         s_accountData.getID() == s_accountList[i_account].getID()
-%     ) {
-                <form method="post" >
-                    <h2>Account bearbeiten</h2>
-                    <p>
-                        <label for="login_name">Login*: </label>
-                        <br>
-                        <input
-                            class="full-size"
-                            name="arg_login_name"
-                            type="text"
-                            value="<$ s_accountData.getLogin_name() $>"
-                            maxlength="80">
-                    </p>
-                    <p>
-                        <label for="mail">Vollständiger Name: </label>
-                        <br>
-                        <input
-                            class="full-size"
-                            name="arg_name"
-                            type="text"
-                            value="<$ s_accountData.getReal_name() $>"
-                            maxlength="80">
-                    </p>
-                    <p>
-                        <label for="mail">E-Mail-Adresse:</label>
-                        <br>
-                        <input
-                            class="full-size"
-                            name="arg_mail"
-                            type="text"
-                            value="<$ s_accountData.getEmail() $>"
-                            maxlength="80">
-                    </p>
-                    <p>
-                        Passwort**:
-                        <br>
-                        <input
-                            class="full-size"
-                            name="arg_password_a"
-                            type="password"
-                            value=""
-                            maxlength="40">
-                    </p>
-                    <p>
-                        Passwortwiederholung:
-                        <br>
-                        <input
-                            class="full-size"
-                            name="arg_password_b"
-                            type="password"
-                            value=""
-                            maxlength="40">
-                    </p>
-                    <p><b>Rollen:</b>
-                        <select
-                            class="userroles"
-                            id="args_userroles"
-                            name="args_userroles"
-                            size="3" multiple >
+            <form method="post" >
+                <h2>Account bearbeiten</h2>
+                <p>
+                    <label for="login_name">Login*: </label>
+                    <br>
+                    <input
+                        class="full-size"
+                        name="arg_login_name"
+                        type="text"
+                        value="<$ s_accountData.getLogin_name() $>"
+                        maxlength="80">
+                </p>
+                <p>
+                    <label for="mail">Vollständiger Name: </label>
+                    <br>
+                    <input
+                        class="full-size"
+                        name="arg_name"
+                        type="text"
+                        value="<$ s_accountData.getReal_name() $>"
+                        maxlength="80">
+                </p>
+                <p>
+                    <label for="mail">E-Mail-Adresse:</label>
+                    <br>
+                    <input
+                        class="full-size"
+                        name="arg_mail"
+                        type="text"
+                        value="<$ s_accountData.getEmail() $>"
+                        maxlength="80">
+                </p>
+                <p>
+                    Passwort**:
+                    <br>
+                    <input
+                        class="full-size"
+                        name="arg_password_a"
+                        type="password"
+                        value=""
+                        maxlength="40">
+                </p>
+                <p>
+                    Passwortwiederholung:
+                    <br>
+                    <input
+                        class="full-size"
+                        name="arg_password_b"
+                        type="password"
+                        value=""
+                        maxlength="40">
+                </p>
+                <p><b>Rollen:</b>
+                    <select
+                        class="userroles"
+                        id="args_userroles"
+                        name="args_userroles"
+                        size="3" multiple >
 %         for ( unsigned int i_rolls = 0;
 %             i_rolls < s_allRolls.size();
 %             i_rolls++
@@ -156,72 +152,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %                     s_allRolls[i_rolls]
 %                 )
 %              ){
-                            <option class="userroles"
-                                value="<$  s_allRolls[i_rolls] $>" selected>
-                                <$ s_allRolls[i_rolls] $>
-                            </option>
+                        <option class="userroles"
+                            value="<$  s_allRolls[i_rolls] $>" selected>
+                            <$ s_allRolls[i_rolls] $>
+                        </option>
 %              } else {
-                            <option class="userroles"
-                                value="<$  s_allRolls[i_rolls] $>">
-                                <$ s_allRolls[i_rolls] $>
-                            </option>
+                        <option class="userroles"
+                            value="<$  s_allRolls[i_rolls] $>">
+                            <$ s_allRolls[i_rolls] $>
+                        </option>
 %             }
 %         }
-                        </select>
-                    </p>
-                    <p>
-                        Account deaktiviert <input
-                        type="checkbox"
-                        name="arg_is_inactive"
-                        value="is_inactive"
+                    </select>
+                </p>
+                <p>
+                    Account deaktiviert <input
+                    type="checkbox"
+                    name="arg_is_inactive"
+                    value="is_inactive"
 % if ( s_accountData.getAccount_disable() ) {
                         checked
 % }
-                        />
-                    </p>
-                    <input
-                        type="hidden"
-                        name="arg_update_account_id"
-                        value="<$ s_accountData.getID() $>" >
-                    <p><button name="arg_update_account_button"
-                                value="pushed"
-                                type="submit">Speichern
-                        </button>
-                    </p>
-                    <hr>
-                    <p>
-                        <small>*Pflichtfeld</small><br>
-                        <small>**Wenn kein Passwort gesetzt wurde, wird das
-                        alte Passwort nicht verändert</small>
-                    </p>
-                </form >
-%     } else {
-                <form method="post" >
-
-                    <i><b>"<$ s_accountList[i_account].getLogin_name() $>"</b></i>
-                    (<$ s_accountList[i_account].getID() $>)&#160;
-                    <input
-                        type="hidden"
-                        name="arg_edit_account_id"
-                        value="<$ s_accountList[i_account].getID() $>" >
-                    <button name="arg_edit_account_button"
+                    />
+                </p>
+                <p><button name="arg_update_account_button"
                             value="pushed"
-                            type="submit">Bearbeiten
-                    </button>&#160;
-                </form >
-                <form method="post" >
-                    <input
-                        type="hidden"
-                        name="arg_delete_account_id"
-                        value="<$ s_accountList[i_account].getID() $>" >
-                    <button name="arg_delete_account_button"
-                            value="pushed"
-                            type="submit">Löschen
+                            type="submit">Speichern
                     </button>
-                </form >
-%     }
-            </div>
-% }
+                </p>
+                <hr>
+                <p>
+                    <small>*Pflichtfeld</small><br>
+                    <small>**Wenn kein Passwort gesetzt wurde, wird das
+                    alte Passwort nicht verändert</small>
+                </p>
+            </form >
         </div>
     </div>
 <%include>views/parts/foot.ecpp.html</%include>

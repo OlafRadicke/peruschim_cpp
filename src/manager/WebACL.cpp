@@ -34,9 +34,6 @@
 
 log_define("models.WebACL")
 
-
-
-
 bool WebACL::authUser ( const std::string& user_name, const std::string& password )
 {
     log_debug("start...");
@@ -273,6 +270,7 @@ std::vector<std::string> WebACL::getAllRolls ( ){
     return rolls;
 }
 
+
 std::string WebACL::genRandomSalt ( const int len) {
     /* initialize random seed: */
     srand (time(NULL));
@@ -485,42 +483,8 @@ void WebACL::setPassword (  std::string user_name, std::string new_password ) {
 
 }
 
-void WebACL::setRevokeTrustAccounts(
-    const unsigned long trusted_account_id,
-    const unsigned long guarantor_id
-){
-    log_debug( __LINE__ + "start...");
 
-    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
 
-    tntdb::Statement st = conn.prepare(
-            "SELECT trusted_account_id  \
-            FROM account_trust \
-            WHERE guarantor_id = :trusted_account_id "
-    );
-    st.set( "trusted_account_id", trusted_account_id ).execute();
-
-    for (tntdb::Statement::const_iterator it = st.begin();
-        it != st.end(); ++it
-    ) {
-        tntdb::Row row = *it;
-        // Yes, this delete recursive the completed trusted link tree of this
-        // user.
-        WebACL::setRevokeTrustAccounts(
-            row[0].getInt(),
-            trusted_account_id
-        );
-    }
-
-    st = conn.prepare(
-        "DELETE FROM account_trust \
-        WHERE trusted_account_id = :trusted_account_id \
-        AND guarantor_id = :guarantor_id;"
-    );
-    st.set("trusted_account_id", trusted_account_id )
-    .set("guarantor_id", guarantor_id ).execute();
-
-}
 
 
 void WebACL::setTrustAccounts(

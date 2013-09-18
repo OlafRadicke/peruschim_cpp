@@ -60,20 +60,6 @@ public:
         unsigned bookChapterBegin
     ) const;
 
-    /*
-     * Get back a depth link to http://bibleserver.com
-     * @arg quote a instance of class Quote with information about book and
-     * chapter.
-     * @return link as string
-     */
-//     std::string getBibleserverComURL(
-//         const Quote& quote) const
-//     {
-//         return getBibleserverComURL(
-//             quote.getBookTitle(),
-//             quote.getChapterBegin()
-//         );
-//     }
 
     /**
      * Get back a depth link to http://bibleserver.com

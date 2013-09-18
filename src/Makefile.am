@@ -13,7 +13,6 @@ EXTRA_DIST = \
 	views/parts/foot.ecpp.html
 
 noinst_HEADERS = \
-	controller/EditOwnVerses.h \
 	manager/BibleManager.h \
 	manager/EditionManager.h \
 	manager/KeywordRegister.h \
@@ -31,6 +30,7 @@ noinst_HEADERS = \
 
 ecppSources = \
 	views/parts/style.ecpp \
+	views/AccountRegisterView.ecpp \
 	views/access_denied.ecpp \
 	views/EditAccountView.ecpp \
 	views/EditEditionsView.ecpp \
@@ -61,6 +61,7 @@ staticSources = \
 	resources/feed-icon.png
 
 peruschim_cpp_SOURCES = \
+	controller/AccountRegisterController.cpp \
 	controller/EditAccountController.cpp \
 	controller/EditEditionsController.cpp \
 	controller/EditOwnVersesController.cpp \

@@ -92,6 +92,8 @@ public:
      **/
     static std::vector<std::string> getAllRolls();
 
+
+
     /**
      * Get back the roles from a user.
      * @para user_name name of the user.
@@ -115,7 +117,7 @@ public:
 
     /**
      * Check is this account trusted..
-     * @para acount_id name of the user/account.
+     * @para acount_id id of the user/account.
      * @return true = trusted, false = no trusted.
      **/
     static bool isTrustedAccount( unsigned long acount_id );
@@ -149,17 +151,7 @@ public:
         std::string new_password
     );
 
-    /**
-     * Remove a trusted link between tow user.
-     * This delete recursive the complied trusted link tree from untrusted
-     * account. Has a user no more guarantors, he can't publish his comments.
-     * @para trusted_account_id id of a trust user.
-     * @para guarantor_id id of his guarantor.
-     **/
-    void static setRevokeTrustAccounts(
-        const unsigned long trusted_account_id,
-        const unsigned long guarantor_id
-    );
+
 
 
     /**
