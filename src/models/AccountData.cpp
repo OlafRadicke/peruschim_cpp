@@ -134,6 +134,27 @@ std::string AccountData::genRandomSalt ( int len) {
     return randomString;
 }
 
+
+bool AccountData::isTrustedAccount( ){
+
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
+
+    tntdb::Statement sel = conn.prepare(
+        "SELECT count(id) \
+            FROM account_trust \
+            WHERE trusted_account_id = :acount_id "
+    );
+
+    tntdb::Row row = sel.set("acount_id", m_id).selectRow();
+
+    if (  row[0].getInt() < 1 ) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
 // S --------------------------------------------------------------------------
 
 void AccountData::revokeTrust( ){
@@ -268,3 +289,54 @@ void AccountData::setNewPassword ( std::string newpassword ) {
 
 }
 
+
+
+// T --------------------------------------------------------------------------
+
+
+void AccountData::trustedByGuarantor( const unsigned long guarantor_id ){
+    log_debug( __LINE__ + "start...");
+    if ( m_id == guarantor_id ) {
+        std::string str_guarantor_id = cxxtools::convert<std::string>( guarantor_id );
+        std::string errorinfo = "User (id" + str_guarantor_id + ") can't trust self!";
+        throw errorinfo;
+    }
+    // Nur User/Accounts die schon Vertrauen besitzen, können Vertrauen
+    // aussprechen.
+
+    if ( AccountData( guarantor_id ).isTrustedAccount() ) {
+        return;
+    }
+
+    log_debug( __LINE__ + " Schritt ZWEI...");
+
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
+
+    tntdb::Statement st = conn.prepare(
+        "INSERT INTO account_trust \
+            (   trusted_account_id, \
+                guarantor_id, \
+                createtime )\
+        VALUES \
+            (   :m_id,  \
+                :guarantor_id,  \
+                now()  \
+            )"
+    );
+    st.set("m_id", m_id )
+    .set("guarantor_id", guarantor_id ).execute();
+
+
+    // Create a feed item
+    RSSfeed newFeed;
+    newFeed.setTitle( "Vertrauen ausgesprochen" );
+    std::string str_tID = cxxtools::convert<std::string>( m_id );
+    std::string str_gID = cxxtools::convert<std::string>( guarantor_id );
+    std::string description = "Der Benutzer mit der ID " + str_gID \
+        + " hat Benutzer mit der ID " + str_tID
+        + " sein Vertrauen ausgesprochen.";
+    newFeed.setDescription( description );
+    newFeed.channels.push_back("trust");
+    RSSfeedManager feedManager;
+    feedManager.addNewFeed( newFeed );
+}

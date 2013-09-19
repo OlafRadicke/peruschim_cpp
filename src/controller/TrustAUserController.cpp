@@ -77,7 +77,8 @@ unsigned TrustAUserController::operator() (tnt::HttpRequest& request, tnt::HttpR
     bool arg_trust_user_button =
         qparam.arg<bool>("arg_trust_user_button");
 
-    if ( WebACL::isTrustedAccount( userSession.getUserID() ) ) {
+    AccountData accountData( userSession.getUserID() );
+    if ( accountData.isTrustedAccount() ) {
         s_feedback = "Derzeit gibt es nehmenden der dir vertraut! \
             Das bedeutet, das du niemanden deinerseits das Vertrauen \
             aussprechen kannst. Solange wie du nicht das Vertrauen eines \
@@ -108,10 +109,13 @@ unsigned TrustAUserController::operator() (tnt::HttpRequest& request, tnt::HttpR
             if ( arg_account_id == userSession.getUserID() ) {
                 s_feedback = "Es ist nicht möglich sich selbst das Vertrauen auszusprechen!";
             } else {
-                WebACL::setTrustAccounts(
-                    arg_account_id,
-                    userSession.getUserID()
-                );
+                AccountData accountData( arg_account_id );
+//                 accountData.setID( arg_account_id );
+                accountData.trustedByGuarantor( userSession.getUserID() );
+//                 WebACL::setTrustAccounts(
+//                     arg_account_id,
+//                     userSession.getUserID()
+//                 );
             }
         }
 

@@ -46,6 +46,20 @@ public:
     {};
 
 
+    /**
+     * Constructor init strings.
+     * @arg account_id id of account.
+     **/
+    AccountData ( unsigned long account_id ) :
+        m_id ( account_id ),
+        m_login_name ( "" ),
+        m_real_name ( "" ),
+        m_password_hash ( "" ),
+        m_password_salt ( "" ),
+        m_email ( "" ),
+        m_account_disable ( false )
+    {};
+
 // D --------------------------------------------------------------------------
 
     /**
@@ -62,6 +76,27 @@ public:
      **/
     int getGuarantorCount( );
 
+    unsigned long getID ( void ) { return m_id; };
+
+    std::string getLogin_name( void ) { return m_login_name; };
+
+    std::string getReal_name( void ) { return m_real_name; };
+
+    std::string getPassword_hash( void ) { return m_password_hash; };
+
+    std::string getPassword_salt( void ) { return m_password_salt; };
+
+    std::string getEmail( void ) { return m_email; };
+
+    bool getAccount_disable( void ) { return m_account_disable; };
+
+// I --------------------------------------------------------------------------
+
+    /**
+     * Check is more than one user this account trusted.
+     * @return true = trusted, false = no trusted.
+     **/
+    bool isTrustedAccount();
 
 // R --------------------------------------------------------------------------
 
@@ -79,20 +114,6 @@ public:
      * @para guarantor_id id of revoked guarantor.
      **/
     void revokeTrust( const unsigned long guarantor_id );
-
-    unsigned long getID ( void ) { return m_id; };
-
-    std::string getLogin_name( void ) { return m_login_name; };
-
-    std::string getReal_name( void ) { return m_real_name; };
-
-    std::string getPassword_hash( void ) { return m_password_hash; };
-
-    std::string getPassword_salt( void ) { return m_password_salt; };
-
-    std::string getEmail( void ) { return m_email; };
-
-    bool getAccount_disable( void ) { return m_account_disable; };
 
 // S --------------------------------------------------------------------------
 
@@ -120,6 +141,19 @@ public:
     void setEmail( std::string email ) { m_email = email; };
 
     void setAccount_disable( bool account_disable ) { m_account_disable = account_disable; };
+
+
+// T --------------------------------------------------------------------------
+
+    /**
+     * Set a trusted link between tow user.
+     * Has a user a guarantor with trust, he can publish his comments.
+     * But guarantor must be a trusted by other user!
+     * @para guarantor_id id of his guarantor.
+     **/
+    void trustedByGuarantor(
+        const unsigned long guarantor_id
+    );
 
 
 private:

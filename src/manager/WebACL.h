@@ -115,12 +115,7 @@ public:
      **/
     static std::vector<AccountData> getTrustAccounts( unsigned long guarantor_id );
 
-    /**
-     * Check is this account trusted..
-     * @para acount_id id of the user/account.
-     * @return true = trusted, false = no trusted.
-     **/
-    static bool isTrustedAccount( unsigned long acount_id );
+
 
     /**
      * Check is user in database exist.
@@ -165,17 +160,7 @@ public:
         const std::vector<std::string> user_rolls
     );
 
-    /**
-     * Set a trusted link between tow user.
-     * Has a user a guarantor with trust, he can publish his comments.
-     * But guarantor must be a trusted by other user!
-     * @para trusted_account_id id of a trust user.
-     * @para guarantor_id id of his guarantor.
-     **/
-    void static setTrustAccounts(
-        const unsigned long trusted_account_id,
-        const unsigned long guarantor_id
-    );
+
 
 
 };

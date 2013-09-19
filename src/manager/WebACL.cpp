@@ -20,7 +20,6 @@
 
 #include <manager/WebACL.h>
 #include <models/DatabaseProxy.h>
-#include <models/OString.h>
 #include <manager/RSSfeedManager.h>
 #include <string>
 
@@ -407,24 +406,6 @@ std::vector<AccountData> WebACL::getTrustAccounts( unsigned long guarantor_id ){
 
 /* I ----------------------------------------------------------------------- */
 
-bool WebACL::isTrustedAccount( unsigned long acount_id ){
-    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
-
-    tntdb::Statement sel = conn.prepare(
-        "SELECT count(id) \
-            FROM account_trust \
-            WHERE trusted_account_id = :acount_id "
-    );
-
-    tntdb::Row row = sel.set("acount_id", acount_id).selectRow();
-
-    if (  row[0].getInt() < 1 ) {
-        return true;
-    } else {
-        return false;
-    }
-
-}
 
 bool WebACL::isUserExist ( std::string user_name ){
     log_debug("start...");
@@ -483,58 +464,6 @@ void WebACL::setPassword (  std::string user_name, std::string new_password ) {
 
 }
 
-
-
-
-
-void WebACL::setTrustAccounts(
-    const unsigned long trusted_account_id,
-    const unsigned long guarantor_id
-) {
-    log_debug( __LINE__ + "start...");
-    if ( trusted_account_id == guarantor_id ) {
-        std::string str_guarantor_id = OString::unsignedLongToStr( guarantor_id );
-        std::string errorinfo = "User (id" + str_guarantor_id + ") can't trust self!";
-        throw errorinfo;
-    }
-    // Nur User/Accounts die schon Vertrauen besitzen, können Vertrauen
-    // aussprechen.
-    if ( isTrustedAccount( guarantor_id ) ) {
-        return;
-    }
-
-    log_debug( __LINE__ + " Schritt ZWEI...");
-
-    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
-
-    tntdb::Statement st = conn.prepare(
-        "INSERT INTO account_trust \
-            (   trusted_account_id, \
-                guarantor_id, \
-                createtime )\
-        VALUES \
-            (   :trusted_account_id,  \
-                :guarantor_id,  \
-                now()  \
-            )"
-    );
-    st.set("trusted_account_id", trusted_account_id )
-    .set("guarantor_id", guarantor_id ).execute();
-
-
-    // Create a feed item
-    RSSfeed newFeed;
-    newFeed.setTitle( "Vertrauen ausgesprochen" );
-    std::string str_tID = cxxtools::convert<std::string>( trusted_account_id );
-    std::string str_gID = cxxtools::convert<std::string>( guarantor_id );
-    std::string description = "Der Benutzer mit der ID " + str_gID \
-        + " hat Benutzer mit der ID " + str_tID
-        + " sein Vertrauen ausgesprochen.";
-    newFeed.setDescription( description );
-    newFeed.channels.push_back("trust");
-    RSSfeedManager feedManager;
-    feedManager.addNewFeed( newFeed );
-}
 
 /* R ----------------------------------------------------------------------- */
 

@@ -175,7 +175,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % }
                     />
                 </p>
-                <p><button name="arg_update_account_button"
+                <p>
+                    <button name="arg_revoke_trust_button"
+                            value="pushed"
+                            type="submit">Alle <$ s_accountData.getGuarantorCount( ) $> Bürkschaften löschen
+                    </button> <br>
+                    <span class="explanation">Das hat den Efekt das keine
+                        Berträge mehr von dem User öffentlich sichtbar sind.</span>
+                </p>
+                <p>
+                    <button name="arg_update_account_button"
                             value="pushed"
                             type="submit">Speichern
                     </button>
