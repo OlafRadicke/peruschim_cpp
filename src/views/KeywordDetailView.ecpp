@@ -80,7 +80,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 <button name="arg_detail_button"
                                         class="low_priority"
                                         value="pushed"
-                                        type="submit"><i><$ keywordList[i2] $></i>
+                                        type="submit"><i><u><$ keywordList[i2] $></u></i>
                                 </button>
                             </form>
 %     }

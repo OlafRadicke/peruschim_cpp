@@ -29,6 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     include="models/Edition.h">
         std::string              s_feedback;
         std::string              s_affirmation;
+        std::string              s_affirmation_typ;
         AccountData              s_accountData;
         std::vector<std::string> s_allRolls;
 </%request>
@@ -68,8 +69,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <b><$ s_affirmation $> </b><br>
                 <input
                     type="hidden"
-                    name="arg_affirmation_request"
-                    value="<$ s_accountData.getID() $>" >
+                    name="arg_affirmation_typ"
+                    value="<$ s_affirmation_typ $>" >
                 <button name="arg_affirmation_ok_button"
                         value="pushed"
                         type="submit">Okay
@@ -175,13 +176,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % }
                     />
                 </p>
-                <p>
+                <p>Bürkschaften: <$ s_accountData.getGuarantorCount( ) $>
                     <button name="arg_revoke_trust_button"
+                            class="low_priority"
                             value="pushed"
-                            type="submit">Alle <$ s_accountData.getGuarantorCount( ) $> Bürkschaften löschen
+                            type="submit"><u>Alle Bürkschaften löschen</u>***
                     </button> <br>
-                    <span class="explanation">Das hat den Efekt das keine
-                        Berträge mehr von dem User öffentlich sichtbar sind.</span>
                 </p>
                 <p>
                     <button name="arg_update_account_button"
@@ -191,9 +191,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </p>
                 <hr>
                 <p>
-                    <small>*Pflichtfeld</small><br>
-                    <small>**Wenn kein Passwort gesetzt wurde, wird das
-                    alte Passwort nicht verändert</small>
+                    <span class="explanation">* Pflichtfeld<br></span>
+                    <span class="explanation">** Wenn kein Passwort gesetzt
+                        wurde, wird das alte Passwort nicht verändert<br></span>
+                    <span class="explanation">*** Das hat den Efekt das keine
+                        Berträge mehr von dem User öffentlich sichtbar sind.</span>
                 </p>
             </form >
         </div>

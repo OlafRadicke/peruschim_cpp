@@ -31,7 +31,7 @@
 #include <iostream>
 #include <cxxtools/log.h>
 
-log_define("component.EditAccountController")
+// log_define("component.EditAccountController")
 
 class EditAccountController : public tnt::Component
 {
@@ -47,12 +47,14 @@ static tnt::ComponentFactoryImpl<EditAccountController> factory("EditAccountCont
 
 unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
 {
-    std::cout << "### EditAccountController::operator() ###" << std::endl;
     // shared variables
+
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
+    // the ID of account where open for open for user operations.
     TNT_SESSION_SHARED_VAR( unsigned long,            open_account_id, () );
 
     TNT_REQUEST_SHARED_VAR( std::string,              s_affirmation, () );
+    TNT_REQUEST_SHARED_VAR( std::string,              s_affirmation_typ, () );
     TNT_REQUEST_SHARED_VAR( AccountData,              s_accountData, () );
     TNT_REQUEST_SHARED_VAR( std::vector<std::string>, s_userRolls, () );
     TNT_REQUEST_SHARED_VAR( std::vector<std::string>, s_allRolls, () );
@@ -87,12 +89,14 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
         qparam.args<std::string>("args_userroles");
     bool arg_is_inactive =
         qparam.arg<bool>("arg_is_inactive");
+    bool arg_revoke_trust_button =
+        qparam.arg<bool>("arg_revoke_trust_button");
     bool arg_update_account_button =
         qparam.arg<bool>("arg_update_account_button");
 
 
-    unsigned long arg_affirmation_request =
-        qparam.arg<unsigned long>("arg_affirmation_request");
+    std::string arg_affirmation_typ =
+        qparam.arg<std::string>("arg_affirmation_typ");
     bool arg_affirmation_ok_button =
         qparam.arg<bool>("arg_affirmation_ok_button");
 
@@ -136,20 +140,32 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
         };
     }
 
-
+    if ( arg_revoke_trust_button ) {
+        AccountData accountData(open_account_id);
+        int guarantorCount = accountData.getGuarantorCount( );
+        if ( guarantorCount == 0 ) {
+            s_feedback = "Der Account/Benutzer besitzt kein Vertrauen was man ihm \
+                entziehen könne.";
+        } else {
+            s_affirmation_typ = "revoke trust";
+            s_affirmation = "Achtung, der Prozess ist unumkehrbar! \
+                Wenn das Vertrauen der Bürgen gelöscht wird müsste jeder einzelne \
+                Bürge sein Vertrauen noch ein mal aussprechen um den Zustand \
+                wieder herzustellen. Das beträfe in diesem Fall " +
+                cxxtools::convert<std::string>( guarantorCount ) + " Bürgen.";
+        }
+    }
 
     // if delete affirmation clicked.
-    if ( arg_affirmation_request ) {
+    if ( arg_affirmation_typ == "revoke trust" ) {
         if ( arg_affirmation_ok_button ) {
-//         s_affirmation = "";
-//         s_feedback = "";
-//         log_debug( "will löschen: " << arg_affirmation_request );
-//         s_accountData.setID( arg_affirmation_request );
-//         s_accountData.deleteAllData();
-//         s_feedback = "Der Account mit der Id " + \
-//             cxxtools::convert<std::string>( arg_affirmation_request ) \
-//             + " wurde gelöscht!";
-//         s_accountList = WebACL::getAllAccounts();
+            AccountData accountData;
+            accountData.setID( open_account_id );
+            int guarantorCount = accountData.getGuarantorCount( );
+            accountData.revokeTrust( userSession.getUserID() );
+            s_feedback = "Es wurde sämtliches Vertrauen entfernt. Das betraf "
+                + OString::IntToStr( guarantorCount ) + " Bürgen.";
+
         }
     }
     return DECLINED;

@@ -76,6 +76,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         name="arg_account_id"
                         value="<$ s_trustedAccountList[i_accountT].getID() $>" >
                     <button name="arg_revoke_trust_button"
+                            class="low_priority"
                             value="pushed"
                             type="submit">Vertrauen entziehen
                     </button>
@@ -114,6 +115,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     value="<$ s_searchAccountList[i_accountS].getID() $>" >
                     <button name="arg_trust_user_button"
                             value="pushed"
+                            class="low_priority"
                             type="submit">Vertrauen aussprechen
                     </button>
                 </p>
