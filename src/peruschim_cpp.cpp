@@ -11,6 +11,10 @@ int main ( int argc, char* argv[] )
 {
     try
     {
+
+        /* initialize random seed: */
+        srand (time(NULL));
+        
         Config& config = Config::it();
         config.read();
 

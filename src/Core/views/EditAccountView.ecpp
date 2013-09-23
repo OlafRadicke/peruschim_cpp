@@ -15,7 +15,9 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
-
+<%pre>
+    #include <SessionForm/manager/Manager.h>
+</%pre>
 <%session
     scope="shared"
     include="Core/models/UserSession.h" >
@@ -34,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         std::vector<std::string> s_allRolls;
 </%request>
 
-
+%  std::string formToken = SessionForm::Manager::getFormToken( request )
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -66,6 +68,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % if ( s_affirmation != "" ) {
         <div class="feedback-box">
             <form method="post" >
+                <$$  formToken  $>
                 <b><$ s_affirmation $> </b><br>
                 <input
                     type="hidden"
@@ -88,6 +91,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <p>
                     <label for="login_name">Login*: </label>
                     <br>
+                    <$$  formToken  $>
                     <input
                         class="full-size"
                         name="arg_login_name"

@@ -272,8 +272,9 @@ std::vector<std::string> WebACL::getAllRolls ( ){
 
 
 std::string WebACL::genRandomSalt ( const int len) {
-    /* initialize random seed: */
-    srand (time(NULL));
+    // Set this in the main-function... initialize random seed: */
+    //srand (time(NULL));
+    
     std::string randomString = "";
     static const char alphanum[] =
         "0123456789"
