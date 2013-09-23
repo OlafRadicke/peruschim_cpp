@@ -94,7 +94,7 @@ peruschim_cpp_SOURCES = \
 	Core/models/Quote.cpp \
 	Core/models/UserSession.cpp \
 	SessionForm/controller/Controller.cpp \
-	SessionForm/manager/Manager.cpp
+	SessionForm/manager/Manager.cpp \
 	$(ecppSources)
 
 nodist_peruschim_cpp_SOURCES = \
