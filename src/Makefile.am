@@ -26,7 +26,8 @@ noinst_HEADERS = \
 	Core/models/KeywordData.h \
 	Core/models/OString.h \
 	Core/models/Quote.h \
-	Core/models/UserSession.h
+	Core/models/UserSession.h \
+	SessionForm/manager/Manager.h
 
 ecppSources = \
 	Core/views/parts/style.ecpp \
@@ -52,7 +53,8 @@ ecppSources = \
 	Core/views/ResetOwnPasswordView.ecpp \
 	Core/views/RSSfeedView.ecpp \
 	Core/views/SwitchToHandheldVersionView.ecpp \
-	Core/views/TrustAUserView.ecpp
+	Core/views/TrustAUserView.ecpp \
+	SessionForm/views/NoAvailabeTokenView.ecpp
 
 staticSources = \
 	Core/resources/favicon.ico \
@@ -91,6 +93,8 @@ peruschim_cpp_SOURCES = \
 	Core/models/OString.cpp \
 	Core/models/Quote.cpp \
 	Core/models/UserSession.cpp \
+	SessionForm/controller/Controller.cpp \
+	SessionForm/manager/Manager.cpp
 	$(ecppSources)
 
 nodist_peruschim_cpp_SOURCES = \

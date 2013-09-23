@@ -30,18 +30,23 @@ int main ( int argc, char* argv[] )
         app.mapUrl("^/Core/feed-icon.png$", "resources")
            .setPathInfo("Core/resources/feed-icon.png");
 
-
         // special pages
+        // 1 to 1 rout
         app.mapUrl( "^/(.*)$", "$1" );
+        // default route for /
         app.mapUrl( "^/$", "home" );
+        // route for rss feed
         app.mapUrl( "^/rss.xml", "RSSfeedView" );
+
+        // controller rout for SessionForm token check.
+        app.mapUrl( "^/(.*)", "SessionForm::Controller" );
+        // controller rout for SessionForm token check.
+        app.mapUrl( "^/SessionForm/NoAvailabeToken", "NoAvailabeTokenView" );
 
         // mvc stuff
         app.mapUrl( "^/(.*)$", "$1Controller" );
         app.mapUrl( "^/(.*)$", "$1View" );
 
-        // nur zum test....
-//         app.mapUrl( "^/EditEditions", "EditEditionsController" );
 
         std::cout << "peruschim cpp is started and run on http://" << config.appIp()
             << ":" <<  config.appPort() << "/" << std::endl;

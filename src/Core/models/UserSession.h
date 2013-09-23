@@ -62,9 +62,7 @@ public:
      **/
     void cleanRoll ( ) { m_userroles.clear(); }
 
-// G --------------------------------------------------------------------------
 
-//     getFormToken(){};
 
     /**
      * Get back the mode of item view.

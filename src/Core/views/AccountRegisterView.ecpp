@@ -16,6 +16,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
 
+<%pre>
+    #include <SessionForm/manager/Manager.h>
+</%pre>
 <%session
     scope="shared"
     include="Core/models/UserSession.h" >
@@ -82,6 +85,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <div class="simple-box">
 
                 <form method="post" action="EditAccount">
+                    <$$  SessionForm::Manager::getFormToken( request )  $>
 
                     <i><b>"<$ s_accountList[i_account].getLogin_name() $>"</b></i><br>
                     (ID:<$ s_accountList[i_account].getID() $>)&#160;
@@ -96,6 +100,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </button>&#160;
                 </form >
                 <form method="post" >
+                    <$$  SessionForm::Manager::getFormToken( request )  $>
                     <input
                         type="hidden"
                         name="arg_delete_account_id"
