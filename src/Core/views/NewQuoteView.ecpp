@@ -1,0 +1,221 @@
+<#
+Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#>
+
+<%session
+    scope="shared"
+    include="Core/models/UserSession.h"
+    include="Core/manager/BibleManager.h">
+
+        UserSession            userSession;
+        BibleManager           s_bibleManager;
+</%session>
+
+<%request
+    scope="shared"
+    include="Core/models/Edition.h"
+    include="Core/models/Quote.h">
+        std::string            s_feedback;
+        Quote                  s_quoteData;
+        std::vector<Edition>   s_editionList;
+        std::string            s_bibleserverComURL;
+</%request>
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>PERUSCHIM - Neuer Vers</title>
+    <meta charset = "UTF-8" />
+    <& "style" &>
+</head>
+<body>
+    <%include>Core/views/parts/user-session.ecpp.html</%include>
+    <%include>Core/views/parts/head.ecpp.html</%include>
+    <br />
+
+    <div class="mainmenue">
+        <ul>
+            <li class="tableft"><a href="home">Home</a></li>
+            <li class="tabmiddle"><a href="KeywordRegister">Schlagwortsuche</a></li>
+            <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
+            <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
+            <li class="tabright"><a href="portaladmin">Administrationsportal</a></li>
+        </ul>
+    </div>
+    <br />
+
+
+    <div class="centerbox">
+        <h1>Neuen Verseintrag erstellen</h1>
+
+% if ( s_feedback != "" ) {
+
+        <div class="feedback-box">
+            <b><$ s_feedback $> </b>
+        </div>
+
+% } else {
+
+        <div class="flush-left-box">
+%     if ( 1 > s_editionList.size() ) {
+            <div class="feedback-box">
+                <b>Bevor ein erster Vers angelegt werden kann, muss zunächst eine
+                    Bibelausgabe angelegt werden. <a href="/EditEditions">Jetzt
+                    Bibelausgabe anlegen...</a></b>
+            </div>
+%     }
+            <br class="clear-both">
+            <form method="post" action="NewQuote">
+
+                <p>Edition:
+                    <select name="arg_edition_id" size="1">
+%                    for ( unsigned int i=0; i<s_editionList.size(); i++) {
+                        <option value="<$  s_editionList[i].getID() $>"><$ s_editionList[i].getName() $></option>
+%                    }
+                    </select> <a href="/EditEditions">Neue Bibelausgabe anlegen...</a>
+                </p>
+
+                <p>Buch:
+                    <select name="arg_book_title" size="1">
+%     for ( unsigned int i=0; i < s_bibleManager.bibleBooksCount(); i++) {
+                        <option value="<$  s_bibleManager.bibleBook(i) $>"<? s_quoteData.getBookTitle() == s_bibleManager.bibleBook(i) ? " selected" ?>>
+                            <$ s_bibleManager.bibleBook(i) $>
+                        </option>
+%     }
+                    </select>
+                </p>
+
+                <p><b>von</b><br>Kapitel: <input
+                        name="arg_chapter_begin"
+                        type="number"
+                        min="1"
+                        max="200"
+%     if ( s_quoteData.getChapterBegin() > 0 ) {
+                        value="<$ s_quoteData.getChapterBegin() $>"
+%     }
+                        required /> Vers: <input
+                        name="arg_sentence_begin"
+                        type="number"
+                        min="1"
+                        max="200"
+%     if ( s_quoteData.getSentenceBegin() > 0 ) {
+                        value="<$ s_quoteData.getSentenceBegin() $>"
+%     }
+                        required /></p>
+
+                <p><b>bis</b><br>Kapitel: <input
+                        name="arg_chapter_end"
+                        type="number"
+                        min="1"
+                        max="200"
+%     if ( s_quoteData.getChapterEnd() > 0 ) {
+                        value="<$ s_quoteData.getChapterEnd() $>"
+%     }
+                        /> Vers: <input
+                        name="arg_sentence_end"
+                        type="number"
+                        min="1"
+                        max="200"
+%     if ( s_quoteData.getSentenceEnd() > 0 ) {
+                        value="<$ s_quoteData.getSentenceEnd() $>"
+%     }
+                        />
+                </p>
+%     if ( s_bibleserverComURL != "" ) {
+                <div class="feedback-box">
+                    Du kanst unter der folgenden URL deine Bibelstelle nachschlagen: <br>
+                    <b><a href="<$ s_bibleserverComURL $>"><$ s_bibleserverComURL $></a></b>
+                </div>
+%     }
+                <p>
+                    Zitat: <br>
+                    <textarea
+                        name="arg_quote_text"
+                        class="full-width"
+                        rows="2"><$ s_quoteData.getQuoteText() $></textarea> <br>
+
+                    <select name="arg_bible_trans" size="1">
+                        <option value="LUT"<? userSession.getPrefersBibleTrans() == "LUT" ? " selected" ?>>
+                            Luther 1986
+                        </option>
+                        <option value="ELB"<? userSession.getPrefersBibleTrans() == "ELB" ? " selected" ?>>
+                            Elberfelder
+                        </option>
+                        <option value="HFA"<? userSession.getPrefersBibleTrans() == "HFA" ? " selected" ?>>
+                            Hoffnung für alle
+                        </option>
+                        <option value="SLT"<? userSession.getPrefersBibleTrans() == "SLT" ? " selected" ?>>
+                            Schlachter 2000
+                        </option>
+                        <option value="NGÜ"<? userSession.getPrefersBibleTrans() == "NGÜ" ? " selected" ?>>
+                            Neue Genfer
+                        </option>
+                        <option value="GNB"<? userSession.getPrefersBibleTrans() == "GNB" ? " selected" ?>>
+                            Gute Nachricht
+                        </option>
+                        <option value="EU"<? userSession.getPrefersBibleTrans() == "EU" ? " selected" ?>>
+                            Einheitsübersetzung
+                        </option>
+                        <option value="NLB"<? userSession.getPrefersBibleTrans() == "NLB" ? " selected" ?>>
+                            Neues Leben
+                        </option>
+                    </select>
+                    <button name="arg_look_up_button"
+                            value="clicked"
+                            type="submit">Auf bibleserver.com nachschlagen
+                    </button>
+                </p>
+
+                <p>Schlagworte (Komma getrennt): <br><input
+                        class="full-width"
+                        name="arg_keywords"
+                        type="text"
+                        value="<$ s_quoteData.getKeywordsAsString() $>"
+                        maxlength="300"></p>
+
+
+                <p>Notizen/Anmerungen: <br>
+                    <textarea
+                        class="full-width"
+                        name="arg_note"
+                        rows="10"><$ s_quoteData.getNote( ) $></textarea>
+                </p>
+                <p>Datensatz nicht öffentlicht sichtbar machen <input
+                        type="checkbox"
+                        id="is_private_data"
+                        value="true"
+                        name="arg_is_private_data"
+%     if ( s_quoteData.isPrivateData() ) {
+                        checked ></p>
+%     } else {
+                        ></p>
+%     }
+
+                <p>
+                    <button id="save_button"
+                            name="arg_create_button"
+                            value="pushed"
+                            type="submit">Speichern
+                    </button></p>
+            </form>
+
+% }
+        </div>
+    </div>
+
+<%include>Core/views/parts/foot.ecpp.html</%include>
+</body>
+</html>

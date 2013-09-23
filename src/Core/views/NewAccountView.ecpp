@@ -1,0 +1,79 @@
+<#
+Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#>
+
+<%session
+    scope="shared"
+    include="Core/models/UserSession.h" >
+        UserSession            userSession;
+</%session>
+
+<%request
+    scope="shared">
+        std::string              s_feedback;
+</%request>
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>PERUSCHIM - Neuen Account anlegen</title>
+    <meta charset = "UTF-8" />
+    <& "style" &>
+</head>
+<body>
+    <%include>Core/views/parts/user-session.ecpp.html</%include>
+    <%include>Core/views/parts/head.ecpp.html</%include>
+    <br />
+    <div class="mainmenue">
+        <ul>
+            <li class="tableft"><a href="home">Home</a></li>
+            <li class="tabmiddle"><a href="KeywordRegister">Schlagwortsuche</a></li>
+            <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
+            <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
+            <li class="tabright"><a href="portaladmin">Administrationsportal</a></li>
+        </ul>
+    </div>
+    <br />
+    <div class="centerbox">
+
+        <h1>Neuen Account anlegen</h1>
+%       if ( s_feedback != "" ) {
+        <div class="feedback-box">
+            <b><$ s_feedback $> </b>
+        </div>
+%       }
+        <form method="post" >
+            <p>Login*:<br><input name="arg_login_name" type="text" size="40" maxlength="80"></p>
+            <p>Vollständiger Name:<br><input name="arg_real_name" type="text" size="40" maxlength="80"></p>
+            <p>E-Mail-Adresse:<br><input name="arg_mail" type="text" size="40" maxlength="80"></p>
+            <p>Passwort*:<br><input name="arg_password_a" type="password" size="40" maxlength="40"></p>
+            <p>Passwortwiederholung*:<br><input name="arg_password_b" type="password" size="40" maxlength="40"></p>
+            <p>
+                <span class="explanation">*Pflichtfeld. Die e-Mail-Adresse ist
+                    keine Pflicht, macht aber Sinnen, wenn du mal dein Passwort
+                    vergisst.
+                </span>
+            </p>
+            <p>
+                <button name="arg_create_button"
+                            value="pushed"
+                            type="submit">Speichern
+                </button></p>
+        </form>
+    </div>
+<%include>Core/views/parts/foot.ecpp.html</%include>
+</body>
+</html>

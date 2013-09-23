@@ -1,0 +1,114 @@
+<#
+Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#>
+
+
+<%session
+    scope="shared"
+    include="Core/models/UserSession.h" >
+        UserSession userSession;
+</%session>
+
+<%request
+    scope="shared"
+    include="Core/models/AccountData.h"
+    include="Core/manager/WebACL.h"
+    include="Core/models/Edition.h">
+        std::string                     s_feedback;
+        std::vector<AccountData>        s_accountList;
+        std::string                     s_affirmation;
+        AccountData                     s_accountData;
+</%request>
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>PERUSCHHIM - Neuen Account anlegen</title>
+    <meta charset = "UTF-8" />
+    <& "style" &>
+</head>
+<body>
+    <%include>Core/views/parts/user-session.ecpp.html</%include>
+    <%include>Core/views/parts/head.ecpp.html</%include>
+    <br />
+    <div class="mainmenue">
+        <ul>
+            <li class="tableft"><a href="home">Home</a></li>
+            <li class="tabmiddle"><a href="KeywordRegister">Schlagwortsuche</a></li>
+            <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
+            <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
+            <li class="tabright"><a href="portaladmin">Administrationsportal</a></li>
+        </ul>
+    </div>
+    <br />
+    <div class="centerbox">
+        <h1>User-Accounts</h1>
+% if ( s_feedback != "" ) {
+        <div class="feedback-box">
+            <b><$ s_feedback $> </b>
+        </div>
+% }
+% if ( s_affirmation != "" ) {
+        <div class="feedback-box">
+            <form method="post" >
+                <b><$ s_affirmation $> </b><br>
+                <input
+                    type="hidden"
+                    name="arg_affirmation_delete_account_id"
+                    value="<$ s_accountData.getID() $>" >
+                <button name="arg_affirmation_delete_button"
+                        value="pushed"
+                        type="submit">Löschen bestätigen
+                </button>
+            </form>
+        </div>
+% }
+        <div class="columnbox">
+% for ( unsigned int i_account = 0; i_account < s_accountList.size(); i_account++) {
+            <div class="simple-box">
+
+                <form method="post" action="EditAccount">
+
+                    <i><b>"<$ s_accountList[i_account].getLogin_name() $>"</b></i><br>
+                    (ID:<$ s_accountList[i_account].getID() $>)&#160;
+                    (Vertrauensfaktor: <$ s_accountList[i_account].getGuarantorCount() $>)
+                    <input
+                        type="hidden"
+                        name="arg_edit_account_id"
+                        value="<$ s_accountList[i_account].getID() $>" >
+                    <button name="arg_edit_account_button"
+                            value="pushed"
+                            type="submit">Bearbeiten
+                    </button>&#160;
+                </form >
+                <form method="post" >
+                    <input
+                        type="hidden"
+                        name="arg_delete_account_id"
+                        value="<$ s_accountList[i_account].getID() $>" >
+                    <button name="arg_delete_account_button"
+                            value="pushed"
+                            type="submit">Löschen
+                    </button>
+                </form >
+            </div>
+% }
+        </div>
+    </div>
+<%include>Core/views/parts/foot.ecpp.html</%include>
+</body>
+</html>

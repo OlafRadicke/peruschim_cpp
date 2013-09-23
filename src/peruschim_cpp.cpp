@@ -2,7 +2,7 @@
 #include <tnt/configurator.h>
 #include <string>
 #include <cxxtools/log.h>
-#include <models/Config.h>
+#include <Core/models/Config.h>
 
 
 log_define("PERUSCHIM")
@@ -23,12 +23,12 @@ int main ( int argc, char* argv[] )
         app.listen( config.appIp(), config.appPort() );
 
         // configure static stuff
-        app.mapUrl("^/resources/(.*)", "resources")
-           .setPathInfo("resources/$1");
-        app.mapUrl("^/favicon.ico$", "resources")
-           .setPathInfo("resources/favicon.ico");
-        app.mapUrl("^/feed-icon.png$", "resources")
-           .setPathInfo("resources/feed-icon.png");
+        app.mapUrl("^/Core/resources/(.*)", "resources")
+           .setPathInfo("Core/resources/$1");
+        app.mapUrl("^/Core/favicon.ico$", "resources")
+           .setPathInfo("Core/resources/favicon.ico");
+        app.mapUrl("^/Core/feed-icon.png$", "resources")
+           .setPathInfo("Core/resources/feed-icon.png");
 
 
         // special pages

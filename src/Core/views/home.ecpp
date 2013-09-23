@@ -1,0 +1,75 @@
+<#
+Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#>
+
+<%pre>
+    #include "Core/manager/WebACL.h"
+    #include "Core/models/UserSession.h"
+</%pre>
+
+<%session scope="shared">
+UserSession userSession;
+</%session>
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>PERUSCHIM - Home</title>
+    <meta charset = "UTF-8" />
+    <& "style" &>
+</head>
+<body>
+
+    <%include>Core/views/parts/user-session.ecpp.html</%include>
+    <%include>Core/views/parts/head.ecpp.html</%include>
+    <br />
+
+    <div class="mainmenue">
+        <ul>
+            <li class="tableft_activ"><a href="home">Home</a></li>
+            <li class="tabmiddle"><a href="KeywordRegister">Schlagwortsuche</a></li>
+            <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
+            <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
+            <li class="tabright"><a href="portaladmin">Administrationsportal</a></li>
+        </ul>
+    </div>
+    <br />
+
+
+    <div class="centerbox">
+        <h1>Herzlich Willkommen auf <i>PERUSCHIM</i></h1>
+        <div class="columnbox">
+<p>Mit <i>PERUSCHIM</i> kannst du dir Bibelverse, die du dir gerne merken willst,
+speichern. Diese Verse kannst du mit Schlagwörtern versehen, um sie schneller
+wiederzufinden. </p>
+<p>Du kannst auch nachschauen, welche Bibelstellen sich Andere zu bestimmten Themen
+markiert haben. <i>PERUSCHIM</i> ist eine Bibelkonkordanz mit
+Sozialem-Netzwerk-Charakter. Versmarkierungen, die du nicht mit anderen teilen
+möchtest, kannst du als "privat" markieren. </p>
+<p><i>PERUSCHIM</i> ist ein OpenSource-Projekt. Den Source-Code findest du hier:
+<a href="https://github.com/OlafRadicke/peruschim_cpp">github.com/OlafRadicke/peruschim_cpp</a>.
+</p>
+<p>Das Wort <i>PERUSCHIM</i> ist übrigens Hebräisch und heißt "Pharisäer". Ich
+habe den Namen für das Projekt gewählt, damit es mich bei aller Begeisterung für
+das Bibelstudium daran erinnern soll, nicht zum <i>Pharisäer</i> zu werden.</p>
+
+        </div>
+    </div>
+
+<%include>Core/views/parts/foot.ecpp.html</%include>
+</body>
+</html>

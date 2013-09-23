@@ -3,94 +3,94 @@ bin_PROGRAMS = peruschim_cpp
 AM_CPPFLAGS = -I$(srcdir)
 
 EXTRA_DIST = \
-	controller/LogoutController.tnt.cpp \
-	resources/favicon.ico \
-	resources/piwik.ecpp \
-	resources/peruschim.css \
-	resources/small_screens.css \
-	views/parts/user-session.ecpp.html \
-	views/parts/head.ecpp.html \
-	views/parts/foot.ecpp.html
+	Core/controller/LogoutController.tnt.cpp \
+	Core/resources/favicon.ico \
+	Core/resources/piwik.ecpp \
+	Core/resources/peruschim.css \
+	Core/resources/small_screens.css \
+	Core/views/parts/user-session.ecpp.html \
+	Core/views/parts/head.ecpp.html \
+	Core/views/parts/foot.ecpp.html
 
 noinst_HEADERS = \
-	manager/BibleManager.h \
-	manager/EditionManager.h \
-	manager/KeywordRegister.h \
-	manager/QuoteManager.h \
-	manager/QuoteRegister.h \
-	manager/WebACL.h \
-	models/AccountData.h \
-	models/Config.h \
-	models/DatabaseProxy.h \
-	models/Edition.h \
-	models/KeywordData.h \
-	models/OString.h \
-	models/Quote.h \
-	models/UserSession.h
+	Core/manager/BibleManager.h \
+	Core/manager/EditionManager.h \
+	Core/manager/KeywordRegister.h \
+	Core/manager/QuoteManager.h \
+	Core/manager/QuoteRegister.h \
+	Core/manager/WebACL.h \
+	Core/models/AccountData.h \
+	Core/models/Config.h \
+	Core/models/DatabaseProxy.h \
+	Core/models/Edition.h \
+	Core/models/KeywordData.h \
+	Core/models/OString.h \
+	Core/models/Quote.h \
+	Core/models/UserSession.h
 
 ecppSources = \
-	views/parts/style.ecpp \
-	views/AccountRegisterView.ecpp \
-	views/access_denied.ecpp \
-	views/EditAccountView.ecpp \
-	views/EditEditionsView.ecpp \
-	views/EditOwnVersesView.ecpp \
-	views/EditQuoteView.ecpp \
-	views/ExportOwnVersesView.ecpp \
-	views/home.ecpp \
-	views/ImportOwnVersesView.ecpp \
-	views/KeywordDetailView.ecpp \
-	views/KeywordRegisterView.ecpp \
-	views/LogInView.ecpp \
-	views/logout.ecpp \
-	views/mainmenu.ecpp \
-	views/NewAccountView.ecpp \
-	views/NewQuoteView.ecpp \
-	views/portalaccount.ecpp \
-	views/portaladmin.ecpp \
-	views/portalquote.ecpp \
-	views/ResetOwnPasswordView.ecpp \
-	views/RSSfeedView.ecpp \
-	views/SwitchToHandheldVersionView.ecpp \
-	views/TrustAUserView.ecpp
+	Core/views/parts/style.ecpp \
+	Core/views/AccountRegisterView.ecpp \
+	Core/views/access_denied.ecpp \
+	Core/views/EditAccountView.ecpp \
+	Core/views/EditEditionsView.ecpp \
+	Core/views/EditOwnVersesView.ecpp \
+	Core/views/EditQuoteView.ecpp \
+	Core/views/ExportOwnVersesView.ecpp \
+	Core/views/home.ecpp \
+	Core/views/ImportOwnVersesView.ecpp \
+	Core/views/KeywordDetailView.ecpp \
+	Core/views/KeywordRegisterView.ecpp \
+	Core/views/LogInView.ecpp \
+	Core/views/logout.ecpp \
+	Core/views/mainmenu.ecpp \
+	Core/views/NewAccountView.ecpp \
+	Core/views/NewQuoteView.ecpp \
+	Core/views/portalaccount.ecpp \
+	Core/views/portaladmin.ecpp \
+	Core/views/portalquote.ecpp \
+	Core/views/ResetOwnPasswordView.ecpp \
+	Core/views/RSSfeedView.ecpp \
+	Core/views/SwitchToHandheldVersionView.ecpp \
+	Core/views/TrustAUserView.ecpp
 
 staticSources = \
-	resources/favicon.ico \
-	resources/peruschim.css \
-	resources/small_screens.css \
-	resources/feed-icon.png
+	Core/resources/favicon.ico \
+	Core/resources/peruschim.css \
+	Core/resources/small_screens.css \
+	Core/resources/feed-icon.png
 
 peruschim_cpp_SOURCES = \
-	controller/AccountRegisterController.cpp \
-	controller/EditAccountController.cpp \
-	controller/EditEditionsController.cpp \
-	controller/EditOwnVersesController.cpp \
-	controller/EditQuoteController.cpp \
-	controller/ExportOwnVersesController.cpp \
-	controller/ImportOwnVersesController.cpp \
-	controller/KeywordDetailController.cpp \
-	controller/KeywordRegisterController.cpp \
-	controller/LogInController.cpp \
-	controller/NewAccountController.cpp \
-	controller/NewQuoteController.cpp \
-	controller/ResetOwnPasswordController.cpp \
-	controller/SwitchToHandheldVersionController.cpp \
-	controller/TrustAUserController.cpp \
-	manager/BibleManager.cpp \
-	manager/EditionManager.cpp \
-	manager/KeywordRegister.cpp \
-	manager/QuoteManager.cpp \
-	manager/QuoteRegister.cpp \
-	manager/RSSfeedManager.cpp \
-	manager/WebACL.cpp \
-	models/AccountData.cpp \
-	models/Config.cpp \
-	models/DatabaseProxy.cpp \
-	models/KeywordData.cpp \
-	models/OString.cpp \
-	models/Quote.cpp \
-	models/UserSession.cpp \
 	peruschim_cpp.cpp \
+	Core/controller/AccountRegisterController.cpp \
+	Core/controller/EditAccountController.cpp \
+	Core/controller/EditEditionsController.cpp \
+	Core/controller/EditOwnVersesController.cpp \
+	Core/controller/EditQuoteController.cpp \
+	Core/controller/ExportOwnVersesController.cpp \
+	Core/controller/ImportOwnVersesController.cpp \
+	Core/controller/KeywordDetailController.cpp \
+	Core/controller/KeywordRegisterController.cpp \
+	Core/controller/LogInController.cpp \
+	Core/controller/NewAccountController.cpp \
+	Core/controller/NewQuoteController.cpp \
+	Core/controller/ResetOwnPasswordController.cpp \
+	Core/controller/SwitchToHandheldVersionController.cpp \
+	Core/controller/TrustAUserController.cpp \
+	Core/manager/BibleManager.cpp \
+	Core/manager/EditionManager.cpp \
+	Core/manager/KeywordRegister.cpp \
+	Core/manager/QuoteManager.cpp \
+	Core/manager/QuoteRegister.cpp \
+	Core/manager/RSSfeedManager.cpp \
+	Core/manager/WebACL.cpp \
+	Core/models/AccountData.cpp \
+	Core/models/Config.cpp \
+	Core/models/DatabaseProxy.cpp \
+	Core/models/KeywordData.cpp \
+	Core/models/OString.cpp \
+	Core/models/Quote.cpp \
+	Core/models/UserSession.cpp \
 	$(ecppSources)
 
 nodist_peruschim_cpp_SOURCES = \
