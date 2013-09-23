@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         std::vector<std::string> s_allRolls;
 </%request>
 
-%  std::string formToken = SessionForm::Manager::getFormToken( request )
+%  std::string formToken = SessionForm::Manager::getFormToken( request );
 <!DOCTYPE HTML>
 <html>
 <head>
