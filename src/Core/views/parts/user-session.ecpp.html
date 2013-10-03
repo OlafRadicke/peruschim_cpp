@@ -1,18 +1,37 @@
 
+<%pre>
+    #include <Core/models/Config.h>
+    #include <RouteReverse/manager/Manager.h>
+</%pre>
+
+% RouteReverse::Manager routeReverseManager;
 
     <div class="login-link">
 % if ( userSession.isHandheldVersion() ) {
-        <a href="SwitchToHandheldVersion">Normale Ansicht</a>
+
+        <a href="<$ RouteReverse::Manager::getLinkTo("SwitchToHandheldVersion", request) $>">
+            Normale Ansicht
+        </a>
 % } else {
-        <a href="SwitchToHandheldVersion">Mobilen Version</a>
+        <a href="<$ RouteReverse::Manager::getLinkTo("SwitchToHandheldVersion", request) $>">
+            Mobilen Version
+        </a>
 % }
         <br>
 % if (  userSession.isInRole ( "user" ) == true) {
-        <$ userSession.getUserName( ) $>(ID:<$ userSession.getUserID( ) $>) <a href="logout">Abmelden</a>
+        <$ userSession.getUserName( ) $>(ID:<$ userSession.getUserID( ) $>)
+        <a href="<$ RouteReverse::Manager::getLinkTo("logout", request) $>">Abmelden</a>
 % } else {
-        <a href="LogIn">Anmelden</a>
+<!--        <a href="http://<$ Config::it().domainName() $>/LogIn">Anmelden</a> -->
+        <a href="<$ RouteReverse::Manager::getLinkTo("LogIn", request) $>">Anmelden</a>
 % }
         <br>
-        <a href="rss.xml"><img src="feed-icon.png"  width="22" height="22" alt="rss-feed-icon" /></a>
+        <a href="<$ RouteReverse::Manager::getLinkTo("RSSfeedView", request) $>">
+            <img
+                src="<$ RouteReverse::Manager::getLinkTo("Core/feed-icon.png", request) $>"
+                width="22"
+                height="22"
+                alt="rss-feed-icon" />
+        </a>
     </div>
 

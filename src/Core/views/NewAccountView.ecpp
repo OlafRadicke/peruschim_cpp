@@ -24,6 +24,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <%request
     scope="shared">
         std::string              s_feedback;
+        std::string              s_login_name;
+        std::string              s_real_name;
+        std::string              s_mail;
 </%request>
 
 <!DOCTYPE HTML>
@@ -56,11 +59,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </div>
 %       }
         <form method="post" >
-            <p>Login*:<br><input name="arg_login_name" type="text" size="40" maxlength="80"></p>
-            <p>Vollständiger Name:<br><input name="arg_real_name" type="text" size="40" maxlength="80"></p>
-            <p>E-Mail-Adresse:<br><input name="arg_mail" type="text" size="40" maxlength="80"></p>
-            <p>Passwort*:<br><input name="arg_password_a" type="password" size="40" maxlength="40"></p>
-            <p>Passwortwiederholung*:<br><input name="arg_password_b" type="password" size="40" maxlength="40"></p>
+            <p>Login*:<br>
+                <input
+                    name="arg_login_name"
+                    type="text" size="40"
+                    maxlength="80"
+                    value="<$ s_login_name $>">
+            </p>
+            <p>Vollständiger Name:<br>
+                <input
+                    name="arg_real_name"
+                    type="text" size="40"
+                    maxlength="80"
+                    value="<$ s_real_name $>">
+            </p>
+            <p>E-Mail-Adresse:<br>
+                <input
+                    name="arg_mail"
+                    type="text"
+                    size="40"
+                    maxlength="80"
+                    value="<$ s_mail $>">
+            </p>
+            <p>Passwort*:<br>
+                <input name="arg_password_a" type="password" size="40" maxlength="40">
+            </p>
+            <p>Passwortwiederholung*:<br>
+                <input name="arg_password_b" type="password" size="40" maxlength="40">
+            </p>
             <p>
                 <span class="explanation">*Pflichtfeld. Die e-Mail-Adresse ist
                     keine Pflicht, macht aber Sinnen, wenn du mal dein Passwort

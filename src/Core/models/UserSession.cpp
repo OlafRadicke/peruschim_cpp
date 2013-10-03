@@ -27,6 +27,7 @@
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
+// A --------------------------------------------------------------------------
 
 void UserSession::addRoll ( std::vector<std::string> rolls ) {
     DEBUG "addRoll" << std::endl;
@@ -35,6 +36,8 @@ void UserSession::addRoll ( std::vector<std::string> rolls ) {
         m_userroles.push_back ( rolls[i] );
     }
 }
+
+// G --------------------------------------------------------------------------
 
 unsigned long UserSession::getUserID ( ) {
     DEBUG std::endl;
@@ -62,12 +65,16 @@ unsigned long UserSession::getUserID ( ) {
     return this->m_userID;
 }
 
+// L --------------------------------------------------------------------------
+
 void UserSession::logout( ) {
     DEBUG "logout..." << std::endl;
     this->m_userroles.clear();
     this->m_username = "";
     this->m_userID = 0;
 }
+
+// U --------------------------------------------------------------------------
 
 bool UserSession::isInRole ( std::string siteroll ) {
     for ( unsigned int i=0; i<m_userroles.size(); i++) {

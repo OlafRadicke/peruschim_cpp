@@ -51,7 +51,7 @@ unsigned AccountRegisterController::operator() (tnt::HttpRequest& request, tnt::
     // shared variables
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
     TNT_REQUEST_SHARED_VAR( std::string,              s_affirmation, () );
-    TNT_REQUEST_SHARED_VAR( AccountData,              s_accountData, () );
+//     TNT_REQUEST_SHARED_VAR( AccountData,              s_accountData, () );
     TNT_REQUEST_SHARED_VAR( std::vector<AccountData>, s_accountList, () );
     TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
 
@@ -64,10 +64,10 @@ unsigned AccountRegisterController::operator() (tnt::HttpRequest& request, tnt::
 
     // URL arguments
 
-    unsigned long arg_edit_account_id =
-        qparam.arg<unsigned long>("arg_edit_account_id");
-    bool arg_edit_account_button =
-        qparam.arg<bool>("arg_edit_account_button");
+//     unsigned long arg_edit_account_id =
+//         qparam.arg<unsigned long>("arg_edit_account_id");
+//     bool arg_edit_account_button =
+//         qparam.arg<bool>("arg_edit_account_button");
 
     unsigned long arg_delete_account_id =
         qparam.arg<unsigned long>("arg_delete_account_id");

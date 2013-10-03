@@ -31,7 +31,7 @@
 #include <Core/models/Quote.h>
 #include <Core/models/OString.h>
 
-// log_define("component.EditAccountController")
+log_define("component.EditAccountController")
 
 class EditAccountController : public tnt::Component
 {
@@ -48,6 +48,14 @@ static tnt::ComponentFactoryImpl<EditAccountController> factory("EditAccountCont
 unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
 {
     // shared variables
+
+    log_debug( __FILE__ << "request.getUrl(): " << request.getUrl() );
+    log_debug( __FILE__ << "request.getPathInfo(): " << request.getPathInfo() );
+    log_debug( __FILE__ << "request.getHost(): " << request.getHost() );
+    log_debug( __FILE__ << "request.getVirtualHost(): " << request.getVirtualHost() );
+    log_debug( __FILE__ << "request.isMethodGET(): " << request.isMethodGET() );
+    log_debug( __FILE__ << "request.isMethodPOST(): " << request.isMethodPOST() );
+
 
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
     // the ID of account where open for open for user operations.
@@ -158,13 +166,30 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
 
     // if delete affirmation clicked.
     if ( arg_affirmation_typ == "revoke trust" ) {
+        log_debug( __LINE__ + "start...");
         if ( arg_affirmation_ok_button ) {
             AccountData accountData;
             accountData.setID( open_account_id );
             int guarantorCount = accountData.getGuarantorCount( );
-            accountData.revokeTrust( userSession.getUserID() );
+            log_debug( __LINE__ );
+            std::vector<unsigned long> accountIDs =
+                accountData.revokeTrust( userSession.getUserID() );
             s_feedback = "Es wurde sämtliches Vertrauen entfernt. Das betraf "
                 + OString::IntToStr( guarantorCount ) + " Bürgen.";
+            log_debug( __LINE__ );
+            if ( accountIDs.size() > 0 ){
+                log_debug( __LINE__ );
+                s_feedback += " Als Folge davon wurden den weiteren Benutzern \
+                (zum Teil) das Vertrauen entzogen:";
+                log_debug( "accountIDs.size()" << accountIDs.size() );
+                for ( unsigned int i=0; i<accountIDs.size(); i++) {
+                    log_debug( __LINE__ << " i:"  << i);
+                    if( i > 0 )  s_feedback += ", ";
+//                     s_feedback += accountIDs[i] ;
+                    s_feedback += OString::IntToStr( accountIDs[i] );
+//                     log_debug( __LINE__ );
+                }
+            }
 
         }
     }

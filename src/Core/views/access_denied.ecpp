@@ -31,7 +31,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <form method="post" >
             <h2>Zugriff verweigert!</h2>
             <p>Sie haben keine ausreichenden Rechte oder sind nicht angemeldet.</p>
-            <p>Zur Anmeldung: <a href="LogIn">Hier weiter klicken</a></p>
+            <p>Zur Anmeldung/Benutzerwechsel: <a href="LogIn">Hier weiter klicken</a></p>
+            <p>Zurück zur <a href="home">Startseite</a></p>
         </form>
     </div>
 

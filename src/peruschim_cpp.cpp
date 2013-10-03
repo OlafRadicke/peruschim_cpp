@@ -3,6 +3,8 @@
 #include <string>
 #include <cxxtools/log.h>
 #include <Core/models/Config.h>
+#include <Core/manager/initcomponent.h>
+#include <RouteReverse/manager/initcomponent.h>
 
 
 log_define("PERUSCHIM")
@@ -14,7 +16,7 @@ int main ( int argc, char* argv[] )
 
         /* initialize random seed: */
         srand (time(NULL));
-        
+
         Config& config = Config::it();
         config.read();
 
@@ -31,16 +33,15 @@ int main ( int argc, char* argv[] )
            .setPathInfo("Core/resources/$1");
         app.mapUrl("^/Core/favicon.ico$", "resources")
            .setPathInfo("Core/resources/favicon.ico");
-        app.mapUrl("^/Core/feed-icon.png$", "resources")
-           .setPathInfo("Core/resources/feed-icon.png");
+
+//         app.mapUrl("^/Core/feed-icon.png$", "resources")
+//            .setPathInfo("Core/resources/feed-icon.png");
 
         // special pages
         // 1 to 1 rout
         app.mapUrl( "^/(.*)$", "$1" );
         // default route for /
         app.mapUrl( "^/$", "home" );
-        // route for rss feed
-        app.mapUrl( "^/rss.xml", "RSSfeedView" );
 
         // controller rout for SessionForm token check.
         app.mapUrl( "^/(.*)", "SessionForm::Controller" );
@@ -50,6 +51,10 @@ int main ( int argc, char* argv[] )
         // mvc stuff
         app.mapUrl( "^/(.*)$", "$1Controller" );
         app.mapUrl( "^/(.*)$", "$1View" );
+
+
+        RouteReverse::initcomponent( app );
+        Core::initcomponent( app );
 
 
         std::cout << "peruschim cpp is started and run on http://" << config.appIp()

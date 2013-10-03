@@ -98,6 +98,7 @@ void AccountData::deleteAllData( unsigned long liqudator_id ) {
 
 
 int AccountData::getGuarantorCount( ){
+
     int guarantorCount = 0;
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
 
@@ -111,14 +112,14 @@ int AccountData::getGuarantorCount( ){
     tntdb::Value value = st.selectValue( );
     value.get(guarantorCount);
 
-    log_debug("guarantorCount: " <<  guarantorCount );
+    DEBUG "guarantorCount: " <<  guarantorCount << std::endl;
     return guarantorCount;
 }
 
-std::string AccountData::genRandomSalt ( int len) {
+std::string AccountData::genRandomSalt ( unsigned int len) {
 
     /* initialize random seed: */
-    srand (time(NULL));
+    // srand (time(NULL));
     std::string randomString;
 
     static const char alphanum[] =
@@ -126,7 +127,7 @@ std::string AccountData::genRandomSalt ( int len) {
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz";
 
-    for (int i = 0; i < len; ++i) {
+    for ( unsigned int i = 0; i < len; ++i) {
         int randNo = rand() % (sizeof(alphanum) - 1) ;
         DEBUG "randNo: " << randNo << std::endl;
         randomString.push_back ( alphanum[randNo] );
@@ -148,7 +149,7 @@ bool AccountData::isTrustedAccount( ){
 
     tntdb::Row row = sel.set("acount_id", m_id).selectRow();
 
-    if (  row[0].getInt() < 1 ) {
+    if ( row[0].getInt() < 1 ) {
         return true;
     } else {
         return false;
@@ -156,10 +157,11 @@ bool AccountData::isTrustedAccount( ){
 
 }
 
-// S --------------------------------------------------------------------------
+// R --------------------------------------------------------------------------
 
-void AccountData::revokeTrust( ){
-    log_debug( __LINE__ + "start...");
+std::vector<unsigned long> AccountData::revokeTrust( ){
+    DEBUG  __LINE__ + "start..." << std::endl;
+    std::vector<unsigned long> accountIdOfrevokedTrust;
     tntdb::Statement st;
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
 
@@ -176,10 +178,12 @@ void AccountData::revokeTrust( ){
         tntdb::Row row = *it;
         // Yes, this delete recursive the completed trusted link tree of this
         // user.
-        AccountData::revokeTrust(
+        std::vector<unsigned long> accountIDs = AccountData::revokeTrust(
             row[0].getInt(),
             m_id
         );
+        for ( unsigned int i=0; i<accountIDs.size(); i++)
+            accountIdOfrevokedTrust.push_back (accountIDs[i]);
     }
 
     st = conn.prepare(
@@ -187,28 +191,39 @@ void AccountData::revokeTrust( ){
         WHERE trusted_account_id = :m_id ;"
     );
     st.set("m_id", m_id ).execute();
-
+    accountIdOfrevokedTrust.push_back (m_id);
+    return accountIdOfrevokedTrust;
 }
 
-void AccountData::revokeTrust(
+std::vector<unsigned long> AccountData::revokeTrust(
     const unsigned long guarantor_id
 ){
-    AccountData::revokeTrust(
+    DEBUG  __LINE__ + "start..." << std::endl;
+    std::vector<unsigned long> accountIDs = AccountData::revokeTrust(
         m_id,
         m_id
     );
+    return accountIDs;
 }
 
-void AccountData::revokeTrust(
+std::vector<unsigned long> AccountData::revokeTrust(
     const unsigned long trusted_account_id,
     const unsigned long guarantor_id
 ){
-    log_debug( __LINE__ + "start...");
+    DEBUG  __LINE__ + "start..." << std::endl;
+    std::vector<unsigned long> accountIdOfrevokedTrust;
     tntdb::Statement st;
     AccountData accountData;
     accountData.setID( trusted_account_id );
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
 
+    st = conn.prepare(
+        "DELETE FROM account_trust \
+        WHERE trusted_account_id = :trusted_account_id \
+        AND guarantor_id = :guarantor_id;"
+    );
+    st.set("trusted_account_id", trusted_account_id )
+    .set("guarantor_id", guarantor_id ).execute();
 
     if ( accountData.getGuarantorCount() <= 0 ) {
         st = conn.prepare(
@@ -220,27 +235,27 @@ void AccountData::revokeTrust(
 
 
         for (tntdb::Statement::const_iterator it = st.begin();
-            it != st.end(); ++it
+            it != st.end();
+            ++it
         ) {
             tntdb::Row row = *it;
             // Yes, this delete recursive the completed trusted link tree of this
             // user.
-            revokeTrust(
+            std::vector<unsigned long> accountIDs = revokeTrust(
                 row[0].getInt(),
                 trusted_account_id
             );
+            for ( unsigned int i=0; i<accountIDs.size(); i++)
+                accountIdOfrevokedTrust.push_back( accountIDs[i] );
         }
     }
-
-    st = conn.prepare(
-        "DELETE FROM account_trust \
-        WHERE trusted_account_id = :trusted_account_id \
-        AND guarantor_id = :guarantor_id;"
-    );
-    st.set("trusted_account_id", trusted_account_id )
-    .set("guarantor_id", guarantor_id ).execute();
+    accountIdOfrevokedTrust.push_back( trusted_account_id );
+    DEBUG  __LINE__ + "RETURN accountIdOfrevokedTrust.size()" << accountIdOfrevokedTrust.size() << std::endl;
+    return accountIdOfrevokedTrust;
 
 }
+
+// S --------------------------------------------------------------------------
 
 void AccountData::saveUpdate() {
 
@@ -296,7 +311,7 @@ void AccountData::setNewPassword ( std::string newpassword ) {
 
 
 void AccountData::trustedByGuarantor( const unsigned long guarantor_id ){
-    log_debug( __LINE__ + "start...");
+    DEBUG  __LINE__ + "start..." << std::endl;
     if ( m_id == guarantor_id ) {
         std::string str_guarantor_id = cxxtools::convert<std::string>( guarantor_id );
         std::string errorinfo = "User (id" + str_guarantor_id + ") can't trust self!";
@@ -309,7 +324,7 @@ void AccountData::trustedByGuarantor( const unsigned long guarantor_id ){
         return;
     }
 
-    log_debug( __LINE__ + " Schritt ZWEI...");
+    DEBUG  __LINE__ + " Schritt ZWEI..." << std::endl;
 
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
 

@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2013 Tommi Maekitalo
+* Copyright (C) 2013 Olaf Radicke <briefkasten@olaf-radicke.de>
 *
 *
 * This program is free software: you can redistribute it and/or modify
@@ -27,6 +27,7 @@
 #include <tnt/httprequest.h>
 
 #include <SessionForm/manager/Manager.h>
+#include <Core/models/OString.h>
 
 namespace SessionForm
 {
@@ -41,6 +42,7 @@ std::string  Manager::getFormToken( tnt::HttpRequest& request )
 {
     TNT_SESSION_SHARED_VAR( std::string, SESSIONFORM_AVAILABLE_TOKEN, () );
     std::string token = genRandomToken(16);
+    token += ":" + OString::IntToStr( request.getSerial() );
     std::string formTokenInput = "<input \n\
             type=\"hidden\" \n\
             name=\"SESSIONFORM_TOKEN\" \n\

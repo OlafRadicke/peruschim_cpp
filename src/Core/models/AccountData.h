@@ -104,16 +104,18 @@ public:
      * Remove all trusted link between tow a user.
      * This delete recursive the complied trusted link tree.
      * Has a user no more guarantors, he can't publish his comments.
+     * @return A list of account ids, where has been revoked the trust.
      **/
-    void revokeTrust();
+    std::vector<unsigned long> revokeTrust();
 
     /**
      * Remove a trusted link between tow user.
      * This delete recursive the complied trusted link tree from untrusted
      * account. Has a user no more guarantors, he can't publish his comments.
      * @para guarantor_id id of revoked guarantor.
+     * @return A list of account ids, where has been revoked the trust.
      **/
-    void revokeTrust( const unsigned long guarantor_id );
+    std::vector<unsigned long> revokeTrust( const unsigned long guarantor_id );
 
 // S --------------------------------------------------------------------------
 
@@ -166,21 +168,24 @@ private:
     std::string m_email;
     bool        m_account_disable;
 
+// G --------------------------------------------------------------------------
     /**
      * Generated a random string for password salt.
      * @para len length of sting.
      * @return a random string
      */
-    std::string static genRandomSalt( int len ) ;
+    std::string static genRandomSalt( unsigned int len ) ;
 
+// R --------------------------------------------------------------------------
     /**
      * Remove a trusted link between tow user.
      * This delete recursive the complied trusted link tree from untrusted
      * account. Has a user no more guarantors, he can't publish his comments.
      * @para trusted_account_id id of a trust user.
      * @para guarantor_id id of his guarantor.
+     * @return A list of account ids, where has been revoked the trust.
      **/
-    void static revokeTrust(
+    static std::vector<unsigned long> revokeTrust(
         const unsigned long trusted_account_id,
         const unsigned long guarantor_id
     );

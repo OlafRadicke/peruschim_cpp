@@ -23,8 +23,8 @@
 #include <tntdb/row.h>
 #include <cxxtools/log.h>
 
-#include "Core/manager/EditionManager.h"
-#include "Core/models/Config.h"
+#include <Core/manager/EditionManager.h>
+#include <Core/models/Config.h>
 
 log_define("EditionManager")
 

@@ -15,6 +15,7 @@ EXTRA_DIST = \
 noinst_HEADERS = \
 	Core/manager/BibleManager.h \
 	Core/manager/EditionManager.h \
+	Core/manager/initcomponent.h \
 	Core/manager/KeywordRegister.h \
 	Core/manager/QuoteManager.h \
 	Core/manager/QuoteRegister.h \
@@ -27,6 +28,9 @@ noinst_HEADERS = \
 	Core/models/OString.h \
 	Core/models/Quote.h \
 	Core/models/UserSession.h \
+	RouteReverse/manager/initcomponent.h \
+	RouteReverse/manager/Manager.h \
+	RouteReverse/models/URLData.h \
 	SessionForm/manager/Manager.h
 
 ecppSources = \
@@ -93,6 +97,7 @@ peruschim_cpp_SOURCES = \
 	Core/models/OString.cpp \
 	Core/models/Quote.cpp \
 	Core/models/UserSession.cpp \
+	RouteReverse/manager/Manager.cpp \
 	SessionForm/controller/Controller.cpp \
 	SessionForm/manager/Manager.cpp \
 	$(ecppSources)

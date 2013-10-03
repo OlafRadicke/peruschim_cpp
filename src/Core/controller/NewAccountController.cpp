@@ -49,7 +49,9 @@ unsigned NewAccountController::operator() (tnt::HttpRequest& request, tnt::HttpR
 {
     // Shared variables
     TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
-
+    TNT_REQUEST_SHARED_VAR( std::string,              s_login_name, () );
+    TNT_REQUEST_SHARED_VAR( std::string,              s_real_name, () );
+    TNT_REQUEST_SHARED_VAR( std::string,              s_mail, () );
 
     // No ACL Check. User can create a account self.
 
@@ -67,6 +69,9 @@ unsigned NewAccountController::operator() (tnt::HttpRequest& request, tnt::HttpR
     std::string  arg_mail =
         qparam.arg<std::string>("arg_mail");
 
+    s_login_name = arg_login_name;
+    s_real_name = arg_real_name;
+    s_mail = arg_mail;
 
     // is button "create" Speichern?
     if ( arg_create_button ) {

@@ -28,6 +28,9 @@
 namespace SessionForm
 {
 
+/**
+ * This class support methods too prevent reloads of html-forms requests.
+ */
 class Manager
 {
 public:
