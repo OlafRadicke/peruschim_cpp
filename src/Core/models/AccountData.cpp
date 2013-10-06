@@ -68,7 +68,7 @@ std::vector<unsigned long> AccountData::cleanUpTrust() {
     st = conn.prepare(
             "SELECT guarantor_id  \
             FROM account_trust \
-            WHERE NOT IN \
+            WHERE guarantor_id NOT IN \
             ( \
                 SELECT DISTINCT ON (trusted_account_id)  trusted_account_id \
                 FROM account_trust \
@@ -89,7 +89,7 @@ std::vector<unsigned long> AccountData::cleanUpTrust() {
         ( \
             SELECT guarantor_id  \
             FROM account_trust \
-            WHERE NOT IN \
+            WHERE guarantor_id NOT IN \
             ( \
                 SELECT DISTINCT ON (trusted_account_id)  trusted_account_id \
                 FROM account_trust \
