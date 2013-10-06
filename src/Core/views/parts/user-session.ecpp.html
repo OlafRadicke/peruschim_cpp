@@ -20,7 +20,6 @@
         <$ userSession.getUserName( ) $>(ID:<$ userSession.getUserID( ) $>)
         <a href="<$ RouteReverse::Manager::getLinkTo("logout", request) $>">Abmelden</a>
 % } else {
-        <a href="<$ RouteReverse::Manager::getAbsolutURL("LogIn", request) $>">Anmelden</a> <br>
         <a href="<$ RouteReverse::Manager::getLinkTo("LogIn", request) $>">Anmelden</a>
 % }
         <br>
