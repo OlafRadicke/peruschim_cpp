@@ -4,8 +4,6 @@
     #include <RouteReverse/manager/Manager.h>
 </%pre>
 
-% RouteReverse::Manager routeReverseManager;
-
     <div class="login-link">
 % if ( userSession.isHandheldVersion() ) {
 
@@ -22,7 +20,7 @@
         <$ userSession.getUserName( ) $>(ID:<$ userSession.getUserID( ) $>)
         <a href="<$ RouteReverse::Manager::getLinkTo("logout", request) $>">Abmelden</a>
 % } else {
-<!--        <a href="http://<$ Config::it().domainName() $>/LogIn">Anmelden</a> -->
+        <a href="<$ RouteReverse::Manager::getAbsolutURL("LogIn", request) $>">Anmelden</a> <br>
         <a href="<$ RouteReverse::Manager::getLinkTo("LogIn", request) $>">Anmelden</a>
 % }
         <br>

@@ -90,22 +90,45 @@ std::string  Manager::getLinkTo(
         std::string compunentName,
         const tnt::HttpRequest& request ){
 
-    std::string urlPath;
-    std::string linkURL;
+    std::string targetURL;
+    std::string returnURL;
+    std::string currentURL = request.getUrl ();
 
     std::map<std::string, std::string>::const_iterator it =
         Manager::reverseMAP.find( compunentName );
     if (it != Manager::reverseMAP.end())
-        urlPath = it->second;
+        targetURL = it->second;
+
+    returnURL = targetURL;
+
+    size_t pathDepth = std::count( currentURL.begin(), currentURL.end(), '/' );
+    for ( unsigned int i = 1; i < pathDepth; i++){
+        returnURL = "../" + returnURL;
+    }
+
+    return returnURL;
+}
+
+std::string  Manager::getAbsolutURL(
+        std::string compunentName,
+        const tnt::HttpRequest& request ){
+
+    std::string targetURL;
+    std::string returnURL;
+
+    std::map<std::string, std::string>::const_iterator it =
+        Manager::reverseMAP.find( compunentName );
+    if (it != Manager::reverseMAP.end())
+        targetURL = it->second;
 
     if ( request.isSsl() ) {
-        linkURL = "https://" +request.getVirtualHost()
-            + "/" + urlPath;
+        returnURL = "https://" +request.getVirtualHost()
+            + "/" + targetURL;
     } else{
-        linkURL = "http://" +request.getVirtualHost()
-            + "/" + urlPath;
+        returnURL = "http://" +request.getVirtualHost()
+            + "/" + targetURL;
     }
-    return linkURL;
+    return returnURL;
 }
 
 } // END namespace SessionForm

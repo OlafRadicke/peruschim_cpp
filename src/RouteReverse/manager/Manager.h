@@ -50,9 +50,19 @@ public:
     /**
     * Get back a URL to a component.
     * @para compunentName the name of component.
-    * @return a absolute URL to a component.
+    * @return a relative URL to a component like: "../../foo/bar".
     */
     static std::string  getLinkTo(
+        std::string compunentName,
+        const tnt::HttpRequest& request
+    );
+
+    /**
+    * Get back a URL to a component.
+    * @para compunentName the name of component.
+    * @return a absolute URL to a component like: "http://domain.net:80/foo/bar".
+    */
+    static std::string getAbsolutURL(
         std::string compunentName,
         const tnt::HttpRequest& request
     );
