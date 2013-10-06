@@ -34,12 +34,79 @@
 
 log_define("models.AccountData")
 
+// C --------------------------------------------------------------------------
+
+std::vector<unsigned long> AccountData::cleanUpTrustRecursively() {
+
+    std::vector<unsigned long> accountIdOfRevokedTrust;    
+    std::vector<unsigned long> idListResult;
+    
+    
+    for( ; ; )
+    {
+        idListResult = AccountData::cleanUpTrust();
+        for (  
+            unsigned int i = 0; 
+            i < accountIdOfRevokedTrust.size(); 
+            ++i 
+        ) {
+            accountIdOfRevokedTrust.push_back( accountIdOfRevokedTrust[i] );
+        }
+        if ( idListResult.size() < 1 ) break;
+    }
+    return accountIdOfRevokedTrust;
+}
+
+std::vector<unsigned long> AccountData::cleanUpTrust() {
+    log_info(   __LINE__ << "start..." );
+    log_info( __LINE__ <<  "start..." );
+    
+    std::vector<unsigned long> accountIdOfrevokedTrust;
+    tntdb::Statement st;
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
+
+    st = conn.prepare(
+            "SELECT guarantor_id  \
+            FROM account_trust \
+            WHERE NOT IN \
+            ( \
+                SELECT DISTINCT ON (trusted_account_id)  trusted_account_id \
+                FROM account_trust \
+            )  "
+    );
+    st.execute();
+
+    for (tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+        accountIdOfrevokedTrust.push_back( row[0].getInt() );
+    }
+
+    st = conn.prepare(
+        "DELETE FROM account_trust \
+        WHERE guarantor_id IN  \
+        ( \
+            SELECT guarantor_id  \
+            FROM account_trust \
+            WHERE NOT IN \
+            ( \
+                SELECT DISTINCT ON (trusted_account_id)  trusted_account_id \
+                FROM account_trust \
+            )  \
+        )\ "
+    );
+    st.execute();
+    return accountIdOfrevokedTrust;    
+
+}
+
 // D --------------------------------------------------------------------------
 
 void AccountData::deleteAllData( unsigned long liqudator_id ) {
 
-    DEBUG "saveUpdate" << std::endl;
-    DEBUG "m_account_disable: " << m_account_disable << std::endl;
+    log_info(  "saveUpdate" );
+    log_info(  "m_account_disable: " << m_account_disable );
 
     // Revoke trust links.
     revokeTrust( );
@@ -112,7 +179,7 @@ int AccountData::getGuarantorCount( ){
     tntdb::Value value = st.selectValue( );
     value.get(guarantorCount);
 
-    DEBUG "guarantorCount: " <<  guarantorCount << std::endl;
+    log_info(  "guarantorCount: " <<  guarantorCount );
     return guarantorCount;
 }
 
@@ -129,7 +196,7 @@ std::string AccountData::genRandomSalt ( unsigned int len) {
 
     for ( unsigned int i = 0; i < len; ++i) {
         int randNo = rand() % (sizeof(alphanum) - 1) ;
-        DEBUG "randNo: " << randNo << std::endl;
+        log_info(  "randNo: " << randNo );
         randomString.push_back ( alphanum[randNo] );
     }
 
@@ -160,45 +227,13 @@ bool AccountData::isTrustedAccount( ){
 // R --------------------------------------------------------------------------
 
 std::vector<unsigned long> AccountData::revokeTrust( ){
-    DEBUG  __LINE__ + "start..." << std::endl;
-    std::vector<unsigned long> accountIdOfrevokedTrust;
-    tntdb::Statement st;
-    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
-
-    st = conn.prepare(
-            "SELECT trusted_account_id  \
-            FROM account_trust \
-            WHERE guarantor_id = :m_id "
-    );
-    st.set( "m_id", m_id ).execute();
-
-    for (tntdb::Statement::const_iterator it = st.begin();
-        it != st.end(); ++it
-    ) {
-        tntdb::Row row = *it;
-        // Yes, this delete recursive the completed trusted link tree of this
-        // user.
-        std::vector<unsigned long> accountIDs = AccountData::revokeTrust(
-            row[0].getInt(),
-            m_id
-        );
-        for ( unsigned int i=0; i<accountIDs.size(); i++)
-            accountIdOfrevokedTrust.push_back (accountIDs[i]);
-    }
-
-    st = conn.prepare(
-        "DELETE FROM account_trust \
-        WHERE trusted_account_id = :m_id ;"
-    );
-    st.set("m_id", m_id ).execute();
-    accountIdOfrevokedTrust.push_back (m_id);
-    return accountIdOfrevokedTrust;
+    return AccountData::cleanUpTrustRecursively();
 }
 
 std::vector<unsigned long> AccountData::revokeTrust(
     const unsigned long guarantor_id
 ){
-    DEBUG  __LINE__ + "start..." << std::endl;
+    log_info(   __LINE__ << "start..." );
     std::vector<unsigned long> accountIDs = AccountData::revokeTrust(
         m_id,
         m_id
@@ -210,7 +245,7 @@ std::vector<unsigned long> AccountData::revokeTrust(
     const unsigned long trusted_account_id,
     const unsigned long guarantor_id
 ){
-    DEBUG  __LINE__ + "start..." << std::endl;
+    log_info(   __LINE__ << "start..." );
     std::vector<unsigned long> accountIdOfrevokedTrust;
     tntdb::Statement st;
     AccountData accountData;
@@ -250,17 +285,20 @@ std::vector<unsigned long> AccountData::revokeTrust(
         }
     }
     accountIdOfrevokedTrust.push_back( trusted_account_id );
-    DEBUG  __LINE__ + "RETURN accountIdOfrevokedTrust.size()" << accountIdOfrevokedTrust.size() << std::endl;
+    log_info(   __LINE__ << 
+        "RETURN accountIdOfrevokedTrust.size()" << 
+        accountIdOfrevokedTrust.size() );
     return accountIdOfrevokedTrust;
 
 }
+
 
 // S --------------------------------------------------------------------------
 
 void AccountData::saveUpdate() {
 
-    DEBUG "saveUpdate" << std::endl;
-    DEBUG "m_account_disable: " << m_account_disable << std::endl;
+    log_info(  "saveUpdate" );
+    log_info(  "m_account_disable: " << m_account_disable );
 
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Statement st = conn.prepare(
@@ -283,7 +321,7 @@ void AccountData::saveUpdate() {
 
 void AccountData::setNewPassword ( std::string newpassword ) {
 
-    DEBUG "setNewPassword" << std::endl;
+    log_info(  "setNewPassword" );
     std::string password_salt;
     std::string password_hash;
 
@@ -291,7 +329,6 @@ void AccountData::setNewPassword ( std::string newpassword ) {
     password_hash = cxxtools::md5 ( newpassword + password_salt );
 
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
-    DEBUG std::endl;
     tntdb::Statement st = conn.prepare(
         "UPDATE account \
             SET password_hash=:v1, \
@@ -311,7 +348,7 @@ void AccountData::setNewPassword ( std::string newpassword ) {
 
 
 void AccountData::trustedByGuarantor( const unsigned long guarantor_id ){
-    DEBUG  __LINE__ + "start..." << std::endl;
+    log_info(   __LINE__ << "start..." );
     if ( m_id == guarantor_id ) {
         std::string str_guarantor_id = cxxtools::convert<std::string>( guarantor_id );
         std::string errorinfo = "User (id" + str_guarantor_id + ") can't trust self!";
@@ -324,7 +361,7 @@ void AccountData::trustedByGuarantor( const unsigned long guarantor_id ){
         return;
     }
 
-    DEBUG  __LINE__ + " Schritt ZWEI..." << std::endl;
+    log_info(   __LINE__ << " Schritt ZWEI..." );
 
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
 

@@ -64,11 +64,6 @@ unsigned AccountRegisterController::operator() (tnt::HttpRequest& request, tnt::
 
     // URL arguments
 
-//     unsigned long arg_edit_account_id =
-//         qparam.arg<unsigned long>("arg_edit_account_id");
-//     bool arg_edit_account_button =
-//         qparam.arg<bool>("arg_edit_account_button");
-
     unsigned long arg_delete_account_id =
         qparam.arg<unsigned long>("arg_delete_account_id");
     bool arg_delete_account_button =

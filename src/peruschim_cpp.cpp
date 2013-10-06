@@ -3,8 +3,8 @@
 #include <string>
 #include <cxxtools/log.h>
 #include <Core/models/Config.h>
-#include <Core/manager/initcomponent.h>
-#include <RouteReverse/manager/initcomponent.h>
+#include <Core/initcomponent.h>
+#include <RouteReverse/initcomponent.h>
 
 
 log_define("PERUSCHIM")

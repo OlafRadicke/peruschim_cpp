@@ -59,7 +59,7 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
 
     TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
     // the ID of account where open for open for user operations.
-    TNT_SESSION_SHARED_VAR( unsigned long,            open_account_id, () );
+    TNT_SESSION_SHARED_VAR( unsigned long,            s_open_account_id, () );
 
     TNT_REQUEST_SHARED_VAR( std::string,              s_affirmation, () );
     TNT_REQUEST_SHARED_VAR( std::string,              s_affirmation_typ, () );
@@ -111,8 +111,8 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
 
     // if a account first time selected for editing?
     if ( arg_edit_account_button ) {
-        open_account_id = arg_edit_account_id;
-        s_accountData =  WebACL::getAccountsWithID ( open_account_id );
+        s_open_account_id = arg_edit_account_id;
+        s_accountData =  WebACL::getAccountsWithID ( s_open_account_id );
         s_userRolls = WebACL::getRoll ( s_accountData.getLogin_name() );
         s_allRolls = WebACL::getAllRolls();
 
@@ -123,12 +123,12 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
     if ( arg_update_account_button ) {
         s_affirmation = "";
         s_feedback = "";
-        s_accountData.setID( open_account_id );
+        s_accountData.setID( s_open_account_id );
         s_accountData.setLogin_name( arg_login_name );
         s_accountData.setReal_name( arg_name );
         s_accountData.setEmail( arg_mail );
         s_accountData.setAccount_disable( arg_is_inactive );
-        WebACL::reSetUserRolls( open_account_id, args_userroles);
+        WebACL::reSetUserRolls( s_open_account_id, args_userroles);
         s_accountData.saveUpdate();
         s_userRolls = WebACL::getRoll ( s_accountData.getLogin_name() );
         s_allRolls = WebACL::getAllRolls();
@@ -149,7 +149,7 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
     }
 
     if ( arg_revoke_trust_button ) {
-        AccountData accountData(open_account_id);
+        AccountData accountData( s_open_account_id );
         int guarantorCount = accountData.getGuarantorCount( );
         if ( guarantorCount == 0 ) {
             s_feedback = "Der Account/Benutzer besitzt kein Vertrauen was man ihm \
@@ -167,9 +167,11 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
     // if delete affirmation clicked.
     if ( arg_affirmation_typ == "revoke trust" ) {
         log_debug( __LINE__ + "start...");
+        
+        
         if ( arg_affirmation_ok_button ) {
             AccountData accountData;
-            accountData.setID( open_account_id );
+            accountData.setID( s_open_account_id );
             int guarantorCount = accountData.getGuarantorCount( );
             log_debug( __LINE__ );
             std::vector<unsigned long> accountIDs =
@@ -185,13 +187,16 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
                 for ( unsigned int i=0; i<accountIDs.size(); i++) {
                     log_debug( __LINE__ << " i:"  << i);
                     if( i > 0 )  s_feedback += ", ";
-//                     s_feedback += accountIDs[i] ;
                     s_feedback += OString::IntToStr( accountIDs[i] );
-//                     log_debug( __LINE__ );
                 }
             }
 
         }
+
+        s_accountData =  WebACL::getAccountsWithID ( s_open_account_id );
+        s_userRolls = WebACL::getRoll ( s_accountData.getLogin_name() );
+        s_allRolls = WebACL::getAllRolls();         
+        
     }
     return DECLINED;
 }

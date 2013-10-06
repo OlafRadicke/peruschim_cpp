@@ -13,9 +13,9 @@ EXTRA_DIST = \
 	Core/views/parts/foot.ecpp.html
 
 noinst_HEADERS = \
+	Core/initcomponent.h \
 	Core/manager/BibleManager.h \
 	Core/manager/EditionManager.h \
-	Core/manager/initcomponent.h \
 	Core/manager/KeywordRegister.h \
 	Core/manager/QuoteManager.h \
 	Core/manager/QuoteRegister.h \
@@ -28,7 +28,7 @@ noinst_HEADERS = \
 	Core/models/OString.h \
 	Core/models/Quote.h \
 	Core/models/UserSession.h \
-	RouteReverse/manager/initcomponent.h \
+	RouteReverse/initcomponent.h \
 	RouteReverse/manager/Manager.h \
 	RouteReverse/models/URLData.h \
 	SessionForm/manager/Manager.h
