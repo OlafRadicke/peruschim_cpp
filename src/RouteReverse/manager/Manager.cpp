@@ -18,12 +18,15 @@
 
 
 
+#include <RouteReverse/manager/Manager.h>
+#include <Core/models/PeruschimException.h>
+
+#include <cxxtools/log.h>
 #include <string>
 #include <map>
 #include <iostream>
-#include <cxxtools/log.h>
-#include <cxxtools/mutex.h>
-#include <RouteReverse/manager/Manager.h>
+#include <sstream>
+#include <exception>
 
 
 namespace RouteReverse
@@ -52,15 +55,17 @@ void Manager::addRoute( URLData &urlData, tnt::Tntnet &app ) {
 
     if ( urlData.reverseRoute != "") {
         if ( Manager::reverseMAP.count( urlData.componentName ) > 0 ) {
-            std::string errorText = "[" + std::string(__FILE__) + " "
-                + cxxtools::convert<std::string>( __LINE__ ) + "] "
-                + " the url " + urlData.componentName
-                + " is all ready set as reverse route!";
+            std::stringstream errorText;
+            errorText << "[" << std::string(__FILE__) << " "
+                << cxxtools::convert<std::string>( __LINE__ ) << "] "
+                << " the url " << urlData.componentName
+                << " is all ready set as reverse route!";
             log_debug( errorText );
-            throw errorText.c_str();
+//             throw errorText.c_str();
+            throw Core::PeruschimException( errorText.str().c_str() );
+
+
         }
-        static cxxtools::Mutex mutex;
-        cxxtools::MutexLock lock(mutex);
         Manager::reverseMAP[ urlData.componentName ] = urlData.reverseRoute;
         log_debug( "List of know reverse routes: \n" <<
             RouteReverse::Manager::getAllReversesRoutes() );

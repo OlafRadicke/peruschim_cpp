@@ -19,7 +19,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <iostream>
+#include <Core/manager/WebACL.h>
+#include <Core/models/UserSession.h>
 
 #include <cxxtools/log.h>
 #include <tnt/component.h>
@@ -27,9 +28,8 @@
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
 
+#include <iostream>
 
-#include <Core/manager/WebACL.h>
-#include <Core/models/UserSession.h>
 
 
 log_define("component.LogInController")
@@ -62,6 +62,7 @@ unsigned LogInController::operator() (tnt::HttpRequest& request, tnt::HttpReply&
         qparam.arg<bool>("arg_login_button");
 
     log_debug("authUser(" << arg_name << ", ***)");
+
     if ( arg_login_button ) {
         if ( WebACL::authUser ( arg_name, arg_password ) )
         {
