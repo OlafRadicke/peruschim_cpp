@@ -19,6 +19,10 @@
 */
 
 
+#include <Core/manager/RSSfeedManager.h>
+#include <Core/models/AccountData.h>
+#include <Core/models/PeruschimException.h>
+
 #include <tntdb/connection.h>
 #include <tntdb/connect.h>
 #include <tntdb/transaction.h>
@@ -26,8 +30,7 @@
 #include <cxxtools/md5.h>
 #include <cxxtools/log.h>
 
-#include <Core/models/AccountData.h>
-#include <Core/manager/RSSfeedManager.h>
+#include <sstream>
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -38,17 +41,15 @@ log_define("models.AccountData")
 
 std::vector<unsigned long> AccountData::cleanUpTrustRecursively() {
 
-    std::vector<unsigned long> accountIdOfRevokedTrust;    
+    std::vector<unsigned long> accountIdOfRevokedTrust;
     std::vector<unsigned long> idListResult;
-    
-    
     for( ; ; )
     {
         idListResult = AccountData::cleanUpTrust();
-        for (  
-            unsigned int i = 0; 
-            i < accountIdOfRevokedTrust.size(); 
-            ++i 
+        for (
+            unsigned int i = 0;
+            i < accountIdOfRevokedTrust.size();
+            ++i
         ) {
             accountIdOfRevokedTrust.push_back( accountIdOfRevokedTrust[i] );
         }
@@ -58,9 +59,6 @@ std::vector<unsigned long> AccountData::cleanUpTrustRecursively() {
 }
 
 std::vector<unsigned long> AccountData::cleanUpTrust() {
-    log_info(   __LINE__ << "start..." );
-    log_info( __LINE__ <<  "start..." );
-    
     std::vector<unsigned long> accountIdOfrevokedTrust;
     tntdb::Statement st;
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
@@ -97,17 +95,15 @@ std::vector<unsigned long> AccountData::cleanUpTrust() {
         )\ "
     );
     st.execute();
-    return accountIdOfrevokedTrust;    
+    return accountIdOfrevokedTrust;
 
 }
 
 // D --------------------------------------------------------------------------
 
 void AccountData::deleteAllData( unsigned long liqudator_id ) {
-
     log_info(  "saveUpdate" );
     log_info(  "m_account_disable: " << m_account_disable );
-
     // Revoke trust links.
     revokeTrust( );
 
@@ -168,7 +164,6 @@ int AccountData::getGuarantorCount( ){
 
     int guarantorCount = 0;
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
-
     tntdb::Statement st = conn.prepare( "SELECT \
                         count( guarantor_id )  \
                     FROM account_trust \
@@ -178,8 +173,6 @@ int AccountData::getGuarantorCount( ){
 
     tntdb::Value value = st.selectValue( );
     value.get(guarantorCount);
-
-    log_info(  "guarantorCount: " <<  guarantorCount );
     return guarantorCount;
 }
 
@@ -188,7 +181,6 @@ std::string AccountData::genRandomSalt ( unsigned int len) {
     /* initialize random seed: */
     // srand (time(NULL));
     std::string randomString;
-
     static const char alphanum[] =
         "0123456789"
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -199,15 +191,12 @@ std::string AccountData::genRandomSalt ( unsigned int len) {
         log_info(  "randNo: " << randNo );
         randomString.push_back ( alphanum[randNo] );
     }
-
     return randomString;
 }
 
 
 bool AccountData::isTrustedAccount( ){
-
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
-
     tntdb::Statement sel = conn.prepare(
         "SELECT count(id) \
             FROM account_trust \
@@ -221,7 +210,6 @@ bool AccountData::isTrustedAccount( ){
     } else {
         return false;
     }
-
 }
 
 // R --------------------------------------------------------------------------
@@ -233,7 +221,6 @@ std::vector<unsigned long> AccountData::revokeTrust( ){
 std::vector<unsigned long> AccountData::revokeTrust(
     const unsigned long guarantor_id
 ){
-    log_info(   __LINE__ << "start..." );
     std::vector<unsigned long> accountIDs = AccountData::revokeTrust(
         m_id,
         m_id
@@ -245,7 +232,6 @@ std::vector<unsigned long> AccountData::revokeTrust(
     const unsigned long trusted_account_id,
     const unsigned long guarantor_id
 ){
-    log_info(   __LINE__ << "start..." );
     std::vector<unsigned long> accountIdOfrevokedTrust;
     tntdb::Statement st;
     AccountData accountData;
@@ -267,8 +253,6 @@ std::vector<unsigned long> AccountData::revokeTrust(
                 WHERE guarantor_id = :trusted_account_id "
         );
         st.set( "trusted_account_id", trusted_account_id ).execute();
-
-
         for (tntdb::Statement::const_iterator it = st.begin();
             it != st.end();
             ++it
@@ -285,9 +269,6 @@ std::vector<unsigned long> AccountData::revokeTrust(
         }
     }
     accountIdOfrevokedTrust.push_back( trusted_account_id );
-    log_info(   __LINE__ << 
-        "RETURN accountIdOfrevokedTrust.size()" << 
-        accountIdOfrevokedTrust.size() );
     return accountIdOfrevokedTrust;
 
 }
@@ -296,10 +277,8 @@ std::vector<unsigned long> AccountData::revokeTrust(
 // S --------------------------------------------------------------------------
 
 void AccountData::saveUpdate() {
-
     log_info(  "saveUpdate" );
     log_info(  "m_account_disable: " << m_account_disable );
-
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Statement st = conn.prepare(
         "UPDATE account \
@@ -320,8 +299,6 @@ void AccountData::saveUpdate() {
 
 
 void AccountData::setNewPassword ( std::string newpassword ) {
-
-    log_info(  "setNewPassword" );
     std::string password_salt;
     std::string password_hash;
 
@@ -342,17 +319,17 @@ void AccountData::setNewPassword ( std::string newpassword ) {
 
 }
 
-
-
 // T --------------------------------------------------------------------------
 
 
 void AccountData::trustedByGuarantor( const unsigned long guarantor_id ){
-    log_info(   __LINE__ << "start..." );
+
     if ( m_id == guarantor_id ) {
         std::string str_guarantor_id = cxxtools::convert<std::string>( guarantor_id );
-        std::string errorinfo = "User (id" + str_guarantor_id + ") can't trust self!";
-        throw errorinfo;
+        std::stringstream errorText;
+        errorText << "User (id" << str_guarantor_id << ") can't trust self!";
+//         log_debug( "errorText" );
+        throw Core::PeruschimException( errorText.str().c_str() );
     }
     // Nur User/Accounts die schon Vertrauen besitzen, können Vertrauen
     // aussprechen.
@@ -360,11 +337,7 @@ void AccountData::trustedByGuarantor( const unsigned long guarantor_id ){
     if ( AccountData( guarantor_id ).isTrustedAccount() ) {
         return;
     }
-
-    log_info(   __LINE__ << " Schritt ZWEI..." );
-
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
-
     tntdb::Statement st = conn.prepare(
         "INSERT INTO account_trust \
             (   trusted_account_id, \
@@ -378,7 +351,6 @@ void AccountData::trustedByGuarantor( const unsigned long guarantor_id ){
     );
     st.set("m_id", m_id )
     .set("guarantor_id", guarantor_id ).execute();
-
 
     // Create a feed item
     RSSfeed newFeed;

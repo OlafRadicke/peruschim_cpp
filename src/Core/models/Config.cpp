@@ -18,11 +18,14 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <Core/models/Config.h>
+#include <Core/models/PeruschimException.h>
+
 #include <cxxtools/jsondeserializer.h>
 #include <cxxtools/fileinfo.h>
-#include <fstream>
 
-#include <Core/models/Config.h>
+#include <fstream>
+#include <sstream>
 
 Config& Config::it()
 {
@@ -48,9 +51,13 @@ void Config::read(const std::string& filename)
     }
 
     std::ifstream in(fname.c_str());
-    if (!in)
-        throw std::runtime_error("failed to open configuration file \"" + fname + '"');
-
+    if (!in) {
+        std::stringstream errorText;
+        errorText << "failed to open configuration file \"";
+        errorText  << fname << '"';
+//         log_debug( "failed to open configuration file \"" << fname << '"' );
+        throw Core::PeruschimException( errorText.str().c_str() );
+    }
     cxxtools::JsonDeserializer deserializer(in);
     deserializer.deserialize(*this);
 }

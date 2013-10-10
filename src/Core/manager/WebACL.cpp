@@ -18,7 +18,11 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <string>
+
+#include <Core/models/DatabaseProxy.h>
+#include <Core/models/PeruschimException.h>
+#include <Core/manager/RSSfeedManager.h>
+#include <Core/manager/WebACL.h>
 
 #include <tntdb/connect.h>
 #include <tntdb/statement.h>
@@ -26,9 +30,8 @@
 #include <cxxtools/md5.h>
 #include <cxxtools/log.h>
 
-#include <Core/manager/WebACL.h>
-#include <Core/models/DatabaseProxy.h>
-#include <Core/manager/RSSfeedManager.h>
+#include <string>
+
 
 /* A ----------------------------------------------------------------------- */
 
@@ -207,8 +210,11 @@ AccountData WebACL::getAccountsWithID ( unsigned long id ){
         }
         return adata;
     }
-    std::string errorinfo = "no account found with this id" + id;
-    throw errorinfo;
+
+    std::stringstream errorText;
+    errorText << "no account found with this id" << id;
+    log_debug( errorText );
+    throw Core::PeruschimException( errorText.str().c_str() );
 }
 
 std::vector<AccountData> WebACL::getAllAccounts (){
@@ -274,7 +280,7 @@ std::vector<std::string> WebACL::getAllRolls ( ){
 std::string WebACL::genRandomSalt ( const int len) {
     // Set this in the main-function... initialize random seed: */
     //srand (time(NULL));
-    
+
     std::string randomString = "";
     static const char alphanum[] =
         "0123456789"

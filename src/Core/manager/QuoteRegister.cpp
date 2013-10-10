@@ -18,6 +18,13 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <Core/models/Config.h>
+#include <Core/models/PeruschimException.h>
+#include <Core/models/Quote.h>
+#include <Core/manager/QuoteRegister.h>
+#include <Core/manager/EditionManager.h>
+#include <Core/manager/QuoteManager.h>
+
 #include <cxxtools/jsondeserializer.h>
 #include <cxxtools/jsonserializer.h>
 #include <cxxtools/serializationinfo.h>
@@ -25,11 +32,8 @@
 #include <tntdb/connect.h>
 #include <tntdb/connection.h>
 
-#include <Core/models/Config.h>
-#include <Core/models/Quote.h>
-#include <Core/manager/QuoteRegister.h>
-#include <Core/manager/EditionManager.h>
-#include <Core/manager/QuoteManager.h>
+
+#include <sstream>
 
 # define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 # define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
@@ -120,9 +124,10 @@ Quote QuoteRegister::getQuoteWithID( const unsigned long id ) {
         DEBUG std::endl;
         return quoteList[0];
     } else {
-        std::string errorinfo = "quote " + cxxtools::convert<std::string>( id ) + " does not exist!";
-        // TODO never throw an std::string!!!
-        throw errorinfo;
+        std::stringstream errorText;
+        errorText <<  "quote " << cxxtools::convert<std::string>( id )
+            << " does not exist!";
+        throw Core::PeruschimException( errorText.str().c_str() );
     }
 
 }

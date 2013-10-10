@@ -16,8 +16,6 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-
 #include <RouteReverse/manager/Manager.h>
 #include <Core/models/PeruschimException.h>
 
@@ -43,7 +41,6 @@ std::map< std::string, std::string > Manager::reverseMAP = std::map< std::string
 
 void Manager::addRoute( URLData &urlData, tnt::Tntnet &app ) {
 
-
     if ( urlData.urlRegEx != "" && urlData.componentName != "" ) {
         if ( urlData.componentPathInfo != "" ) {
             app.mapUrl( urlData.urlRegEx, urlData.componentName )
@@ -61,10 +58,7 @@ void Manager::addRoute( URLData &urlData, tnt::Tntnet &app ) {
                 << " the url " << urlData.componentName
                 << " is all ready set as reverse route!";
             log_debug( errorText );
-//             throw errorText.c_str();
             throw Core::PeruschimException( errorText.str().c_str() );
-
-
         }
         Manager::reverseMAP[ urlData.componentName ] = urlData.reverseRoute;
         log_debug( "List of know reverse routes: \n" <<
