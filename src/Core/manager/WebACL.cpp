@@ -214,7 +214,7 @@ AccountData WebACL::getAccountsWithID ( unsigned long id ){
     std::stringstream errorText;
     errorText << "no account found with this id" << id;
     log_debug( errorText );
-    throw Core::PeruschimException( errorText.str().c_str() );
+    throw Core::PeruschimException( errorText.str() );
 }
 
 std::vector<AccountData> WebACL::getAllAccounts (){

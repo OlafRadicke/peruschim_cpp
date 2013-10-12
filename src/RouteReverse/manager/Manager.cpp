@@ -23,7 +23,7 @@
 #include <string>
 #include <map>
 #include <iostream>
-#include <sstream>
+#include <ostream>
 #include <exception>
 
 
@@ -52,13 +52,13 @@ void Manager::addRoute( URLData &urlData, tnt::Tntnet &app ) {
 
     if ( urlData.reverseRoute != "") {
         if ( Manager::reverseMAP.count( urlData.componentName ) > 0 ) {
-            std::stringstream errorText;
-            errorText << "[" << std::string(__FILE__) << " "
-                << cxxtools::convert<std::string>( __LINE__ ) << "] "
+            std::ostringstream errorText;
+            errorText << "[" << __FILE__ << " "
+                <<  __LINE__  << "] "
                 << " the url " << urlData.componentName
                 << " is all ready set as reverse route!";
             log_debug( errorText );
-            throw Core::PeruschimException( errorText.str().c_str() );
+            throw Core::PeruschimException( errorText.str() );
         }
         Manager::reverseMAP[ urlData.componentName ] = urlData.reverseRoute;
         log_debug( "List of know reverse routes: \n" <<

@@ -30,10 +30,7 @@
 #include <cxxtools/md5.h>
 #include <cxxtools/log.h>
 
-#include <sstream>
-
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+#include <ostream>
 
 log_define("models.AccountData")
 
@@ -92,7 +89,7 @@ std::vector<unsigned long> AccountData::cleanUpTrust() {
                 SELECT DISTINCT ON (trusted_account_id)  trusted_account_id \
                 FROM account_trust \
             )  \
-        )\ "
+        )"
     );
     st.execute();
     return accountIdOfrevokedTrust;
@@ -326,10 +323,10 @@ void AccountData::trustedByGuarantor( const unsigned long guarantor_id ){
 
     if ( m_id == guarantor_id ) {
         std::string str_guarantor_id = cxxtools::convert<std::string>( guarantor_id );
-        std::stringstream errorText;
+        std::ostringstream errorText;
         errorText << "User (id" << str_guarantor_id << ") can't trust self!";
-//         log_debug( "errorText" );
-        throw Core::PeruschimException( errorText.str().c_str() );
+        log_debug( "errorText" );
+        throw Core::PeruschimException( errorText.str() );
     }
     // Nur User/Accounts die schon Vertrauen besitzen, können Vertrauen
     // aussprechen.

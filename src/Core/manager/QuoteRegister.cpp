@@ -27,19 +27,19 @@
 
 #include <cxxtools/jsondeserializer.h>
 #include <cxxtools/jsonserializer.h>
+#include <cxxtools/log.h>
 #include <cxxtools/serializationinfo.h>
 #include <tntdb/transaction.h>
 #include <tntdb/connect.h>
 #include <tntdb/connection.h>
 
+#include <ostream>
 
-#include <sstream>
 
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+log_define("core.manager.QuoteRegister")
 
 void QuoteRegister::deleteAllQuoteOfUser( const unsigned long userID ){
-    DEBUG "deleteAllQuoteOfUser: " << userID << std::endl;
+    log_debug( "deleteAllQuoteOfUser: " << userID );
 
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Transaction trans(conn);
@@ -53,7 +53,7 @@ void QuoteRegister::deleteAllQuoteOfUser( const unsigned long userID ){
 }
 
 void QuoteRegister::deleteQuote( const unsigned long quoteID ) {
-    DEBUG "deleteQuote: " << quoteID << std::endl;
+    log_debug( "deleteQuote: " << quoteID );
 
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Transaction trans(conn);
@@ -67,7 +67,6 @@ void QuoteRegister::deleteQuote( const unsigned long quoteID ) {
 }
 
 std::vector<Quote> QuoteRegister::getQuotes ( tntdb::Statement st ){
-    DEBUG std::endl;
     std::vector< Quote > quoteList;
 
     for (tntdb::Statement::const_iterator it = st.begin();
@@ -96,9 +95,7 @@ std::vector<Quote> QuoteRegister::getQuotes ( tntdb::Statement st ){
 }
 
 Quote QuoteRegister::getQuoteWithID( const unsigned long id ) {
-    DEBUG std::endl;
     std::vector< Quote > quoteList;
-    DEBUG std::endl;
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Statement st = conn.prepare( "SELECT \
         title, \
@@ -118,22 +115,19 @@ Quote QuoteRegister::getQuoteWithID( const unsigned long id ) {
     st.set( "v1", id )
     .execute();
 
-    DEBUG std::endl;
     quoteList = getQuotes ( st );
     if ( quoteList.size() == 1 ) {
-        DEBUG std::endl;
         return quoteList[0];
     } else {
-        std::stringstream errorText;
-        errorText <<  "quote " << cxxtools::convert<std::string>( id )
+        std::ostringstream errorText;
+        errorText <<  "quote " <<  id
             << " does not exist!";
-        throw Core::PeruschimException( errorText.str().c_str() );
+        throw Core::PeruschimException( errorText.str() );
     }
 
 }
 
 std::vector<Quote> QuoteRegister::getAllPubQuoteOfKeyword( const std::string keyword ) {
-    DEBUG std::endl;
     std::vector< Quote > quoteList;
 
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
@@ -207,11 +201,11 @@ void operator<<= ( cxxtools::SerializationInfo& si, const Edition& edition )
 */
 void operator>>= ( const cxxtools::SerializationInfo& si, Edition& edition )
 {
-    DEBUG "deserialize the Edition..." << std::endl;
+    log_debug( "deserialize the Edition..." );
     std::string strValue;
 
     si.getMember("name") >>= strValue;
-    DEBUG "strValue: " << strValue << std::endl;
+    log_debug( "strValue: " << strValue );
     edition.setName(strValue);
     si.getMember("publisher-name") >>= strValue;
     edition.setPublisherName(strValue);
@@ -250,7 +244,7 @@ void operator<<= ( cxxtools::SerializationInfo& si, const Quote& quote )
 */
 void operator>>= ( const cxxtools::SerializationInfo& si, Quote& quote)
 {
-    DEBUG "deserialize the Quote: " << std::endl;
+    log_debug( "deserialize the Quote: " );
     std::string strValue;
     int intValue;
     std::vector<std::string> vectorValue;
@@ -258,7 +252,7 @@ void operator>>= ( const cxxtools::SerializationInfo& si, Quote& quote)
     Edition editionValue;
 
     si.getMember( "book-title" ) >>= strValue;
-    DEBUG "strValue: " << strValue << std::endl;
+    log_debug( "strValue: " << strValue );
     quote.setBookTitle( strValue );
     si.getMember("chapter-begin") >>= intValue;
     quote.setChapterBegin( intValue );
@@ -307,13 +301,13 @@ void operator<<= ( cxxtools::SerializationInfo& si,
 void operator>>= ( const cxxtools::SerializationInfo& si,
                    QuoteExportContainer& quoteContainer)
 {
-    DEBUG "deserialize the QuoteExportContainer... " << std::endl;
+    log_debug( "deserialize the QuoteExportContainer... " );
     si.getMember("user-quotes") >>= quoteContainer.allUserQuotes;
 }
 
 std::string QuoteRegister::getJsonExport( const unsigned long userID ) {
     std::string json_text;
-    DEBUG "userID: " << userID << std::endl;
+    log_debug( "getJsonExport for userID: " << userID );
 
     QuoteExportContainer quoteContainer;
     quoteContainer.allUserQuotes = QuoteRegister::getAllQuoteOfUser( userID );
@@ -336,7 +330,7 @@ std::string QuoteRegister::getJsonExport( const unsigned long userID ) {
 
 
 std::vector<Quote> QuoteRegister::getAllQuoteOfUser( const unsigned long userID ) {
-    DEBUG "userID: " << userID << std::endl;
+    log_debug( "userID: " << userID );
     std::vector< Quote > quoteList;
 
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
@@ -366,8 +360,8 @@ std::vector<Quote> QuoteRegister::getAllQuoteOfKeyword(
         const std::string keyword,
         const unsigned long userID ){
 
-    DEBUG "keyword: " << keyword <<  std::endl;
-    DEBUG "userID: " << userID << std::endl;
+    log_debug( "getAllQuoteOfKeyword keyword: " << keyword );
+    log_debug( "getAllQuoteOfKeyword userID: " << userID );
     std::vector< Quote > quoteList;
 
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
@@ -410,8 +404,8 @@ void QuoteRegister::jsonImport( const std::string jsonText,
         // read json configuration struct from stdin:
         cxxtools::JsonDeserializer deserializer( sstream );
         deserializer.deserialize( quoteContainer );
-        DEBUG "quoteContainer.allUserQuotes.size(): "
-            << quoteContainer.allUserQuotes.size() <<  std::endl;
+        log_debug( "quoteContainer.allUserQuotes.size(): "
+            << quoteContainer.allUserQuotes.size() );
 
         tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
         tntdb::Transaction trans(conn);

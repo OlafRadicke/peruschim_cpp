@@ -25,7 +25,7 @@
 #include <cxxtools/fileinfo.h>
 
 #include <fstream>
-#include <sstream>
+#include <ostream>
 
 Config& Config::it()
 {
@@ -52,11 +52,11 @@ void Config::read(const std::string& filename)
 
     std::ifstream in(fname.c_str());
     if (!in) {
-        std::stringstream errorText;
+        std::ostringstream errorText;
         errorText << "failed to open configuration file \"";
         errorText  << fname << '"';
 //         log_debug( "failed to open configuration file \"" << fname << '"' );
-        throw Core::PeruschimException( errorText.str().c_str() );
+        throw Core::PeruschimException( errorText.str() );
     }
     cxxtools::JsonDeserializer deserializer(in);
     deserializer.deserialize(*this);

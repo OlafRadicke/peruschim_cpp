@@ -24,8 +24,6 @@
 
 #include <Core/models/OString.h>
 
-# define DEBUG cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
 
 /*
 std::string myString = "foo:bar:baz";

@@ -27,13 +27,8 @@
 #include <Core/manager/KeywordRegister.h>
 #include <Core/models/Config.h>
 
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-
-
 
 vector<string> KeywordRegister::getAllKeywordTitles( void ){
-    DEBUG std::endl;
     vector<string> keywordList;
     tntdb::Result result;
 
@@ -53,27 +48,10 @@ vector<string> KeywordRegister::getAllKeywordTitles( void ){
 
 
 vector<KeywordCount> KeywordRegister::getAllKeywordTitleAndCound( const unsigned long owner_id ){
-    DEBUG std::endl;
     vector< KeywordCount > keywordList;
     tntdb::Result result;
 
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
-
-//     tntdb::Statement st = conn.prepare(
-//                             "SELECT title, \
-//                                 COUNT(title) As Anzahl \
-//                             FROM quote_keyword \
-//                             WHERE quote_id in \
-//                                 ( SELECT id \
-//                                   FROM quote \
-//                                   WHERE privatedata = FALSE \
-//                                   OR owner_id = :v1 \
-//                                 ) \
-//                             GROUP BY title \
-//                             ORDER BY title"
-//     );
-
-
     tntdb::Statement st = conn.prepare(
                             "SELECT title, \
                                 COUNT(title) As Anzahl \
@@ -113,19 +91,10 @@ vector<KeywordCount> KeywordRegister::getAllKeywordTitleAndCound( const unsigned
 }
 
 vector<KeywordCount> KeywordRegister::getAllPubKeywordTitleAndCound( void ) {
-    DEBUG std::endl;
     vector< KeywordCount > keywordList;
     tntdb::Result result;
 
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
-//     result = conn.select(  "SELECT title, \
-//                                 COUNT(title) As Anzahl \
-//                             FROM quote_keyword \
-//                             WHERE quote_id in ( SELECT id \
-//                                     FROM quote \
-//                                     WHERE privatedata = FALSE ) \
-//                             GROUP BY title \
-//                             ORDER BY title" );
     result = conn.select(  "SELECT title, \
                                 COUNT(title) As Anzahl \
                             FROM quote_keyword \
@@ -158,7 +127,6 @@ vector<KeywordCount> KeywordRegister::getAllPubKeywordTitleAndCound( void ) {
 
 
 vector<KeywordCount> KeywordRegister::getOwnKeywordTitleAndCound( const unsigned long owner_id ){
-    DEBUG "owner_id" <<  owner_id << std::endl;
 
     vector< KeywordCount > keywordList;
     tntdb::Result result;

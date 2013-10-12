@@ -1,22 +1,25 @@
-#include <iostream>
-#include <exception>
+
+#include <stdexcept>
 
 #ifndef CORE_PERUSCHIMEXCEPTION_H
 #define CORE_PERUSCHIMEXCEPTION_H
 
+/**
+ * A exception class. This exception is help full to give more information
+ * in the Browser. Tntnet catch this exception and return the error message
+ * in the browser.
+ */
 namespace Core {
 
-    class PeruschimException : public std::exception
+    class PeruschimException : public std::runtime_error
     {
         public:
-            PeruschimException( const char* err_message ):errMessage( err_message ){}
-//             PeruschimException( const std::string err_message ):errMessage( err_message ){}
 
-            const char* what() const throw() { return errMessage; }
-
-        private:
-            const char* errMessage;
-//             const std::string errMessage;
+            /**
+             * @err_message This message is show in the browser.
+             */
+            explicit PeruschimException( const std::string& err_message )
+                : std::runtime_error( err_message ){}
     };
 
 } // end namespace RouteReverse
