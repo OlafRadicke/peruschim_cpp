@@ -120,7 +120,9 @@ unsigned TrustAUserController::operator() (tnt::HttpRequest& request, tnt::HttpR
             }
         }
 
-        s_trustedAccountList = WebACL::getTrustAccounts( userSession.getUserID() );
+        AccountData ownAccountData;
+        ownAccountData.setID( userSession.getUserID() );
+        s_trustedAccountList = ownAccountData.getTrustAccounts();
     }
 
     return DECLINED;

@@ -76,19 +76,38 @@ public:
      **/
     int getGuarantorCount( );
 
+    /**
+     * Get back all guarantors of this accont/user.
+     * @return list of account datas.
+     **/
+    std::vector<AccountData> getGuarantors();
+
+    /** Get back account id. */
     unsigned long getID ( void ) { return m_id; };
 
+    /** Get back login name. */
     std::string getLogin_name( void ) { return m_login_name; };
 
+    /** Get back real name. */
     std::string getReal_name( void ) { return m_real_name; };
 
+    /** Get back password hash. */
     std::string getPassword_hash( void ) { return m_password_hash; };
 
+    /** Get back password salt. */
     std::string getPassword_salt( void ) { return m_password_salt; };
 
+    /** Get back emil address. */
     std::string getEmail( void ) { return m_email; };
 
+    /** Get back true when the account is disabled. */
     bool getAccount_disable( void ) { return m_account_disable; };
+
+    /**
+     * Get back all account data where in trust of this user.
+     * @return list of account datas.
+     **/
+    std::vector<AccountData> getTrustAccounts();
 
 // I --------------------------------------------------------------------------
 
@@ -166,6 +185,8 @@ private:
     std::string m_password_hash;
     std::string m_password_salt;
     std::string m_email;
+
+    /** Value is true when the account is disabled. */
     bool        m_account_disable;
 
 // G --------------------------------------------------------------------------
@@ -189,24 +210,24 @@ private:
         const unsigned long trusted_account_id,
         const unsigned long guarantor_id
     );
-    
+
     /**
      * This function search user where don't have any guarantors and remove
      * the trust link to other user their are truster. Because only trusted
-     * user can trusted other user. 
+     * user can trusted other user.
      * @return A list of account ids, where has been revoked the trust.
-     **/    
+     **/
     static std::vector<unsigned long> cleanUpTrust();
-    
+
     /**
      * This function search user where don't have any guarantors and remove
      * the trust link to other user their are truster. Because only trusted
-     * user can trusted other user. 
+     * user can trusted other user.
      * This delete recursive the complied trusted link tree from untrusted
      * account. Has a user no more guarantors, he can't publish his comments.
      * @return A list of account ids, where has been revoked the trust.
-     **/    
-    static std::vector<unsigned long> cleanUpTrustRecursively();    
+     **/
+    static std::vector<unsigned long> cleanUpTrustRecursively();
 
 };
 

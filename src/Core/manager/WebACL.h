@@ -109,15 +109,6 @@ public:
     static std::vector<AccountData> getSearchAccounts( const std::string& serach_string );
 
     /**
-     * Get back all account data where in trust of a specific user.
-     * @arg guarantor_id id from a guarantor account/user.
-     * @return list of account datas.
-     **/
-    static std::vector<AccountData> getTrustAccounts( unsigned long guarantor_id );
-
-
-
-    /**
      * Check is user in database exist.
      * @para user_name name of the user.
      * @return true = exist, false = no exist.

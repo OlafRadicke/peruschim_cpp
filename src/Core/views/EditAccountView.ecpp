@@ -34,6 +34,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         std::string              s_affirmation_typ;
         AccountData              s_accountData;
         std::vector<std::string> s_allRolls;
+        std::vector<AccountData> s_trustedAccountList;
+        std::vector<AccountData> s_guarantorAccountList;
 </%request>
 
 %  std::string formToken = SessionForm::Manager::getFormToken( request );
@@ -59,7 +61,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </div>
     <br />
     <div class="centerbox">
-        <h1>User-Accounts</h1>
+        <h1>User-Account ID: <$ s_accountData.getID() $></h1>
 % if ( s_feedback != "" ) {
         <div class="feedback-box">
             <b><$ s_feedback $> </b>
@@ -87,7 +89,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % }
         <div class="columnbox">
             <form method="post" >
-                <h2>Account bearbeiten</h2>
+                <h2>Kerndaten</h2>
                 <p>
                     <label for="login_name">Login*: </label>
                     <br>
@@ -139,7 +141,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         value=""
                         maxlength="40">
                 </p>
-                <p><b>Rollen:</b>
+                <p>
+                    Account deaktiviert <input
+                    type="checkbox"
+                    name="arg_is_inactive"
+                    value="is_inactive"
+% if ( s_accountData.getAccount_disable() ) {
+                        checked
+% }
+                    />
+                </p>
+                <h2>ACL-Rollen</h2>
+                <p>
                     <select
                         class="userroles"
                         id="args_userroles"
@@ -170,37 +183,55 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %         }
                     </select>
                 </p>
+
+                <h2>Bürgschaften</h2>
+                <h3>Liste der Bürgschaften</h3>
                 <p>
-                    Account deaktiviert <input
-                    type="checkbox"
-                    name="arg_is_inactive"
-                    value="is_inactive"
-% if ( s_accountData.getAccount_disable() ) {
-                        checked
+                    Dieser Benutzern hat folgenden Benutzern sein Vertrauen ausgesprochen:
+                    <ul>
+% for ( unsigned int i_accountT = 0; i_accountT < s_trustedAccountList.size(); i_accountT++) {
+                        <li>
+                            <$ s_trustedAccountList[i_accountT].getLogin_name() $>
+                            "<$ s_trustedAccountList[i_accountT].getReal_name() $>"
+                            (ID: <$ s_trustedAccountList[i_accountT].getID() $>)
+                        </li>
 % }
-                    />
-                </p>
-                <p>Bürkschaften: <$ s_accountData.getGuarantorCount( ) $>
-                    <button name="arg_revoke_trust_button"
-                            class="low_priority"
-                            value="pushed"
-                            type="submit"><u>Alle Bürkschaften löschen</u>***
-                    </button> <br>
-                </p>
-                <p>
-                    <button name="arg_update_account_button"
-                            value="pushed"
-                            type="submit">Speichern
-                    </button>
-                </p>
-                <hr>
-                <p>
-                    <span class="explanation">* Pflichtfeld<br></span>
-                    <span class="explanation">** Wenn kein Passwort gesetzt
-                        wurde, wird das alte Passwort nicht verändert<br></span>
-                    <span class="explanation">*** Das hat den Efekt das keine
-                        Berträge mehr von dem User öffentlich sichtbar sind.</span>
-                </p>
+                    </ul>
+
+                <h3>Vertrauensbonus</h3>
+                    <p><$ s_accountData.getGuarantorCount( ) $> andere Benutzer
+                    haben diesem Benutzern ihr Vertrauen ausgesprochen:
+                        <ul>
+% for ( unsigned int i_accountT = 0; i_accountT < s_guarantorAccountList.size(); i_accountT++) {
+                            <li>
+                                <$ s_guarantorAccountList[i_accountT].getLogin_name() $>
+                                "<$ s_guarantorAccountList[i_accountT].getReal_name() $>"
+                                (ID: <$ s_guarantorAccountList[i_accountT].getID() $>)
+                            </li>
+% }
+                        </ul>
+% if( s_accountData.getGuarantorCount( ) > 0 ) {
+                        <button name="arg_revoke_trust_button"
+                                class="low_priority"
+                                value="pushed"
+                                type="submit"><u>Alle Bürkschaften löschen</u>***
+                        </button>
+                    </p>
+% }
+                    <p>
+                        <button name="arg_update_account_button"
+                                value="pushed"
+                                type="submit">Speichern
+                        </button>
+                    </p>
+                    <hr>
+                    <p>
+                        <span class="explanation">* Pflichtfeld<br></span>
+                        <span class="explanation">** Wenn kein Passwort gesetzt
+                            wurde, wird das alte Passwort nicht verändert<br></span>
+                        <span class="explanation">*** Das hat den Efekt das keine
+                            Berträge mehr von dem User öffentlich sichtbar sind.</span>
+                    </p>
             </form >
         </div>
     </div>

@@ -192,6 +192,102 @@ std::string AccountData::genRandomSalt ( unsigned int len) {
 }
 
 
+std::vector<AccountData> AccountData::getGuarantors(){
+
+    std::vector<AccountData> accounts;
+
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
+    tntdb::Statement st = conn.prepare(
+            "SELECT \
+                id, \
+                login_name, \
+                real_name, \
+                password_hash, \
+                password_salt, \
+                email, \
+                account_disable  \
+            FROM account \
+            WHERE id IN ( \
+                SELECT guarantor_id \
+                FROM account_trust \
+                WHERE trusted_account_id = :trusted_account_id \
+                ) \
+            AND NOT id = :trusted_account_id \
+            ORDER BY login_name"
+    );
+    st.set( "trusted_account_id", m_id ).execute();
+
+    for (tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+        AccountData accountData;
+
+        accountData.setID( row[0].getInt() );
+        accountData.setLogin_name( row[1].getString () );
+        accountData.setReal_name( row[2].getString () );
+        accountData.setPassword_hash( row[3].getString () );
+        accountData.setPassword_salt( row[4].getString () );
+        accountData.setEmail( row[5].getString () );
+        accountData.setAccount_disable( row[5].getBool () );
+
+        accounts.push_back ( accountData );
+    }
+
+    log_debug("accounts.size(): " <<  accounts.size());
+    return accounts;
+
+}
+
+std::vector<AccountData> AccountData::getTrustAccounts( ){
+
+    std::vector<AccountData> accounts;
+
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
+    tntdb::Statement st = conn.prepare(
+            "SELECT \
+                id, \
+                login_name, \
+                real_name, \
+                password_hash, \
+                password_salt, \
+                email, \
+                account_disable  \
+            FROM account \
+            WHERE id IN ( \
+                SELECT trusted_account_id \
+                FROM account_trust \
+                WHERE guarantor_id = :guarantor_id \
+                ) \
+            AND NOT id = :guarantor_id \
+            ORDER BY login_name"
+    );
+    st.set( "guarantor_id", m_id ).execute();
+
+    for (tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+        AccountData accountData;
+
+        accountData.setID( row[0].getInt() );
+        accountData.setLogin_name( row[1].getString () );
+        accountData.setReal_name( row[2].getString () );
+        accountData.setPassword_hash( row[3].getString () );
+        accountData.setPassword_salt( row[4].getString () );
+        accountData.setEmail( row[5].getString () );
+        accountData.setAccount_disable( row[5].getBool () );
+
+        accounts.push_back ( accountData );
+    }
+
+    log_debug("accounts.size(): " <<  accounts.size());
+    return accounts;
+
+}
+
+// I -------------------------------------------------------------------------
+
 bool AccountData::isTrustedAccount( ){
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Statement sel = conn.prepare(

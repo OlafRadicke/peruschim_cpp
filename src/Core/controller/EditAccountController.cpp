@@ -67,6 +67,8 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
     TNT_REQUEST_SHARED_VAR( std::vector<std::string>, s_userRolls, () );
     TNT_REQUEST_SHARED_VAR( std::vector<std::string>, s_allRolls, () );
     TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
+    TNT_REQUEST_SHARED_VAR( std::vector<AccountData>, s_trustedAccountList, () );
+    TNT_REQUEST_SHARED_VAR( std::vector<AccountData>, s_guarantorAccountList, () );
 
 
     std::cout << __FILE__ << __LINE__ << std::endl;
@@ -166,9 +168,9 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
 
     // if delete affirmation clicked.
     if ( arg_affirmation_typ == "revoke trust" ) {
-        log_debug( __LINE__ + "start...");
-        
-        
+        log_debug( __LINE__ << "start...");
+
+
         if ( arg_affirmation_ok_button ) {
             AccountData accountData;
             accountData.setID( s_open_account_id );
@@ -195,8 +197,13 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
 
         s_accountData =  WebACL::getAccountsWithID ( s_open_account_id );
         s_userRolls = WebACL::getRoll ( s_accountData.getLogin_name() );
-        s_allRolls = WebACL::getAllRolls();         
-        
+        s_allRolls = WebACL::getAllRolls();
+
     }
+
+    AccountData openAccountData;
+    openAccountData.setID( s_open_account_id );
+    s_trustedAccountList = openAccountData.getTrustAccounts();
+    s_guarantorAccountList = openAccountData.getGuarantors();
     return DECLINED;
 }
