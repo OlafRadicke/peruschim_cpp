@@ -37,9 +37,11 @@ log_define("models.AccountData")
 // C --------------------------------------------------------------------------
 
 std::vector<unsigned long> AccountData::cleanUpTrustRecursively() {
+    log_info( "[" << __FILE__ << ":" << __LINE__ << "] AccountData::cleanUpTrustRecursively()" );
 
     std::vector<unsigned long> accountIdOfRevokedTrust;
     std::vector<unsigned long> idListResult;
+    unsigned roundCount = 0;
     for( ; ; )
     {
         idListResult = AccountData::cleanUpTrust();
@@ -50,8 +52,11 @@ std::vector<unsigned long> AccountData::cleanUpTrustRecursively() {
         ) {
             accountIdOfRevokedTrust.push_back( accountIdOfRevokedTrust[i] );
         }
+        roundCount++;
         if ( idListResult.size() < 1 ) break;
     }
+    log_info( "[" << __FILE__ << ":" << __LINE__ << "] " << roundCount << " Durchläufe" );
+
     return accountIdOfRevokedTrust;
 }
 
@@ -102,7 +107,7 @@ void AccountData::deleteAllData( unsigned long liqudator_id ) {
     log_info(  "saveUpdate" );
     log_info(  "m_account_disable: " << m_account_disable );
     // Revoke trust links.
-    revokeTrust( );
+    revokeAllTrust( liqudator_id );
 
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Transaction trans(conn);
@@ -307,13 +312,40 @@ bool AccountData::isTrustedAccount( ){
 
 // R --------------------------------------------------------------------------
 
-std::vector<unsigned long> AccountData::revokeTrust( ){
+std::vector<unsigned long> AccountData::revokeAllTrust( const unsigned long admin_id ){
+    log_info( "[" << __FILE__ << ":" << __LINE__ << "] AccountData::revokeTrust()" );
+    std::vector<unsigned long> accountIdOfrevokedTrust;
+    tntdb::Statement st;
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
+
+    st = conn.prepare(
+        "DELETE FROM account_trust \
+        WHERE trusted_account_id = :trusted_account_id;"
+    );
+    st.set("trusted_account_id", m_id ).execute();
+
+
+    // create a event feed.
+    RSSfeed newFeed;
+    newFeed.setTitle( "Account: Vertrauen entzogen" );
+    std::string description = "Dem Account mit der ID "
+        + cxxtools::convert<std::string>( m_id ) \
+        + " wurde jegliches Vertrauen entzogen. Der Login-Name war: \"" + m_login_name
+        + "\", und der reale name: \"" + m_real_name
+        + "\". Dieser Schritt erfolgte durch den Admin ID: "
+        + cxxtools::convert<std::string>( admin_id );
+    newFeed.setDescription( description );
+    newFeed.channels.push_back("account");
+    RSSfeedManager feedManager;
+    feedManager.addNewFeed( newFeed );
+
     return AccountData::cleanUpTrustRecursively();
 }
 
 std::vector<unsigned long> AccountData::revokeTrust(
     const unsigned long guarantor_id
 ){
+    log_info( "[" << __FILE__ << ":" << __LINE__ << "] AccountData::revokeTrust(guarantor_id)" );
     std::vector<unsigned long> accountIDs = AccountData::revokeTrust(
         m_id,
         m_id
@@ -325,6 +357,7 @@ std::vector<unsigned long> AccountData::revokeTrust(
     const unsigned long trusted_account_id,
     const unsigned long guarantor_id
 ){
+    log_info( "[" << __FILE__ << ":" << __LINE__ << "] AccountData::revokeTrust(trusted_account_id,guarantor_id)" );
     std::vector<unsigned long> accountIdOfrevokedTrust;
     tntdb::Statement st;
     AccountData accountData;

@@ -120,12 +120,13 @@ public:
 // R --------------------------------------------------------------------------
 
     /**
-     * Remove all trusted link between tow a user.
+     * Remove ALL trusted link between tow a user.
      * This delete recursive the complied trusted link tree.
      * Has a user no more guarantors, he can't publish his comments.
+     * @para admin_id id of a administrator.
      * @return A list of account ids, where has been revoked the trust.
      **/
-    std::vector<unsigned long> revokeTrust();
+    std::vector<unsigned long> revokeAllTrust( const unsigned long admin_id );
 
     /**
      * Remove a trusted link between tow user.
