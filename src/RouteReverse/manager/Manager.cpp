@@ -32,13 +32,16 @@ namespace RouteReverse
 
 log_define("RouteReverse.Manager")
 
-std::map< std::string, std::string > Manager::reverseMAP = std::map< std::string, std::string >();
+// std::map< std::string, std::string > Manager::reverseMAP = std::map< std::string, std::string >();
+
+
+std::map< std::string, std::string > Manager::reverseMAP;
 
 
 // A --------------------------------------------------------------------------
 
 
-void Manager::addRoute( URLData &urlData, tnt::Tntnet &app ) {
+void Manager::addRoute( const URLData &urlData, tnt::Tntnet &app ) {
 
 
     if ( urlData.urlRegEx != "" && urlData.componentName != "" ) {
@@ -74,10 +77,10 @@ std::string Manager::getAllReversesRoutes(){
 
     std::string returnString;
 
-    std::map< std::string, std::string >::iterator it;
+    std::map< std::string, std::string >::const_iterator it;
     for (
-        std::map< std::string, std::string >::iterator it=Manager::reverseMAP.begin();
-        it!=Manager::reverseMAP.end();
+        it = Manager::reverseMAP.begin();
+        it != Manager::reverseMAP.end();
         ++it
     ){
         returnString += it->first + " => " + it->second + "\n";
@@ -87,7 +90,7 @@ std::string Manager::getAllReversesRoutes(){
 
 
 std::string  Manager::getLinkTo(
-        std::string compunentName,
+        const std::string componentName,
         const tnt::HttpRequest& request ){
 
     std::string targetURL;
@@ -95,7 +98,7 @@ std::string  Manager::getLinkTo(
     std::string currentURL = request.getUrl ();
 
     std::map<std::string, std::string>::const_iterator it =
-        Manager::reverseMAP.find( compunentName );
+        Manager::reverseMAP.find( componentName );
     if (it != Manager::reverseMAP.end())
         targetURL = it->second;
 
@@ -110,14 +113,14 @@ std::string  Manager::getLinkTo(
 }
 
 std::string  Manager::getAbsolutURL(
-        std::string compunentName,
+        const std::string componentName,
         const tnt::HttpRequest& request ){
 
     std::string targetURL;
     std::string returnURL;
 
     std::map<std::string, std::string>::const_iterator it =
-        Manager::reverseMAP.find( compunentName );
+        Manager::reverseMAP.find( componentName );
     if (it != Manager::reverseMAP.end())
         targetURL = it->second;
 
