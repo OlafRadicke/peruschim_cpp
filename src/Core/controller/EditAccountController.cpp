@@ -67,6 +67,8 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
     TNT_REQUEST_SHARED_VAR( std::vector<std::string>, s_userRolls, () );
     TNT_REQUEST_SHARED_VAR( std::vector<std::string>, s_allRolls, () );
     TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
+    TNT_REQUEST_SHARED_VAR( std::vector<AccountData>, s_trustedAccountList, () );
+    TNT_REQUEST_SHARED_VAR( std::vector<AccountData>, s_guarantorAccountList, () );
 
 
     std::cout << __FILE__ << __LINE__ << std::endl;
@@ -116,6 +118,12 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
         s_userRolls = WebACL::getRoll ( s_accountData.getLogin_name() );
         s_allRolls = WebACL::getAllRolls();
 
+    } else {
+        s_accountData =  WebACL::getAccountsWithID ( s_open_account_id );
+        s_userRolls = WebACL::getRoll ( s_accountData.getLogin_name() );
+        s_allRolls = WebACL::getAllRolls();
+        s_trustedAccountList = s_accountData.getTrustAccounts();
+        s_guarantorAccountList = s_accountData.getGuarantors();
     }
 
 
@@ -149,8 +157,7 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
     }
 
     if ( arg_revoke_trust_button ) {
-        AccountData accountData( s_open_account_id );
-        int guarantorCount = accountData.getGuarantorCount( );
+        int guarantorCount = s_accountData.getGuarantorCount( );
         if ( guarantorCount == 0 ) {
             s_feedback = "Der Account/Benutzer besitzt kein Vertrauen was man ihm \
                 entziehen könne.";
@@ -166,16 +173,14 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
 
     // if delete affirmation clicked.
     if ( arg_affirmation_typ == "revoke trust" ) {
-        log_debug( __LINE__ + "start...");
-        
-        
+        log_debug( __LINE__ << "start...");
+
+
         if ( arg_affirmation_ok_button ) {
-            AccountData accountData;
-            accountData.setID( s_open_account_id );
-            int guarantorCount = accountData.getGuarantorCount( );
+            int guarantorCount = s_accountData.getGuarantorCount( );
             log_debug( __LINE__ );
             std::vector<unsigned long> accountIDs =
-                accountData.revokeTrust( userSession.getUserID() );
+                s_accountData.revokeAllTrust( userSession.getUserID() );
             s_feedback = "Es wurde sämtliches Vertrauen entfernt. Das betraf "
                 + OString::IntToStr( guarantorCount ) + " Bürgen.";
             log_debug( __LINE__ );
@@ -193,10 +198,10 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
 
         }
 
-        s_accountData =  WebACL::getAccountsWithID ( s_open_account_id );
-        s_userRolls = WebACL::getRoll ( s_accountData.getLogin_name() );
-        s_allRolls = WebACL::getAllRolls();         
-        
+        s_trustedAccountList = s_accountData.getTrustAccounts();
+        s_guarantorAccountList = s_accountData.getGuarantors();
+
     }
+
     return DECLINED;
 }

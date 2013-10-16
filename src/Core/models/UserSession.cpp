@@ -18,21 +18,22 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <cxxtools/log.h>
+
 #include <tntdb/statement.h>
 #include <tntdb/connection.h>
 #include <tntdb/connect.h>
 
 #include <Core/models/UserSession.h>
 
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+
+log_define("core.models.UserSession")
 
 // A --------------------------------------------------------------------------
 
 void UserSession::addRoll ( std::vector<std::string> rolls ) {
-    DEBUG "addRoll" << std::endl;
     for ( unsigned int i=0; i<rolls.size(); i++) {
-        DEBUG "Add roll: " << rolls[i] << std::endl;
+        log_debug( "Add roll: " << rolls[i] );
         m_userroles.push_back ( rolls[i] );
     }
 }
@@ -40,9 +41,7 @@ void UserSession::addRoll ( std::vector<std::string> rolls ) {
 // G --------------------------------------------------------------------------
 
 unsigned long UserSession::getUserID ( ) {
-    DEBUG std::endl;
     if ( this->m_userID > 0 ) {
-        DEBUG std::endl;
         return this->m_userID;
     } else {
 
@@ -68,7 +67,7 @@ unsigned long UserSession::getUserID ( ) {
 // L --------------------------------------------------------------------------
 
 void UserSession::logout( ) {
-    DEBUG "logout..." << std::endl;
+    log_debug( "logout..." );
     this->m_userroles.clear();
     this->m_username = "";
     this->m_userID = 0;
@@ -86,16 +85,16 @@ bool UserSession::isInRole ( std::string siteroll ) {
 }
 
 bool UserSession::isInRole ( std::vector<std::string> siterolls ) {
-    DEBUG "m_userroles.size(): " << m_userroles.size() << std::endl;
+    log_debug( "m_userroles.size(): " << m_userroles.size() );
 
     for ( unsigned int i=0; i<m_userroles.size(); i++) {
         for ( unsigned int i2=0; i2<siterolls.size(); i2++) {
             if ( m_userroles[i] == siterolls[i2] ) {
-                DEBUG "true" << std::endl;
+                log_debug( "true" );
                 return true;
             }
         }
     }
-    DEBUG "false" << std::endl;
+    log_debug( "false" );
     return false;
 }

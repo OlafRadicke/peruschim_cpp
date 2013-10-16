@@ -26,6 +26,7 @@ noinst_HEADERS = \
 	Core/models/Edition.h \
 	Core/models/KeywordData.h \
 	Core/models/OString.h \
+	Core/models/PeruschimException.h \
 	Core/models/Quote.h \
 	Core/models/UserSession.h \
 	RouteReverse/initcomponent.h \

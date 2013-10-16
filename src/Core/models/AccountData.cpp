@@ -19,6 +19,10 @@
 */
 
 
+#include <Core/manager/RSSfeedManager.h>
+#include <Core/models/AccountData.h>
+#include <Core/models/PeruschimException.h>
+
 #include <tntdb/connection.h>
 #include <tntdb/connect.h>
 #include <tntdb/transaction.h>
@@ -26,41 +30,37 @@
 #include <cxxtools/md5.h>
 #include <cxxtools/log.h>
 
-#include <Core/models/AccountData.h>
-#include <Core/manager/RSSfeedManager.h>
-
-# define DEBUG std::cout << "[" << __FILE__ << ":" << __LINE__ << "] " <<
-# define ERROR std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " <<
+#include <ostream>
 
 log_define("models.AccountData")
 
 // C --------------------------------------------------------------------------
 
 std::vector<unsigned long> AccountData::cleanUpTrustRecursively() {
+    log_info( "[" << __FILE__ << ":" << __LINE__ << "] AccountData::cleanUpTrustRecursively()" );
 
-    std::vector<unsigned long> accountIdOfRevokedTrust;    
+    std::vector<unsigned long> accountIdOfRevokedTrust;
     std::vector<unsigned long> idListResult;
-    
-    
+    unsigned roundCount = 0;
     for( ; ; )
     {
         idListResult = AccountData::cleanUpTrust();
-        for (  
-            unsigned int i = 0; 
-            i < accountIdOfRevokedTrust.size(); 
-            ++i 
+        for (
+            unsigned int i = 0;
+            i < accountIdOfRevokedTrust.size();
+            ++i
         ) {
             accountIdOfRevokedTrust.push_back( accountIdOfRevokedTrust[i] );
         }
+        roundCount++;
         if ( idListResult.size() < 1 ) break;
     }
+    log_info( "[" << __FILE__ << ":" << __LINE__ << "] " << roundCount << " Durchläufe" );
+
     return accountIdOfRevokedTrust;
 }
 
 std::vector<unsigned long> AccountData::cleanUpTrust() {
-    log_info(   __LINE__ << "start..." );
-    log_info( __LINE__ <<  "start..." );
-    
     std::vector<unsigned long> accountIdOfrevokedTrust;
     tntdb::Statement st;
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
@@ -94,22 +94,20 @@ std::vector<unsigned long> AccountData::cleanUpTrust() {
                 SELECT DISTINCT ON (trusted_account_id)  trusted_account_id \
                 FROM account_trust \
             )  \
-        )\ "
+        )"
     );
     st.execute();
-    return accountIdOfrevokedTrust;    
+    return accountIdOfrevokedTrust;
 
 }
 
 // D --------------------------------------------------------------------------
 
 void AccountData::deleteAllData( unsigned long liqudator_id ) {
-
     log_info(  "saveUpdate" );
     log_info(  "m_account_disable: " << m_account_disable );
-
     // Revoke trust links.
-    revokeTrust( );
+    revokeAllTrust( liqudator_id );
 
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Transaction trans(conn);
@@ -168,7 +166,6 @@ int AccountData::getGuarantorCount( ){
 
     int guarantorCount = 0;
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
-
     tntdb::Statement st = conn.prepare( "SELECT \
                         count( guarantor_id )  \
                     FROM account_trust \
@@ -178,8 +175,6 @@ int AccountData::getGuarantorCount( ){
 
     tntdb::Value value = st.selectValue( );
     value.get(guarantorCount);
-
-    log_info(  "guarantorCount: " <<  guarantorCount );
     return guarantorCount;
 }
 
@@ -188,7 +183,6 @@ std::string AccountData::genRandomSalt ( unsigned int len) {
     /* initialize random seed: */
     // srand (time(NULL));
     std::string randomString;
-
     static const char alphanum[] =
         "0123456789"
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -199,15 +193,108 @@ std::string AccountData::genRandomSalt ( unsigned int len) {
         log_info(  "randNo: " << randNo );
         randomString.push_back ( alphanum[randNo] );
     }
-
     return randomString;
 }
 
 
-bool AccountData::isTrustedAccount( ){
+std::vector<AccountData> AccountData::getGuarantors(){
+
+    std::vector<AccountData> accounts;
 
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
+    tntdb::Statement st = conn.prepare(
+            "SELECT \
+                id, \
+                login_name, \
+                real_name, \
+                password_hash, \
+                password_salt, \
+                email, \
+                account_disable  \
+            FROM account \
+            WHERE id IN ( \
+                SELECT guarantor_id \
+                FROM account_trust \
+                WHERE trusted_account_id = :trusted_account_id \
+                ) \
+            AND NOT id = :trusted_account_id \
+            ORDER BY login_name"
+    );
+    st.set( "trusted_account_id", m_id ).execute();
 
+    for (tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+        AccountData accountData;
+
+        accountData.setID( row[0].getInt() );
+        accountData.setLogin_name( row[1].getString () );
+        accountData.setReal_name( row[2].getString () );
+        accountData.setPassword_hash( row[3].getString () );
+        accountData.setPassword_salt( row[4].getString () );
+        accountData.setEmail( row[5].getString () );
+        accountData.setAccount_disable( row[5].getBool () );
+
+        accounts.push_back ( accountData );
+    }
+
+    log_debug("accounts.size(): " <<  accounts.size());
+    return accounts;
+
+}
+
+std::vector<AccountData> AccountData::getTrustAccounts( ){
+
+    std::vector<AccountData> accounts;
+
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
+    tntdb::Statement st = conn.prepare(
+            "SELECT \
+                id, \
+                login_name, \
+                real_name, \
+                password_hash, \
+                password_salt, \
+                email, \
+                account_disable  \
+            FROM account \
+            WHERE id IN ( \
+                SELECT trusted_account_id \
+                FROM account_trust \
+                WHERE guarantor_id = :guarantor_id \
+                ) \
+            AND NOT id = :guarantor_id \
+            ORDER BY login_name"
+    );
+    st.set( "guarantor_id", m_id ).execute();
+
+    for (tntdb::Statement::const_iterator it = st.begin();
+        it != st.end(); ++it
+    ) {
+        tntdb::Row row = *it;
+        AccountData accountData;
+
+        accountData.setID( row[0].getInt() );
+        accountData.setLogin_name( row[1].getString () );
+        accountData.setReal_name( row[2].getString () );
+        accountData.setPassword_hash( row[3].getString () );
+        accountData.setPassword_salt( row[4].getString () );
+        accountData.setEmail( row[5].getString () );
+        accountData.setAccount_disable( row[5].getBool () );
+
+        accounts.push_back ( accountData );
+    }
+
+    log_debug("accounts.size(): " <<  accounts.size());
+    return accounts;
+
+}
+
+// I -------------------------------------------------------------------------
+
+bool AccountData::isTrustedAccount( ){
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Statement sel = conn.prepare(
         "SELECT count(id) \
             FROM account_trust \
@@ -221,19 +308,44 @@ bool AccountData::isTrustedAccount( ){
     } else {
         return false;
     }
-
 }
 
 // R --------------------------------------------------------------------------
 
-std::vector<unsigned long> AccountData::revokeTrust( ){
+std::vector<unsigned long> AccountData::revokeAllTrust( const unsigned long admin_id ){
+    log_info( "[" << __FILE__ << ":" << __LINE__ << "] AccountData::revokeTrust()" );
+    std::vector<unsigned long> accountIdOfrevokedTrust;
+    tntdb::Statement st;
+    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
+
+    st = conn.prepare(
+        "DELETE FROM account_trust \
+        WHERE trusted_account_id = :trusted_account_id;"
+    );
+    st.set("trusted_account_id", m_id ).execute();
+
+
+    // create a event feed.
+    RSSfeed newFeed;
+    newFeed.setTitle( "Account: Vertrauen entzogen" );
+    std::string description = "Dem Account mit der ID "
+        + cxxtools::convert<std::string>( m_id ) \
+        + " wurde jegliches Vertrauen entzogen. Der Login-Name war: \"" + m_login_name
+        + "\", und der reale name: \"" + m_real_name
+        + "\". Dieser Schritt erfolgte durch den Admin ID: "
+        + cxxtools::convert<std::string>( admin_id );
+    newFeed.setDescription( description );
+    newFeed.channels.push_back("account");
+    RSSfeedManager feedManager;
+    feedManager.addNewFeed( newFeed );
+
     return AccountData::cleanUpTrustRecursively();
 }
 
 std::vector<unsigned long> AccountData::revokeTrust(
     const unsigned long guarantor_id
 ){
-    log_info(   __LINE__ << "start..." );
+    log_info( "[" << __FILE__ << ":" << __LINE__ << "] AccountData::revokeTrust(guarantor_id)" );
     std::vector<unsigned long> accountIDs = AccountData::revokeTrust(
         m_id,
         m_id
@@ -245,7 +357,7 @@ std::vector<unsigned long> AccountData::revokeTrust(
     const unsigned long trusted_account_id,
     const unsigned long guarantor_id
 ){
-    log_info(   __LINE__ << "start..." );
+    log_info( "[" << __FILE__ << ":" << __LINE__ << "] AccountData::revokeTrust(trusted_account_id,guarantor_id)" );
     std::vector<unsigned long> accountIdOfrevokedTrust;
     tntdb::Statement st;
     AccountData accountData;
@@ -267,8 +379,6 @@ std::vector<unsigned long> AccountData::revokeTrust(
                 WHERE guarantor_id = :trusted_account_id "
         );
         st.set( "trusted_account_id", trusted_account_id ).execute();
-
-
         for (tntdb::Statement::const_iterator it = st.begin();
             it != st.end();
             ++it
@@ -285,9 +395,6 @@ std::vector<unsigned long> AccountData::revokeTrust(
         }
     }
     accountIdOfrevokedTrust.push_back( trusted_account_id );
-    log_info(   __LINE__ << 
-        "RETURN accountIdOfrevokedTrust.size()" << 
-        accountIdOfrevokedTrust.size() );
     return accountIdOfrevokedTrust;
 
 }
@@ -296,10 +403,8 @@ std::vector<unsigned long> AccountData::revokeTrust(
 // S --------------------------------------------------------------------------
 
 void AccountData::saveUpdate() {
-
     log_info(  "saveUpdate" );
     log_info(  "m_account_disable: " << m_account_disable );
-
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
     tntdb::Statement st = conn.prepare(
         "UPDATE account \
@@ -320,8 +425,6 @@ void AccountData::saveUpdate() {
 
 
 void AccountData::setNewPassword ( std::string newpassword ) {
-
-    log_info(  "setNewPassword" );
     std::string password_salt;
     std::string password_hash;
 
@@ -342,17 +445,17 @@ void AccountData::setNewPassword ( std::string newpassword ) {
 
 }
 
-
-
 // T --------------------------------------------------------------------------
 
 
 void AccountData::trustedByGuarantor( const unsigned long guarantor_id ){
-    log_info(   __LINE__ << "start..." );
+
     if ( m_id == guarantor_id ) {
         std::string str_guarantor_id = cxxtools::convert<std::string>( guarantor_id );
-        std::string errorinfo = "User (id" + str_guarantor_id + ") can't trust self!";
-        throw errorinfo;
+        std::ostringstream errorText;
+        errorText << "User (id" << str_guarantor_id << ") can't trust self!";
+        log_debug( "errorText" );
+        throw Core::PeruschimException( errorText.str() );
     }
     // Nur User/Accounts die schon Vertrauen besitzen, können Vertrauen
     // aussprechen.
@@ -360,11 +463,7 @@ void AccountData::trustedByGuarantor( const unsigned long guarantor_id ){
     if ( AccountData( guarantor_id ).isTrustedAccount() ) {
         return;
     }
-
-    log_info(   __LINE__ << " Schritt ZWEI..." );
-
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
-
     tntdb::Statement st = conn.prepare(
         "INSERT INTO account_trust \
             (   trusted_account_id, \
@@ -378,7 +477,6 @@ void AccountData::trustedByGuarantor( const unsigned long guarantor_id ){
     );
     st.set("m_id", m_id )
     .set("guarantor_id", guarantor_id ).execute();
-
 
     // Create a feed item
     RSSfeed newFeed;

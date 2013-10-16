@@ -18,7 +18,11 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <string>
+
+#include <Core/models/DatabaseProxy.h>
+#include <Core/models/PeruschimException.h>
+#include <Core/manager/RSSfeedManager.h>
+#include <Core/manager/WebACL.h>
 
 #include <tntdb/connect.h>
 #include <tntdb/statement.h>
@@ -26,9 +30,8 @@
 #include <cxxtools/md5.h>
 #include <cxxtools/log.h>
 
-#include <Core/manager/WebACL.h>
-#include <Core/models/DatabaseProxy.h>
-#include <Core/manager/RSSfeedManager.h>
+#include <string>
+
 
 /* A ----------------------------------------------------------------------- */
 
@@ -207,8 +210,11 @@ AccountData WebACL::getAccountsWithID ( unsigned long id ){
         }
         return adata;
     }
-    std::string errorinfo = "no account found with this id" + id;
-    throw errorinfo;
+
+    std::stringstream errorText;
+    errorText << "no account found with this id" << id;
+    log_debug( errorText );
+    throw Core::PeruschimException( errorText.str() );
 }
 
 std::vector<AccountData> WebACL::getAllAccounts (){
@@ -274,7 +280,7 @@ std::vector<std::string> WebACL::getAllRolls ( ){
 std::string WebACL::genRandomSalt ( const int len) {
     // Set this in the main-function... initialize random seed: */
     //srand (time(NULL));
-    
+
     std::string randomString = "";
     static const char alphanum[] =
         "0123456789"
@@ -357,53 +363,6 @@ std::vector<AccountData> WebACL::getSearchAccounts( const std::string& serach_st
 
 }
 
-
-std::vector<AccountData> WebACL::getTrustAccounts( unsigned long guarantor_id ){
-
-    std::vector<AccountData> accounts;
-
-    tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
-    tntdb::Statement st = conn.prepare(
-            "SELECT \
-                id, \
-                login_name, \
-                real_name, \
-                password_hash, \
-                password_salt, \
-                email, \
-                account_disable  \
-            FROM account \
-            WHERE id IN ( \
-                SELECT trusted_account_id \
-                FROM account_trust \
-                WHERE guarantor_id = :guarantor_id \
-                ) \
-            AND NOT id = :guarantor_id \
-            ORDER BY login_name"
-    );
-    st.set( "guarantor_id", guarantor_id ).execute();
-
-    for (tntdb::Statement::const_iterator it = st.begin();
-        it != st.end(); ++it
-    ) {
-        tntdb::Row row = *it;
-        AccountData accountData;
-
-        accountData.setID( row[0].getInt() );
-        accountData.setLogin_name( row[1].getString () );
-        accountData.setReal_name( row[2].getString () );
-        accountData.setPassword_hash( row[3].getString () );
-        accountData.setPassword_salt( row[4].getString () );
-        accountData.setEmail( row[5].getString () );
-        accountData.setAccount_disable( row[5].getBool () );
-
-        accounts.push_back ( accountData );
-    }
-
-    log_debug("accounts.size(): " <<  accounts.size());
-    return accounts;
-
-}
 
 
 /* I ----------------------------------------------------------------------- */
