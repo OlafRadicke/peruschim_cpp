@@ -55,7 +55,6 @@ unsigned AccountRegisterController::operator() (tnt::HttpRequest& request, tnt::
     TNT_REQUEST_SHARED_VAR( std::vector<AccountData>, s_accountList, () );
     TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
 
-
     // ACL Check
     if ( userSession.isInRole ( "admin" ) == false ) {
         return reply.redirect ( "/access_denied" );

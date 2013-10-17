@@ -117,6 +117,8 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
         s_accountData =  WebACL::getAccountsWithID ( s_open_account_id );
         s_userRolls = WebACL::getRoll ( s_accountData.getLogin_name() );
         s_allRolls = WebACL::getAllRolls();
+        s_trustedAccountList = s_accountData.getTrustAccounts();
+        s_guarantorAccountList = s_accountData.getGuarantors();
 
     } else {
         s_accountData =  WebACL::getAccountsWithID ( s_open_account_id );

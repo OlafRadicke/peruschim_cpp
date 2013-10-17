@@ -32,6 +32,8 @@
 #include <Core/models/Quote.h>
 #include <Core/models/OString.h>
 
+#include <ostream>
+
 log_define("component.TrustAUserController")
 
 class TrustAUserController : public tnt::Component
@@ -103,7 +105,15 @@ unsigned TrustAUserController::operator() (tnt::HttpRequest& request, tnt::HttpR
         if( arg_revoke_trust_button ) {
             AccountData accountData;
             accountData.setID( arg_account_id );
-            accountData.revokeTrust( userSession.getUserID() );
+            std::vector<unsigned long> revokeIDs =
+                accountData.revokeTrust( userSession.getUserID() );
+            std::ostringstream outText;
+            outText << "Es wurde folgenden (IDs) das Vertrauen entzogen: ";
+            for ( unsigned int i = 0; revokeIDs.size() > i; i++ ){
+                if ( i > 0 ) outText << ", ";
+                outText << revokeIDs[i];
+            }
+            s_feedback = outText.str();
         }
 
         if( arg_trust_user_button ) {
@@ -111,12 +121,7 @@ unsigned TrustAUserController::operator() (tnt::HttpRequest& request, tnt::HttpR
                 s_feedback = "Es ist nicht möglich sich selbst das Vertrauen auszusprechen!";
             } else {
                 AccountData accountData( arg_account_id );
-//                 accountData.setID( arg_account_id );
                 accountData.trustedByGuarantor( userSession.getUserID() );
-//                 WebACL::setTrustAccounts(
-//                     arg_account_id,
-//                     userSession.getUserID()
-//                 );
             }
         }
 

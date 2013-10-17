@@ -149,11 +149,11 @@ void AccountData::deleteAllData( unsigned long liqudator_id ) {
     // create a event feed.
     RSSfeed newFeed;
     newFeed.setTitle( "Account gelöscht" );
-    std::string description = "Der Account mit der ID "
-        + cxxtools::convert<std::string>( m_id ) \
-        + " wurde gelöscht. Der Login-Name war: \"" + m_login_name
-        + "\", und der reale name: \"" + m_real_name + "\".";
-    newFeed.setDescription( description );
+    std::ostringstream description;
+    description << "Der Account mit der ID " << m_id
+        << " wurde gelöscht. Der Login-Name war: \"" << m_login_name
+        << "\", und der reale name: \"" << m_real_name << "\".";
+    newFeed.setDescription( description.str() );
     newFeed.channels.push_back("account");
     RSSfeedManager feedManager;
     feedManager.addNewFeed( newFeed );
@@ -313,7 +313,7 @@ bool AccountData::isTrustedAccount( ){
 // R --------------------------------------------------------------------------
 
 std::vector<unsigned long> AccountData::revokeAllTrust( const unsigned long admin_id ){
-    log_info( "[" << __FILE__ << ":" << __LINE__ << "] AccountData::revokeTrust()" );
+    log_info( "[" << __FILE__ << ":" << __LINE__ << "] AccountData::revokeAllTrust()" );
     std::vector<unsigned long> accountIdOfrevokedTrust;
     tntdb::Statement st;
     tntdb::Connection conn = tntdb::connectCached( Config::it().dbDriver() );
@@ -328,13 +328,13 @@ std::vector<unsigned long> AccountData::revokeAllTrust( const unsigned long admi
     // create a event feed.
     RSSfeed newFeed;
     newFeed.setTitle( "Account: Vertrauen entzogen" );
-    std::string description = "Dem Account mit der ID "
-        + cxxtools::convert<std::string>( m_id ) \
-        + " wurde jegliches Vertrauen entzogen. Der Login-Name war: \"" + m_login_name
-        + "\", und der reale name: \"" + m_real_name
-        + "\". Dieser Schritt erfolgte durch den Admin ID: "
-        + cxxtools::convert<std::string>( admin_id );
-    newFeed.setDescription( description );
+    std::ostringstream description;
+    description << "Dem Account mit der ID " << m_id
+        << " wurde jegliches Vertrauen entzogen. Der Login-Name war: \""
+        << m_login_name
+        << "\", und der reale name: \"" << m_real_name
+        << "\". Dieser Schritt erfolgte durch den Admin ID: " << admin_id ;
+    newFeed.setDescription( description.str() );
     newFeed.channels.push_back("account");
     RSSfeedManager feedManager;
     feedManager.addNewFeed( newFeed );
@@ -348,8 +348,31 @@ std::vector<unsigned long> AccountData::revokeTrust(
     log_info( "[" << __FILE__ << ":" << __LINE__ << "] AccountData::revokeTrust(guarantor_id)" );
     std::vector<unsigned long> accountIDs = AccountData::revokeTrust(
         m_id,
-        m_id
+        guarantor_id
     );
+
+
+    // create a event feed.
+    RSSfeed newFeed;
+    newFeed.setTitle( "Account: Vertrauen entzogen" );
+    std::ostringstream description;
+    description << "Dem Account mit der ID " << m_id
+        << " wurde jegliches Vertrauen entzogen. Der Login-Name war: \"" << m_login_name
+        << "\", und der reale name: \"" << m_real_name
+        << "\". Dieser Schritt erfolgte durch den User ID: " << guarantor_id ;
+    newFeed.setDescription( description.str() );
+    newFeed.channels.push_back("account");
+    RSSfeedManager feedManager;
+    feedManager.addNewFeed( newFeed );
+
+    std::vector<unsigned long> cleanUpIDs = AccountData::cleanUpTrustRecursively();
+    for (
+        unsigned int i = 0;
+        i < cleanUpIDs.size();
+        ++i
+    ) {
+        accountIDs.push_back( cleanUpIDs[i] );
+    }
     return accountIDs;
 }
 
