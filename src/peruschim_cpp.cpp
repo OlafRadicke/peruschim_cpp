@@ -1,11 +1,31 @@
+/**
+* @author Olaf Radicke <briefkasten@olaf-rdicke.de>
+* @date 2013
+* @copyright GNU Affero General Public License
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or later
+* version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#include <Core/models/Config.h>
+#include <Core/initcomponent.h>
+#include <RouteReverse/initcomponent.h>
+#include <Core/manager/TableManager.h>
+
 #include <tnt/tntnet.h>
 #include <tnt/configurator.h>
 #include <string>
 #include <cxxtools/log.h>
-#include <Core/models/Config.h>
-#include <Core/initcomponent.h>
-#include <RouteReverse/initcomponent.h>
-
 
 log_define("PERUSCHIM")
 
@@ -21,12 +41,23 @@ int main ( int argc, char* argv[] )
         config.read();
 
         log_init(config.logging());
+        
 
+        // Data base update check:
+        TableManager tabM;
+        if( tabM.update() == false ){
+            log_error("Table update was failed! Abortion...");
+            std::cerr << "Table update was failed! Abortion..." << std::endl;
+            exit (EXIT_FAILURE);
+        }
+        
+        // Init Application Server
         tnt::Tntnet app;
         tnt::Configurator tntConfigurator(app);
         tntConfigurator.setSessionTimeout ( config.sessionTimeout() );
-
         app.listen( config.appIp(), config.appPort() );
+        
+        
 
         // configure static stuff
         app.mapUrl("^/Core/resources/(.*)", "resources")

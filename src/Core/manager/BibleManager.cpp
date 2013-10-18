@@ -1,5 +1,7 @@
 /*
-* Copyright (C) 2013 Tommi Maekitalo
+* Copyright (C) 2013 
+*     Tommi Maekitalo, 
+*     Olaf Radicke <briefkasten@olaf-radicke.de>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Affero General Public License as published by
@@ -254,24 +256,6 @@ BibleManager::Impl& BibleManager::Impl::getInstance()
     return impl;
 }
 
-// std::string BibleManager::Impl::getBibleserverComURL(
-//     const std::string& bookTitle,
-//     unsigned bookChapterBegin) const
-// {
-//     std::string t = bookTitle;
-//     std::map<std::string, std::string>::const_iterator it =
-//         bibleserverComNames.find(bookTitle);
-//     if (it != bibleserverComNames.end())
-//         t = it->second;
-//
-//     std::ostringstream s;
-//     s << "http://www.bibleserver.com/text/EU/"
-//       << t
-//       << '/'
-//       << bookChapterBegin;
-//
-//     return s.str();
-// }
 
 std::string BibleManager::Impl::getBibleserverComURL(
     const std::string& bibleTrans,
@@ -322,16 +306,6 @@ const std::string& BibleManager::bibleBook(unsigned n) const
 {
     return impl->bibleBook(n);
 }
-
-// std::string BibleManager::getBibleserverComURL(
-//     const std::string& bookTitle,
-//     unsigned bookChapterBegin) const
-// {
-//     return impl->getBibleserverComURL(
-//         bookTitle,
-//         bookChapterBegin
-//     );
-// }
 
 std::string BibleManager::getBibleserverComURL(
     const std::string& bibleTrans,

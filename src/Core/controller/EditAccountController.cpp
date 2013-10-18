@@ -114,6 +114,7 @@ unsigned EditAccountController::operator() (tnt::HttpRequest& request, tnt::Http
     // if a account first time selected for editing?
     if ( arg_edit_account_button ) {
         s_open_account_id = arg_edit_account_id;
+        
         s_accountData =  WebACL::getAccountsWithID ( s_open_account_id );
         s_userRolls = WebACL::getRoll ( s_accountData.getLogin_name() );
         s_allRolls = WebACL::getAllRolls();

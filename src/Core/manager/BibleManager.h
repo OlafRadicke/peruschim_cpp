@@ -1,5 +1,7 @@
 /*
-* Copyright (C) 2013 Tommi Maekitalo
+* Copyright (C) 2013 
+*     Tommi Maekitalo, 
+*     Olaf Radicke <briefkasten@olaf-radicke.de>
 *
 *
 * This program is free software: you can redistribute it and/or modify

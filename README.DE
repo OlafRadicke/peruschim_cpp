@@ -142,5 +142,12 @@ Und danach weiter mit "./configure && make"
 TODOs
 =====
 
-* RSS-Feed für neue Einträge.
+* Den Core-Bereich in weiter Module aufteilen
+* RouteReverse überall einsetzen
+
+Angedacht:
+
+* Namensräume für TNT_REQUEST_SHARED_VAR
+* ACL-Konzept umbauen als eigenes Modul. 
+* <%include></%include> ersetzen durch <&  >
 

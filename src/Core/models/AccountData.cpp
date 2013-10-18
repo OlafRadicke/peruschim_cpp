@@ -178,25 +178,6 @@ int AccountData::getGuarantorCount( ){
     return guarantorCount;
 }
 
-std::string AccountData::genRandomSalt ( unsigned int len) {
-
-    /* initialize random seed: */
-    // srand (time(NULL));
-    std::string randomString;
-    static const char alphanum[] =
-        "0123456789"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz";
-
-    for ( unsigned int i = 0; i < len; ++i) {
-        int randNo = rand() % (sizeof(alphanum) - 1) ;
-        log_info(  "randNo: " << randNo );
-        randomString.push_back ( alphanum[randNo] );
-    }
-    return randomString;
-}
-
-
 std::vector<AccountData> AccountData::getGuarantors(){
 
     std::vector<AccountData> accounts;
@@ -217,7 +198,6 @@ std::vector<AccountData> AccountData::getGuarantors(){
                 FROM account_trust \
                 WHERE trusted_account_id = :trusted_account_id \
                 ) \
-            AND NOT id = :trusted_account_id \
             ORDER BY login_name"
     );
     st.set( "trusted_account_id", m_id ).execute();
@@ -243,6 +223,26 @@ std::vector<AccountData> AccountData::getGuarantors(){
     return accounts;
 
 }
+
+std::string AccountData::genRandomSalt ( unsigned int len) {
+
+    /* initialize random seed: */
+    // srand (time(NULL));
+    std::string randomString;
+    static const char alphanum[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
+
+    for ( unsigned int i = 0; i < len; ++i) {
+        int randNo = rand() % (sizeof(alphanum) - 1) ;
+        log_info(  "randNo: " << randNo );
+        randomString.push_back ( alphanum[randNo] );
+    }
+    return randomString;
+}
+
+
 
 std::vector<AccountData> AccountData::getTrustAccounts( ){
 

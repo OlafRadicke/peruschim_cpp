@@ -19,6 +19,7 @@ noinst_HEADERS = \
 	Core/manager/KeywordRegister.h \
 	Core/manager/QuoteManager.h \
 	Core/manager/QuoteRegister.h \
+	Core/manager/TableManager.h \
 	Core/manager/WebACL.h \
 	Core/models/AccountData.h \
 	Core/models/Config.h \
@@ -90,6 +91,7 @@ peruschim_cpp_SOURCES = \
 	Core/manager/QuoteManager.cpp \
 	Core/manager/QuoteRegister.cpp \
 	Core/manager/RSSfeedManager.cpp \
+	Core/manager/TableManager.cpp \
 	Core/manager/WebACL.cpp \
 	Core/models/AccountData.cpp \
 	Core/models/Config.cpp \
