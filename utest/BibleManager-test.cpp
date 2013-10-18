@@ -19,7 +19,7 @@
 
 #include "cxxtools/unit/testsuite.h"
 #include "cxxtools/unit/registertest.h"
-#include <manager/BibleManager.h>
+#include <Core/manager/BibleManager.h>
 
 class BibleManagerTest : public cxxtools::unit::TestSuite
 {
@@ -46,9 +46,10 @@ public:
             bibleManager.getBibleserverComURL("EU", "2. Mose", 2),
             "http://www.bibleserver.com/text/EU/2.Mose/2"
         );
-    CXXTOOLS_UNIT_ASSERT_EQUALS(
-        bibleManager.getBibleserverComURL("ELB", "Ijob", 5),
-        "http://www.bibleserver.com/text/ELB.'/Hiob/5");
+
+        CXXTOOLS_UNIT_ASSERT_EQUALS(
+            bibleManager.getBibleserverComURL("ELB", "Ijob", 5),
+            "http://www.bibleserver.com/text/ELB/Hiob/5");
     }
 };
 

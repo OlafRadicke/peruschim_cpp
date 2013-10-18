@@ -1,0 +1,102 @@
+<#
+Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#>
+
+<%session
+    scope="shared"
+    include="Core/manager/WebACL.h"
+    include="Core/models/UserSession.h" >
+
+        UserSession            userSession;
+</%session>
+
+<%request
+    scope="shared">
+
+        std::string            s_feedback;
+        bool                   s_clearOldVerses;
+        std::string            s_jasonText;
+</%request>
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>PERUSCHIM - Verse importieren</title>
+    <meta charset = "UTF-8" />
+    <& "style" &>
+</head>
+<body>
+    <%include>Core/views/parts/user-session.ecpp.html</%include>
+    <%include>Core/views/parts/head.ecpp.html</%include>
+    <br />
+    <div class="mainmenue">
+        <ul>
+            <li class="tableft"><a href="home">Home</a></li>
+            <li class="tabmiddle"><a href="KeywordRegister">Schlagwortsuche</a></li>
+            <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
+            <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
+            <li class="tabright"><a href="portaladmin">Administrationsportal</a></li>
+        </ul>
+    </div>
+    <br />
+    <div class="centerbox">
+
+        <h1>Versimport</h1>
+% if ( s_feedback != "" ) {
+        <div class="feedback-box">
+            <b><$ s_feedback $> </b>
+        </div>
+% }
+
+        <form method="post" >
+
+% if ( s_clearOldVerses ) {
+            <div class="feedback-box">
+                <h2>Achtung!</h2>
+                <p>Du hast ausgewählt das alle vorhandenen Verse durch den Import
+                gelöscht werden. Bitte bestätige den Vorgang der entferne den
+                Haken unten und Klick erneut auf "Importieren".</p>
+                <p><button
+                        name="arg_affirmation_clear_old_button"
+                        value="pushed"
+                        type="submit">Importieren</button><br><a href="/home">Abbrechen</a></p>
+
+                </div>
+% }
+            <p>Kopiere hier deine zu importierenden Verse in JSON-Format ein:<br>
+                <textarea
+                    class="jason_text"
+                    name="arg_jason_text"
+                    cols="80"
+                    rows="10"><$ s_jasonText $></textarea>
+            </p>
+            <p>Vorhandenen Verse löschen<input
+                    type="checkbox"
+                    value="true"
+                    name="arg_clear_old_verses"
+% if ( s_clearOldVerses ) {
+                    checked
+% }
+                    ></p>
+            <p><button
+                    name="arg_import_button"
+                    value="pushed"
+                    type="submit">Importieren</button></p>
+        </form>
+    </div>
+<%include>Core/views/parts/foot.ecpp.html</%include>
+</body>
+</html>

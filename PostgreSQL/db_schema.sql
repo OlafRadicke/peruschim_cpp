@@ -213,4 +213,30 @@ CREATE TABLE rss_feeds_channel(
 -- COMMENT ON TABLE rss_feeds_channel IS 'the channels of a rss feed item.';
 -- COMMENT ON COLUMN rss_feeds_channel.rss_feeds_id IS 'Linkt to rss feed item.';
 
+CREATE TABLE account_trust (
+    id                   SERIAL    PRIMARY KEY,
+    trusted_account_id   BIGINT    NOT NULL,
+    guarantor_id         BIGINT    NOT NULL,
+    createtime           TIMESTAMP NOT NULL,
+    FOREIGN KEY  (trusted_account_id)   REFERENCES account (id),
+    FOREIGN KEY  (guarantor_id) REFERENCES account (id)
+);
+-- COMMENT ON TABLE account_trust IS 'Links for user trust user.';
+-- COMMENT ON COLUMN account_trust.trusted_account_id IS 'The account where we are in trust.';
+-- COMMENT ON COLUMN account_trust.guarantor_id IS 'This account give the guarant.';
+
+-- Default value
+INSERT INTO account_trust
+(
+    trusted_account_id,
+    guarantor_id,
+    createtime
+)
+VALUES (
+    1,
+    1,
+    now()
+);
+
+
 COMMIT;

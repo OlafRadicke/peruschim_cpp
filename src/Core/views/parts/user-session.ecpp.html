@@ -1,0 +1,46 @@
+
+<%pre>
+    #include <Core/models/Config.h>
+    #include <RouteReverse/manager/Manager.h>
+</%pre>
+
+    <div class="login-link">
+        <ul>
+% if ( userSession.isHandheldVersion() ) {
+
+            <li>
+                <a href="<$ RouteReverse::Manager::getLinkTo("SwitchToHandheldVersion", request) $>">
+            [Normale Ansicht]
+                </a>
+            </li>
+% } else {
+            <li>
+                <a href="<$ RouteReverse::Manager::getLinkTo("SwitchToHandheldVersion", request) $>">
+                    [Mobilen Version]
+                </a>
+            </li>
+% }
+% if (  userSession.isInRole ( "user" ) == true) {
+            <li>
+                <$ userSession.getUserName( ) $>(ID:<$ userSession.getUserID( ) $>)
+                <a href="<$ RouteReverse::Manager::getLinkTo("logout", request) $>">[Abmelden]</a>
+            </li>
+% } else {
+            <li>
+                <a href="<$ RouteReverse::Manager::getLinkTo("LogIn", request) $>">[Anmelden]</a>
+            </li>
+            <li>
+                <a href="<$ RouteReverse::Manager::getLinkTo("NewAccount", request) $>">[Account erstellen]</a>
+            </li>
+% }
+            <li>
+                <a href="<$ RouteReverse::Manager::getLinkTo("RSSfeedView", request) $>">
+                    <img
+                        src="<$ RouteReverse::Manager::getLinkTo("Core/feed-icon.png", request) $>"
+                        width="22"
+                        height="22"
+                        alt="rss-feed-icon" />
+                </a>
+            </li>
+    </div>
+

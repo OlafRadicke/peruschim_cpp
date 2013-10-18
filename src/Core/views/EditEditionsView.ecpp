@@ -1,0 +1,175 @@
+<#
+Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#>
+
+
+<%session
+    scope="shared"
+    include="Core/models/UserSession.h" >
+
+        UserSession            userSession;
+</%session>
+
+<%request
+    scope="shared"
+    include="Core/models/Edition.h"
+    include="Core/manager/WebACL.h">
+
+        std::vector<Edition>   s_editionList;
+        std::string            s_feedback;
+        bool                   s_isEditionEdit;
+        unsigned long          s_editionID;
+</%request>
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>PERUSCHIM - Bibelausgaben</title>
+    <meta charset = "UTF-8" />
+    <& "style" &>
+</head>
+<body>
+    <%include>Core/views/parts/user-session.ecpp.html</%include>
+    <%include>Core/views/parts/head.ecpp.html</%include>
+    <br />
+
+    <div class="mainmenue">
+        <ul>
+            <li class="tableft"><a href="home">Home</a></li>
+            <li class="tabmiddle"><a href="KeywordRegister">Schlagwortsuche</a></li>
+            <li class="tabmiddle"><a href="portalquote">Versverwaltung</a></li>
+            <li class="tabmiddle"><a href="portalaccount">Mein Account</a></li>
+            <li class="tabright"><a href="portaladmin">Administrationsportal</a></li>
+        </ul>
+    </div>
+    <br />
+
+    <div class="centerbox">
+        <h1>Verwaltung der Bibelausgaben</h1>
+
+% if ( s_feedback != "" ) {
+
+        <div class="feedback-box">
+            <b><$ s_feedback $> </b>
+        </div>
+
+% }
+
+        <div class="simple-box">
+            <form method="post" action="EditEditions">
+                Neuen Eintrag zu einer Bibelausgabe erstellen (Titel. z.B. Luther-, Elberfelder-, Einheitsübersetzung):&#160;
+                <input name="arg_new_edition_title"
+                    type="text"
+                    size="40"
+                    maxlength="40">
+                &#160;
+                <button name="arg_new_edition_button"
+                        value="pushed"
+                        type="submit">Speichern
+                </button>
+            </form>
+        </div>
+
+            <div class="columnbox">
+% for ( unsigned int i=0; i < s_editionList.size(); i++) {
+%     if
+%     (
+%         s_isEditionEdit == true &&
+%         s_editionID == s_editionList[i].getID()
+%     ) {
+                <div class="simple-box">
+                    <form method="post" action="EditEditions">
+                        <p>Titel:<br>
+                            <input name="arg_modified_title"
+                                type="text"
+                                size="40"
+                                maxlength="40"
+                                value="<$ s_editionList[i].getName() $>" >
+                        </p>
+                        <p>Verlag:<br>
+                            <input name="arg_modified_publishername"
+                                type="text"
+                                size="40"
+                                maxlength="40"
+                                value="<$ s_editionList[i].getPublisherName( ) $>" >
+                        </p>
+                        <p>Auflage:<br>
+                            <input name="arg_modified_releasenumber"
+                                type="number"
+                                size="40"
+                                maxlength="40"
+                                value="<$ s_editionList[i].getReleaseNumber( ) $>" >
+                        </p>
+                        <p>Erscheinungsdatum:<br>
+                            <input name="arg_modified_releasedate"
+                                type="date"
+                                size="40"
+                                maxlength="40"
+                                value="<$ s_editionList[i].getReleaseDate( ) $>" >
+                        </p>
+                        <p>Erscheinungsort:<br>
+                            <input name="arg_modified_releaseplace"
+                                type="text"
+                                size="40"
+                                maxlength="40"
+                                value="<$ s_editionList[i].getReleasePlace() $>" >
+                        </p>
+                        <p>
+                            <input
+                                type="hidden"
+                                name="arg_modified_id"
+                                value="<$ s_editionList[i].getID() $>" >
+                            <button name="arg_save_modified_button"
+                                    value="pushed"
+                                    type="submit" >Änderung speichern
+                            </button>
+                        </p>
+                    </form>
+                </div>
+
+%     } else {
+                <div class="simple-box">
+                    <form method="post" action="EditEditions">
+                        <i>"<$ s_editionList[i].getName() $>
+                            (ID: <$s_editionList[i].getID() $>)"</i>&#160;
+                        <input
+                            type="hidden"
+                            name="arg_edit_edition_id"
+                            value="<$ s_editionList[i].getID( ) $>" >
+                        <button name="arg_edition_edition_button"
+                                value="pushed"
+                                type="submit">Bearbeiten
+                        </button>&#160;
+                        <input
+                            type="hidden"
+                            name="arg_delete_edition_id"
+                            value="<$ s_editionList[i].getID( ) $>" >
+                        <button name="arg_delete_edition_button"
+                                value="pushed"
+                                type="submit">Löschen
+                        </button>
+                    </form>
+                </div>
+%     }
+% }
+
+            </div>
+    </div>
+
+<%include>Core/views/parts/foot.ecpp.html</%include>
+</body>
+</html>

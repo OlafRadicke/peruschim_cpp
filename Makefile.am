@@ -1,4 +1,5 @@
-SUBDIRS=src utest
+SUBDIRS=src  utest
+
 ACLOCAL_AMFLAGS = -I m4 --install
 
 EXTRA_DIST = peruschim_cpp.spec \
