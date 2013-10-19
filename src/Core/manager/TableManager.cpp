@@ -27,7 +27,7 @@
 #include <Core/manager/TableManager.h>
 #include <Core/models/Config.h>
 
-/*#include <iostream>  */  
+/*#include <iostream>  */
 // #include <ostream>
 #include <sstream>
 
@@ -42,7 +42,7 @@ TableManager::TableManager()
 
 std::string TableManager::getTabeVersion(){
     std::string  tabVersion;
-    
+
     tntdb::Statement st = m_conn.prepare( " SELECT data_value \
          FROM metadata \
          WHERE data_name = :data_name ;");
@@ -53,8 +53,8 @@ std::string TableManager::getTabeVersion(){
                        .selectValue();
 
     value.get(tabVersion);
-    return tabVersion;    
-    
+    return tabVersion;
+
 }
 
 // S -------------------------------------------------------------------------
@@ -62,6 +62,8 @@ std::string TableManager::getTabeVersion(){
 bool TableManager::setUpdate2(){
     tntdb::Transaction trans(m_conn);
     std::ostringstream sqlCommand;
+    std::ostringstream sqlCommand5;
+    std::ostringstream sqlCommand6;
 
     try{
         sqlCommand << "CREATE TABLE account_trust ("
@@ -73,24 +75,10 @@ bool TableManager::setUpdate2(){
         << "    FOREIGN KEY  (guarantor_id) REFERENCES account (id)"
         << ");";
         m_conn.prepare( sqlCommand.str() ).execute();
-        sqlCommand.flush();
-        
-        sqlCommand << "-- COMMENT ON TABLE account_trust IS 'Links for user trust user.';";
-        m_conn.prepare( sqlCommand.str() ).execute(); 
-        sqlCommand.flush();
-        
-        sqlCommand << "-- COMMENT ON COLUMN account_trust.trusted_account_id IS "
-        << "'The account where we are in trust.';";
-        m_conn.prepare( sqlCommand.str() ).execute(); 
-        sqlCommand.flush();
-        
-        sqlCommand << "-- COMMENT ON COLUMN account_trust.guarantor_id IS "
-        << "'This account give the guarant.';";
-        m_conn.prepare( sqlCommand.str() ).execute(); 
-        sqlCommand.flush();
+//         sqlCommand.flush();
 
         //  Default value
-        sqlCommand << "INSERT INTO account_trust"
+        sqlCommand5 << "INSERT INTO account_trust"
         << "("
         << "    trusted_account_id,"
         << "    guarantor_id,"
@@ -101,15 +89,15 @@ bool TableManager::setUpdate2(){
         << "    1,"
         << "    now()"
         << ");";
-        m_conn.prepare( sqlCommand.str() ).execute(); 
-        sqlCommand.flush();
-        
-        sqlCommand << "UPDATE metadata "
+        m_conn.prepare( sqlCommand5.str() ).execute();
+//         sqlCommand.flush();
+
+        sqlCommand6 << "UPDATE metadata "
         << "SET data_value = '00002', "
         << "data_parameter = 'alpha' "
         << "WHERE data_name = 'tableversion';";
-        m_conn.prepare( sqlCommand.str() ).execute(); 
-        sqlCommand.flush();
+        m_conn.prepare( sqlCommand6.str() ).execute();
+//         sqlCommand.flush();
 
         trans.commit();
     }catch (...) {
@@ -123,7 +111,7 @@ bool TableManager::setUpdate2(){
 
     bool TableManager::update(){
         std::string version = getTabeVersion();
-        
+
         if ( version == "00001" ) {
             if( setUpdate2() == false){
                 log_info( "Table update 00002 failed!");
@@ -132,9 +120,9 @@ bool TableManager::setUpdate2(){
                 log_info( "Table update 00002 is successful!");
             }
         }
-   
-        
-/*      for next version...  
+
+
+/*      for next version...
         if ( version = "00002" ) {
             if( setUpdate3() == false){
                 log_info( "Table update 00003 failed!");
@@ -142,9 +130,9 @@ bool TableManager::setUpdate2(){
             }else{
                 log_info( "Table update 00003 is successful!");
             }
-        } 
-*/  
+        }
+*/
 
         return true;
-        
+
     }
