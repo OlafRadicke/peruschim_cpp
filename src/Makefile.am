@@ -14,6 +14,7 @@ EXTRA_DIST = \
 
 noinst_HEADERS = \
 	Core/initcomponent.h \
+	Core/controller/AlterLogInController.h \
 	Core/manager/BibleManager.h \
 	Core/manager/EditionManager.h \
 	Core/manager/KeywordRegister.h \
@@ -71,6 +72,7 @@ staticSources = \
 peruschim_cpp_SOURCES = \
 	peruschim_cpp.cpp \
 	Core/controller/AccountRegisterController.cpp \
+	Core/controller/AlterLogInController.cpp \
 	Core/controller/EditAccountController.cpp \
 	Core/controller/EditEditionsController.cpp \
 	Core/controller/EditOwnVersesController.cpp \
