@@ -24,18 +24,10 @@
 #include <Core/models/UserSession.h>
 
 #include <cxxtools/log.h>
-#include <tnt/component.h>
-#include <tnt/componentfactory.h>
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
 
-#include <iostream>
-
-
-
 log_define("Core.AlterLogInController")
-
-
 
 void AlterLogInController::operator() (
     tnt::HttpRequest& request,
@@ -58,7 +50,6 @@ void AlterLogInController::operator() (
         {
             userSession.setUserName ( arg_name );
             userSession.addRoll (  WebACL::getRoll ( arg_name ) );
-//             return reply.redirect ( "/home" );
             reply.redirect ( "/home" );
         }
         else

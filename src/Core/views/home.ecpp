@@ -53,16 +53,43 @@ UserSession userSession;
     <div class="centerbox">
         <h1>Herzlich Willkommen auf <i>PERUSCHIM</i></h1>
         <div class="columnbox">
+
+
+
 <p>Mit <i>PERUSCHIM</i> kannst du dir Bibelverse, die du dir gerne merken willst,
 speichern. Diese Verse kannst du mit Schlagwörtern versehen, um sie schneller
 wiederzufinden. </p>
+
 <p>Du kannst auch nachschauen, welche Bibelstellen sich Andere zu bestimmten Themen
 markiert haben. <i>PERUSCHIM</i> ist eine Bibelkonkordanz mit
 Sozialem-Netzwerk-Charakter. Versmarkierungen, die du nicht mit anderen teilen
 möchtest, kannst du als "privat" markieren. </p>
+
+<!-- neu -->
+<p>
+Um mit <i>PERUSCHIM</i> zu arbeiten brauchst du ein Account. Den kannst du dir
+selber anlegen. Du solltest dir dein Passwort gut merken, denn du kannst dir
+der Zeit noch nicht selber ein neues zuschicken lassen, wenn du es vergessen
+hast. Trotzdem macht es Sinn, deine Mail-Adresse zu hinterlegen. Dann kannst
+du mich per Mail (<a href="mailto:breifkasten@olaf-radicke.de">breifkasten@olaf-radicke.de</a>)
+bitten dein Passwort zu setzen und ich schicke dir dein neues zu.
+</p>
+
+<p>Nach dem du dich angemeldet hast, kannst du sofort los legen. Allerdings
+sind deine Einträge nur für dich sichtbar und auch nur wenn du angemeldet bist.
+Das ändert sich, sobald jemand dir sein Vertrauen ausgesprochen hat. Das kann
+aber auch wiederum nur jemand tun, der selber schon das Vertrauen eines Anderen
+besitzt. Wenn du noch niemanden kennst der dir das Vertrauen aussprechen kann
+dann melde dich bei mir (<a href="mailto:breifkasten@olaf-radicke.de">breifkasten@olaf-radicke.de</a>),
+wenn du deine ersten Einträge gemacht hast. Dann entscheide ich, ob dein Account
+als vertrauenswürdig einstufe.
+</p>
+
+<!-- neu ende -->
 <p><i>PERUSCHIM</i> ist ein OpenSource-Projekt. Den Source-Code findest du hier:
 <a href="https://github.com/OlafRadicke/peruschim_cpp">github.com/OlafRadicke/peruschim_cpp</a>.
 </p>
+
 <p>Das Wort <i>PERUSCHIM</i> ist übrigens Hebräisch und heißt "Pharisäer". Ich
 habe den Namen für das Projekt gewählt, damit es mich bei aller Begeisterung für
 das Bibelstudium daran erinnern soll, nicht zum <i>Pharisäer</i> zu werden.</p>

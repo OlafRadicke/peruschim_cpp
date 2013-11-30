@@ -22,17 +22,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         UserSession userSession;
 </%session>
 <%request
-    scope="shared"
     include="Core/controller/AlterLogInController.h">
         AlterLogInController  alterLogInController(userSession);
 </%request>
-
-% alterLogInController.operator() (
-%        request,
-%        reply,
-%        qparam
-%    );
-
+<%cpp>
+    alterLogInController.operator() (
+        request,
+        reply,
+        qparam
+    );
+</%cpp>
 <!DOCTYPE HTML>
 <html>
 <head>

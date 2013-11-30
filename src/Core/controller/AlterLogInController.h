@@ -22,12 +22,9 @@
 #ifndef ALTERLOGINCONTROLLER_H
 #define ALTERLOGINCONTROLLER_H
 
-#include <Core/manager/WebACL.h>
 #include <Core/models/UserSession.h>
 
 #include <cxxtools/log.h>
-#include <tnt/component.h>
-#include <tnt/componentfactory.h>
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
 

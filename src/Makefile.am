@@ -81,7 +81,6 @@ peruschim_cpp_SOURCES = \
 	Core/controller/ImportOwnVersesController.cpp \
 	Core/controller/KeywordDetailController.cpp \
 	Core/controller/KeywordRegisterController.cpp \
-	Core/controller/LogInController.cpp \
 	Core/controller/NewAccountController.cpp \
 	Core/controller/NewQuoteController.cpp \
 	Core/controller/ResetOwnPasswordController.cpp \
