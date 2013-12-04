@@ -10,6 +10,7 @@ EXTRA_DIST = \
 	Core/resources/small_screens.css \
 	Core/views/parts/user-session.ecpp.html \
 	Core/views/parts/head.ecpp.html \
+	Core/views/parts/style.ecpp \
 	Core/views/parts/foot.ecpp.html
 
 noinst_HEADERS = \
@@ -36,7 +37,6 @@ noinst_HEADERS = \
 	SessionForm/manager/Manager.h
 
 ecppSources = \
-	Core/views/parts/style.ecpp \
 	Core/views/AccountRegisterView.ecpp \
 	Core/views/access_denied.ecpp \
 	Core/views/EditAccountView.ecpp \
