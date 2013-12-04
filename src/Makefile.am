@@ -11,7 +11,31 @@ EXTRA_DIST = \
 	Core/views/parts/user-session.ecpp.html \
 	Core/views/parts/head.ecpp.html \
 	Core/views/parts/style.ecpp \
-	Core/views/parts/foot.ecpp.html
+	Core/views/parts/foot.ecpp.html \
+	Core/views/AccountRegisterView.ecpp \
+	Core/views/access_denied.ecpp \
+	Core/views/EditAccountView.ecpp \
+	Core/views/EditEditionsView.ecpp \
+	Core/views/EditOwnVersesView.ecpp \
+	Core/views/EditQuoteView.ecpp \
+	Core/views/ExportOwnVersesView.ecpp \
+	Core/views/home.ecpp \
+	Core/views/ImportOwnVersesView.ecpp \
+	Core/views/KeywordDetailView.ecpp \
+	Core/views/KeywordRegisterView.ecpp \
+	Core/views/LogInView.ecpp \
+	Core/views/logout.ecpp \
+	Core/views/mainmenu.ecpp \
+	Core/views/NewAccountView.ecpp \
+	Core/views/NewQuoteView.ecpp \
+	Core/views/portalaccount.ecpp \
+	Core/views/portaladmin.ecpp \
+	Core/views/portalquote.ecpp \
+	Core/views/ResetOwnPasswordView.ecpp \
+	Core/views/RSSfeedView.ecpp \
+	Core/views/SwitchToHandheldVersionView.ecpp \
+	Core/views/TrustAUserView.ecpp \
+	SessionForm/views/NoAvailabeTokenView.ecpp
 
 noinst_HEADERS = \
 	Core/initcomponent.h \
