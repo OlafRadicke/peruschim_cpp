@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         AlterLogInController  alterLogInController(userSession);
 </%request>
 <%cpp>
-    alterLogInController.operator() (
+    alterLogInController.worker(
         request,
         reply,
         qparam

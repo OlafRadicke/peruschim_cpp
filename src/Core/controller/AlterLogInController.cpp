@@ -29,7 +29,7 @@
 
 log_define("Core.AlterLogInController")
 
-void AlterLogInController::operator() (
+void AlterLogInController::worker (
     tnt::HttpRequest& request,
     tnt::HttpReply& reply,
     tnt::QueryParams& qparam)

@@ -117,7 +117,7 @@ CLEANFILES = $(ecppSources:.ecpp=.cpp) $(ecppSources:.ecpp=.deps) resources.cpp
 # Rules for tntnet applications
 #
 resources.cpp: $(staticSources) Makefile.am
-	$(ECPPC) -bb -z -n resources -p -o resources.cpp -I$(srcdir) $(staticSources)
+	$(ECPPC) -bb -z -n resources -p -o resources.cpp -I $(srcdir) $(staticSources)
 
 SUFFIXES=.ecpp .ico .cpp
 

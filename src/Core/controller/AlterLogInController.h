@@ -37,7 +37,7 @@ class AlterLogInController
 public:
     AlterLogInController (UserSession& userSession_): userSession(userSession_){};
 
-    void operator() (
+    void worker (
         tnt::HttpRequest& request,
         tnt::HttpReply& reply,
         tnt::QueryParams& qparam
