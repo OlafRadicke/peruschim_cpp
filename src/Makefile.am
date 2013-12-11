@@ -38,6 +38,7 @@ noinst_HEADERS = \
 	SessionForm/manager/Manager.h
 
 ecppSources = \
+	Core/views/parts/style.ecpp \
 	Core/views/AccountRegisterView.ecpp \
 	Core/views/access_denied.ecpp \
 	Core/views/EditAccountView.ecpp \
