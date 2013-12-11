@@ -16,11 +16,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
 
+<%session
+    scope="shared"
+    include="Core/models/UserSession.h" >
+        UserSession userSession;
+</%session>
 <%request
-    scope="shared">
-        std::string              s_feedback;
+    include="Core/controller/AlterLogInController.h">
+        AlterLogInController  alterLogInController(userSession);
 </%request>
-
+<%cpp>
+    alterLogInController.worker(
+        request,
+        reply,
+        qparam
+    );
+</%cpp>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -34,9 +45,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="smallgroupbox">
         <form method="post" >
             <h2>Login</h2>
-% if ( s_feedback != "" ) {
+% if ( alterLogInController.feedback != "" ) {
             <div class="feedback-box">
-                <b><$ s_feedback $> </b>
+                <b><$ alterLogInController.feedback $> </b>
             </div>
 % }
             <p>Für den gewählten Bereich muss du angemeldet sein. Bitte

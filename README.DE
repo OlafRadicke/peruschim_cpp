@@ -35,9 +35,7 @@ Alternativ kann das Build auch in einem separaten Verzeichnis erstellt werden.
 Dann ist wie folgt zu verfahren:
 
   * "autoreconf -i" ausführen
-  * "mkdir build" ausführen
-  * "cd build" ausführen
-  * "../configure" ausführen
+  * "./configure" ausführen
   * "make" ausführen
 
 Nun sind alle generiereten Datein im Build-Verzeichnis zu finden. Noch ein Tipp:
@@ -148,6 +146,6 @@ TODOs
 Angedacht:
 
 * Namensräume für TNT_REQUEST_SHARED_VAR
-* ACL-Konzept umbauen als eigenes Modul. 
+* ACL-Konzept umbauen als eigenes Modul.
 * <%include></%include> ersetzen durch <&  >
 

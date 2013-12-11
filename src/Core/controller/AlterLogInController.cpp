@@ -19,39 +19,21 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <Core/controller/AlterLogInController.h>
 #include <Core/manager/WebACL.h>
 #include <Core/models/UserSession.h>
 
 #include <cxxtools/log.h>
-#include <tnt/component.h>
-#include <tnt/componentfactory.h>
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
 
-#include <iostream>
+log_define("Core.AlterLogInController")
 
-
-
-log_define("component.LogInController")
-
-class LogInController : public tnt::Component
+void AlterLogInController::worker (
+    tnt::HttpRequest& request,
+    tnt::HttpReply& reply,
+    tnt::QueryParams& qparam)
 {
-public:
-    unsigned operator() (
-        tnt::HttpRequest& request,
-        tnt::HttpReply& reply,
-        tnt::QueryParams& qparam
-    );
-};
-
-static tnt::ComponentFactoryImpl<LogInController> factory("LogInController");
-
-unsigned LogInController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
-{
-    // Shared variables
-    TNT_SESSION_SHARED_VAR( UserSession,              userSession, () );
-    TNT_REQUEST_SHARED_VAR( std::string,              s_feedback, () );
-
 
     // define the query parameters
     std::string  arg_name =
@@ -68,16 +50,14 @@ unsigned LogInController::operator() (tnt::HttpRequest& request, tnt::HttpReply&
         {
             userSession.setUserName ( arg_name );
             userSession.addRoll (  WebACL::getRoll ( arg_name ) );
-            return reply.redirect ( "/home" );
+            reply.redirect ( "/home" );
         }
         else
         {
             log_debug("fail");
-            s_feedback = "Login fehlgeschlagen!";
+            feedback = "Login fehlgeschlagen!";
         };
     }
-
-    return DECLINED;
 }
 
 

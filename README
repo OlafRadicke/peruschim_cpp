@@ -17,9 +17,7 @@ Alternatively you can build it into another directory. You have to run configure
 from that directory then like this:
 
   * run "autoreconf -i"
-  * run "mkdir build"
-  * run "cd build"
-  * run "../configure"
+  * run "./configure"
   * run "make"
 
 Then you have all generated files in that build directory.

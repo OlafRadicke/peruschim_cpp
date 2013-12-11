@@ -15,6 +15,7 @@ EXTRA_DIST = \
 
 noinst_HEADERS = \
 	Core/initcomponent.h \
+	Core/controller/AlterLogInController.h \
 	Core/manager/BibleManager.h \
 	Core/manager/EditionManager.h \
 	Core/manager/KeywordRegister.h \
@@ -71,6 +72,7 @@ staticSources = \
 peruschim_cpp_SOURCES = \
 	peruschim_cpp.cpp \
 	Core/controller/AccountRegisterController.cpp \
+	Core/controller/AlterLogInController.cpp \
 	Core/controller/EditAccountController.cpp \
 	Core/controller/EditEditionsController.cpp \
 	Core/controller/EditOwnVersesController.cpp \
@@ -79,7 +81,6 @@ peruschim_cpp_SOURCES = \
 	Core/controller/ImportOwnVersesController.cpp \
 	Core/controller/KeywordDetailController.cpp \
 	Core/controller/KeywordRegisterController.cpp \
-	Core/controller/LogInController.cpp \
 	Core/controller/NewAccountController.cpp \
 	Core/controller/NewQuoteController.cpp \
 	Core/controller/ResetOwnPasswordController.cpp \
@@ -116,7 +117,7 @@ CLEANFILES = $(ecppSources:.ecpp=.cpp) $(ecppSources:.ecpp=.deps) resources.cpp
 # Rules for tntnet applications
 #
 resources.cpp: $(staticSources) Makefile.am
-	$(ECPPC) -bb -z -n resources -p -o resources.cpp -I$(srcdir) $(staticSources)
+	$(ECPPC) -bb -z -n resources -p -o resources.cpp -I $(srcdir) $(staticSources)
 
 SUFFIXES=.ecpp .ico .cpp
 
