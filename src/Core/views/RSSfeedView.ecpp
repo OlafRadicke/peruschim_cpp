@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <channel>
 % RSSfeedManager feedManager;
         <title>Peruschim RSS-Feed</title>
-        <link><$ Config::it().domainName() $></link>
+        <link>http://<$ Config::it().domainName() $></link>
         <description>Mit Peruschim kannst du gemeinsam mit anderen deine Bibelstudien machen.</description>
 
         <language>de-de</language>
@@ -36,9 +36,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % for ( unsigned int i=0; i < feedList.size(); i++) {
         <item>
             <title><$ feedList[i].getTitle() $></title>
-            <link><$ Config::it().domainName() $>/<$ feedList[i].getLinkURL()  $></link>
+            <link>http://<$ Config::it().domainName() $>/<$ feedList[i].getLinkURL()  $></link>
             <description><$ feedList[i].getDescription()  $></description>
-            <guid><$ Config::it().domainName() $>/home/<$ feedList[i].getID() $></guid>
+            <guid>http://<$ Config::it().domainName() $>/home/<$ feedList[i].getID() $></guid>
             <pubDate><$ feedManager.covertDate( feedList[i].getCreateTime() ) $></pubDate>
         </item>
 % }
