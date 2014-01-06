@@ -67,12 +67,14 @@
         <div class="columnbox">
 % for ( unsigned int i=0; i < s_quoteList.size(); i++) {
             <div class="simple-box">
-                <h2>
+                <h3>
                     <$ s_quoteList[i].getBookTitle() $>&#160;
                     <$ s_quoteList[i].getChapterBegin() $>:
                     <$ s_quoteList[i].getSentenceBegin() $>
-                </h2>
-                <ul>
+                </h3>
+
+                <b>Stichworte:</b> <$ s_quoteList[i].getKeywordsAsString() $> <br>
+                <b>Zitat:</b> <$ s_quoteList[i].getQuoteText() $> <br>
                 <form method="post" action="EditQuote">
                     <input
                         type="hidden"

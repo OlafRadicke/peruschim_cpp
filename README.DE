@@ -31,14 +31,7 @@ Um peruschim_cpp zu erstellen sind die folgenden Schritte nötig:
 
 Die ausführbare Datei findest du nun unter src/peruschim_cpp.
 
-Alternativ kann das Build auch in einem separaten Verzeichnis erstellt werden.
-Dann ist wie folgt zu verfahren:
-
-  * "autoreconf -i" ausführen
-  * "./configure" ausführen
-  * "make" ausführen
-
-Nun sind alle generiereten Datein im Build-Verzeichnis zu finden. Noch ein Tipp:
+Noch ein Tipp:
 Die meisten Systeme haben heutzutage mehere CPUs oder Kerne. Um die volle
 Leistung zu nutzen kann man auch "make -j 4" aufrufen, dann wird make mit vier
 Prozessen gleichzeitig laufen um die Zeit Kompilierens zu verkürzen.
@@ -74,7 +67,7 @@ createuser -W peruschim_cpp
 # Datenbank erstellen und User zuweisen
 createdb -O peruschim_cpp  peruschim_cpp
 # ggf. Anpassungen an der Konfiguration in
-# Rdehat/Fedora
+# Redhat/Fedora
 /var/lib/pgsql/data/pg_hba.conf
 # Debian...
 /etc/postgresql/9.1/main/pg_hba.conf
@@ -137,8 +130,22 @@ Dann muss der folgende Befehl ausgeführt werden:
 
 Und danach weiter mit "./configure && make"
 
+
+libtool: link:  is not a valid libtool archive
+==============================================
+
+Beim Übersetzen von Tntnet erscheint eine Fehlermeldung in der Form:
+    libtool: link: [...] is not a valid libtool archive
+
+Dann sind möglicherweise noch störende Überreste der letzten Übersetzung
+vorhanden. Lösung: folgenden Befehl ausführen...
+
+    make distclean && autoreconf -ivf && ./configure && make
+
+
+
 TODOs
-=====
+-----
 
 * Den Core-Bereich in weiter Module aufteilen
 * RouteReverse überall einsetzen

@@ -78,6 +78,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <span class="explanation">Einen neuen
                     Datensatz zu einer Bibel-Ausgabe anlegen oder bearbeiten.</span>
                 </li>
+                <li>
+                    <a href="EditOwnVerses">
+                        <b>Verse berbeiten:</b>
+                    </a> <span class="explanation">Die eigenen Verse auflisten und bearbeiten.</span>
+                </li>
             </ul>
         </div>
     </div>
