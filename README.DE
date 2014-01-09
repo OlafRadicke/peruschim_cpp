@@ -81,6 +81,9 @@ psql -U peruschim_cpp -h localhost -W peruschim_cpp
 # Tabellen erstellen:
 psql -h localhost -U peruschim_cpp peruschim_cpp < /peruschim_cpp/PostgreSQL/db_schema.sql
 
+# mit diesem Befehl kann man das Passwort noch ein mal ändern
+ALTER USER peruschim_cpp with password 'anders';
+
 
 STARTEN
 -------

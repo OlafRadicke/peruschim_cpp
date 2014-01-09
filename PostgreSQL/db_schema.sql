@@ -21,7 +21,7 @@ INSERT INTO metadata
 VALUES (
     'tableversion',
     'alpha',
-    '00001',
+    '00002',
     'Namber of table version'
 );
 
