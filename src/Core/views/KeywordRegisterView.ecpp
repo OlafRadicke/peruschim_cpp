@@ -25,9 +25,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <%request
     scope="shared"
+    include="cxxtools/string.h"
+    include="cxxtools/utf8codec.h"
     include="Core/manager/KeywordRegister.h">
         vector<KeywordCount>   s_keywordTitlesCounts;
 </%request>
+<%pre>
+#include <cxxtools/string.h>
+#include <sstream>
+#include <cxxtools/utf8codec.h>
+</%pre>
 
 <!DOCTYPE HTML>
 <html>
@@ -109,15 +116,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <a href="#letter_ü"><span class="big">ü</span></a>
         </div>
 
-% string lastLetter = "";
+% cxxtools::String lastLetter;
 % for ( unsigned int i=0; i<s_keywordTitlesCounts.size(); i++) {
-%     if ( lastLetter != s_keywordTitlesCounts[i].Name.substr (0,1) ) {
-%         lastLetter = s_keywordTitlesCounts[i].Name.substr (0,1);
+%     cxxtools::String uName = cxxtools::Utf8Codec::decode( s_keywordTitlesCounts[i].Name );
+%     if ( lastLetter != uName.substr (0,1) ) {
+%         lastLetter = uName.substr (0,1);
 %         if ( i != 0 ) {
             </div>
 %         }
         <h3 id="letter_<$ s_keywordTitlesCounts[i].Name.substr (0,1) $>" >
-            <$ s_keywordTitlesCounts[i].Name.substr (0,1) $>
+            <$ uName.substr (0,1) $>
         </h3>
         <div class="columnbox-triple">
 %     }
