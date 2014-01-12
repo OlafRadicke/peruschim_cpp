@@ -25,8 +25,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <%request
     scope="shared"
-    include="cxxtools/string.h"
-    include="cxxtools/utf8codec.h"
     include="Core/manager/KeywordRegister.h">
         vector<KeywordCount>   s_keywordTitlesCounts;
 </%request>
