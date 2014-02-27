@@ -36,25 +36,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <%include>Core/views/parts/head.ecpp.html</%include>
 
     <div class="centerbox">
-        <h1>Fehlerhafte Formularverarbeitung</h1>
+        <h1>Invalid form token</h1>
         <div class="feedback-box">
             <b>
-                Wenn sie diese Seite sehen ist etwas mit der Formularverarbeitung
-                schief gelaufen. Das tut mir leide! Folgende Ursachen können der
-                Grund sein:
+                if you see this message than it can be...
             </b>
             <ul>
                 <li>
-                    Das Formular wurde (versehentlich) zwei mal abgesendet in
-                    dem die Seite neu geladen haben.
+                    You a send a fome two times .
                 </li>
                 <li>
-                    Es waren/sind in mehreren Fenster das selbe Formular
-                    geöffnet.
+                    Or you has open more than one of the same from page.
                 </li>
                 <li>
-                    Das Formular stammt von einer Sitzung die bereits abgelaufen
-                    ist
+                    Or this token is from a out timed session.
+                </li>
+                <li>
+                    Or you under a hacker attack.
                 </li>
             </ul>
         </div>
