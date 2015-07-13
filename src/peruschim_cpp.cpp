@@ -36,7 +36,7 @@ int main ( int argc, char* argv[] )
     {
 
         /* initialize random seed: */
-        srand (time(NULL));
+        std::srand (time(NULL));
 
         Config& config = Config::it();
         config.read();
