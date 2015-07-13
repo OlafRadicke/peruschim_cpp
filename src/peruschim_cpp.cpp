@@ -25,8 +25,8 @@
 #include <tnt/tntnet.h>
 #include <tnt/configurator.h>
 #include <string>
-#include <cxxtools/log.h>   
-#include <stdlib.h>
+#include <cxxtools/log.h>
+#include <cstdlib>
 
 log_define("PERUSCHIM")
 
