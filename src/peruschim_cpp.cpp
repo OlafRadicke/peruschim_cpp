@@ -25,7 +25,8 @@
 #include <tnt/tntnet.h>
 #include <tnt/configurator.h>
 #include <string>
-#include <cxxtools/log.h>
+#include <cxxtools/log.h>   
+#include <stdlib.h>
 
 log_define("PERUSCHIM")
 
@@ -41,7 +42,7 @@ int main ( int argc, char* argv[] )
         config.read();
 
         log_init(config.logging());
-        
+
 
         // Data base update check:
         TableManager tabM;
@@ -50,14 +51,14 @@ int main ( int argc, char* argv[] )
             std::cerr << "Table update was failed! Abortion..." << std::endl;
             exit (EXIT_FAILURE);
         }
-        
+
         // Init Application Server
         tnt::Tntnet app;
         tnt::Configurator tntConfigurator(app);
         tntConfigurator.setSessionTimeout ( config.sessionTimeout() );
         app.listen( config.appIp(), config.appPort() );
-        
-        
+
+
 
         // configure static stuff
         app.mapUrl("^/Core/resources/(.*)", "resources")
